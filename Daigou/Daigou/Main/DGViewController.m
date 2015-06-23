@@ -7,6 +7,10 @@
 //
 
 #import "DGViewController.h"
+#import <ionicons/IonIcons.h>
+#import <ionicons/ionicons-codes.h>
+#define kTabICONSIZE 26.0f
+#define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 
 @interface DGViewController ()
 
@@ -20,18 +24,26 @@
   UIStoryboard *procurementStoryboard = [UIStoryboard storyboardWithName:@"Procurement" bundle:nil];
   UIViewController *firstVC = [procurementStoryboard instantiateInitialViewController];
   firstVC.title = @"采购";
+  firstVC.tabBarItem.image = [IonIcons imageWithIcon:ion_android_cart size:kTabICONSIZE color:kICONCOLOR];
   UIStoryboard *orderStoryboard = [UIStoryboard storyboardWithName:@"Order" bundle:nil];
   UIViewController *secVC = [orderStoryboard instantiateInitialViewController];
   secVC.title = @"订单";
-  UIStoryboard *addStoryboard = [UIStoryboard storyboardWithName:@"Order" bundle:nil];
+  secVC.tabBarItem.image = [IonIcons imageWithIcon:ion_document_text size:kTabICONSIZE color:kICONCOLOR];
+  UIStoryboard *addStoryboard = [UIStoryboard storyboardWithName:@"Add" bundle:nil];
   UIViewController *thirdVC = [addStoryboard instantiateInitialViewController];
   thirdVC.title = @"新增";
-  UIStoryboard *stockStoryboard = [UIStoryboard storyboardWithName:@"Order" bundle:nil];
+  thirdVC.tabBarItem.image = [IonIcons imageWithIcon:ion_plus size:kTabICONSIZE color:kICONCOLOR];
+
+  UIStoryboard *stockStoryboard = [UIStoryboard storyboardWithName:@"Stock" bundle:nil];
   UIViewController *forthVC = [stockStoryboard instantiateInitialViewController];
   forthVC.title = @"库存";
-  UIStoryboard *mineStoryboard = [UIStoryboard storyboardWithName:@"Order" bundle:nil];
+  forthVC.tabBarItem.image = [IonIcons imageWithIcon:ion_podium size:kTabICONSIZE color:kICONCOLOR];
+
+  UIStoryboard *mineStoryboard = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
   UIViewController *fifthVC = [mineStoryboard instantiateInitialViewController];
   fifthVC.title = @"我的";
+  fifthVC.tabBarItem.image = [IonIcons imageWithIcon:ion_android_person size:kTabICONSIZE color:kICONCOLOR];
+
   [self setViewControllers:[NSArray arrayWithObjects:firstVC,secVC,thirdVC,forthVC,fifthVC, nil]];
   
     // Do any additional setup after loading the view.

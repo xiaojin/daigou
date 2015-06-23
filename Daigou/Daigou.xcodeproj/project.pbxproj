@@ -25,6 +25,7 @@
 		3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED1C1B2C5E2300C7478F /* Images.xcassets */; };
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
+		3CE3C77A1B396199008A1335 /* daigou.db in Resources */ = {isa = PBXBuildFile; fileRef = 3CE3C7791B396199008A1335 /* daigou.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		3C6EED201B2C5E6100C7478F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3C6EED211B2C5E6100C7478F /* DGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGViewController.h; sourceTree = "<group>"; };
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
+		3CE3C7791B396199008A1335 /* daigou.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = daigou.db; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC5C4AF44B02D95DE319F4 /* Pods-Daigou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9DE06086462CEABFF0A4F0 /* Pods-Daigou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.release.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.release.xcconfig"; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 		3C6EED1E1B2C5E6100C7478F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				3CE3C7791B396199008A1335 /* daigou.db */,
 				3C6EED1F1B2C5E6100C7478F /* AppDelegate.h */,
 				3C6EED201B2C5E6100C7478F /* AppDelegate.m */,
 				3C6EED211B2C5E6100C7478F /* DGViewController.h */,
@@ -432,6 +435,7 @@
 				19B0F7B656D557D701E4603D /* Procurement.storyboard in Resources */,
 				19B0F9C9C08DC6F41566E215 /* Order.storyboard in Resources */,
 				19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */,
+				3CE3C77A1B396199008A1335 /* daigou.db in Resources */,
 				19B0FCBE1BCC44E9A349875D /* Add.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
