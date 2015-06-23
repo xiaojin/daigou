@@ -31,3 +31,4 @@ environment_*.plist
 *.kml
 *.kmz
 !2ABCD-01.kml
+Pods/*

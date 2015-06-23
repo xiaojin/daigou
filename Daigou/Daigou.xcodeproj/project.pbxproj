@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19B0F2A5A729CC3A56F1B82E /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */; };
+		19B0F7B656D557D701E4603D /* Procurement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F6F26C67FEFD48FD7CBA /* Procurement.storyboard */; };
+		19B0F7C63CDBF2FBC3CD877E /* Stock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F1B4311BCA42CF7B3AE9 /* Stock.storyboard */; };
+		19B0F9C9C08DC6F41566E215 /* Order.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0FA38422F0DFB1AFDD799 /* Order.storyboard */; };
+		19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F72631E39FD08240B2CC /* OrderViewController.m */; };
+		19B0FCBE1BCC44E9A349875D /* Add.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0FE48E1D3824371B4BE48 /* Add.storyboard */; };
+		19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F1B595271C47494B85C4 /* StockViewController.m */; };
+		19B0FF341585D8D16427108F /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F38AE32013E7156EF0E5 /* AddViewController.m */; };
+		19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */; };
+		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
 		3C6EECC01B2C3D7B00C7478F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EECBF1B2C3D7B00C7478F /* main.m */; };
 		3C6EECCC1B2C3D7B00C7478F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCA1B2C3D7B00C7478F /* Main.storyboard */; };
 		3C6EECD11B2C3D7B00C7478F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCF1B2C3D7B00C7478F /* LaunchScreen.xib */; };
 		3C6EECDD1B2C3D7B00C7478F /* DaigouTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EECDC1B2C3D7B00C7478F /* DaigouTests.m */; };
-		3C6EED111B2C5DDE00C7478F /* Add.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECFE1B2C5DDE00C7478F /* Add.storyboard */; };
-		3C6EED121B2C5DDE00C7478F /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED001B2C5DDE00C7478F /* AddViewController.m */; };
-		3C6EED131B2C5DDE00C7478F /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED021B2C5DDE00C7478F /* Mine.storyboard */; };
-		3C6EED141B2C5DDE00C7478F /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED041B2C5DDE00C7478F /* MineViewController.m */; };
-		3C6EED151B2C5DDE00C7478F /* Order.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED061B2C5DDE00C7478F /* Order.storyboard */; };
-		3C6EED161B2C5DDE00C7478F /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED081B2C5DDE00C7478F /* OrderViewController.m */; };
-		3C6EED171B2C5DDE00C7478F /* Procurement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED0A1B2C5DDE00C7478F /* Procurement.storyboard */; };
-		3C6EED181B2C5DDE00C7478F /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED0C1B2C5DDE00C7478F /* ProcurementViewController.m */; };
-		3C6EED191B2C5DDE00C7478F /* Stock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED0E1B2C5DDE00C7478F /* Stock.storyboard */; };
-		3C6EED1A1B2C5DDE00C7478F /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED101B2C5DDE00C7478F /* StockViewController.m */; };
 		3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED1C1B2C5E2300C7478F /* Images.xcassets */; };
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
@@ -38,6 +38,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19B0F12B1F71973E20970770 /* OrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderViewController.h; sourceTree = "<group>"; };
+		19B0F1B4311BCA42CF7B3AE9 /* Stock.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stock.storyboard; sourceTree = "<group>"; };
+		19B0F1B595271C47494B85C4 /* StockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockViewController.m; sourceTree = "<group>"; };
+		19B0F245CE78B94CFB16ED10 /* StockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
+		19B0F283014B25096F1FFF78 /* Mine.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
+		19B0F2D2E926566BD7FA217A /* ProcurementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcurementViewController.h; sourceTree = "<group>"; };
+		19B0F38AE32013E7156EF0E5 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
+		19B0F3DF3E14D0CDC1821C8E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
+		19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcurementViewController.m; sourceTree = "<group>"; };
+		19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
+		19B0F6F26C67FEFD48FD7CBA /* Procurement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Procurement.storyboard; sourceTree = "<group>"; };
+		19B0F72631E39FD08240B2CC /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
+		19B0FA38422F0DFB1AFDD799 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
+		19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
+		19B0FE48E1D3824371B4BE48 /* Add.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
 		3C6EECBA1B2C3D7B00C7478F /* Daigou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daigou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C6EECBE1B2C3D7B00C7478F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C6EECBF1B2C3D7B00C7478F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -46,21 +61,6 @@
 		3C6EECD61B2C3D7B00C7478F /* DaigouTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaigouTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C6EECDB1B2C3D7B00C7478F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C6EECDC1B2C3D7B00C7478F /* DaigouTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaigouTests.m; sourceTree = "<group>"; };
-		3C6EECFE1B2C5DDE00C7478F /* Add.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
-		3C6EECFF1B2C5DDE00C7478F /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
-		3C6EED001B2C5DDE00C7478F /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
-		3C6EED021B2C5DDE00C7478F /* Mine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
-		3C6EED031B2C5DDE00C7478F /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
-		3C6EED041B2C5DDE00C7478F /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
-		3C6EED061B2C5DDE00C7478F /* Order.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
-		3C6EED071B2C5DDE00C7478F /* OrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderViewController.h; sourceTree = "<group>"; };
-		3C6EED081B2C5DDE00C7478F /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
-		3C6EED0A1B2C5DDE00C7478F /* Procurement.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Procurement.storyboard; sourceTree = "<group>"; };
-		3C6EED0B1B2C5DDE00C7478F /* ProcurementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcurementViewController.h; sourceTree = "<group>"; };
-		3C6EED0C1B2C5DDE00C7478F /* ProcurementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcurementViewController.m; sourceTree = "<group>"; };
-		3C6EED0E1B2C5DDE00C7478F /* Stock.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Stock.storyboard; sourceTree = "<group>"; };
-		3C6EED0F1B2C5DDE00C7478F /* StockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
-		3C6EED101B2C5DDE00C7478F /* StockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockViewController.m; sourceTree = "<group>"; };
 		3C6EED1C1B2C5E2300C7478F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3C6EED1F1B2C5E6100C7478F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3C6EED201B2C5E6100C7478F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -90,6 +90,162 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19B0F0B8D8DFE6F4EF526A01 /* Procurement */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Procurement;
+			sourceTree = "<group>";
+		};
+		19B0F100AB9F65AA637957B8 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		19B0F24FE9CC9165CDBF8588 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		19B0F2702E82E20C5D43D510 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				19B0FBCBCC2E82E04CA10AE6 /* Add */,
+				19B0FDC79F375A6C71079B5E /* Mine */,
+				19B0F24FE9CC9165CDBF8588 /* Order */,
+				19B0F0B8D8DFE6F4EF526A01 /* Procurement */,
+				19B0FD27AB863D7DF63C1A7B /* Stock */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		19B0F465C711BD9D8D141010 /* Stock */ = {
+			isa = PBXGroup;
+			children = (
+				19B0F1B4311BCA42CF7B3AE9 /* Stock.storyboard */,
+				19B0F245CE78B94CFB16ED10 /* StockViewController.h */,
+				19B0F1B595271C47494B85C4 /* StockViewController.m */,
+			);
+			path = Stock;
+			sourceTree = "<group>";
+		};
+		19B0F549668E525B1D07A561 /* Stock */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stock;
+			sourceTree = "<group>";
+		};
+		19B0F5CE6A77B4016CEF46B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				19B0FC8D05008E59E2B085CA /* Add */,
+				19B0F100AB9F65AA637957B8 /* Mine */,
+				19B0F8DDCA4A348E3D3D3F95 /* Order */,
+				19B0F88A6E4050FBC9DA84F6 /* Procurement */,
+				19B0F549668E525B1D07A561 /* Stock */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		19B0F7516A5C6AFDBD135755 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				19B0FA38422F0DFB1AFDD799 /* Order.storyboard */,
+				19B0F12B1F71973E20970770 /* OrderViewController.h */,
+				19B0F72631E39FD08240B2CC /* OrderViewController.m */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		19B0F8345A9DD2655658FEB2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				19B0F465C711BD9D8D141010 /* Stock */,
+				19B0FA400B7BD39D78297CEC /* Procurement */,
+				19B0F7516A5C6AFDBD135755 /* Order */,
+				19B0FBF2D12C98B6BD76F533 /* Mine */,
+				19B0FE79E07BCDD49D4544E4 /* Add */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		19B0F88A6E4050FBC9DA84F6 /* Procurement */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Procurement;
+			sourceTree = "<group>";
+		};
+		19B0F8DDCA4A348E3D3D3F95 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		19B0FA400B7BD39D78297CEC /* Procurement */ = {
+			isa = PBXGroup;
+			children = (
+				19B0F6F26C67FEFD48FD7CBA /* Procurement.storyboard */,
+				19B0F2D2E926566BD7FA217A /* ProcurementViewController.h */,
+				19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */,
+			);
+			path = Procurement;
+			sourceTree = "<group>";
+		};
+		19B0FBCBCC2E82E04CA10AE6 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		19B0FBF2D12C98B6BD76F533 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				19B0F283014B25096F1FFF78 /* Mine.storyboard */,
+				19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */,
+				19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		19B0FC8D05008E59E2B085CA /* Add */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		19B0FD27AB863D7DF63C1A7B /* Stock */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stock;
+			sourceTree = "<group>";
+		};
+		19B0FDC79F375A6C71079B5E /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		19B0FE79E07BCDD49D4544E4 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				19B0FE48E1D3824371B4BE48 /* Add.storyboard */,
+				19B0F3DF3E14D0CDC1821C8E /* AddViewController.h */,
+				19B0F38AE32013E7156EF0E5 /* AddViewController.m */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
 		3C6EECB11B2C3D7B00C7478F = {
 			isa = PBXGroup;
 			children = (
@@ -113,13 +269,11 @@
 		3C6EECBC1B2C3D7B00C7478F /* Daigou */ = {
 			isa = PBXGroup;
 			children = (
-				3C6EED011B2C5DDE00C7478F /* Mine */,
-				3C6EED0D1B2C5DDE00C7478F /* Stock */,
-				3C6EECFD1B2C5DDE00C7478F /* Add */,
-				3C6EED051B2C5DDE00C7478F /* Order */,
-				3C6EED091B2C5DDE00C7478F /* Procurement */,
 				3C6EED1E1B2C5E6100C7478F /* Main */,
 				3C6EECBD1B2C3D7B00C7478F /* Supporting Files */,
+				19B0F8345A9DD2655658FEB2 /* Controller */,
+				19B0F2702E82E20C5D43D510 /* Model */,
+				19B0F5CE6A77B4016CEF46B6 /* View */,
 			);
 			path = Daigou;
 			sourceTree = "<group>";
@@ -151,56 +305,6 @@
 				3C6EECDB1B2C3D7B00C7478F /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3C6EECFD1B2C5DDE00C7478F /* Add */ = {
-			isa = PBXGroup;
-			children = (
-				3C6EECFE1B2C5DDE00C7478F /* Add.storyboard */,
-				3C6EECFF1B2C5DDE00C7478F /* AddViewController.h */,
-				3C6EED001B2C5DDE00C7478F /* AddViewController.m */,
-			);
-			path = Add;
-			sourceTree = "<group>";
-		};
-		3C6EED011B2C5DDE00C7478F /* Mine */ = {
-			isa = PBXGroup;
-			children = (
-				3C6EED021B2C5DDE00C7478F /* Mine.storyboard */,
-				3C6EED031B2C5DDE00C7478F /* MineViewController.h */,
-				3C6EED041B2C5DDE00C7478F /* MineViewController.m */,
-			);
-			path = Mine;
-			sourceTree = "<group>";
-		};
-		3C6EED051B2C5DDE00C7478F /* Order */ = {
-			isa = PBXGroup;
-			children = (
-				3C6EED061B2C5DDE00C7478F /* Order.storyboard */,
-				3C6EED071B2C5DDE00C7478F /* OrderViewController.h */,
-				3C6EED081B2C5DDE00C7478F /* OrderViewController.m */,
-			);
-			path = Order;
-			sourceTree = "<group>";
-		};
-		3C6EED091B2C5DDE00C7478F /* Procurement */ = {
-			isa = PBXGroup;
-			children = (
-				3C6EED0A1B2C5DDE00C7478F /* Procurement.storyboard */,
-				3C6EED0B1B2C5DDE00C7478F /* ProcurementViewController.h */,
-				3C6EED0C1B2C5DDE00C7478F /* ProcurementViewController.m */,
-			);
-			path = Procurement;
-			sourceTree = "<group>";
-		};
-		3C6EED0D1B2C5DDE00C7478F /* Stock */ = {
-			isa = PBXGroup;
-			children = (
-				3C6EED0E1B2C5DDE00C7478F /* Stock.storyboard */,
-				3C6EED0F1B2C5DDE00C7478F /* StockViewController.h */,
-				3C6EED101B2C5DDE00C7478F /* StockViewController.m */,
-			);
-			path = Stock;
 			sourceTree = "<group>";
 		};
 		3C6EED1B1B2C5E2300C7478F /* Resources */ = {
@@ -324,11 +428,11 @@
 				3C6EECCC1B2C3D7B00C7478F /* Main.storyboard in Resources */,
 				3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */,
 				3C6EECD11B2C3D7B00C7478F /* LaunchScreen.xib in Resources */,
-				3C6EED131B2C5DDE00C7478F /* Mine.storyboard in Resources */,
-				3C6EED191B2C5DDE00C7478F /* Stock.storyboard in Resources */,
-				3C6EED111B2C5DDE00C7478F /* Add.storyboard in Resources */,
-				3C6EED151B2C5DDE00C7478F /* Order.storyboard in Resources */,
-				3C6EED171B2C5DDE00C7478F /* Procurement.storyboard in Resources */,
+				19B0F7C63CDBF2FBC3CD877E /* Stock.storyboard in Resources */,
+				19B0F7B656D557D701E4603D /* Procurement.storyboard in Resources */,
+				19B0F9C9C08DC6F41566E215 /* Order.storyboard in Resources */,
+				19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */,
+				19B0FCBE1BCC44E9A349875D /* Add.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,14 +483,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C6EED161B2C5DDE00C7478F /* OrderViewController.m in Sources */,
 				3C6EECC01B2C3D7B00C7478F /* main.m in Sources */,
-				3C6EED1A1B2C5DDE00C7478F /* StockViewController.m in Sources */,
-				3C6EED141B2C5DDE00C7478F /* MineViewController.m in Sources */,
-				3C6EED121B2C5DDE00C7478F /* AddViewController.m in Sources */,
-				3C6EED181B2C5DDE00C7478F /* ProcurementViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
+				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
+				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
+				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
+				19B0F2A5A729CC3A56F1B82E /* MineViewController.m in Sources */,
+				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
