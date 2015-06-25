@@ -9,7 +9,10 @@
 #import "CustomInfoManagement.h"
 #import "CustomInfo.h"
 #import "CommonDefines.h"
-@implementation CustomInfoManagement
+#import <FMDB/FMDB.h>
+@implementation CustomInfoManagement {
+  FMDatabase *_db;
+}
 
 + (instancetype)shareInstance {
   static CustomInfoManagement *customInfoManagement = nil;
@@ -23,12 +26,14 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    
+    NSString *stringPath = DATABASE_PATH;
+    _db = [[FMDatabase alloc]initWithPath:stringPath];
   }
   return self;
 }
 
 - (NSArray *)getCustomInfo {
+  
   return nil;
 }
 

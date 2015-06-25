@@ -12,3 +12,5 @@
 static dispatch_once_t oncetoken = 0; \
 dispatch_once(&oncetoken, BLOCK); \
 })
+
+#define DATABASE_PATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"daigou.db"];
