@@ -9,6 +9,13 @@
 #import "MineViewController.h"
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
+#import "MCustInfoViewController.h"
+#import "MProductCatalogViewController.h"
+#import "MDeliveryManagementViewController.h"
+#import "MFinanceViewController.h"
+#import "MSettingViewController.h"
+#import "MSharingViewController.h"
+#import "MAboutViewController.h"
 
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 #define kICONSIZE 20.0f
@@ -87,6 +94,43 @@ NSString *const kTableCellID = @"SETTINGCELLID";
 }
 #pragma mark --TableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UIViewController *pushViewController = nil;
+  switch (indexPath.section) {
+    case 0:
+      switch (indexPath.row) {
+        case 0:
+          pushViewController = [self getCustomInfo];
+          break;
+        case 1:
+          pushViewController = [self getProductCatalog];
+          break;
+        case 2:
+          pushViewController = [self getDeliveryManagement];
+          break;
+        case 3:
+          pushViewController = [self getFinance];
+          break;
+      }
+      break;
+    case 1:
+      switch (indexPath.row) {
+        case 0:
+          pushViewController = [self getSetting];
+          break;
+        case 1:
+          pushViewController = [self getSharing];
+          break;
+        case 2:
+          pushViewController = [self getAbout];
+          break;
+      }
+      break;
+  }
+  pushViewController.title = self.stringArray[indexPath.section][indexPath.row];
+  [self.navigationController pushViewController:pushViewController animated:YES];
+}
 /*
 #pragma mark - Navigation
 
@@ -96,6 +140,41 @@ NSString *const kTableCellID = @"SETTINGCELLID";
     // Pass the selected object to the new view controller.
 }
 */
+
+- (MCustInfoViewController *)getCustomInfo{
+  MCustInfoViewController *customInfor = [[MCustInfoViewController alloc]initWithStyle:UITableViewStylePlain];
+  return customInfor;
+}
+
+- (MProductCatalogViewController *)getProductCatalog{
+  MProductCatalogViewController *productCatalog = [[MProductCatalogViewController alloc]init];
+  return productCatalog;
+}
+
+- (MDeliveryManagementViewController *)getDeliveryManagement{
+  MDeliveryManagementViewController *deliveryManagement = [[MDeliveryManagementViewController alloc]init];
+  return deliveryManagement;
+}
+
+- (MFinanceViewController *)getFinance{
+  MFinanceViewController *finance = [[MFinanceViewController alloc]init];
+  return finance;
+}
+
+- (MSettingViewController *)getSetting{
+  MSettingViewController *setting = [[MSettingViewController alloc]init];
+  return setting;
+}
+
+- (MSharingViewController *)getSharing{
+  MSharingViewController *sharing = [[MSharingViewController alloc]init];
+  return sharing;
+}
+
+- (MAboutViewController *)getAbout{
+  MAboutViewController *about = [[MAboutViewController alloc]init];
+  return about;
+}
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];

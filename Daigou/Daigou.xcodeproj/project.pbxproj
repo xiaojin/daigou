@@ -18,6 +18,15 @@
 		19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */; };
 		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
+		3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */; };
+		3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */; };
+		3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */; };
+		3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249841B3C11BC008F34C7 /* MSettingViewController.m */; };
+		3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249871B3C11CB008F34C7 /* MSharingViewController.m */; };
+		3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */; };
+		3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62498D1B3C1395008F34C7 /* MCustInfoViewController.m */; };
+		3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249901B3C1E81008F34C7 /* CustomInfo.m */; };
+		3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */; };
 		3C6EECC01B2C3D7B00C7478F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EECBF1B2C3D7B00C7478F /* main.m */; };
 		3C6EECCC1B2C3D7B00C7478F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCA1B2C3D7B00C7478F /* Main.storyboard */; };
 		3C6EECD11B2C3D7B00C7478F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCF1B2C3D7B00C7478F /* LaunchScreen.xib */; };
@@ -54,6 +63,25 @@
 		19B0FA38422F0DFB1AFDD799 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
 		19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		19B0FE48E1D3824371B4BE48 /* Add.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
+		3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductCatalogViewController.h; sourceTree = "<group>"; };
+		3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductCatalogViewController.m; sourceTree = "<group>"; };
+		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
+		3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDeliveryManagementViewController.m; sourceTree = "<group>"; };
+		3C6249801B3C11A5008F34C7 /* MFinanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFinanceViewController.h; sourceTree = "<group>"; };
+		3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFinanceViewController.m; sourceTree = "<group>"; };
+		3C6249831B3C11BC008F34C7 /* MSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSettingViewController.h; sourceTree = "<group>"; };
+		3C6249841B3C11BC008F34C7 /* MSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSettingViewController.m; sourceTree = "<group>"; };
+		3C6249861B3C11CB008F34C7 /* MSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSharingViewController.h; sourceTree = "<group>"; };
+		3C6249871B3C11CB008F34C7 /* MSharingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSharingViewController.m; sourceTree = "<group>"; };
+		3C6249891B3C11D6008F34C7 /* MAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAboutViewController.h; sourceTree = "<group>"; };
+		3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAboutViewController.m; sourceTree = "<group>"; };
+		3C62498C1B3C1395008F34C7 /* MCustInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCustInfoViewController.h; sourceTree = "<group>"; };
+		3C62498D1B3C1395008F34C7 /* MCustInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCustInfoViewController.m; sourceTree = "<group>"; };
+		3C62498F1B3C1E81008F34C7 /* CustomInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfo.h; sourceTree = "<group>"; };
+		3C6249901B3C1E81008F34C7 /* CustomInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfo.m; sourceTree = "<group>"; };
+		3C6249921B3C1FDC008F34C7 /* CustomInfoManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfoManagement.h; sourceTree = "<group>"; };
+		3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfoManagement.m; sourceTree = "<group>"; };
+		3C6249951B3C2254008F34C7 /* CommonDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDefines.h; sourceTree = "<group>"; };
 		3C6EECBA1B2C3D7B00C7478F /* Daigou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daigou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C6EECBE1B2C3D7B00C7478F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C6EECBF1B2C3D7B00C7478F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -213,6 +241,20 @@
 				19B0F283014B25096F1FFF78 /* Mine.storyboard */,
 				19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */,
 				19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */,
+				3C62498C1B3C1395008F34C7 /* MCustInfoViewController.h */,
+				3C62498D1B3C1395008F34C7 /* MCustInfoViewController.m */,
+				3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */,
+				3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */,
+				3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */,
+				3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */,
+				3C6249801B3C11A5008F34C7 /* MFinanceViewController.h */,
+				3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */,
+				3C6249831B3C11BC008F34C7 /* MSettingViewController.h */,
+				3C6249841B3C11BC008F34C7 /* MSettingViewController.m */,
+				3C6249861B3C11CB008F34C7 /* MSharingViewController.h */,
+				3C6249871B3C11CB008F34C7 /* MSharingViewController.m */,
+				3C6249891B3C11D6008F34C7 /* MAboutViewController.h */,
+				3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -234,6 +276,10 @@
 		19B0FDC79F375A6C71079B5E /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3C62498F1B3C1E81008F34C7 /* CustomInfo.h */,
+				3C6249901B3C1E81008F34C7 /* CustomInfo.m */,
+				3C6249921B3C1FDC008F34C7 /* CustomInfoManagement.h */,
+				3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -325,6 +371,7 @@
 				3C6EED201B2C5E6100C7478F /* AppDelegate.m */,
 				3C6EED211B2C5E6100C7478F /* DGViewController.h */,
 				3C6EED221B2C5E6100C7478F /* DGViewController.m */,
+				3C6249951B3C2254008F34C7 /* CommonDefines.h */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -488,12 +535,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C6EECC01B2C3D7B00C7478F /* main.m in Sources */,
+				3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */,
+				3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */,
+				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
+				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
+				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,
 				19B0F2A5A729CC3A56F1B82E /* MineViewController.m in Sources */,
+				3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */,
+				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,
+				3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */,
+				3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */,
 				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
