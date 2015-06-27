@@ -131,15 +131,6 @@ NSString *const kTableCellID = @"SETTINGCELLID";
   pushViewController.title = self.stringArray[indexPath.section][indexPath.row];
   [self.navigationController pushViewController:pushViewController animated:YES];
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (MCustInfoViewController *)getCustomInfo{
   MCustInfoViewController *customInfor = [[MCustInfoViewController alloc]initWithStyle:UITableViewStylePlain];

@@ -18,6 +18,7 @@
 		19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */; };
 		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
+		3C3212671B3E7F4E0014BA38 /* MCustomInfoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3212661B3E7F4E0014BA38 /* MCustomInfoItemView.m */; };
 		3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */; };
 		3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */; };
 		3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */; };
@@ -36,6 +37,7 @@
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
 		3CE3C77A1B396199008A1335 /* daigou.db in Resources */ = {isa = PBXBuildFile; fileRef = 3CE3C7791B396199008A1335 /* daigou.db */; };
+		3CE58DBC1B3E75750056621A /* MAddCusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE58DBB1B3E75750056621A /* MAddCusInfoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		19B0FA38422F0DFB1AFDD799 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
 		19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		19B0FE48E1D3824371B4BE48 /* Add.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
+		3C3212651B3E7F4E0014BA38 /* MCustomInfoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCustomInfoItemView.h; sourceTree = "<group>"; };
+		3C3212661B3E7F4E0014BA38 /* MCustomInfoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCustomInfoItemView.m; sourceTree = "<group>"; };
 		3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductCatalogViewController.h; sourceTree = "<group>"; };
 		3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductCatalogViewController.m; sourceTree = "<group>"; };
 		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 		3C6EED211B2C5E6100C7478F /* DGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGViewController.h; sourceTree = "<group>"; };
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
 		3CE3C7791B396199008A1335 /* daigou.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = daigou.db; sourceTree = "<group>"; };
+		3CE58DBA1B3E75750056621A /* MAddCusInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAddCusInfoViewController.h; path = Custom/MAddCusInfoViewController.h; sourceTree = "<group>"; };
+		3CE58DBB1B3E75750056621A /* MAddCusInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAddCusInfoViewController.m; path = Custom/MAddCusInfoViewController.m; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC5C4AF44B02D95DE319F4 /* Pods-Daigou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9DE06086462CEABFF0A4F0 /* Pods-Daigou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.release.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +139,8 @@
 		19B0F100AB9F65AA637957B8 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3C3212651B3E7F4E0014BA38 /* MCustomInfoItemView.h */,
+				3C3212661B3E7F4E0014BA38 /* MCustomInfoItemView.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -241,6 +249,7 @@
 		19B0FBF2D12C98B6BD76F533 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3CE58DB91B3E753E0056621A /* Custom */,
 				19B0F283014B25096F1FFF78 /* Mine.storyboard */,
 				19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */,
 				19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */,
@@ -377,6 +386,15 @@
 				3C6249951B3C2254008F34C7 /* CommonDefines.h */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		3CE58DB91B3E753E0056621A /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				3CE58DBA1B3E75750056621A /* MAddCusInfoViewController.h */,
+				3CE58DBB1B3E75750056621A /* MAddCusInfoViewController.m */,
+			);
+			name = Custom;
 			sourceTree = "<group>";
 		};
 		AFC2D6A2E6E1070FC7148171 /* Pods */ = {
@@ -544,6 +562,7 @@
 				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
+				3CE58DBC1B3E75750056621A /* MAddCusInfoViewController.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
@@ -553,6 +572,7 @@
 				3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */,
 				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,
 				3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */,
+				3C3212671B3E7F4E0014BA38 /* MCustomInfoItemView.m in Sources */,
 				3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */,
 				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
 			);

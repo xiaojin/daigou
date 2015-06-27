@@ -12,7 +12,7 @@
 @property(nonatomic, copy)NSString *name;
 @property(nonatomic, copy)NSString *email;
 @property(nonatomic, copy)NSString *idnum;
-@property(nonatomic, assign)NSInteger *agent;
+@property(nonatomic, assign)NSInteger agent;
 @property(nonatomic, copy)NSString *address;
 @property(nonatomic, copy)NSString *address1;
 @property(nonatomic, copy)NSString *address2;
@@ -22,4 +22,6 @@
 @property(nonatomic, copy)NSString *expressAvaible;
 @property(nonatomic, copy)NSString *note;
 @property(nonatomic, copy)NSString *ename;
+
+- (NSArray *)cutomToArray;
 @end
