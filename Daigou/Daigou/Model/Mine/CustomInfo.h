@@ -7,6 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef enum {
+  NOTAGENT,
+  ISAGENT
+} AgentDesc ;
 
 @interface CustomInfo : NSObject
 @property(nonatomic, copy)NSString *name;
