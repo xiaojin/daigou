@@ -48,7 +48,6 @@
   [self addSubview:seperateCell];
   self.titleName.text = _title;
   self.detailInfo.text = _value;
-  NSLog(@"%@",NSStringFromCGSize(self.frame.size));
 }
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{
     self.title =titleName;

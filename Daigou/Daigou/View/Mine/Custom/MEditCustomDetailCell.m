@@ -20,26 +20,11 @@
 @implementation MEditCustomDetailCell
 
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-  if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    self.titleName = [[UILabel alloc]initWithFrame:CGRectMake(CONTENTPADDINGLEFT, 0, CUSTOMINFOTITLEWIDTH, CGRectGetHeight(self.contentView.frame))];
-    self.titleName.font = [UIFont systemFontOfSize:FONTSIZE];
-    self.titleName.textColor = [UIColor colorWithRed:198.0f/255.0f green:198.0f/255.0f blue:198.0f/255.0f alpha:1.0f];
-    self.titleName.textAlignment = NSTextAlignmentLeft;
-    [self.contentView addSubview:self.titleName];
-    
-    CGFloat textFieldX = CGRectGetWidth(self.titleName.frame) + CONTENTPADDINGLEFT+ LEABELINPUTFIELDGAPPING;
-    CGFloat textFieldwith = CGRectGetWidth(self.contentView.frame) - textFieldX- CONTENTPADDINGRIGHT;
-    self.detailInfo = [[UILabel alloc]initWithFrame:CGRectMake(textFieldX , 0, textFieldwith, CGRectGetHeight(self.contentView.frame))];
-    self.detailInfo.font = [UIFont systemFontOfSize:FONTSIZE];
-    self.detailInfo.textColor = [UIColor colorWithRed:89.0f/255.0f green:89.0f/255.0f blue:89.0f/255.0f alpha:1.0f];
-    self.detailInfo.textAlignment = NSTextAlignmentLeft;
-    self.detailInfo.lineBreakMode = NSLineBreakByTruncatingTail;
-    [self.contentView addSubview:self.detailInfo];
-    
-  }
-  return self;
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    UIView *seperateCell = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(self.contentView.frame)-1, CGRectGetWidth(self.frame), 1)];
+    [seperateCell setBackgroundColor:[UIColor lightGrayColor]];
+    [self addSubview:seperateCell];
 }
 @end

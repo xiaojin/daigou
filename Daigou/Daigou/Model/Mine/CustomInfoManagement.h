@@ -13,6 +13,5 @@
 + (instancetype)shareInstance;
 - (NSArray *)getCustomInfo;
 - (BOOL)deleteCustomInfoByID:(NSString *)name;
-- (BOOL)saveCustomInfo:(CustomInfo *)custom;
 - (BOOL)updateCustomInfo:(CustomInfo *)custom;
 @end

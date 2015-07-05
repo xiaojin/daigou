@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MEditCustomDetailCell : UITableViewCell
-
+- (instancetype)tableviewCellInitWithSubView:(UIView *)subview;
 @end

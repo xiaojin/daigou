@@ -8,6 +8,7 @@
 
 #import "MShowCustomDetailViewController.h"
 #import "MShowCustomDetailCell.h"
+#import "MEditCustomInfoViewController.h"
 @interface MShowCustomDetailViewController ()<UITableViewDelegate,UITableViewDataSource>{
   NSMutableArray *titleArray;
   NSMutableArray *valueArray;
@@ -28,7 +29,6 @@ NSString *const tableviewCell = @"MShowCustomDetailCell ";
     self.tableView.delegate = self;
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 0.01f)];
     self.tableView.allowsSelection = NO;
-//    [self.tableView registerClass:[MShowCustomDetailCell class] forCellReuseIdentifier:tableviewCell];
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.customInfo = customInfo;
@@ -39,6 +39,7 @@ NSString *const tableviewCell = @"MShowCustomDetailCell ";
     [self initValueForCell];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(editCustomInfo)];
     self.navigationItem.rightBarButtonItem =editButton;
+      self.title = @"详细信息";
   }
   return self;
 }
@@ -52,16 +53,17 @@ NSString *const tableviewCell = @"MShowCustomDetailCell ";
   [valueArray addObject:_customInfo.address];
   [titleArray addObject:@"身份证"];
   [valueArray addObject:_customInfo.idnum];
-  [titleArray addObject:@"备注"];
-  [valueArray addObject:_customInfo.note];
   [titleArray addObject:@"代理"];
    NSString *agentDesc = _customInfo.agent? @"是":@"否";
   [valueArray addObject:agentDesc];
+  [titleArray addObject:@"备注"];
+  [valueArray addObject:_customInfo.note];
 
 }
 
 - (void)editCustomInfo {
-
+    MEditCustomInfoViewController *editCustomInfoViewController = [[MEditCustomInfoViewController alloc]initWithCustom:_customInfo];
+    [self.navigationController pushViewController:editCustomInfoViewController animated:YES];
 }
 
 

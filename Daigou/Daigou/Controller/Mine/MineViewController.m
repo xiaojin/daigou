@@ -36,7 +36,7 @@ NSString *const kTableCellID = @"SETTINGCELLID";
 }
 
 - (void)settingArray {
-  NSArray *firstSection = [NSArray arrayWithObjects:@"客户信息",@"商品目录",@"快递管理",@"现状统计",nil];
+  NSArray *firstSection = [NSArray arrayWithObjects:@"客户列表",@"商品目录",@"快递管理",@"现状统计",nil];
   NSMutableArray *firstSectionIcons = [NSMutableArray array];
   [firstSectionIcons addObject:[IonIcons imageWithIcon:ion_android_person size:kICONSIZE color:kICONCOLOR]];
   [firstSectionIcons addObject:[IonIcons imageWithIcon:ion_bag size:kICONSIZE color:kICONCOLOR]];

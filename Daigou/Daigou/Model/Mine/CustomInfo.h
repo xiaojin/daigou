@@ -13,6 +13,7 @@ typedef enum {
 } AgentDesc ;
 
 @interface CustomInfo : NSObject
+@property(nonatomic,assign)NSInteger cid;
 @property(nonatomic, copy)NSString *name;
 @property(nonatomic, copy)NSString *email;
 @property(nonatomic, copy)NSString *idnum;
