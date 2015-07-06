@@ -129,6 +129,7 @@ NSString *const kTableCellID = @"SETTINGCELLID";
       break;
   }
   pushViewController.title = self.stringArray[indexPath.section][indexPath.row];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
   [self.navigationController pushViewController:pushViewController animated:YES];
 }
 

@@ -98,15 +98,22 @@
 //  info11.note = @"m cxklb,m ,asdl c,mnfjwb11i";
 //  info11.agent = 1;
 //  self.contacts = [NSArray arrayWithObjects:info1,info2,info4,info4,info5,info6,info7,info8,info9,info10,info11,nil];
-    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
-    NSArray *customes = [customManage getCustomInfo];
-    self.contacts = [NSArray arrayWithArray:customes];
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewCustom)];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
+    NSArray *customes = [customManage getCustomInfo];
+    self.contacts = [NSArray arrayWithArray:customes];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

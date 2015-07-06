@@ -11,9 +11,11 @@
 #import "CustomInfo.h"
 #import "MEditCustomDetailCell.h"
 #import "CustomInfoManagement.h"
+#import "MShowCustomDetailViewController.h"
 #define TEXTFIELDFONTSIZE 16.0f
 @interface MEditCustomInfoViewController()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate>{
-  NSMutableArray *placeHolderValue;
+    NSMutableArray *placeHolderValue;
+    UIButton *agentButton;
 }
 @property(nonatomic, strong)UITableView *editTableView;
 @property(nonatomic, strong)CustomInfo *customInfo;
@@ -88,9 +90,10 @@ NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
         [addressInputView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.editTableView.frame),CGRectGetHeight(cell.frame))];
         addressInputView.text = self.customInfo.address;
         addressInputView.tag = 51002;
+        addressInputView.delegate = self;
         [cell.contentView addSubview:addressInputView];
     } else if (indexPath.row == 4){
-        UIButton *agentButton = [[UIButton alloc]initWithFrame:cell.bounds];
+        agentButton = [[UIButton alloc]initWithFrame:cell.bounds];
         [agentButton addTarget:self action:@selector(showAgent:) forControlEvents:UIControlEventTouchUpInside];
         [agentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [agentButton.titleLabel setFont:[UIFont systemFontOfSize:TEXTFIELDFONTSIZE]];
@@ -113,6 +116,7 @@ NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
         [noteInputView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.editTableView.frame),CGRectGetHeight(cell.frame))];
         noteInputView.text = _customInfo.note;
         noteInputView.tag = 51005;
+        noteInputView.delegate = self;
         [cell.contentView addSubview:noteInputView];
     } else {
         UITextField *inputText = [[UITextField alloc]initWithFrame:cell.bounds];
@@ -142,6 +146,7 @@ NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
         }
         inputText.tag = tag;
         inputText.text = textValue;
+        inputText.delegate = self;
         [cell.contentView addSubview:inputText];
     }
     return cell;
@@ -164,10 +169,15 @@ NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
     } else {
         _customInfo.agent = 0;
     }
-    [self.editTableView reloadData];
+    agentButton.titleLabel.text = _customInfo.agent ? @"是":@"否";
 }
 
 #pragma mark - UITextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSLog(@"%@",textView.text);
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     if (textView.tag == 51002) {
@@ -184,19 +194,27 @@ NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
         _customInfo.name = textField.text;
     } else if(textField.tag == 51001){
         _customInfo.email = textField.text;
-    } else if (textField.tag == 51001){
+    } else if(textField.tag == 51003){
         _customInfo.idnum = textField.text;
     }
 }
 
 #pragma mark - SaveCustomInfo
 - (void)saveCustomInfo {
+    //dismiss keyboard.
+    [self.view endEditing:YES];
     if ([_customInfo.name isEqualToString:@""] || _customInfo.name == nil) {
         return;
     }
     CustomInfoManagement *customManager = [CustomInfoManagement shareInstance];
-    BOOL resutl = [customManager updateCustomInfo:_customInfo];
-    if (resutl) {
+    BOOL result = [customManager updateCustomInfo:_customInfo];
+    if (result) {
+        NSArray *controllers = self.navigationController.childViewControllers;
+        NSInteger length = [controllers count];
+        if ([[controllers objectAtIndex:length-2] isKindOfClass:[MShowCustomDetailViewController class]]) {
+            MShowCustomDetailViewController *showDetailView =  (MShowCustomDetailViewController *)[controllers lastObject];
+            showDetailView.customInfo = _customInfo;
+        }
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

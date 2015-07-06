@@ -44,4 +44,24 @@
     XCTAssertGreaterThan([customes count], 0,@"There should be more than 1 customer in the database");
 }
 
+- (void)testUpdateCustomInfo {
+    CustomInfo *custom = [[CustomInfo alloc]init];
+    [custom setCid:1];
+    [custom setName:@"James"];
+    [custom setEmail:@"123@163.com"];
+    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
+    BOOL result = [customManage updateCustomInfo:custom];
+    XCTAssertTrue(result,@"should update the custominfo successfully");
+    
+}
+
+- (void)testInsertCustomInfo{
+    CustomInfo *custom = [[CustomInfo alloc]init];
+    [custom setName:@"Lani"];
+    [custom setEmail:@"Lani@163.com"];
+    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
+    BOOL result = [customManage updateCustomInfo:custom];
+    XCTAssertTrue(result,@"should insert the custominfo successfully");
+}
+
 @end

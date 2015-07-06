@@ -16,7 +16,7 @@
     [result addObject:self.name?self.name :@""];
   [result addObject:self.email?self.email :@""];
   [result addObject:self.idnum?self.idnum :@""];
-  [result addObject:[NSNumber numberWithInteger:self.agent]?[NSNumber numberWithInteger:self.agent] :0];
+    [result addObject:[NSNumber numberWithInteger:self.agent]?[NSNumber numberWithInteger:self.agent] :[NSNumber numberWithInteger:0]];
   [result addObject:self.address?self.address :@""];
   [result addObject:self.address1?self.address1 :@""];
   [result addObject:self.address2?self.address2 :@""];

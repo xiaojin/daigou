@@ -14,7 +14,6 @@
   NSMutableArray *valueArray;
 }
 @property(nonatomic, strong)UITableView *tableView;
-@property(nonatomic, strong) CustomInfo *customInfo;
 @end
 
 @implementation MShowCustomDetailViewController
@@ -34,9 +33,6 @@ NSString *const tableviewCell = @"MShowCustomDetailCell ";
     self.customInfo = customInfo;
     [self.view addSubview:self.tableView];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    titleArray = [NSMutableArray array];
-    valueArray = [NSMutableArray array];
-    [self initValueForCell];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(editCustomInfo)];
     self.navigationItem.rightBarButtonItem =editButton;
       self.title = @"详细信息";
@@ -44,20 +40,29 @@ NSString *const tableviewCell = @"MShowCustomDetailCell ";
   return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    titleArray = [NSMutableArray array];
+    valueArray = [NSMutableArray array];
+    [self initValueForCell];
+    [self.tableView reloadData];
+}
+
 - (void) initValueForCell{
   [titleArray addObject:@"姓名"];
-  [valueArray addObject:_customInfo.name];
+  [valueArray addObject:self.customInfo.name];
   [titleArray addObject:@"邮箱"];
-  [valueArray addObject:_customInfo.email];
+  [valueArray addObject:self.customInfo.email];
   [titleArray addObject:@"地址"];
-  [valueArray addObject:_customInfo.address];
+  [valueArray addObject:self.customInfo.address];
   [titleArray addObject:@"身份证"];
-  [valueArray addObject:_customInfo.idnum];
+  [valueArray addObject:self.customInfo.idnum];
   [titleArray addObject:@"代理"];
-   NSString *agentDesc = _customInfo.agent? @"是":@"否";
+   NSString *agentDesc = self.customInfo.agent? @"是":@"否";
   [valueArray addObject:agentDesc];
   [titleArray addObject:@"备注"];
-  [valueArray addObject:_customInfo.note];
+  [valueArray addObject:self.customInfo.note];
 
 }
 

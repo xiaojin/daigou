@@ -89,17 +89,27 @@
 }
 
 - (BOOL)addCustomInfo:(CustomInfo *)custom{
-  BOOL result = [_db executeUpdate:@"INSERT INTO Client VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[custom cutomToArray]];
-  return result;
+    [_db beginTransaction];
+    BOOL result = [_db executeUpdate:@"insert into client (name,email,idnum,agent,address,address1,address2,address3,photofront,photoback,expressAvaible,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[custom cutomToArray]];
+    if (result) {
+        [_db commit];
+        [_db close];
+    }
+    return result;
 }
 
 - (BOOL)updateCustomInfo:(CustomInfo *)custom{
     BOOL exists = [self checkIfCustomExists:custom];
     BOOL result;
     if (exists) {
+        [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[custom cutomToArray]];
-        [updateData addObject:[NSNumber numberWithInteger:custom.cid]];
-         result= [_db executeUpdate:@"update client set (?,?,?,?,?,?,?,?,?,?,?,?,?) where cid = (?)" withArgumentsInArray:updateData];
+        [updateData addObject:@(custom.cid)];
+        result= [_db executeUpdate:@"update client set name=?,email=?,idnum=?,agent=?,address=?,address1=?,address2=?,address3=?,photofront=?,photoback=?,expressAvaible=?,note=?,ename=? where cid = ?" withArgumentsInArray:updateData];
+        if (result) {
+            [_db commit];
+            [_db close];
+        }
     } else {
         result = [self addCustomInfo:custom];
     }

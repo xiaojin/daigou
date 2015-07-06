@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "CustomInfo.h"
 @interface MShowCustomDetailViewController : UIViewController
-
+@property(nonatomic, strong) CustomInfo *customInfo;
 - (instancetype)initWithCustomInfo:(CustomInfo *)customInfo;
 @end
