@@ -32,6 +32,8 @@
 		3C6483301B494BE800EFAE4E /* CustomInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C64832F1B494BE800EFAE4E /* CustomInfoTests.m */; };
 		3C64833A1B49642700EFAE4E /* daigou.db in Resources */ = {isa = PBXBuildFile; fileRef = 3C6483391B49642700EFAE4E /* daigou.db */; };
 		3C6D85631B4BFBB10076F4AE /* DropDownListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6D85621B4BFBB10076F4AE /* DropDownListView.m */; };
+		3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6D85691B4DDFD20076F4AE /* Product.m */; };
+		3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6D856C1B4DDFE70076F4AE /* ProductManagement.m */; };
 		3C6DDF1C1B43F86C000B8152 /* MShowCustomDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF1B1B43F86C000B8152 /* MShowCustomDetailCell.m */; };
 		3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF1F1B44018F000B8152 /* MShowCustomDetailViewController.m */; };
 		3C6DDF231B440D4A000B8152 /* MAddCusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF221B440D4A000B8152 /* MAddCusInfoViewController.m */; };
@@ -99,6 +101,10 @@
 		3C64833B1B49643900EFAE4E /* daigou.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = daigou.db; path = Daigou/Main/daigou.db; sourceTree = "<group>"; };
 		3C6D85611B4BFBB10076F4AE /* DropDownListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropDownListView.h; path = DropDownMenu/DropDownListView.h; sourceTree = "<group>"; };
 		3C6D85621B4BFBB10076F4AE /* DropDownListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropDownListView.m; path = DropDownMenu/DropDownListView.m; sourceTree = "<group>"; };
+		3C6D85681B4DDFD20076F4AE /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Product.h; path = ProductCategory/Product.h; sourceTree = "<group>"; };
+		3C6D85691B4DDFD20076F4AE /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Product.m; path = ProductCategory/Product.m; sourceTree = "<group>"; };
+		3C6D856B1B4DDFE70076F4AE /* ProductManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductManagement.h; path = ProductCategory/ProductManagement.h; sourceTree = "<group>"; };
+		3C6D856C1B4DDFE70076F4AE /* ProductManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductManagement.m; path = ProductCategory/ProductManagement.m; sourceTree = "<group>"; };
 		3C6DDF1A1B43F86C000B8152 /* MShowCustomDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MShowCustomDetailCell.h; path = Daigou/View/Mine/Custom/MShowCustomDetailCell.h; sourceTree = SOURCE_ROOT; };
 		3C6DDF1B1B43F86C000B8152 /* MShowCustomDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MShowCustomDetailCell.m; path = Daigou/View/Mine/Custom/MShowCustomDetailCell.m; sourceTree = SOURCE_ROOT; };
 		3C6DDF1E1B44018F000B8152 /* MShowCustomDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MShowCustomDetailViewController.h; path = Custom/MShowCustomDetailViewController.h; sourceTree = "<group>"; };
@@ -157,11 +163,9 @@
 		19B0F100AB9F65AA637957B8 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3C6D85651B4DDF950076F4AE /* ProductCategory */,
+				3C6D85641B4DDF880076F4AE /* CustomInfo */,
 				3C6D85601B4BFB650076F4AE /* DropDownMenu */,
-				3C6DDF1A1B43F86C000B8152 /* MShowCustomDetailCell.h */,
-				3C6DDF1B1B43F86C000B8152 /* MShowCustomDetailCell.m */,
-				3C6DDF271B4412EC000B8152 /* MEditCustomDetailCell.h */,
-				3C6DDF281B4412EC000B8152 /* MEditCustomDetailCell.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -309,10 +313,8 @@
 		19B0FDC79F375A6C71079B5E /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				3C62498F1B3C1E81008F34C7 /* CustomInfo.h */,
-				3C6249901B3C1E81008F34C7 /* CustomInfo.m */,
-				3C6249921B3C1FDC008F34C7 /* CustomInfoManagement.h */,
-				3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */,
+				3C6D85671B4DDFAE0076F4AE /* CustomInfo */,
+				3C6D85661B4DDFAA0076F4AE /* ProductCategory */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -350,6 +352,46 @@
 				3C6D85621B4BFBB10076F4AE /* DropDownListView.m */,
 			);
 			name = DropDownMenu;
+			sourceTree = "<group>";
+		};
+		3C6D85641B4DDF880076F4AE /* CustomInfo */ = {
+			isa = PBXGroup;
+			children = (
+				3C6DDF1A1B43F86C000B8152 /* MShowCustomDetailCell.h */,
+				3C6DDF1B1B43F86C000B8152 /* MShowCustomDetailCell.m */,
+				3C6DDF271B4412EC000B8152 /* MEditCustomDetailCell.h */,
+				3C6DDF281B4412EC000B8152 /* MEditCustomDetailCell.m */,
+			);
+			name = CustomInfo;
+			sourceTree = "<group>";
+		};
+		3C6D85651B4DDF950076F4AE /* ProductCategory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ProductCategory;
+			sourceTree = "<group>";
+		};
+		3C6D85661B4DDFAA0076F4AE /* ProductCategory */ = {
+			isa = PBXGroup;
+			children = (
+				3C6D85681B4DDFD20076F4AE /* Product.h */,
+				3C6D85691B4DDFD20076F4AE /* Product.m */,
+				3C6D856B1B4DDFE70076F4AE /* ProductManagement.h */,
+				3C6D856C1B4DDFE70076F4AE /* ProductManagement.m */,
+			);
+			name = ProductCategory;
+			sourceTree = "<group>";
+		};
+		3C6D85671B4DDFAE0076F4AE /* CustomInfo */ = {
+			isa = PBXGroup;
+			children = (
+				3C62498F1B3C1E81008F34C7 /* CustomInfo.h */,
+				3C6249901B3C1E81008F34C7 /* CustomInfo.m */,
+				3C6249921B3C1FDC008F34C7 /* CustomInfoManagement.h */,
+				3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */,
+			);
+			name = CustomInfo;
 			sourceTree = "<group>";
 		};
 		3C6DDF1D1B43FA3F000B8152 /* Extension */ = {
@@ -624,9 +666,11 @@
 				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
+				3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */,
 				3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
+				3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */,
 				3C6D85631B4BFBB10076F4AE /* DropDownListView.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowCustomDetailCell.m in Sources */,
