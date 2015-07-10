@@ -10,7 +10,8 @@
 #import <FMDB/FMDB.h>
 #import "Product.h"
 #import "CommonDefines.h"
-
+#import "Brand.h"
+#import "ProductCategory.h"
 @implementation ProductManagement{
     FMDatabase *_db;
 }
@@ -52,35 +53,70 @@
     FMResultSet *rs = [_db executeQuery:@"select * from product"];
     NSMutableArray *productArray = [NSMutableArray array];
     while (rs.next) {
-        Product *product = [[Product alloc]init];
-        product.pid = (NSInteger)[rs intForColumn:@"pid"];
-        product.name = [rs stringForColumn:@"name"];
-        product.categoryid = (NSInteger)[rs intForColumn:@"categoryid"];
-        product.model = [rs stringForColumn:@"model"];
-        product.brandid = (NSInteger)[rs intForColumn:@"brandid"];
-        product.barcode = [rs stringForColumn:@"barcode"];
-        product.quickid = [rs stringForColumn:@"quickid"];
-        product.picture = [rs stringForColumn:@"picture"];
-        product.rrp = [rs doubleForColumn:@"rrp"];
-        product.purchaseprice = [rs doubleForColumn:@"purchaseprice"];
-        product.costprice = [rs doubleForColumn:@"costprice"];
-        product.lowestprice = [rs doubleForColumn:@"lowestprice"];
-        product.agentprice = [rs doubleForColumn:@"agentprice"];
-        product.saleprice = [rs doubleForColumn:@"saleprice"];
-        product.sellprice = [rs doubleForColumn:@"sellprice"];
-        product.wight = [rs doubleForColumn:@"wight"];
-        product.prodDescription = [rs stringForColumn:@"prodDescription"];
-        product.want = [rs intForColumn:@"want"];
-        product.avaibility = [rs stringForColumn:@"avaibility"];
-        product.function = [rs stringForColumn:@"function"];
-        product.sellpoint= [rs stringForColumn:@"sellpoint"];
-        product.note= [rs stringForColumn:@"note"];
-        product.ename= [rs stringForColumn:@"ename"];
-        [productArray addObject:product];
+        [productArray addObject:[self setValueForProduct:rs]];
     }
     [_db close];
     return productArray;
 }
+
+- (NSArray *)getProductByBrand:(Brand *)brand {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from product where brandid = ?" , @(brand.bid)];
+    NSMutableArray *productArray = [NSMutableArray array];
+    while (rs.next) {
+        [productArray addObject:[self setValueForProduct:rs]];
+    }
+    [_db close];
+    return productArray;
+}
+
+- (NSArray *)getProductByCategory:(ProductCategory *)productCategory {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from product where categoryid = ?" , @(productCategory.cateid)];
+    NSMutableArray *productArray = [NSMutableArray array];
+    while (rs.next) {
+        [productArray addObject:[self setValueForProduct:rs]];
+    }
+    [_db close];
+    return productArray;
+    
+}
+
+- (Product *)setValueForProduct:(FMResultSet *)rs {
+    Product *product = [[Product alloc]init];
+    product.pid = (NSInteger)[rs intForColumn:@"pid"];
+    product.name = [rs stringForColumn:@"name"];
+    product.categoryid = (NSInteger)[rs intForColumn:@"categoryid"];
+    product.model = [rs stringForColumn:@"model"];
+    product.brandid = (NSInteger)[rs intForColumn:@"brandid"];
+    product.barcode = [rs stringForColumn:@"barcode"];
+    product.quickid = [rs stringForColumn:@"quickid"];
+    product.picture = [rs stringForColumn:@"picture"];
+    product.rrp = [rs doubleForColumn:@"rrp"];
+    product.purchaseprice = [rs doubleForColumn:@"purchaseprice"];
+    product.costprice = [rs doubleForColumn:@"costprice"];
+    product.lowestprice = [rs doubleForColumn:@"lowestprice"];
+    product.agentprice = [rs doubleForColumn:@"agentprice"];
+    product.saleprice = [rs doubleForColumn:@"saleprice"];
+    product.sellprice = [rs doubleForColumn:@"sellprice"];
+    product.wight = [rs doubleForColumn:@"wight"];
+    product.prodDescription = [rs stringForColumn:@"prodDescription"];
+    product.want = [rs intForColumn:@"want"];
+    product.avaibility = [rs stringForColumn:@"avaibility"];
+    product.function = [rs stringForColumn:@"function"];
+    product.sellpoint= [rs stringForColumn:@"sellpoint"];
+    product.note= [rs stringForColumn:@"note"];
+    product.ename= [rs stringForColumn:@"ename"];
+    return product;
+}
+
+
 
 - (BOOL)checkIfProductExists:(Product *)product {
     if (![_db open]) {

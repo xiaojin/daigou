@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Brand : NSObject
-
+@property(nonatomic ,assign) NSInteger bid;
+@property(nonatomic, strong) NSString *name;
+@property(nonatomic, strong) NSString *image;
 @end

@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 @class Product;
+@class Brand;
+@class ProductCategory;
 @interface ProductManagement : NSObject
 + (instancetype)shareInstance;
 - (NSArray *)getProduct;
-- (NSArray *)getProductByType:(NSString *)type;
+- (NSArray *)getProductByBrand:(Brand *)brand;
+- (NSArray *)getProductByCategory:(ProductCategory *)productCategory;
 - (BOOL)deleteProduct:(Product *)product;
 - (BOOL)updateProduct:(Product *)product;
 @end

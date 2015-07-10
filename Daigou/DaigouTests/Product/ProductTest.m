@@ -11,6 +11,8 @@
 #import <XCTest/XCTest.h>
 #import "Product.h"
 #import "ProductManagement.h"
+#import "Brand.h"
+#import "ProductCategory.h"
 @interface ProductTest : XCTestCase
 @property(nonatomic, strong)ProductManagement *productManage;
 @property(nonatomic, strong)Product *product;
@@ -42,12 +44,12 @@
     }];
 }
 
-- (void)testQueryCustomInfo {
+- (void)testQueryProduct {
     NSArray *prodcuts = [self.productManage getProduct];
     XCTAssertGreaterThan([prodcuts count], 0,@"There should be more than 1 product in the database");
 }
 
-- (void)testUpdateCustomInfo {
+- (void)testUpdateProduct {
     self.product = [[Product alloc]init];
     [self.product setPid:21];
     [self.product setName:@"香蕉船防晒+运动系列SPF50+按压"];
@@ -59,15 +61,28 @@
     
 }
 
-- (void)testInsertCustomInfo{
+- (void)testInsertProduct {
     self.product = [[Product alloc]init];
-    [self.product setPid:22];
     [self.product setName:@"香蕉船防晒+运动系列SPF250+按压"];
     [self.product setProdDescription:@"这是一个很好的产品"];
     [self.product setCategoryid:9];
     [self.product setBrandid:10];
     BOOL result = [self.productManage updateProduct:self.product];
     XCTAssertTrue(result,@"should insert the product successfully");
+}
+
+- (void)testgetProductByBrand {
+    Brand *brand = [Brand new];
+    brand.bid = 10;
+    NSArray *products = [self.productManage getProductByBrand:brand];
+    XCTAssertNotNil(products , @"There should be more than 1 product in the database");
+}
+
+- (void)testgetProductByCategory {
+    ProductCategory *productCategory = [ProductCategory new];
+    productCategory.cateid = 9;
+    NSArray *products = [self.productManage getProductByCategory:productCategory];
+    XCTAssertNotNil(products , @"There should be more than 1 product in the database");
 }
 
 @end

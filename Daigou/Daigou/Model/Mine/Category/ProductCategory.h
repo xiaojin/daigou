@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface ProductCategory : NSObject
-
+@property(nonatomic ,assign) NSInteger cateid;
+@property(nonatomic, strong) NSString *name;
+@property(nonatomic, strong) NSString *image;
 @end

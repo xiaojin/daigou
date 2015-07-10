@@ -14,10 +14,14 @@
 
 @end
 
-@implementation CustomInfoTests
+@implementation CustomInfoTests{
+    CustomInfoManagement *customManage;
+}
 
 - (void)setUp {
     [super setUp];
+    customManage = [CustomInfoManagement shareInstance];
+
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -39,7 +43,6 @@
 }
 
 - (void)testQueryCustomInfo {
-    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
     NSArray *customes = [customManage getCustomInfo];
     XCTAssertGreaterThan([customes count], 0,@"There should be more than 1 customer in the database");
 }
@@ -49,17 +52,17 @@
     [custom setCid:1];
     [custom setName:@"James"];
     [custom setEmail:@"123@163.com"];
-    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
     BOOL result = [customManage updateCustomInfo:custom];
     XCTAssertTrue(result,@"should update the custominfo successfully");
     
 }
 
 - (void)testInsertCustomInfo{
+    NSArray *customes = [customManage getCustomInfo];
+
     CustomInfo *custom = [[CustomInfo alloc]init];
     [custom setName:@"Lani"];
     [custom setEmail:@"Lani@163.com"];
-    CustomInfoManagement *customManage = [CustomInfoManagement shareInstance];
     BOOL result = [customManage updateCustomInfo:custom];
     XCTAssertTrue(result,@"should insert the custominfo successfully");
 }
