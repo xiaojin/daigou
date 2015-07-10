@@ -49,25 +49,34 @@
         NSLog(@"Could not open db.");
         return nil ;
     }
-    FMResultSet *rs = [_db executeQuery:@"select * from client"];
+    FMResultSet *rs = [_db executeQuery:@"select * from product"];
     NSMutableArray *productArray = [NSMutableArray array];
     while (rs.next) {
-//        Product *product = [[Product alloc]init];
-//        customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
-//        customInfo.name = [rs stringForColumn:@"name"];
-//        customInfo.email = [rs stringForColumn:@"email"];
-//        customInfo.idnum = [rs stringForColumn:@"idnum"];
-//        customInfo.agent = (NSInteger)[rs intForColumn:@"agent"];
-//        customInfo.address = [rs stringForColumn:@"address"];
-//        customInfo.address1 = [rs stringForColumn:@"address1"];
-//        customInfo.address2 = [rs stringForColumn:@"address2"];
-//        customInfo.address3 = [rs stringForColumn:@"address3"];
-//        customInfo.photofront = [rs stringForColumn:@"photofront"];
-//        customInfo.photoback = [rs stringForColumn:@"photoback"];
-//        customInfo.expressAvaible = [rs stringForColumn:@"expressAvaible"];
-//        customInfo.note = [rs stringForColumn:@"note"];
-//        customInfo.ename = [rs stringForColumn:@"ename"];
-//        [customArray addObject:customInfo];
+        Product *product = [[Product alloc]init];
+        product.pid = (NSInteger)[rs intForColumn:@"pid"];
+        product.name = [rs stringForColumn:@"name"];
+        product.categoryid = (NSInteger)[rs intForColumn:@"categoryid"];
+        product.model = [rs stringForColumn:@"model"];
+        product.brandid = (NSInteger)[rs intForColumn:@"brandid"];
+        product.barcode = [rs stringForColumn:@"barcode"];
+        product.quickid = [rs stringForColumn:@"quickid"];
+        product.picture = [rs stringForColumn:@"picture"];
+        product.rrp = [rs doubleForColumn:@"rrp"];
+        product.purchaseprice = [rs doubleForColumn:@"purchaseprice"];
+        product.costprice = [rs doubleForColumn:@"costprice"];
+        product.lowestprice = [rs doubleForColumn:@"lowestprice"];
+        product.agentprice = [rs doubleForColumn:@"agentprice"];
+        product.saleprice = [rs doubleForColumn:@"saleprice"];
+        product.sellprice = [rs doubleForColumn:@"sellprice"];
+        product.wight = [rs doubleForColumn:@"wight"];
+        product.prodDescription = [rs stringForColumn:@"prodDescription"];
+        product.want = [rs intForColumn:@"want"];
+        product.avaibility = [rs stringForColumn:@"avaibility"];
+        product.function = [rs stringForColumn:@"function"];
+        product.sellpoint= [rs stringForColumn:@"sellpoint"];
+        product.note= [rs stringForColumn:@"note"];
+        product.ename= [rs stringForColumn:@"ename"];
+        [productArray addObject:product];
     }
     [_db close];
     return productArray;
@@ -78,7 +87,7 @@
         NSLog(@"Could not open db.");
         return nil ;
     }
-    FMResultSet *rs = [_db executeQuery:@"select * from client where cid =(?)",[NSNumber numberWithInteger:product.pid]];
+    FMResultSet *rs = [_db executeQuery:@"select * from product where pid =(?)",[NSNumber numberWithInteger:product.pid]];
     if (rs.next) {
         return YES;
     } return NO;
@@ -91,7 +100,7 @@
 
 - (BOOL)addProduct:(Product *)product{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into client (name,email,idnum,agent,address,address1,address2,address3,photofront,photoback,expressAvaible,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[product productToArray]];
+    BOOL result = [_db executeUpdate:@"insert into product (categoryid,name,model,brandid,barcode,quickid,picture,rrp,purchaseprice,costprice,lowestprice,agentprice,saleprice,sellprice,wight,description,want,avaibility,function,sellpoint,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[product productToArray]];
     if (result) {
         [_db commit];
         [_db close];
@@ -106,7 +115,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[product productToArray]];
         [updateData addObject:@(product.pid)];
-        result= [_db executeUpdate:@"update client set name=?,email=?,idnum=?,agent=?,address=?,address1=?,address2=?,address3=?,photofront=?,photoback=?,expressAvaible=?,note=?,ename=? where cid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update product set categoryid=?,name=?,model=?,brandid=?,barcode=?,quickid=?,picture=?,rrp=?,purchaseprice=?,costprice=?,lowestprice=?,agentprice=?,saleprice=?,sellprice=?,wight=?,description=?,want=?,avaibility=?,function=?,sellpoint=?,note=?,ename=?  where pid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];

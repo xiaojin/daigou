@@ -19,6 +19,11 @@
 		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
 		3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */; };
+		3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021561B4F98DF001A741D /* ProductItemCell.m */; };
+		3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021581B4F98DF001A741D /* ProductItemFrame.m */; };
+		3C30215C1B4FDE1A001A741D /* ProductTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30215B1B4FDE1A001A741D /* ProductTest.m */; };
+		3C3021621B4FDF09001A741D /* Brand.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021611B4FDF09001A741D /* Brand.m */; };
+		3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021641B4FDF1B001A741D /* ProductCategory.m */; };
 		3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */; };
 		3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */; };
 		3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */; };
@@ -76,6 +81,15 @@
 		19B0FE48E1D3824371B4BE48 /* Add.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
 		3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Extension/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Extension/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		3C3021551B4F98DF001A741D /* ProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemCell.h; sourceTree = "<group>"; };
+		3C3021561B4F98DF001A741D /* ProductItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemCell.m; sourceTree = "<group>"; };
+		3C3021571B4F98DF001A741D /* ProductItemFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemFrame.h; sourceTree = "<group>"; };
+		3C3021581B4F98DF001A741D /* ProductItemFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemFrame.m; sourceTree = "<group>"; };
+		3C30215B1B4FDE1A001A741D /* ProductTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductTest.m; path = Product/ProductTest.m; sourceTree = "<group>"; };
+		3C3021601B4FDF09001A741D /* Brand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Brand.h; path = Brand/Brand.h; sourceTree = "<group>"; };
+		3C3021611B4FDF09001A741D /* Brand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Brand.m; path = Brand/Brand.m; sourceTree = "<group>"; };
+		3C3021631B4FDF1B001A741D /* ProductCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductCategory.h; path = Category/ProductCategory.h; sourceTree = "<group>"; };
+		3C3021641B4FDF1B001A741D /* ProductCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductCategory.m; path = Category/ProductCategory.m; sourceTree = "<group>"; };
 		3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductCatalogViewController.h; sourceTree = "<group>"; };
 		3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductCatalogViewController.m; sourceTree = "<group>"; };
 		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
@@ -199,6 +213,13 @@
 			path = Stock;
 			sourceTree = "<group>";
 		};
+		19B0F483D4149C7D43F96FCF /* Product */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
 		19B0F549668E525B1D07A561 /* Stock */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,6 +313,7 @@
 				3C6249871B3C11CB008F34C7 /* MSharingViewController.m */,
 				3C6249891B3C11D6008F34C7 /* MAboutViewController.h */,
 				3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */,
+				19B0F483D4149C7D43F96FCF /* Product */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -313,6 +335,8 @@
 		19B0FDC79F375A6C71079B5E /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3C30215F1B4FDEF1001A741D /* Brand */,
+				3C30215E1B4FDEE8001A741D /* Category */,
 				3C6D85671B4DDFAE0076F4AE /* CustomInfo */,
 				3C6D85661B4DDFAA0076F4AE /* ProductCategory */,
 			);
@@ -329,9 +353,36 @@
 			path = Add;
 			sourceTree = "<group>";
 		};
+		3C30215D1B4FDE1E001A741D /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				3C30215B1B4FDE1A001A741D /* ProductTest.m */,
+			);
+			name = Product;
+			sourceTree = "<group>";
+		};
+		3C30215E1B4FDEE8001A741D /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				3C3021631B4FDF1B001A741D /* ProductCategory.h */,
+				3C3021641B4FDF1B001A741D /* ProductCategory.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		3C30215F1B4FDEF1001A741D /* Brand */ = {
+			isa = PBXGroup;
+			children = (
+				3C3021601B4FDF09001A741D /* Brand.h */,
+				3C3021611B4FDF09001A741D /* Brand.m */,
+			);
+			name = Brand;
+			sourceTree = "<group>";
+		};
 		3C64832D1B494BB600EFAE4E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C30215D1B4FDE1E001A741D /* Product */,
 				3C64832E1B494BC000EFAE4E /* Mine */,
 			);
 			name = Model;
@@ -368,6 +419,10 @@
 		3C6D85651B4DDF950076F4AE /* ProductCategory */ = {
 			isa = PBXGroup;
 			children = (
+				3C3021551B4F98DF001A741D /* ProductItemCell.h */,
+				3C3021561B4F98DF001A741D /* ProductItemCell.m */,
+				3C3021571B4F98DF001A741D /* ProductItemFrame.h */,
+				3C3021581B4F98DF001A741D /* ProductItemFrame.m */,
 			);
 			name = ProductCategory;
 			sourceTree = "<group>";
@@ -661,10 +716,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C6EECC01B2C3D7B00C7478F /* main.m in Sources */,
+				3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */,
 				3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */,
 				3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */,
+				3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */,
 				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
+				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
 				3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */,
 				3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */,
@@ -684,6 +742,7 @@
 				3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */,
 				3C6DDF231B440D4A000B8152 /* MAddCusInfoViewController.m in Sources */,
 				3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */,
+				3C3021621B4FDF09001A741D /* Brand.m in Sources */,
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
 				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
 			);
@@ -695,6 +754,7 @@
 			files = (
 				3C6483301B494BE800EFAE4E /* CustomInfoTests.m in Sources */,
 				3C6EECDD1B2C3D7B00C7478F /* DaigouTests.m in Sources */,
+				3C30215C1B4FDE1A001A741D /* ProductTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

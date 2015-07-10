@@ -11,6 +11,7 @@
 @interface ProductManagement : NSObject
 + (instancetype)shareInstance;
 - (NSArray *)getProduct;
+- (NSArray *)getProductByType:(NSString *)type;
 - (BOOL)deleteProduct:(Product *)product;
 - (BOOL)updateProduct:(Product *)product;
 @end

@@ -18,7 +18,7 @@
 @property(nonatomic,copy)NSString *quickid;
 @property(nonatomic,copy)NSString *picture;
 @property(nonatomic,assign)float rrp;
-@property(nonatomic,assign)float pruchaseprice;
+@property(nonatomic,assign)float purchaseprice;
 @property(nonatomic,assign)float costprice;
 @property(nonatomic,assign)float lowestprice;
 @property(nonatomic,assign)float agentprice;
