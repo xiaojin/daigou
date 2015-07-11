@@ -23,12 +23,12 @@
 }
 
 - (void) setProduct:(Product *)product
-{
+{       _product = product;
         CGFloat padding = 10;
         CGFloat paddingTop = 5;
         CGSize frameSize = self.viewFrame.size;
         
-        CGSize titleSize = [self initSizeWithText:self.product.name withSize:CGSizeMake((frameSize.width - 2*padding), MAXFLOAT) withFont:NewsTitleFont];
+        CGSize titleSize = [self initSizeWithText:product.name withSize:CGSizeMake((frameSize.width - 2*padding), MAXFLOAT) withFont:NewsTitleFont];
         CGFloat nameW = titleSize.width;
         CGFloat nameH = titleSize.height;
         CGFloat pointX = padding;
@@ -36,7 +36,7 @@
         
         _titleFrame = CGRectMake(pointX, pointY, nameW, nameH);
         
-        CGSize textSize = [self initSizeWithText:self.product.description withSize:CGSizeMake((frameSize.width - 3*padding-PicWith), MAXFLOAT) withFont:NewsTextFont];
+        CGSize textSize = [self initSizeWithText:product.description withSize:CGSizeMake((frameSize.width - 3*padding-PicWith), MAXFLOAT) withFont:NewsTextFont];
         CGFloat textW = textSize.width;
         CGFloat textH = textSize.height;
         CGFloat textPointX = padding;

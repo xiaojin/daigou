@@ -1,11 +1,3 @@
-//
-//  DropDownListView.h
-//  Daigou
-//
-//  Created by jin on 7/07/2015.
-//  Copyright (c) 2015 dg. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #define SECTION_BTN_TAG_BEGIN   1000
 #define SECTION_IV_TAG_BEGIN    3000

@@ -5,29 +5,38 @@
 
 @interface MProductCatalogViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic, strong) UITableView *productTableView;
-@property(nonatomic, strong) NSArray *products;
+@property(nonatomic, strong) NSMutableArray *productFrameItems;
 @end
 
 @implementation MProductCatalogViewController
 
 - (void)loadView{
+    [super loadView];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self fetchAllProduct];
     self.productTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.productTableView.dataSource = self;
     self.productTableView.delegate = self;
     [self.view addSubview:self.productTableView];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
-
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
 - (NSArray *)fetchAllProduct {
     ProductManagement *productManagement = [ProductManagement shareInstance];
-    self.products = [productManagement getProduct];
-    return self.products;
+    self.productFrameItems = [NSMutableArray array];
+    NSArray *products = [productManagement getProduct];
+    //self.productFrameItems =
+    for (Product *productItem in products) {
+        ProductItemFrame *itemFrame = [[ProductItemFrame alloc]initFrameWithProduct:productItem withViewFrame:self.view.bounds];
+        //itemFrame setPro
+        [self.productFrameItems addObject:itemFrame];
+        
+    }
+    return self.productFrameItems;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,14 +54,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.products count];
+    return [self.productFrameItems count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ProductItemCell * cell = [ProductItemCell NewsWithCell:tableView];
-    ProductItemFrame *newItem = self.products[indexPath.row];
-    cell.status = newItem;
+    ProductItemFrame *newItem = self.productFrameItems[indexPath.row];
+    cell.productFrame = newItem;
     return cell;
 }
 
@@ -60,7 +69,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProductItemFrame *itemFrame =self.products[indexPath.row];
+    ProductItemFrame *itemFrame =self.productFrameItems[indexPath.row];
     return itemFrame.cellHeight;
 }
 

@@ -42,25 +42,26 @@
     return  self;
 }
 
-- (void)setStatus:(ProductItemFrame *)status
+- (void)setProductFrame:(ProductItemFrame *)productFrame
 {
+    _productFrame = productFrame;
     [self updateFrame];
     [self updateData];
 }
 
 - (void)updateFrame
 {
-    _imagePic.frame = _status.pictureFrame;
-    _lblTitle.frame = _status.titleFrame;
-    _lblText.frame = _status.textFrame;
+    _imagePic.frame = _productFrame.pictureFrame;
+    _lblTitle.frame = _productFrame.titleFrame;
+    _lblText.frame = _productFrame.textFrame;
 }
 
 - (void)updateData
 {
-    Product *product =  [_status getProduct];
+    Product *product =  [_productFrame getProduct];
     _imagePic.image = [UIImage imageNamed:@"default.jpg"];
     [_lblTitle setText:[product name]];
-    [_lblText setText:[product description]];
+    [_lblText setText:[product prodDescription]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

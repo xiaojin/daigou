@@ -1,11 +1,3 @@
-//
-//  DropDownListView.m
-//  Daigou
-//
-//  Created by jin on 7/07/2015.
-//  Copyright (c) 2015 dg. All rights reserved.
-//
-
 #import "DropDownListView.h"
 #define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 #define RADIANS_TO_DEGREES(radians) ((radians)*(180.0/M_PI))
