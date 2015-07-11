@@ -29,6 +29,8 @@
 		3C30216D1B50D1E6001A741D /* BrandTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30216C1B50D1E6001A741D /* BrandTest.m */; };
 		3C30216F1B50D312001A741D /* CategoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30216E1B50D312001A741D /* CategoryTest.m */; };
 		3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021721B5140E3001A741D /* ErrorHelper.m */; };
+		3C3021761B514B3B001A741D /* MShowProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021751B514B3B001A741D /* MShowProductDetailViewController.m */; };
+		3C3021791B514B60001A741D /* MEditProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021781B514B60001A741D /* MEditProductViewController.m */; };
 		3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */; };
 		3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */; };
 		3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */; };
@@ -103,6 +105,10 @@
 		3C30216E1B50D312001A741D /* CategoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryTest.m; path = Model/CategoryTest.m; sourceTree = "<group>"; };
 		3C3021711B5140E3001A741D /* ErrorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorHelper.h; sourceTree = "<group>"; };
 		3C3021721B5140E3001A741D /* ErrorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorHelper.m; sourceTree = "<group>"; };
+		3C3021741B514B3B001A741D /* MShowProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MShowProductDetailViewController.h; sourceTree = "<group>"; };
+		3C3021751B514B3B001A741D /* MShowProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MShowProductDetailViewController.m; sourceTree = "<group>"; };
+		3C3021771B514B60001A741D /* MEditProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEditProductViewController.h; sourceTree = "<group>"; };
+		3C3021781B514B60001A741D /* MEditProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEditProductViewController.m; sourceTree = "<group>"; };
 		3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductCatalogViewController.h; sourceTree = "<group>"; };
 		3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductCatalogViewController.m; sourceTree = "<group>"; };
 		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
@@ -229,6 +235,10 @@
 		19B0F483D4149C7D43F96FCF /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				3C3021741B514B3B001A741D /* MShowProductDetailViewController.h */,
+				3C3021751B514B3B001A741D /* MShowProductDetailViewController.m */,
+				3C3021771B514B60001A741D /* MEditProductViewController.h */,
+				3C3021781B514B60001A741D /* MEditProductViewController.m */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -309,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				3CE58DB91B3E753E0056621A /* Custom */,
+				19B0F483D4149C7D43F96FCF /* Product */,
 				19B0F283014B25096F1FFF78 /* Mine.storyboard */,
 				19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */,
 				19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */,
@@ -326,7 +337,6 @@
 				3C6249871B3C11CB008F34C7 /* MSharingViewController.m */,
 				3C6249891B3C11D6008F34C7 /* MAboutViewController.h */,
 				3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */,
-				19B0F483D4149C7D43F96FCF /* Product */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -746,6 +756,7 @@
 			files = (
 				3C6EECC01B2C3D7B00C7478F /* main.m in Sources */,
 				3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */,
+				3C3021791B514B60001A741D /* MEditProductViewController.m in Sources */,
 				3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */,
 				3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */,
 				3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */,
@@ -774,6 +785,7 @@
 				3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */,
 				3C6DDF231B440D4A000B8152 /* MAddCusInfoViewController.m in Sources */,
 				3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */,
+				3C3021761B514B3B001A741D /* MShowProductDetailViewController.m in Sources */,
 				3C3021621B4FDF09001A741D /* Brand.m in Sources */,
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
 				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
