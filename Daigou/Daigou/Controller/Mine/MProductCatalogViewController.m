@@ -25,6 +25,19 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)showProductCategoryView {
+
+
+}
+
+- (void)fetchAllBrand {
+
+}
+
+- (void)fetchAllCategory {
+    
+}
+
 - (NSArray *)fetchAllProduct {
     ProductManagement *productManagement = [ProductManagement shareInstance];
     self.productFrameItems = [NSMutableArray array];

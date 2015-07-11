@@ -1,23 +1,26 @@
 //
-//  DaigouTests.m
-//  DaigouTests
+//  CategoryTest.m
+//  Daigou
 //
-//  Created by jin on 13/06/2015.
+//  Created by jin on 11/07/2015.
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-
-@interface DaigouTests : XCTestCase
-
+#import "ProductCategory.h"
+#import "ProductCategoryManagement.h"
+@interface CategoryTest : XCTestCase
+@property(nonatomic ,strong) ProductCategory *category;
+@property(nonatomic, strong) ProductCategoryManagement *categoryManagement;
 @end
 
-@implementation DaigouTests
+@implementation CategoryTest
 
 - (void)setUp {
     [super setUp];
-
+    self.categoryManagement = [ProductCategoryManagement shareInstance];
+    self.category = [[ProductCategory alloc]init];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -38,4 +41,8 @@
     }];
 }
 
+- (void)testQueryCategory {
+    NSArray *categories = [self.categoryManagement getCategory];
+    XCTAssertGreaterThan([categories count], 0,@"There should be more than 1 product in the database");
+}
 @end

@@ -12,4 +12,5 @@
 @property(nonatomic ,assign) NSInteger bid;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *image;
+- (NSArray *)brandToArray;
 @end

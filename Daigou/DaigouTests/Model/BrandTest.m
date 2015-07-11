@@ -1,23 +1,26 @@
 //
-//  DaigouTests.m
-//  DaigouTests
+//  BrandTest.m
+//  Daigou
 //
-//  Created by jin on 13/06/2015.
+//  Created by jin on 11/07/2015.
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-
-@interface DaigouTests : XCTestCase
-
+#import "Brand.h"
+#import "BrandManagement.h"
+@interface BrandTest : XCTestCase
+@property(nonatomic ,strong) Brand *brand;
+@property(nonatomic, strong) BrandManagement *brandManagement;
 @end
 
-@implementation DaigouTests
+@implementation BrandTest
 
 - (void)setUp {
     [super setUp];
-
+    self.brandManagement = [BrandManagement shareInstance];
+    self.brand = [[Brand alloc]init];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -38,4 +41,8 @@
     }];
 }
 
+- (void)testQueryBrand {
+    NSArray *brands = [self.brandManagement getBrand];
+    XCTAssertGreaterThan([brands count], 0,@"There should be more than 1 product in the database");
+}
 @end
