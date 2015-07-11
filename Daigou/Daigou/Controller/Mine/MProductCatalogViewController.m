@@ -2,14 +2,23 @@
 #import "ProductManagement.h"
 #import "Product.h"
 #import "ProductItemCell.h"
-
-@interface MProductCatalogViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "Brand.h"
+#import "BrandManagement.h"
+#import "ProductCategory.h"
+#import "ProductCategoryManagement.h"
+#import "DropDownListView.h"
+#import "ErrorHelper.h"
+@interface MProductCatalogViewController ()<UITableViewDataSource,UITableViewDelegate,DropDownChooseDataSource,DropDownChooseDelegate>
 @property(nonatomic, strong) UITableView *productTableView;
 @property(nonatomic, strong) NSMutableArray *productFrameItems;
+@property(nonatomic, strong) NSArray *chooseArray;
+@property(nonatomic, strong) NSArray *brands;
+@property(nonatomic, strong) NSArray *categories;
 @end
 
 @implementation MProductCatalogViewController
-
+const float categroyViewPaddingTop = 60.0f;
+const float categoryViewHeight = 40.0f;
 - (void)loadView{
     [super loadView];
 }
@@ -21,40 +30,102 @@
     self.productTableView.dataSource = self;
     self.productTableView.delegate = self;
     [self.view addSubview:self.productTableView];
+    [self.productTableView setContentInset:UIEdgeInsetsMake(categoryViewHeight-4, 0, 0, 0)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
-    // Do any additional setup after loading the view.
+    [self showProductCategoryView];
 }
 
 - (void)showProductCategoryView {
-
-
+    self.brands = [[NSArray alloc] initWithArray:[self fetchAllBrand]];
+    NSMutableArray *brandNames = [NSMutableArray array];
+    [brandNames addObject:@"所有"];
+    for (Brand *brand in self.brands) {
+        [brandNames addObject:brand.name];
+    }
+    self.categories = [[NSArray alloc] initWithArray:[self fetchAllCategory]];
+    NSMutableArray *categoryNames = [NSMutableArray array];
+    [categoryNames addObject:@"所有"];
+    for (ProductCategory *category in self.categories) {
+        [categoryNames addObject:category.name];
+    }
+    self.chooseArray = @[categoryNames, brandNames ];
+    DropDownListView *dropDownView = [[DropDownListView alloc] initWithFrame:CGRectMake(0, categroyViewPaddingTop, self.view.frame.size.width, categoryViewHeight) dataSource:self delegate:self];
+    dropDownView.mSuperView = self.view;
+    [self.view addSubview:dropDownView];
 }
 
-- (void)fetchAllBrand {
-
+- (NSArray *)fetchAllBrand {
+    BrandManagement *brandManagement = [BrandManagement shareInstance];
+    return [brandManagement getBrand];
 }
 
-- (void)fetchAllCategory {
-    
+- (NSArray *)fetchAllCategory {
+    ProductCategoryManagement *categoryManage = [ProductCategoryManagement shareInstance];
+    return [categoryManage getCategory];
 }
 
-- (NSArray *)fetchAllProduct {
+- (void)initProductFrameItemsWithProducts:(NSArray *)products {
+    self.productFrameItems = [NSMutableArray array];
+    for (Product *productItem in products) {
+        ProductItemFrame *itemFrame = [[ProductItemFrame alloc]initFrameWithProduct:productItem withViewFrame:self.view.bounds];
+        [self.productFrameItems addObject:itemFrame];
+    }
+}
+
+- (void)fetchAllProduct {
     ProductManagement *productManagement = [ProductManagement shareInstance];
     self.productFrameItems = [NSMutableArray array];
     NSArray *products = [productManagement getProduct];
-    //self.productFrameItems =
-    for (Product *productItem in products) {
-        ProductItemFrame *itemFrame = [[ProductItemFrame alloc]initFrameWithProduct:productItem withViewFrame:self.view.bounds];
-        //itemFrame setPro
-        [self.productFrameItems addObject:itemFrame];
-        
-    }
-    return self.productFrameItems;
+    [self initProductFrameItemsWithProducts:products];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - DropDownListDelegate
+- (void)chooseAtSection:(NSInteger)section index:(NSInteger)index {
+    ProductManagement *productManagement = [ProductManagement shareInstance];
+    NSArray *products = [NSArray array];
+    if (index == 0) {
+        products = [productManagement getProduct];
+    } else {
+        if (section == 0) {
+            //category
+            ProductCategory *category = self.categories[index-1];
+            products = [productManagement getProductByCategory:category];
+        } else {
+            //brand
+            Brand *brand = self.brands[index-1];
+            products = [productManagement getProductByBrand:brand];
+        }
+    }
+    [self initProductFrameItemsWithProducts:products];
+    if ([products count] ==0) {
+        [ErrorHelper showErrorAlertWithTitle:@"查询结果" message:@"查不到此类产品"];
+    }
+    [self.productTableView reloadData];
+
+}
+
+#pragma mark - DropDownlistDataSource
+
+- (NSInteger)numberOfSections {
+    return [self.chooseArray count];
+}
+
+- (NSInteger)numberOfRowsInSection:(NSInteger)section {
+    NSArray *items = self.chooseArray[section];
+    return [items count];
+}
+
+- (NSString *)titleInSection:(NSInteger)section index:(NSInteger)index {
+    return self.chooseArray[section][index];
+}
+
+- (NSInteger)defaultShowSection:(NSInteger)section {
+    return 0;
 }
 
 #pragma mark - Product

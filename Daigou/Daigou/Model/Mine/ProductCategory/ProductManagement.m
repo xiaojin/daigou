@@ -106,7 +106,7 @@
     product.saleprice = [rs doubleForColumn:@"saleprice"];
     product.sellprice = [rs doubleForColumn:@"sellprice"];
     product.wight = [rs doubleForColumn:@"wight"];
-    product.prodDescription = [rs stringForColumn:@"prodDescription"];
+    product.prodDescription = [rs stringForColumn:@"description"];
     product.want = [rs intForColumn:@"want"];
     product.avaibility = [rs stringForColumn:@"avaibility"];
     product.function = [rs stringForColumn:@"function"];

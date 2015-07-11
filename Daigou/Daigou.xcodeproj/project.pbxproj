@@ -28,6 +28,7 @@
 		3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30216A1B50C841001A741D /* ProductCategoryManagement.m */; };
 		3C30216D1B50D1E6001A741D /* BrandTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30216C1B50D1E6001A741D /* BrandTest.m */; };
 		3C30216F1B50D312001A741D /* CategoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30216E1B50D312001A741D /* CategoryTest.m */; };
+		3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021721B5140E3001A741D /* ErrorHelper.m */; };
 		3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */; };
 		3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */; };
 		3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */; };
@@ -100,6 +101,8 @@
 		3C30216A1B50C841001A741D /* ProductCategoryManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductCategoryManagement.m; path = Category/ProductCategoryManagement.m; sourceTree = "<group>"; };
 		3C30216C1B50D1E6001A741D /* BrandTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BrandTest.m; path = Model/BrandTest.m; sourceTree = "<group>"; };
 		3C30216E1B50D312001A741D /* CategoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryTest.m; path = Model/CategoryTest.m; sourceTree = "<group>"; };
+		3C3021711B5140E3001A741D /* ErrorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorHelper.h; sourceTree = "<group>"; };
+		3C3021721B5140E3001A741D /* ErrorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorHelper.m; sourceTree = "<group>"; };
 		3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductCatalogViewController.h; sourceTree = "<group>"; };
 		3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductCatalogViewController.m; sourceTree = "<group>"; };
 		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
@@ -393,6 +396,15 @@
 			name = Brand;
 			sourceTree = "<group>";
 		};
+		3C3021701B5140D0001A741D /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				3C3021711B5140E3001A741D /* ErrorHelper.h */,
+				3C3021721B5140E3001A741D /* ErrorHelper.m */,
+			);
+			name = Help;
+			sourceTree = "<group>";
+		};
 		3C64832D1B494BB600EFAE4E /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +560,7 @@
 		3C6EED1E1B2C5E6100C7478F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				3C3021701B5140D0001A741D /* Help */,
 				3C6483391B49642700EFAE4E /* daigou.db */,
 				3C6DDF1D1B43FA3F000B8152 /* Extension */,
 				3C6EED1F1B2C5E6100C7478F /* AppDelegate.h */,
@@ -736,6 +749,7 @@
 				3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */,
 				3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */,
 				3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */,
+				3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */,
 				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,

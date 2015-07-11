@@ -2,7 +2,9 @@
 #define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 #define RADIANS_TO_DEGREES(radians) ((radians)*(180.0/M_PI))
 
-@implementation DropDownListView
+@implementation DropDownListView {
+    NSInteger sectionNum;
+}
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -12,7 +14,7 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame dataSource:(id)datasource delegate:(id) delegate
+- (instancetype)initWithFrame:(CGRect)frame dataSource:(id)datasource delegate:(id) delegate
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -21,7 +23,7 @@
         self.dropDownDataSource = datasource;
         self.dropDownDelegate = delegate;
         
-        NSInteger sectionNum =0;
+        sectionNum =0;
         if ([self.dropDownDataSource respondsToSelector:@selector(numberOfSections)] ) {
             
             sectionNum = [self.dropDownDataSource numberOfSections];
@@ -31,7 +33,6 @@
             self = nil;
         }
         
-        //初始化默认显示view
         CGFloat sectionWidth = (1.0*(frame.size.width)/sectionNum);
         for (int i = 0; i <sectionNum; i++) {
             UIButton *sectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(sectionWidth*i, 1, sectionWidth, frame.size.height-2)];
@@ -58,9 +59,10 @@
                 lineView.backgroundColor = [UIColor lightGrayColor];
                 [self addSubview:lineView];
             }
-            
         }
-        
+        UIView *bottomlineView = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-0.5, frame.size.width, 0.5)];
+        bottomlineView.backgroundColor = [UIColor colorWithRed:227.0f/255.0f green:227.0f/255.0f blue:227.0f/255.0f alpha:1.0f];
+        [self addSubview:bottomlineView];
     }
     return self;
 }
@@ -181,8 +183,18 @@
         NSString *chooseCellTitle = [self.dropDownDataSource titleInSection:currentExtendSection index:indexPath.row];
         
         UIButton *currentSectionBtn = (UIButton *)[self viewWithTag:SECTION_BTN_TAG_BEGIN + currentExtendSection];
+        for (int index = 0; index < sectionNum; index ++) {
+            if (index == currentExtendSection) {
+                continue;
+            }
+            UIButton *sectionBtn = (UIButton *)[self viewWithTag:SECTION_BTN_TAG_BEGIN + index];
+            [sectionBtn setTitle:[self.dropDownDataSource titleInSection:index index:0] forState:UIControlStateNormal];
+        }
         [currentSectionBtn setTitle:chooseCellTitle forState:UIControlStateNormal];
-        
+        UIImageView *currentIV= (UIImageView *)[self viewWithTag:(SECTION_IV_TAG_BEGIN +currentExtendSection)];
+        [UIView animateWithDuration:0.3 animations:^{
+            currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+        }];
         [self.dropDownDelegate chooseAtSection:currentExtendSection index:indexPath.row];
         [self hideExtendedChooseView];
     }

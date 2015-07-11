@@ -28,7 +28,7 @@
 @property (nonatomic, strong) UIView *mTableBaseView;
 @property (nonatomic, strong) UITableView *mTableView;
 
-- (id)initWithFrame:(CGRect)frame dataSource:(id)datasource delegate:(id) delegate;
+- (instancetype)initWithFrame:(CGRect)frame dataSource:(id)datasource delegate:(id) delegate;
 - (void)setTitle:(NSString *)title inSection:(NSInteger) section;
 
 - (BOOL)isShow;

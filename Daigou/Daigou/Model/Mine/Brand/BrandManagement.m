@@ -52,7 +52,7 @@
     NSMutableArray *brandArray = [NSMutableArray array];
     while (rs.next) {
         Brand *brandInfo = [[Brand alloc]init];
-        brandInfo.bid = (NSInteger)[rs intForColumn:@"cid"];
+        brandInfo.bid = (NSInteger)[rs intForColumn:@"bid"];
         brandInfo.name = [rs stringForColumn:@"name"];
         brandInfo.image = [rs stringForColumn:@"image"];
         [brandArray addObject:brandInfo];
