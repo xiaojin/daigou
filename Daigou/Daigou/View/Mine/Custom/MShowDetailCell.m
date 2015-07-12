@@ -6,20 +6,20 @@
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
-#import "MShowCustomDetailCell.h"
-#define CUSTOMINFOTITLEWIDTH 80.0f
+#import "MShowDetailCell.h"
+#define CUSTOMINFOTITLEWIDTH 90.0f
 #define CONTENTPADDINGLEFT 10.0f
-#define CONTENTPADDINGRIGHT 20.0f
+#define CONTENTPADDINGRIGHT 10.0f
 #define LEABELINPUTFIELDGAPPING 10.0f
 #define FONTSIZE 16.0f
-@interface MShowCustomDetailCell()
+@interface MShowDetailCell()
 @property(nonatomic, strong)UILabel *titleName;
 @property(nonatomic, strong)UILabel *detailInfo;
 @property(nonatomic, strong)NSString *title;
 @property(nonatomic, strong)NSString *value;
 @end
 
-@implementation MShowCustomDetailCell
+@implementation MShowDetailCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
     }
@@ -49,7 +49,9 @@
   self.titleName.text = _title;
   self.detailInfo.text = _value;
 }
+
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{
+
     self.title =titleName;
     self.value = detailInfo;
 

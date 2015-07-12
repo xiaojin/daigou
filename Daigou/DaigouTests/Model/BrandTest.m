@@ -45,4 +45,6 @@
     NSArray *brands = [self.brandManagement getBrand];
     XCTAssertGreaterThan([brands count], 0,@"There should be more than 1 product in the database");
 }
+
+
 @end

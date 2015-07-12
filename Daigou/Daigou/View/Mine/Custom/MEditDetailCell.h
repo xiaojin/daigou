@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MEditCustomDetailCell : UITableViewCell
+@interface MEditDetailCell : UITableViewCell
 - (instancetype)tableviewCellInitWithSubView:(UIView *)subview;
 @end

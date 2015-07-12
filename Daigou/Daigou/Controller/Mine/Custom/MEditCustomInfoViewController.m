@@ -9,7 +9,7 @@
 #import "MEditCustomInfoViewController.h"
 #import "UIPlaceHolderTextView.h"
 #import "CustomInfo.h"
-#import "MEditCustomDetailCell.h"
+#import "MEditDetailCell.h"
 #import "CustomInfoManagement.h"
 #import "MShowCustomDetailViewController.h"
 #define TEXTFIELDFONTSIZE 16.0f
@@ -24,7 +24,7 @@
 
 @implementation MEditCustomInfoViewController
 
-NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
+NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 
 - (instancetype)initWithCustom:(CustomInfo*)custom {
     if (self = [super init]) {
@@ -79,9 +79,9 @@ NSString *const tableviewCellIdentity = @"MEditCustomDetailCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MEditCustomDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:tableviewCellIdentity];
+    MEditDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:mEditCustomDetailCellIdentify];
     if (cell == nil) {
-        cell = [[MEditCustomDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableviewCellIdentity];
+        cell = [[MEditDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:mEditCustomDetailCellIdentify];
     }
     if (indexPath.row == 2) {
         UIPlaceHolderTextView *addressInputView = [[UIPlaceHolderTextView alloc] initWithFrame:cell.bounds];

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Product;
 @interface MEditProductViewController : UIViewController
-
+- (instancetype)initWithProduct:(Product *)product;
+@property(nonatomic, strong)NSArray *brands;
+@property(nonatomic, strong)NSArray *productCategories;
+@property(nonatomic, strong)NSArray *cellPlaceHolderValues;
+@property(nonatomic, strong)NSArray *cellContentValues;
 @end

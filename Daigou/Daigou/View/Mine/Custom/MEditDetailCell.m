@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
-#import "MEditCustomDetailCell.h"
+#import "MEditDetailCell.h"
 #define CUSTOMINFOTITLEWIDTH 80.0f
 #define CONTENTPADDINGLEFT 10.0f
 #define CONTENTPADDINGRIGHT 20.0f
 #define LEABELINPUTFIELDGAPPING 10.0f
 #define FONTSIZE 16.0f
-@interface MEditCustomDetailCell()
+@interface MEditDetailCell()
 @property(nonatomic, strong)UILabel *titleName;
 @property(nonatomic, strong)UILabel *detailInfo;
 @end
 
-@implementation MEditCustomDetailCell
+@implementation MEditDetailCell
 
 
 - (void)layoutSubviews

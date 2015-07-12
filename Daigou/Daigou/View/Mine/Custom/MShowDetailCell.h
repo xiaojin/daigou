@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MShowCustomDetailCell : UITableViewCell
+@interface MShowDetailCell : UITableViewCell
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo;
 @end

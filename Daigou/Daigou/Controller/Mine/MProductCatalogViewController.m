@@ -8,6 +8,7 @@
 #import "ProductCategoryManagement.h"
 #import "DropDownListView.h"
 #import "ErrorHelper.h"
+#import "MShowProductDetailViewController.h"
 @interface MProductCatalogViewController ()<UITableViewDataSource,UITableViewDelegate,DropDownChooseDataSource,DropDownChooseDelegate>
 @property(nonatomic, strong) UITableView *productTableView;
 @property(nonatomic, strong) NSMutableArray *productFrameItems;
@@ -157,4 +158,8 @@ const float categoryViewHeight = 40.0f;
     return itemFrame.cellHeight;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MShowProductDetailViewController *showDetailViewController = [[MShowProductDetailViewController alloc]initWithProduct:[(ProductItemFrame *)self.productFrameItems[indexPath.row] getProduct]];
+    [self.navigationController pushViewController:showDetailViewController animated:YES];
+}
 @end

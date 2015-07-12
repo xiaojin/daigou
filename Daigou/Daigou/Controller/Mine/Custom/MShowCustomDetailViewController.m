@@ -7,7 +7,7 @@
 //
 
 #import "MShowCustomDetailViewController.h"
-#import "MShowCustomDetailCell.h"
+#import "MShowDetailCell.h"
 #import "MEditCustomInfoViewController.h"
 @interface MShowCustomDetailViewController ()<UITableViewDelegate,UITableViewDataSource>{
   NSMutableArray *titleArray;
@@ -18,7 +18,7 @@
 
 @implementation MShowCustomDetailViewController
 
-NSString *const tableviewCell = @"MShowCustomDetailCell ";
+NSString *const mShowTableviewCell = @"MShowCustomDetailCell ";
 
 - (instancetype)initWithCustomInfo:(CustomInfo *)customInfo {
   if (self = [self init]) {
@@ -73,11 +73,11 @@ NSString *const tableviewCell = @"MShowCustomDetailCell ";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MShowCustomDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:tableviewCell];
+    MShowDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:mShowTableviewCell];
   if (cell==nil) {
-    cell = [[MShowCustomDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableviewCell];
+    cell = [[MShowDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:mShowTableviewCell];
   }
-    [cell updateCellWithTitle:titleArray[indexPath.row] detailInformation:valueArray[indexPath.row] ];
+    [cell updateCellWithTitle:titleArray[indexPath.row] detailInformation:valueArray[indexPath.row]];
   return cell;
 }
 
