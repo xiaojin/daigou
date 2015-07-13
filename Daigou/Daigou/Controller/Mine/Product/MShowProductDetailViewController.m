@@ -41,8 +41,6 @@ NSString *const mShowProductTableviewCell = @"MShowProductDetailCell ";
 
 - (void)editProductInfo {
     MEditProductViewController *editProductInfoViewController = [[MEditProductViewController alloc]initWithProduct:self.product];
-    editProductInfoViewController.brands = self.brands;
-    editProductInfoViewController.productCategories = self.categories;
     editProductInfoViewController.cellPlaceHolderValues = titleArray;
     editProductInfoViewController.cellContentValues = valueArray;
     [self.navigationController pushViewController:editProductInfoViewController animated:YES];
@@ -58,7 +56,6 @@ NSString *const mShowProductTableviewCell = @"MShowProductDetailCell ";
     [self initValueForCell];
     [self.tableView reloadData];
 }
-
 
 - (NSString *)getBrandNameById:(NSInteger)bid {
     __block NSString *result =@"";

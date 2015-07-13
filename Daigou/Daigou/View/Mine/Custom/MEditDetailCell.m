@@ -1,11 +1,3 @@
-//
-//  MEditCustomDetailCell.m
-//  Daigou
-//
-//  Created by jin on 1/07/2015.
-//  Copyright (c) 2015 dg. All rights reserved.
-//
-
 #import "MEditDetailCell.h"
 #define CUSTOMINFOTITLEWIDTH 80.0f
 #define CONTENTPADDINGLEFT 10.0f

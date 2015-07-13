@@ -54,7 +54,6 @@
 		3C6EECC01B2C3D7B00C7478F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EECBF1B2C3D7B00C7478F /* main.m */; };
 		3C6EECCC1B2C3D7B00C7478F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCA1B2C3D7B00C7478F /* Main.storyboard */; };
 		3C6EECD11B2C3D7B00C7478F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCF1B2C3D7B00C7478F /* LaunchScreen.xib */; };
-		3C6EECDD1B2C3D7B00C7478F /* DaigouTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EECDC1B2C3D7B00C7478F /* DaigouTests.m */; };
 		3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED1C1B2C5E2300C7478F /* Images.xcassets */; };
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
@@ -155,7 +154,6 @@
 		3C6EECD01B2C3D7B00C7478F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3C6EECD61B2C3D7B00C7478F /* DaigouTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaigouTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C6EECDB1B2C3D7B00C7478F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C6EECDC1B2C3D7B00C7478F /* DaigouTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaigouTests.m; sourceTree = "<group>"; };
 		3C6EED1C1B2C5E2300C7478F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3C6EED1F1B2C5E6100C7478F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3C6EED201B2C5E6100C7478F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -542,7 +540,6 @@
 			isa = PBXGroup;
 			children = (
 				3C64832D1B494BB600EFAE4E /* Model */,
-				3C6EECDC1B2C3D7B00C7478F /* DaigouTests.m */,
 				3C6EECDA1B2C3D7B00C7478F /* Supporting Files */,
 			);
 			path = DaigouTests;
@@ -807,7 +804,6 @@
 				3C6483301B494BE800EFAE4E /* CustomInfoTests.m in Sources */,
 				3C30216F1B50D312001A741D /* CategoryTest.m in Sources */,
 				3C30216D1B50D1E6001A741D /* BrandTest.m in Sources */,
-				3C6EECDD1B2C3D7B00C7478F /* DaigouTests.m in Sources */,
 				3C30215C1B4FDE1A001A741D /* ProductTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

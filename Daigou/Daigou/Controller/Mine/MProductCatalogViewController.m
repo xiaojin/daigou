@@ -9,6 +9,7 @@
 #import "DropDownListView.h"
 #import "ErrorHelper.h"
 #import "MShowProductDetailViewController.h"
+#import "MEditProductViewController.h"
 @interface MProductCatalogViewController ()<UITableViewDataSource,UITableViewDelegate,DropDownChooseDataSource,DropDownChooseDelegate>
 @property(nonatomic, strong) UITableView *productTableView;
 @property(nonatomic, strong) NSMutableArray *productFrameItems;
@@ -26,6 +27,12 @@ const float categoryViewHeight = 40.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     [self fetchAllProduct];
     self.productTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.productTableView.dataSource = self;
@@ -34,7 +41,9 @@ const float categoryViewHeight = 40.0f;
     [self.productTableView setContentInset:UIEdgeInsetsMake(categoryViewHeight-4, 0, 0, 0)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
     [self showProductCategoryView];
+    [self.productTableView reloadData];
 }
+
 
 - (void)showProductCategoryView {
     self.brands = [[NSArray alloc] initWithArray:[self fetchAllBrand]];
@@ -132,7 +141,9 @@ const float categoryViewHeight = 40.0f;
 #pragma mark - Product
 
 - (void)addNewProduct {
-
+    Product *product = [[Product alloc]init];
+    MEditProductViewController *editProductViewController = [[MEditProductViewController alloc]initWithProduct:product];
+    [self.navigationController pushViewController:editProductViewController animated:YES];
 }
 
 #pragma mark - tableview data source

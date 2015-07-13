@@ -172,5 +172,4 @@ NSString *const kTableCellID = @"SETTINGCELLID";
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
-
 @end
