@@ -16,12 +16,19 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
+    self.navigationItem.rightBarButtonItem =editButton;
   // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
+}
+
+- (void)addNewOrder {
+    
+
 }
 
 @end

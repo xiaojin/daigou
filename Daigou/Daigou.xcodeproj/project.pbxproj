@@ -57,6 +57,7 @@
 		3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED1C1B2C5E2300C7478F /* Images.xcassets */; };
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
+		3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,8 @@
 		3C6EED201B2C5E6100C7478F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3C6EED211B2C5E6100C7478F /* DGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGViewController.h; sourceTree = "<group>"; };
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
+		3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAddNewOrderViewController.h; sourceTree = "<group>"; };
+		3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAddNewOrderViewController.m; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC5C4AF44B02D95DE319F4 /* Pods-Daigou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9DE06086462CEABFF0A4F0 /* Pods-Daigou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.release.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.release.xcconfig"; sourceTree = "<group>"; };
@@ -267,6 +270,8 @@
 				19B0FA38422F0DFB1AFDD799 /* Order.storyboard */,
 				19B0F12B1F71973E20970770 /* OrderViewController.h */,
 				19B0F72631E39FD08240B2CC /* OrderViewController.m */,
+				3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */,
+				3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -767,6 +772,7 @@
 				3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */,
 				3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */,
 				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
+				3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
