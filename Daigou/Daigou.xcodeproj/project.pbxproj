@@ -58,6 +58,9 @@
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
 		3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */; };
+		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
+		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
+		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +165,12 @@
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
 		3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAddNewOrderViewController.h; sourceTree = "<group>"; };
 		3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAddNewOrderViewController.m; sourceTree = "<group>"; };
+		3CA1A2951B56884200C0A74C /* OrderItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemView.h; path = Daigou/View/Order/OrderItemView.h; sourceTree = SOURCE_ROOT; };
+		3CA1A2961B56884200C0A74C /* OrderItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItemView.m; path = Daigou/View/Order/OrderItemView.m; sourceTree = SOURCE_ROOT; };
+		3CA1A2981B56942400C0A74C /* OrderProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProductsViewController.h; sourceTree = "<group>"; };
+		3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductsViewController.m; sourceTree = "<group>"; };
+		3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketViewController.h; sourceTree = "<group>"; };
+		3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketViewController.m; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC5C4AF44B02D95DE319F4 /* Pods-Daigou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9DE06086462CEABFF0A4F0 /* Pods-Daigou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.release.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.release.xcconfig"; sourceTree = "<group>"; };
@@ -272,6 +281,12 @@
 				19B0F72631E39FD08240B2CC /* OrderViewController.m */,
 				3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */,
 				3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */,
+				3CA1A2951B56884200C0A74C /* OrderItemView.h */,
+				3CA1A2961B56884200C0A74C /* OrderItemView.m */,
+				3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */,
+				3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */,
+				3CA1A2981B56942400C0A74C /* OrderProductsViewController.h */,
+				3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -777,8 +792,10 @@
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
+				3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */,
 				3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */,
 				3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */,
+				3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */,
@@ -800,6 +817,7 @@
 				3C3021621B4FDF09001A741D /* Brand.m in Sources */,
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
 				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
+				3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
