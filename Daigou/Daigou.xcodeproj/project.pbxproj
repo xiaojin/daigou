@@ -18,6 +18,8 @@
 		19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */; };
 		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
+		3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF61B5913A200DBF0B9 /* OrderItem.m */; };
+		3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */; };
 		3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */; };
 		3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021561B4F98DF001A741D /* ProductItemCell.m */; };
 		3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021581B4F98DF001A741D /* ProductItemFrame.m */; };
@@ -89,6 +91,10 @@
 		19B0FA38422F0DFB1AFDD799 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
 		19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		19B0FE48E1D3824371B4BE48 /* Add.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
+		3C036AF51B5913A200DBF0B9 /* OrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItem.h; path = Daigou/Model/Order/Order/OrderItem.h; sourceTree = SOURCE_ROOT; };
+		3C036AF61B5913A200DBF0B9 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItem.m; path = Daigou/Model/Order/Order/OrderItem.m; sourceTree = SOURCE_ROOT; };
+		3C036AF81B59325500DBF0B9 /* OrderItemManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemManagement.h; path = Daigou/Model/Order/Order/OrderItemManagement.h; sourceTree = SOURCE_ROOT; };
+		3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItemManagement.m; path = Daigou/Model/Order/Order/OrderItemManagement.m; sourceTree = SOURCE_ROOT; };
 		3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Extension/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Extension/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		3C3021551B4F98DF001A741D /* ProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemCell.h; sourceTree = "<group>"; };
@@ -217,6 +223,7 @@
 		19B0F24FE9CC9165CDBF8588 /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				3C036AF41B59136400DBF0B9 /* Order */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -393,6 +400,18 @@
 				19B0F38AE32013E7156EF0E5 /* AddViewController.m */,
 			);
 			path = Add;
+			sourceTree = "<group>";
+		};
+		3C036AF41B59136400DBF0B9 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				3C036AF51B5913A200DBF0B9 /* OrderItem.h */,
+				3C036AF61B5913A200DBF0B9 /* OrderItem.m */,
+				3C036AF81B59325500DBF0B9 /* OrderItemManagement.h */,
+				3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */,
+			);
+			name = Order;
+			path = ../Procurement;
 			sourceTree = "<group>";
 		};
 		3C30215D1B4FDE1E001A741D /* Product */ = {
@@ -788,6 +807,7 @@
 				3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */,
 				3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */,
 				3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */,
+				3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
@@ -806,6 +826,7 @@
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,
 				3C6DDF291B4412EC000B8152 /* MEditDetailCell.m in Sources */,
+				3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */,
 				19B0F2A5A729CC3A56F1B82E /* MineViewController.m in Sources */,
 				3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */,
 				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,

@@ -8,7 +8,8 @@
 //现有购物篮，在购物篮里面可以修改商品的属性，可以改变商品的数量，
 //购物篮 右上方有个修改按钮 或者添加按钮，可以挑选商品。
 #import <UIKit/UIKit.h>
+@class OrderItem;
+@interface OrderBasketViewController : UIViewController
 
-@interface OrderBasketViewController : UITableViewController
-
+- (instancetype)initwithOrderItem :(OrderItem *)orderitem;
 @end
