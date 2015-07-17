@@ -77,16 +77,18 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 
 - (void)clickEditingField:(OrderItemView *)orderItem {
- //   NSInteger index = orderItem.tag - ORDERTAGBASE;
-//    if (index/4 == 0) {
-//        if ((index - 4) == 0) {
+    NSInteger index = orderItem.tag - ORDERTAGBASE;
+    if (index/4 == 0) {
+        if ((4-index) == 4) {
             MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
             [self.navigationController pushViewController:customInfo animated:YES];
-//        }
-//    } else {
-//    
-//    
-//    }
+        } else if ((4-index) ==2) {
+        
+        }
+    } else {
+    
+    
+    }
    
 }
 @end
