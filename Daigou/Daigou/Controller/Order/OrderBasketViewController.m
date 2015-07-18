@@ -9,7 +9,7 @@
 #import "OrderBasketViewController.h"
 #import "OrderItem.h"
 #import "OrderItemManagement.h"
-
+#import "OrderProductsViewController.h"
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong) OrderItem *orderItem;
@@ -28,6 +28,17 @@
     return self;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(addProduct)];
+    [self checkBasketItems];
+}
+
+- (void)addProduct {
+    OrderProductsViewController *ordeProductView = [[OrderProductsViewController alloc]init];
+    [self.navigationController pushViewController:ordeProductView animated:YES];
+}
+
 - (void)checkBasketItems {
     OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
     NSArray *orderItems = [orderManagement getOrderItems];
@@ -38,14 +49,18 @@
     }
 }
 
+
 - (void)showEmptyView {
+
+    self.emptyView = [[UIView alloc]initWithFrame:self.view.bounds];
+    [self.emptyView setBackgroundColor:[UIColor whiteColor]];
     CGFloat labelHeight = 44.0f;
     CGFloat labelWidth = CGRectGetWidth(self.view.frame);
     CGFloat offY = (CGRectGetHeight(self.view.frame) - labelHeight)/2;
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, offY, labelWidth, labelHeight)];
     [label setText:@"您还订单货物是空的哦"];
+    [label setTextAlignment:NSTextAlignmentCenter];
     [self.emptyView addSubview:label];
-    self.emptyView = [[UIView alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:self.emptyView];
 }
 

@@ -9,6 +9,9 @@
 #import "OAddNewOrderViewController.h"
 #import "OrderItemView.h"
 #import "MCustInfoViewController.h"
+#import "OrderBasketViewController.h"
+#import "OrderItem.h"
+
 #define ORDERTAGBASE 6000
 @interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate>
 @property(nonatomic, strong)UITableView *editTableView;
@@ -83,7 +86,9 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
             MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
             [self.navigationController pushViewController:customInfo animated:YES];
         } else if ((4-index) ==2) {
-        
+            OrderItem *orderItem = [[OrderItem alloc]init];
+            OrderBasketViewController *orderBasket = [[OrderBasketViewController alloc]initwithOrderItem:orderItem];
+            [self.navigationController pushViewController:orderBasket animated:YES];
         }
     } else {
     
