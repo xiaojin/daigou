@@ -8,22 +8,35 @@
 
 #import "OrderViewController.h"
 #import "OAddNewOrderViewController.h"
-@interface OrderViewController ()
-
+@interface OrderViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, strong)UITableView *orderListTableView;
 @end
 
 @implementation OrderViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
-    self.navigationItem.rightBarButtonItem =editButton;
+
   // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self fetchAllOrders];
+    self.orderListTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.orderListTableView.dataSource = self;
+    self.orderListTableView.delegate = self;
+    [self.view addSubview:self.orderListTableView];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
+    self.navigationItem.rightBarButtonItem =editButton;
+    [self.orderListTableView reloadData];
 }
 
 - (void)addNewOrder {
@@ -33,4 +46,36 @@
 
 }
 
+- (void)fetchAllOrders {
+
+
+}
+
+#pragma mark - tableview data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.productFrameItems count];
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProductItemCell * cell = [ProductItemCell NewsWithCell:tableView];
+    ProductItemFrame *newItem = self.productFrameItems[indexPath.row];
+    cell.productFrame = newItem;
+    return cell;
+}
+
+#pragma mark - tableview delegate
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProductItemFrame *itemFrame =self.productFrameItems[indexPath.row];
+    return itemFrame.cellHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MShowProductDetailViewController *showDetailViewController = [[MShowProductDetailViewController alloc]initWithProduct:[(ProductItemFrame *)self.productFrameItems[indexPath.row] getProduct]];
+    [self.navigationController pushViewController:showDetailViewController animated:YES];
+}
 @end

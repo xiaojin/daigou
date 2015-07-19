@@ -12,20 +12,19 @@
 
 
 - (NSArray *)cutomToArray {
-  NSMutableArray *result = [NSMutableArray array];
-    [result addObject:self.name?self.name :@""];
-  [result addObject:self.email?self.email :@""];
-  [result addObject:self.idnum?self.idnum :@""];
-    [result addObject:[NSNumber numberWithInteger:self.agent]?[NSNumber numberWithInteger:self.agent] :[NSNumber numberWithInteger:0]];
-  [result addObject:self.address?self.address :@""];
-  [result addObject:self.address1?self.address1 :@""];
-  [result addObject:self.address2?self.address2 :@""];
-  [result addObject:self.address3?self.address3 :@""];
-  [result addObject:self.photofront?self.photofront :@""];
-  [result addObject:self.photoback?self.photoback :@""];
-  [result addObject:self.expressAvaible?self.expressAvaible :@""];
-  [result addObject:self.note?self.note :@""];
-  [result addObject:self.ename?self.ename :@""];
+  NSArray *result = @[self.name?self.name :@"",
+                      self.email?self.email :@"",
+                      self.idnum?self.idnum :@"",
+                      @(self.agent)?@(self.agent):0,
+                      self.address?self.address :@"",
+                      self.address1?self.address1 :@"",
+                      self.address2?self.address2 :@"",
+                      self.address3?self.address3 :@"",
+                      self.photofront?self.photofront :@"",
+                      self.photoback?self.photoback :@"",
+                      self.expressAvaible?self.expressAvaible :@"",
+                      self.note?self.note :@"",
+                      self.ename?self.ename :@""];
   return result;
 }
 @end
