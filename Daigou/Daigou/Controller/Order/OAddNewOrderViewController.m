@@ -16,6 +16,7 @@
 @interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate>
 @property(nonatomic, strong)UITableView *editTableView;
 @property(nonatomic, strong)NSArray *titleArray;
+@property(nonatomic, strong)NSArray *detailArray;
 @property(nonatomic, strong)OrderItem *orderItem;
 @property(nonatomic, strong)CustomInfo *customInfo;
 @end
@@ -47,7 +48,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     self.title = @"填写订单";
     [self initValueForCell];
     [self addTableVIew];
-    //[self hideTabBar:self.tabBarController];
 }
 
 
@@ -65,8 +65,16 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 }
 
+- (void)fetchOrderProducts {
+
+}
+
 - (void) initValueForCell{
     NSArray *firstSection = @[@"客户姓名",@"客户地址",@"货品清单"];
+//    if (self.orderItem) {
+//        <#statements#>
+//    }
+//    NSArray *detailFirstSection = @[self.customInfo.name,self.customInfo.address]
     NSArray *secSection = @[@"小记",@"优惠",@"总价",@"货品清单"];
     self.titleArray = @[firstSection, secSection];
 }
@@ -77,11 +85,11 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     OrderItemView *cell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
     if (cell == nil) {
         cell = [[OrderItemView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
-        [cell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:@""];
-        cell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
-        if (indexPath.section == 0) {
-            cell.orderCellDelegate = self;
-        }
+    }
+    [cell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:@""];
+    cell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
+    if (indexPath.section == 0) {
+        cell.orderCellDelegate = self;
     }
     return cell;
 }

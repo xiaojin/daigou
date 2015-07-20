@@ -71,6 +71,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 }
 
 -(IBAction)showAgent:(id)sender{
+    [self.view endEditing:YES];
     UIActionSheet *agent = [[UIActionSheet alloc]initWithTitle:@"代理" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"是" otherButtonTitles:@"否", nil];
     [agent showInView:self.view];
 }

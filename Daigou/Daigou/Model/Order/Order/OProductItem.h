@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef enum {
+    PURCHASE = 0,
+    INSTOCK = 10,
+    SHIPPED = 20,
+} ItemStatus;
 
 @interface OProductItem : NSObject
 @property(nonatomic,assign)NSInteger iid;
@@ -16,7 +21,7 @@
 @property(nonatomic, assign)float amount;
 @property(nonatomic,assign)NSInteger orderid;
 @property(nonatomic,assign)NSInteger orderdate;
-@property(nonatomic,assign)NSInteger statu;
+@property(nonatomic,assign)ItemStatus statu;
 @property(nonatomic, copy)NSString *note;
 
 - (NSArray *)orderProductToArray;

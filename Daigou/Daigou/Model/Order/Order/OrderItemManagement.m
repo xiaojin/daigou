@@ -9,6 +9,7 @@
 #import "OrderItemManagement.h"
 #import "CommonDefines.h"
 #import "OrderItem.h"
+#import "OProductItem.h"
 #import <FMDB/FMDB.h>
 
 @implementation OrderItemManagement{
@@ -88,7 +89,7 @@
     return NO;
 }
 
-- (BOOL)addCustomInfo:(OrderItem *)orderItem{
+- (BOOL)addOrder:(OrderItem *)orderItem{
     [_db beginTransaction];
     BOOL result = [_db executeUpdate:@"insert into orderitem (clientid,statu,expressid,parentoid,address,total,discount,delivery,subtotal,profit,createDate,shipDate,deliverDate,payDate,note,barcode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderItem orderToArray]];
     if (result) {
@@ -111,11 +112,53 @@
             [_db close];
         }
     } else {
-        result = [self addCustomInfo:orderItem];
+        result = [self addOrder:orderItem];
     }
     [_db close];
     return result;
 
+}
+
+- (NSArray *)getOrderProductsByOrderId:(NSInteger)orderid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from item where orderid = (?) ",@(orderid)];
+    NSMutableArray *orderProductsArray = [NSMutableArray array];
+    while (rs.next) {
+        OProductItem *orderProd = [[OProductItem alloc]init];
+        orderProd.iid = (NSInteger)[rs intForColumn:@"iid"];
+        orderProd.productid = (NSInteger)[rs intForColumn:@"productid"];
+        orderProd.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
+        orderProd.price = (NSInteger) [rs doubleForColumn:@"price"];
+        orderProd.amount = (NSInteger)[rs doubleForColumn:@"amount"];
+        orderProd.orderid = [rs intForColumn:@"orderid"];
+        orderProd.orderdate = (float)[rs intForColumn:@"orderdate"];
+        orderProd.statu = [rs intForColumn:@"statu"];
+        orderProd.note = [rs stringForColumn:@"note"];
+        [orderProductsArray addObject:orderProd];
+    }
+    [_db close];
+    return orderProductsArray;
+}
+
+- (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid  {
+    
+    BOOL result;
+    result = [_db executeQuery:@"delete from item where orderid = (?)",@(orderid)];
+    [_db commit];
+    if (result) {
+        for (OProductItem *productItem in products) {
+              [_db executeUpdate:@"insert into item (productid,refprice,price,amount,orderid,orderdate,statu,note) values (?,?,?,?,?,?,?,?)" withArgumentsInArray:[productItem orderProductToArray]];
+        }
+    } else {
+        NSLog(@"Delete product item error");
+    }
+    [_db commit];
+    [_db close];
+    return result;
+    
 }
     
 @end
