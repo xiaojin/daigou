@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 @class OrderItem, CustomInfo;
 @interface OAddNewOrderViewController : UIViewController
+@property(nonatomic, strong)OrderItem *orderItem;
+@property(nonatomic, strong)CustomInfo *customInfo;
 - (instancetype)initWithOrderItem:(OrderItem *)orderItem withClientDetail:(CustomInfo *)client;
 @end

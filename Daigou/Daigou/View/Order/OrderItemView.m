@@ -58,6 +58,7 @@
 }
 
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{
+    
     self.title =titleName;
     self.value = detailInfo;
 }

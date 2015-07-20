@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 typedef enum {
-    PURCHASE = 0,
-    INSTOCK = 10,
-    SHIPPED = 20,
+    PRODUCT_PURCHASE = 0,
+    PRODUCT_INSTOCK = 10,
+    PRODUCT_SHIPPED = 20
 } ItemStatus;
 
 @interface OProductItem : NSObject

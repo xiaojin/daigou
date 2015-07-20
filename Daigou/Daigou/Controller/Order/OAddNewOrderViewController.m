@@ -12,13 +12,14 @@
 #import "OrderBasketViewController.h"
 #import "OrderItem.h"
 #import "CustomInfo.h"
+#import "OrderItemManagement.h"
+#import "OProductItem.h"
 #define ORDERTAGBASE 6000
 @interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate>
 @property(nonatomic, strong)UITableView *editTableView;
 @property(nonatomic, strong)NSArray *titleArray;
 @property(nonatomic, strong)NSArray *detailArray;
-@property(nonatomic, strong)OrderItem *orderItem;
-@property(nonatomic, strong)CustomInfo *customInfo;
+@property(nonatomic, strong)NSArray *products;
 @end
 
 
@@ -33,6 +34,13 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self initValueForCell];
+    [self.editTableView reloadData];
+}
+
+
 - (void)loadView
 {
     [super loadView];
@@ -43,10 +51,10 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         self.orderItem = [[OrderItem alloc]init];
     }
     
+    [self fetchOrderProducts];
     UIBarButtonItem *saveBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrderInfo)];
     self.navigationItem.rightBarButtonItem = saveBarItem;
     self.title = @"填写订单";
-    [self initValueForCell];
     [self addTableVIew];
 }
 
@@ -66,17 +74,28 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 
 - (void)fetchOrderProducts {
-
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+    if (self.orderItem.oid == 0) {
+        self.products = [NSArray array];
+    } else {
+        self.products = [itemManagement getOrderProductsByOrderId:self.orderItem.oid];
+    }
 }
-
+// TODO 小记，总计，youhui
 - (void) initValueForCell{
     NSArray *firstSection = @[@"客户姓名",@"客户地址",@"货品清单"];
-//    if (self.orderItem) {
-//        <#statements#>
-//    }
-//    NSArray *detailFirstSection = @[self.customInfo.name,self.customInfo.address]
-    NSArray *secSection = @[@"小记",@"优惠",@"总价",@"货品清单"];
+    NSArray *detailFirstSection = nil;
+    NSArray *detailSecSection  = nil;
+    if (self.orderItem.oid != 0) {
+        detailFirstSection = @[self.customInfo.name,self.customInfo.address,@(self.products.count)];
+        detailSecSection = @[@0,@0,@0,@""];
+    } else {
+        detailFirstSection = @[@"",@"",@0];
+        detailSecSection = @[@0,@0,@0,@""];
+    }
+    NSArray *secSection = @[@"小记",@"优惠",@"总价",@"注释"];
     self.titleArray = @[firstSection, secSection];
+    self.detailArray = @[detailFirstSection, detailSecSection];
 }
 #pragma mark - UITableViewDataSource
 
@@ -86,7 +105,8 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     if (cell == nil) {
         cell = [[OrderItemView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
     }
-    [cell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:@""];
+    
+    [cell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:[NSString stringWithFormat:@"%@",self.detailArray[indexPath.section][indexPath.row]]];
     cell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
     if (indexPath.section == 0) {
         cell.orderCellDelegate = self;

@@ -11,6 +11,7 @@
 #import "MShowCustomDetailViewController.h"
 #import "MEditCustomInfoViewController.h"
 #import "CustomInfoManagement.h"
+#import "OAddNewOrderViewController.h"
 @interface MCustInfoViewController ()
 @property(nonatomic, strong) NSArray *contacts;
 @property(nonatomic, strong) NSArray *indexList;
@@ -34,7 +35,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewCustom)];
+    if (![self checkIsFromOrder]) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewCustom)];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,9 +139,32 @@
   return index;
 }
 
+- (BOOL) checkIsFromOrder {
+    NSArray *viewController = self.navigationController.viewControllers;
+    __block BOOL result = NO;
+    [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[OAddNewOrderViewController class]]) {
+            result = YES;
+        }
+    }];
+    return result;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  MShowCustomDetailViewController *showDetailViewController = [[MShowCustomDetailViewController alloc]initWithCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
-  
-  [self.navigationController pushViewController:showDetailViewController animated:YES];
+    if ([self checkIsFromOrder]) {
+        NSArray *viewController = self.navigationController.viewControllers;
+        [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isKindOfClass:[OAddNewOrderViewController class]]) {
+                OAddNewOrderViewController *editNewOrderViewController = (OAddNewOrderViewController *)obj;
+                editNewOrderViewController.customInfo =[_contacts objectAtIndex:indexPath.section][indexPath.row];
+                [self.navigationController popViewControllerAnimated:YES];
+                return ;
+            }
+        }];
+    } else {
+        MShowCustomDetailViewController *showDetailViewController = [[MShowCustomDetailViewController alloc]initWithCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
+        
+        [self.navigationController pushViewController:showDetailViewController animated:YES];
+    }
+
 }
 @end
