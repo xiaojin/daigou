@@ -11,19 +11,37 @@
 #import "MCustInfoViewController.h"
 #import "OrderBasketViewController.h"
 #import "OrderItem.h"
-
+#import "CustomInfo.h"
 #define ORDERTAGBASE 6000
 @interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate>
 @property(nonatomic, strong)UITableView *editTableView;
 @property(nonatomic, strong)NSArray *titleArray;
+@property(nonatomic, strong)OrderItem *orderItem;
+@property(nonatomic, strong)CustomInfo *customInfo;
 @end
 
 
 @implementation OAddNewOrderViewController
 NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
+- (instancetype)initWithOrderItem:(OrderItem *)orderItem withClientDetail:(CustomInfo *)client
+{
+    if (self = [super init]) {
+        self.customInfo = client;
+        self.orderItem = orderItem;
+    }
+    return self;
+}
+
 - (void)loadView
 {
     [super loadView];
+    if (self.customInfo == nil) {
+        self.customInfo = [[CustomInfo alloc]init];
+    }
+    if (self.orderItem == nil) {
+        self.orderItem = [[OrderItem alloc]init];
+    }
+    
     UIBarButtonItem *saveBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrderInfo)];
     self.navigationItem.rightBarButtonItem = saveBarItem;
     self.title = @"填写订单";

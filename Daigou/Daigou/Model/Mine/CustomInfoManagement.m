@@ -72,6 +72,34 @@
   return customArray;
 }
 
+- (CustomInfo *)getCustomInfoById:(NSInteger)cid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from client where cid = (?) ", [NSNumber numberWithInteger:cid]];
+    CustomInfo *customInfo = nil;
+    if (rs.next) {
+        customInfo = [[CustomInfo alloc]init];
+        customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
+        customInfo.name = [rs stringForColumn:@"name"];
+        customInfo.email = [rs stringForColumn:@"email"];
+        customInfo.idnum = [rs stringForColumn:@"idnum"];
+        customInfo.agent = (NSInteger)[rs intForColumn:@"agent"];
+        customInfo.address = [rs stringForColumn:@"address"];
+        customInfo.address1 = [rs stringForColumn:@"address1"];
+        customInfo.address2 = [rs stringForColumn:@"address2"];
+        customInfo.address3 = [rs stringForColumn:@"address3"];
+        customInfo.photofront = [rs stringForColumn:@"photofront"];
+        customInfo.photoback = [rs stringForColumn:@"photoback"];
+        customInfo.expressAvaible = [rs stringForColumn:@"expressAvaible"];
+        customInfo.note = [rs stringForColumn:@"note"];
+        customInfo.ename = [rs stringForColumn:@"ename"];
+    }
+    [_db close];
+    return customInfo;
+}
+
 - (BOOL)checkIfCustomExists:(CustomInfo *)custom {
     if (![_db open]) {
         NSLog(@"Could not open db.");

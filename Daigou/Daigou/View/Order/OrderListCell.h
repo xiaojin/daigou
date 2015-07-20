@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class OrderItem, CustomInfo;
 @interface OrderListCell : UITableViewCell
-
+@property(nonatomic, strong)OrderItem *orderItem;
+@property(nonatomic, strong)CustomInfo *custom;
 @end

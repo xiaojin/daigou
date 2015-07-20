@@ -8,11 +8,20 @@
 
 #import "OrderViewController.h"
 #import "OAddNewOrderViewController.h"
+#import "OrderListCell.h"
+#import "OrderItem.h"
+#import "OrderItemManagement.h"
+#import "OAddNewOrderViewController.h"
+#import "CustomInfoManagement.h"
+#import "CustomInfo.h"
 @interface OrderViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong)UITableView *orderListTableView;
+@property (nonatomic, strong)NSArray *orderItems;
+@property (nonatomic, strong)NSArray *custominfos;
 @end
 
 @implementation OrderViewController
+NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -30,6 +39,7 @@
 {
     [super viewWillAppear:animated];
     [self fetchAllOrders];
+    [self fetchAllClients];
     self.orderListTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.orderListTableView.dataSource = self;
     self.orderListTableView.delegate = self;
@@ -46,23 +56,44 @@
 
 }
 
+
 - (void)fetchAllOrders {
+    self.orderItems = [NSArray array];
+    self.orderItems = [[OrderItemManagement shareInstance] getOrderItems];
+}
 
+- (void)fetchAllClients {
+    CustomInfoManagement *customManagement = [CustomInfoManagement shareInstance];
+    self.custominfos = [customManagement getCustomInfo];
+}
 
+- (CustomInfo *)getCustomInfobyId:(NSInteger)clientID {
+    __block CustomInfo *customInfo = nil;
+    [self.custominfos enumerateObjectsUsingBlock:^(CustomInfo *obj, NSUInteger idx, BOOL *stop) {
+        if (obj.cid == clientID) {
+            customInfo = obj;
+            return;
+        }
+    }];
+    return customInfo;
 }
 
 #pragma mark - tableview data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.productFrameItems count];
+    return [self.orderItems count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProductItemCell * cell = [ProductItemCell NewsWithCell:tableView];
-    ProductItemFrame *newItem = self.productFrameItems[indexPath.row];
-    cell.productFrame = newItem;
+    OrderListCell * cell = [tableView dequeueReusableCellWithIdentifier:orderlistcellIdentity];
+    if (cell == nil) {
+        cell = [[OrderListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderlistcellIdentity];
+    }
+    OrderItem *item = [self.orderItems objectAtIndex:indexPath.row];
+    cell.orderItem = item;
+    cell.custom = [self getCustomInfobyId:item.clientid];
     return cell;
 }
 
@@ -70,12 +101,13 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProductItemFrame *itemFrame =self.productFrameItems[indexPath.row];
-    return itemFrame.cellHeight;
+    return 65.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MShowProductDetailViewController *showDetailViewController = [[MShowProductDetailViewController alloc]initWithProduct:[(ProductItemFrame *)self.productFrameItems[indexPath.row] getProduct]];
-    [self.navigationController pushViewController:showDetailViewController animated:YES];
+    OrderItem *orderItem = (OrderItem *)[self.orderItems objectAtIndex:indexPath.row];
+    OAddNewOrderViewController *editOrderViewContorller = [[OAddNewOrderViewController alloc]initWithOrderItem:orderItem withClientDetail:[self getCustomInfobyId:orderItem.clientid]];
+    [self.navigationController pushViewController:editOrderViewContorller animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 @end

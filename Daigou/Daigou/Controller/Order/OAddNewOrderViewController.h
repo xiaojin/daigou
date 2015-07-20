@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class OrderItem, CustomInfo;
 @interface OAddNewOrderViewController : UIViewController
-
+- (instancetype)initWithOrderItem:(OrderItem *)orderItem withClientDetail:(CustomInfo *)client;
 @end
