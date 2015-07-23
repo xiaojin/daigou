@@ -104,13 +104,13 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     OrderItemView *cell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
     if (cell == nil) {
         cell = [[OrderItemView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
+        cell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
+        if (indexPath.section == 0) {
+            cell.orderCellDelegate = self;
+        }
     }
     
     [cell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:[NSString stringWithFormat:@"%@",self.detailArray[indexPath.section][indexPath.row]]];
-    cell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
-    if (indexPath.section == 0) {
-        cell.orderCellDelegate = self;
-    }
     return cell;
 }
 
@@ -125,16 +125,15 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     return [self.titleArray[section] count];
 }
 
-- (void)clickEditingField:(OrderItemView *)orderItem {
-    NSInteger index = orderItem.tag - ORDERTAGBASE;
+- (void)clickEditingField:(OrderItemView *)orderItemView {
+    NSInteger index = orderItemView.tag - ORDERTAGBASE;
     if (index/4 == 0) {
         if ((4-index) == 4) {
             MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
             [self.navigationController pushViewController:customInfo animated:YES];
         } else if ((4-index) ==2) {
-            OrderItem *orderItem = [[OrderItem alloc]init];
-            OrderBasketViewController *orderBasket = [[OrderBasketViewController alloc]initwithOrderItem:orderItem];
-            [self.navigationController pushViewController:orderBasket animated:YES];
+            OrderBasketViewController *orderBasket = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withProducts:self.products];
+           [self.navigationController pushViewController:orderBasket animated:YES];
         }
     } else {
     

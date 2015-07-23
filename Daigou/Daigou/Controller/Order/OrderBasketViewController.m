@@ -14,11 +14,14 @@
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong) OrderItem *orderItem;
 @property(nonatomic, strong) UIView *emptyView;
+@property(nonatomic, strong) NSArray *products;
 @end
 @implementation OrderBasketViewController
 
-- (instancetype)initwithOrderItem :(OrderItem *)orderitem {
+- (instancetype)initwithOrderItem :(OrderItem *)orderitem  withProducts:(NSArray *)products{
     self.orderItem = orderitem;
+    self.products = [NSArray array];
+    self.products = products;
     return [self init];
 }
 
@@ -30,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(addProduct)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addProduct)];
     [self checkBasketItems];
 }
 
@@ -40,9 +43,7 @@
 }
 
 - (void)checkBasketItems {
-    OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
-    NSArray *orderItems = [orderManagement getOrderItems];
-    if (orderItems == 0) {
+    if (self.products.count == 0) {
         [self showEmptyView];
     } else {
         [self showOrderItemsTableView];

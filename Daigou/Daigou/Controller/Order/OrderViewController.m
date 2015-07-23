@@ -43,6 +43,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     self.orderListTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.orderListTableView.dataSource = self;
     self.orderListTableView.delegate = self;
+    self.orderListTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.orderListTableView.bounds.size.width, 0.01f)];
     [self.view addSubview:self.orderListTableView];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
     self.navigationItem.rightBarButtonItem =editButton;

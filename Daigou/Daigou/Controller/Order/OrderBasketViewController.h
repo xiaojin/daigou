@@ -10,6 +10,5 @@
 #import <UIKit/UIKit.h>
 @class OrderItem;
 @interface OrderBasketViewController : UIViewController
-
-- (instancetype)initwithOrderItem :(OrderItem *)orderitem;
+- (instancetype)initwithOrderItem :(OrderItem *)orderitem withProducts:(NSArray *)products;
 @end

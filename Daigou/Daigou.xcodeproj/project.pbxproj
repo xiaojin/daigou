@@ -299,8 +299,6 @@
 				19B0F72631E39FD08240B2CC /* OrderViewController.m */,
 				3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */,
 				3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */,
-				3CA1A2951B56884200C0A74C /* OrderItemView.h */,
-				3CA1A2961B56884200C0A74C /* OrderItemView.m */,
 				3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */,
 				3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */,
 				3CA1A2981B56942400C0A74C /* OrderProductsViewController.h */,
@@ -331,6 +329,8 @@
 		19B0F8DDCA4A348E3D3D3F95 /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				3CA1A2951B56884200C0A74C /* OrderItemView.h */,
+				3CA1A2961B56884200C0A74C /* OrderItemView.m */,
 				3C036AFB1B59FBD100DBF0B9 /* OrderBasketCell.h */,
 				3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */,
 				3C56783C1B5B6AC2001B6B40 /* OrderListCell.h */,
