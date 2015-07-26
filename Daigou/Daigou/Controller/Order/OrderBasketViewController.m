@@ -52,7 +52,6 @@
 
 
 - (void)showEmptyView {
-
     self.emptyView = [[UIView alloc]initWithFrame:self.view.bounds];
     [self.emptyView setBackgroundColor:[UIColor whiteColor]];
     CGFloat labelHeight = 44.0f;

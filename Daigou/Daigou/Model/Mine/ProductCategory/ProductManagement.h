@@ -13,6 +13,7 @@
 @interface ProductManagement : NSObject
 + (instancetype)shareInstance;
 - (NSArray *)getProduct;
+- (Product *)getProductById:(NSInteger)prodcutId;
 - (NSArray *)getProductByBrand:(Brand *)brand;
 - (NSArray *)getProductByCategory:(ProductCategory *)productCategory;
 - (BOOL)deleteProduct:(Product *)product;

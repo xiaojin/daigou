@@ -59,6 +59,20 @@
     return productArray;
 }
 
+- (Product *)getProductById:(NSInteger)prodcutId {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from product where pid = ? ", @(prodcutId)];
+    Product *product = [Product new];
+    if (rs.next) {
+       product = [self setValueForProduct:rs];
+    }
+    [_db close];
+    return product;
+}
+
 - (NSArray *)getProductByBrand:(Brand *)brand {
     if (![_db open]) {
         NSLog(@"Could not open db.");

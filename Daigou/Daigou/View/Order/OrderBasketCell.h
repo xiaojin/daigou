@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class OrderBasketCellFrame;
 @interface OrderBasketCell : UITableViewCell
+@property (nonatomic, strong) OrderBasketCellFrame *orderBasketCellFrame;
+
 + (instancetype) OrderWithCell:(UITableView *)tableview;
 
 @end

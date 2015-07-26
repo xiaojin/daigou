@@ -22,6 +22,7 @@
 		3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */; };
 		3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */; };
 		3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */; };
+		3C2603181B65034E00AA8BFC /* OrderBasketCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2603171B65034E00AA8BFC /* OrderBasketCellFrame.m */; };
 		3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021561B4F98DF001A741D /* ProductItemCell.m */; };
 		3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021581B4F98DF001A741D /* ProductItemFrame.m */; };
 		3C30215C1B4FDE1A001A741D /* ProductTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30215B1B4FDE1A001A741D /* ProductTest.m */; };
@@ -103,6 +104,8 @@
 		3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketCell.m; sourceTree = "<group>"; };
 		3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Extension/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Extension/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		3C2603161B65034E00AA8BFC /* OrderBasketCellFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketCellFrame.h; sourceTree = "<group>"; };
+		3C2603171B65034E00AA8BFC /* OrderBasketCellFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketCellFrame.m; sourceTree = "<group>"; };
 		3C3021551B4F98DF001A741D /* ProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemCell.h; sourceTree = "<group>"; };
 		3C3021561B4F98DF001A741D /* ProductItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemCell.m; sourceTree = "<group>"; };
 		3C3021571B4F98DF001A741D /* ProductItemFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemFrame.h; sourceTree = "<group>"; };
@@ -333,6 +336,8 @@
 				3CA1A2961B56884200C0A74C /* OrderItemView.m */,
 				3C036AFB1B59FBD100DBF0B9 /* OrderBasketCell.h */,
 				3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */,
+				3C2603161B65034E00AA8BFC /* OrderBasketCellFrame.h */,
+				3C2603171B65034E00AA8BFC /* OrderBasketCellFrame.m */,
 				3C56783C1B5B6AC2001B6B40 /* OrderListCell.h */,
 				3C56783D1B5B6AC2001B6B40 /* OrderListCell.m */,
 			);
@@ -866,6 +871,7 @@
 				3C3021761B514B3B001A741D /* MShowProductDetailViewController.m in Sources */,
 				3C3021621B4FDF09001A741D /* Brand.m in Sources */,
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
+				3C2603181B65034E00AA8BFC /* OrderBasketCellFrame.m in Sources */,
 				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
 				3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */,
 			);
