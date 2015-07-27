@@ -10,11 +10,15 @@
 #import "OrderItem.h"
 #import "OrderItemManagement.h"
 #import "OrderProductsViewController.h"
+#import "OrderBasketCellFrame.h"
+#import "OrderBasketCell.h"
+#import "OProductItem.h"
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong) OrderItem *orderItem;
 @property(nonatomic, strong) UIView *emptyView;
 @property(nonatomic, strong) NSArray *products;
+@property(nonatomic, strong) NSMutableArray *orderItemFrames;
 @end
 @implementation OrderBasketViewController
 
@@ -46,6 +50,7 @@
     if (self.products.count == 0) {
         [self showEmptyView];
     } else {
+        [self initOrderBasketItemsFrameWithOrderItems:self.products];
         [self showOrderItemsTableView];
     }
 }
@@ -69,6 +74,14 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)initOrderBasketItemsFrameWithOrderItems:(NSArray *)orderItems {
+    self.orderItemFrames = [NSMutableArray array];
+    for (OProductItem *item in orderItems) {
+        OrderBasketCellFrame *itemFrame = [[OrderBasketCellFrame alloc]initFrameWithOrderProduct:item withViewFrame:self.view.bounds];
+        [self.orderItemFrames addObject:itemFrame];
+    }
+    
+}
 
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

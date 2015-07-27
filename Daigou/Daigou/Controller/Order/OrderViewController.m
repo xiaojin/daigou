@@ -25,19 +25,6 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  // Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     [self fetchAllOrders];
     [self fetchAllClients];
     self.orderListTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -48,7 +35,14 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
     self.navigationItem.rightBarButtonItem =editButton;
     [self.orderListTableView reloadData];
+  // Do any additional setup after loading the view, typically from a nib.
 }
+
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
+
 
 - (void)addNewOrder {
     OAddNewOrderViewController *addNewOrderViewController = [[OAddNewOrderViewController alloc]
