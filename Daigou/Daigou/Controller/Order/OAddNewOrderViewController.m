@@ -34,6 +34,8 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     return self;
 }
 
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self initValueForCell];
@@ -141,4 +143,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     }
    
 }
+
+
 @end
