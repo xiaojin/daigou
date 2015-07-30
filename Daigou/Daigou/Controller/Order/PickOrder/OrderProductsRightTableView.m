@@ -33,13 +33,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OrderProductsRightCell *cell =[OrderProductsRightCell cellWithTableView:tableView];
-    cell.TapActionBlock=^(NSInteger pageIndex ,NSInteger money,NSString *key){
+    cell.TapActionBlock=^(NSInteger pageIndex ,NSInteger money,NSInteger key){
         if ([self.rightDelegate respondsToSelector:@selector(quantity:money:key:)]) {
             [self.rightDelegate quantity:pageIndex money:money key:key];
         }
         
     };
-    
     cell.backgroundColor=RGB(246, 246, 246);
     cell.rightData=_rightArray[indexPath.row];
     return cell;

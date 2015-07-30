@@ -20,6 +20,7 @@
     [result addObject:self.barcode?self.barcode : @""];
     [result addObject:self.quickid?self.quickid : @""];
     [result addObject:self.picture?self.picture : @""];
+    [result addObject:@(self.onshelf)?@(self.onshelf) : @(0)];
     [result addObject:@(self.rrp)?@(self.rrp) :@(0.0f)];
     
     [result addObject:@(self.purchaseprice)?@(self.purchaseprice) : @(0.0f)];
@@ -73,6 +74,10 @@
 - (void)setRrp:(float)rrp {
     _rrp = rrp ? rrp :0.0f;
 
+}
+
+- (void)setOnshelf:(NSInteger)onshelf {
+    _onshelf = onshelf ? onshelf : 0;
 }
 
 - (void)setPurchaseprice:(float)purchaseprice {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @protocol DockTableViewDelegate <NSObject>
-- (void)dockClickIndexRow:(NSMutableArray *)row index:(NSIndexPath *)index indexPath:(NSIndexPath *)indexPath;
+- (void)dockClickIndexRow:(NSMutableArray *)array index:(NSIndexPath *)index indexPath:(NSIndexPath *)indexPath;
 @end
 
 @interface OrderProductDockView : UITableView

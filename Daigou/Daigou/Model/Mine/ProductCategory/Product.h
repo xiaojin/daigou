@@ -17,6 +17,7 @@
 @property(nonatomic,copy)NSString *barcode;
 @property(nonatomic,copy)NSString *quickid;
 @property(nonatomic,copy)NSString *picture;
+@property(nonatomic,assign)NSInteger onshelf;
 @property(nonatomic,assign)float rrp;
 @property(nonatomic,assign)float purchaseprice;
 @property(nonatomic,assign)float costprice;

@@ -8,6 +8,8 @@
 
 #import "OrderProductsRightCell.h"
 #import "CommonDefines.h"
+#import "Product.h"
+
 @interface OrderProductsRightCell()
 @property (weak ,nonatomic) UIImageView *prodImage;
 
@@ -26,6 +28,8 @@
 @property (weak ,nonatomic) UILabel *prodMoneyOriginalPrice;
 
 @property (weak ,nonatomic) UIView *prodMoneyOriginalPriceShow;
+
+@property (assign ,nonatomic)NSInteger quantity;
 @end
 
 @implementation OrderProductsRightCell
@@ -81,32 +85,39 @@
     return self;
 }
 
--(void)setRightData:(NSMutableDictionary *)rightData
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+}
+
+-(void)setRightData:(Product *)rightData
 {
     
     _rightData=rightData;
     _prodImage.frame=(CGRect){5,15,65,65};
-    _prodImage.image=[UIImage imageNamed:_rightData[@"image"]];
+    NSString *prodImageString = _rightData.picture? _rightData.picture : @"default";
+    _prodImage.image=[UIImage imageNamed:prodImageString];
     _prodImage.layer.masksToBounds=YES;
     _prodImage.layer.cornerRadius=6;
     _imageShow.frame=(CGRect){0,65-10,65,10};
     
-    if (_rightData[@"Discount"]!=nil) {
+    if (YES) {
         _imageShow.hidden=NO;
-        _imageShow.text=_rightData[@"Discount"];
+        _imageShow.text=@"7折";
         _imageShow.textColor=[UIColor whiteColor];
         _imageShow.font=Font(10);
         _imageShow.textAlignment=NSTextAlignmentCenter;
         _imageShow.backgroundColor=RGB(255, 127, 0);
-    }else
-    {
-        _imageShow.hidden=YES;
     }
+//    }else
+//    {
+//        _imageShow.hidden=YES;
+//    }
     
     
     
     
-    NSString *prodNameText =_rightData[@"name"];
+    NSString *prodNameText =_rightData.name;
     CGRect prodNameRect =[prodNameText boundingRectWithSize:CGSizeMake(kWindowWidth-75-CGRectGetMaxX(_prodImage.frame)-10, 35) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil] context:nil];
     
     _prodName.text=prodNameText;
@@ -115,17 +126,17 @@
     _prodName.textAlignment=NSTextAlignmentJustified;
     _prodName.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame)+5,10},prodNameRect.size};
     
-    NSString *prodMoneyText =[NSString stringWithFormat:@"￥%@",_rightData[@"money"]];
+    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_rightData.sellprice];
     CGSize prodMoneySize =[prodMoneyText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil]];
     _prodMoney.text=prodMoneyText;
     _prodMoney.font=Font(14);
     _prodMoney.textColor=RGB(255, 127, 0);
     _prodMoney.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame),CGRectGetMaxY(_prodImage.frame)-prodMoneySize.height-prodMoneySize.height*0.5},prodMoneySize};
     
-    if(_rightData[@"OriginalPrice"]!=nil)
+    if(_rightData.agentprice!=0.0f)
     {
         _prodMoneyOriginalPrice.hidden=NO;
-        NSString *prodMoneyOriginalPriceText =[NSString stringWithFormat:@"原价:%@",_rightData[@"OriginalPrice"]];
+        NSString *prodMoneyOriginalPriceText =[NSString stringWithFormat:@"代理价:%.2f",_rightData.agentprice];
         CGSize prodMoneyOriginalPriceSize =[prodMoneyOriginalPriceText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(11),NSFontAttributeName, nil]];
         _prodMoneyOriginalPrice.text=prodMoneyOriginalPriceText;
         _prodMoneyOriginalPrice.font=Font(11);
@@ -159,7 +170,7 @@
     
     CGFloat W =(kWindowWidth-75-10 -30)-CGRectGetMaxX(_minusLeft.frame);
     _prodQuantity.frame=(CGRect){CGRectGetMaxX(_minusLeft.frame),90-40,W,30};
-    _prodQuantity.text=_rightData[@"Quantity"];
+    _prodQuantity.text=@"0";
     _prodQuantity.textAlignment=NSTextAlignmentCenter;
     _prodQuantity.font=Font(16);
 }
@@ -173,8 +184,8 @@
     ++NumberInt;
     
     _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
-    _rightData[@"Quantity"] = _prodQuantity.text;
-    _TapActionBlock([ _rightData[@"Quantity"] integerValue],[_rightData[@"money"] integerValue] ,_rightData[@"ProductID"]);
+    _quantity = [_prodQuantity.text integerValue];
+    _TapActionBlock(_quantity,_rightData.saleprice ,_rightData.pid);
 }
 
 -(void)minusLeftClick
@@ -185,10 +196,9 @@
     }
     --NumberInt;
     _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
-    _rightData[@"Quantity"] = _prodQuantity.text;
-    _TapActionBlock([ _rightData[@"Quantity"] integerValue],[_rightData[@"money"] integerValue],_rightData[@"ProductID"]);
+    _quantity = [_prodQuantity.text integerValue];
+    _TapActionBlock(_quantity,_rightData.saleprice ,_rightData.pid);
     if (NumberInt ==0) {
-        
         return;
     }
 }

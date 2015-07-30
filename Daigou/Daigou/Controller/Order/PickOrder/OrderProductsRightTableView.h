@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol RightTableViewDelegate <NSObject>
 
--(void)quantity:(NSInteger)quantity money:(NSInteger)money key:(NSString *)key;
+-(void)quantity:(NSInteger)quantity money:(NSInteger)money key:(NSInteger )key;
 
 @end
 

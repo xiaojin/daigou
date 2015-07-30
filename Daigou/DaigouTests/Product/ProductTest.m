@@ -67,6 +67,8 @@
     [self.product setProdDescription:@"这是一个很好的产品"];
     [self.product setCategoryid:9];
     [self.product setBrandid:10];
+    [self.product setQuickid:@"123"];
+    [self.product setEname:@"123123"];
     BOOL result = [self.productManage updateProduct:self.product];
     XCTAssertTrue(result,@"should insert the product successfully");
 }

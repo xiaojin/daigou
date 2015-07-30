@@ -113,6 +113,7 @@
     product.quickid = [rs stringForColumn:@"quickid"];
     product.picture = [rs stringForColumn:@"picture"];
     product.rrp = [rs doubleForColumn:@"rrp"];
+    product.onshelf = [rs doubleForColumn:@"onshelf"];
     product.purchaseprice = [rs doubleForColumn:@"purchaseprice"];
     product.costprice = [rs doubleForColumn:@"costprice"];
     product.lowestprice = [rs doubleForColumn:@"lowestprice"];
@@ -150,7 +151,7 @@
 
 - (BOOL)addProduct:(Product *)product{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into product (categoryid,name,model,brandid,barcode,quickid,picture,rrp,purchaseprice,costprice,lowestprice,agentprice,saleprice,sellprice,wight,description,want,avaibility,function,sellpoint,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[product productToArray]];
+    BOOL result = [_db executeUpdate:@"insert into product (categoryid,name,model,brandid,barcode,quickid,picture,onshelf,rrp,purchaseprice,costprice,lowestprice,agentprice,saleprice,sellprice,wight,description,want,avaibility,function,sellpoint,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[product productToArray]];
     if (result) {
         [_db commit];
         [_db close];
@@ -165,7 +166,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[product productToArray]];
         [updateData addObject:@(product.pid)];
-        result= [_db executeUpdate:@"update product set categoryid=?,name=?,model=?,brandid=?,barcode=?,quickid=?,picture=?,rrp=?,purchaseprice=?,costprice=?,lowestprice=?,agentprice=?,saleprice=?,sellprice=?,wight=?,description=?,want=?,avaibility=?,function=?,sellpoint=?,note=?,ename=?  where pid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update product set categoryid=?,name=?,model=?,brandid=?,barcode=?,quickid=?,picture=?,onshelf =?,rrp=?,purchaseprice=?,costprice=?,lowestprice=?,agentprice=?,saleprice=?,sellprice=?,wight=?,description=?,want=?,avaibility=?,function=?,sellpoint=?,note=?,ename=?  where pid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];

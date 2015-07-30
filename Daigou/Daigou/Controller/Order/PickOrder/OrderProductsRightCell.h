@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Product;
 @interface OrderProductsRightCell : UITableViewCell
-@property (nonatomic, strong) NSMutableDictionary *rightData;
+@property (nonatomic, strong) Product *rightData;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
-@property (nonatomic, copy) void (^TapActionBlock)(NSInteger pageIndex, NSInteger money, NSString *key);
+@property (nonatomic, copy) void (^TapActionBlock)(NSInteger pageIndex, NSInteger money, NSInteger key);
 @end

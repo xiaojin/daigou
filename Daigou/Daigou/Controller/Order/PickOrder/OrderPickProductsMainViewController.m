@@ -15,6 +15,10 @@
 #import "Product.h"
 #import "ProductCategory.h"
 #import "ProductCategoryManagement.h"
+#import <Masonry/Masonry.h>
+#import <ionicons/ionicons-codes.h>
+#import <ionicons/IonIcons.h>
+
 
 @interface OrderPickProductsMainViewController () <DockTableViewDelegate,RightTableViewDelegate>
 @property (nonatomic, strong)OrderProductDockView *dockTableView;
@@ -31,21 +35,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    OrderProductDockView *prodDockView = [[OrderProductDockView alloc]initWithFrame:(CGRect){0,0,75,kWindowHeight-50}];
+    //
+    OrderProductDockView *prodDockView = [[OrderProductDockView alloc]init];
     prodDockView.rowHeight = 50;
     prodDockView.dockDelegate = self;
-    prodDockView.backgroundColor = RGB(238, 238, 238);
+    prodDockView.backgroundColor = RGB(255, 255, 255);
     [prodDockView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:prodDockView];
+    [prodDockView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.width.equalTo(@75);
+    }];
     
     _dockTableView = prodDockView;
-    
-    OrderProductsRightTableView *rightTableView = [[OrderProductsRightTableView alloc]initWithFrame:(CGRect){75,0,kWindowWidth-75,kWindowHeight-50}];
+    OrderProductsRightTableView *rightTableView = [[OrderProductsRightTableView alloc]init];
     rightTableView.rowHeight = 90;
     rightTableView.rightDelegate = self;
     rightTableView.backgroundColor = RGB(238, 238, 238);
+    rightTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 0.01f)];
     [rightTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:rightTableView];
+    [rightTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.dockTableView.mas_top);
+        make.left.equalTo(self.dockTableView.mas_right);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     _rightProductsTableView = rightTableView;
     NSArray *categorys = [self fetchAllCategory];
     _docksArray = [NSMutableArray array];
@@ -58,13 +75,30 @@
     }
     
     _dockTableView.dockArray = _docksArray;
-    [_dockTableView reloadData];
-    _offsArray = [NSMutableArray array];
-    for (int i = 0; i < [_docksArray count]; i++) {
-        CGPoint point = CGPointMake(0, 0);
-        [_offsArray addObject:NSStringFromCGPoint(point)];
-    }
-
+   [_dockTableView reloadData];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.translucent=NO;
+    self.tabBarController.tabBar.translucent = NO;
+    
+    //self.navigationItem.leftBarButtonItem =
+    UIView *cartButton = [[UIView alloc]init];
+    [cartButton setFrame:CGRectMake(0, 0, 35, 35)];
+    UIImage *cart = [IonIcons imageWithIcon:ion_ios_cart_outline iconColor:[UIColor blackColor] iconSize:35.0f imageSize:CGSizeMake(35.0f, 35.0f)];
+    UIImageView *carView = [[UIImageView alloc]initWithImage:cart];
+    [carView setFrame:cartButton.frame];
+    [cartButton addSubview:carView];
+    UILabel *countlbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 15, 15)];
+    [countlbl setText:@"0"];
+    countlbl.layer.masksToBounds = YES;
+    countlbl.layer.cornerRadius = 7.5;
+    countlbl.textAlignment = NSTextAlignmentCenter;
+    countlbl.backgroundColor = [UIColor redColor];
+    [countlbl setTextColor:[UIColor whiteColor]];
+    [countlbl setFont:[UIFont systemFontOfSize:12.0f]];
+    [cartButton addSubview:countlbl];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithCustomView:cartButton];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    
 // 结算栏
 //    UIView *bottomView = [[UIView alloc]
 //                          initWithFrame:(CGRect){0, kWindowHeight - 50, kWindowWidth, 50}];
@@ -88,7 +122,7 @@
 //    bottomLabel.layer.borderColor = [[UIColor whiteColor] CGColor];
 //    [bottomView addSubview:bottomLabel];
 //    _bottomLabel = bottomLabel;
-//    
+//    ion_ios_cart_outline
 //    UIImageView *cartImage =
 //    [[UIImageView alloc] initWithFrame:(CGRect){10, 5, 40, 40}];
 //    cartImage.image = [UIImage imageNamed:@"Home_Cart.jpg"];
@@ -130,7 +164,7 @@
 
 - (void)quantity:(NSInteger)quantity
            money:(NSInteger)money
-             key:(NSString *)key {
+             key:(NSInteger)key {
 //    NSInteger addend = quantity * money;
 //    
 //    [_dic setObject:[NSString stringWithFormat:@"%ld", addend] forKey:key];
@@ -161,16 +195,16 @@
     
 }
 
--(void)dockClickindexPathRow:(NSMutableArray *)array index:(NSIndexPath *)index indeXPath:(NSIndexPath *)indexPath
-{
-//    [_rightTableView setContentOffset:_rightTableView.contentOffset animated:NO];
-//    _offsArray[index.row] =NSStringFromCGPoint(_rightTableView.contentOffset);
-//    _rightTableView.rightArray=array;
-//    [_rightTableView reloadData];
+- (void)dockClickIndexRow:(NSMutableArray *)array index:(NSIndexPath *)index indexPath:(NSIndexPath *)indexPath {
+
+//    [_rightProductsTableView setContentOffset:_rightProductsTableView.contentOffset animated:NO];
+//    _offsArray[index.row] =NSStringFromCGPoint(_rightProductsTableView.contentOffset);
+    _rightProductsTableView.rightArray=array;
+    [_rightProductsTableView reloadData];
 //    CGPoint point=CGPointFromString([_offsArray objectAtIndex:indexPath.row]);
-//    [_rightTableView setContentOffset:point];
-    //    NSLog(@"%@",row);
+//     [_rightProductsTableView setContentOffset:point];
 }
+
 
 -(void)cartImageClick
 {

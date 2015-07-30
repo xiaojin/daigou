@@ -13,6 +13,8 @@
 #import "OrderBasketCellFrame.h"
 #import "OrderBasketCell.h"
 #import "OProductItem.h"
+#import "OrderPickProductsMainViewController.h"
+
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong) OrderItem *orderItem;
@@ -42,8 +44,8 @@
 }
 
 - (void)addProduct {
-    OrderProductsViewController *ordeProductView = [[OrderProductsViewController alloc]init];
-    [self.navigationController pushViewController:ordeProductView animated:YES];
+    OrderPickProductsMainViewController *orderPickMainViewController =  [[OrderPickProductsMainViewController alloc]init];
+    [self.navigationController pushViewController:orderPickMainViewController animated:YES];
 }
 
 - (void)checkBasketItems {

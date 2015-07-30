@@ -9,6 +9,7 @@
 #import "OrderProductDockView.h"
 #import "OrderDockCell.h"
 #import "CommonDefines.h"
+#import "ProductCategory.h"
 
 @interface OrderProductDockView()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong)NSIndexPath *path;
@@ -55,7 +56,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OrderDockCell *cell =[OrderDockCell cellWithTableView:tableView];
-    cell.categoryText=_dockArray[indexPath.row][@"dockName"];
+    ProductCategory *category = _dockArray[indexPath.row][@"category"];
+    cell.categoryText=category.name;
     cell.backgroundColor=[UIColor whiteColor];
     return cell;
 }
@@ -70,7 +72,7 @@
         cell.ViewShow.hidden=YES;
     }
     if ([_dockDelegate respondsToSelector:@selector(dockClickIndexRow:index:indexPath:)]) {
-        [_dockDelegate dockClickIndexRow:_dockArray[indexPath.row][@"right"] index:_path indexPath:indexPath];
+        [_dockDelegate dockClickIndexRow:_dockArray[indexPath.row][@"products"] index:_path indexPath:indexPath];
     }
     //取消选中颜色
     OrderDockCell *cell = (OrderDockCell *)[tableView cellForRowAtIndexPath:indexPath];
