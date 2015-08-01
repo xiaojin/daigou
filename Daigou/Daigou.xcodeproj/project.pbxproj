@@ -37,6 +37,7 @@
 		3C3021791B514B60001A741D /* MEditProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021781B514B60001A741D /* MEditProductViewController.m */; };
 		3C344AA81B6CD46500818F19 /* OrderBasketPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */; };
 		3C344AAE1B6CED2D00818F19 /* ProductWithCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */; };
+		3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */; };
 		3C5661701B679B2E0082F49E /* OrderPickProductsMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */; };
 		3C5661731B679B650082F49E /* OrderProductDockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5661721B679B650082F49E /* OrderProductDockView.m */; };
 		3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5661751B679B910082F49E /* OrderProductsRightTableView.m */; };
@@ -138,6 +139,8 @@
 		3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderBasketPickerViewController.m; path = PickOrder/OrderBasketPickerViewController.m; sourceTree = "<group>"; };
 		3C344AAC1B6CED2D00818F19 /* ProductWithCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductWithCount.h; path = ProductCategory/ProductWithCount.h; sourceTree = "<group>"; };
 		3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductWithCount.m; path = ProductCategory/ProductWithCount.m; sourceTree = "<group>"; };
+		3C344AAF1B6CF6B600818F19 /* OrderBasketPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderBasketPickerCell.h; path = PickOrder/OrderBasketPickerCell.h; sourceTree = "<group>"; };
+		3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderBasketPickerCell.m; path = PickOrder/OrderBasketPickerCell.m; sourceTree = "<group>"; };
 		3C56616E1B679B2E0082F49E /* OrderPickProductsMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderPickProductsMainViewController.h; path = PickOrder/OrderPickProductsMainViewController.h; sourceTree = "<group>"; };
 		3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderPickProductsMainViewController.m; path = PickOrder/OrderPickProductsMainViewController.m; sourceTree = "<group>"; };
 		3C5661711B679B650082F49E /* OrderProductDockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderProductDockView.h; path = PickOrder/OrderProductDockView.h; sourceTree = "<group>"; };
@@ -512,6 +515,8 @@
 				3C56617B1B67AC6A0082F49E /* OrderProductsRightCell.m */,
 				3C344AA61B6CD46500818F19 /* OrderBasketPickerViewController.h */,
 				3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */,
+				3C344AAF1B6CF6B600818F19 /* OrderBasketPickerCell.h */,
+				3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */,
 			);
 			name = PickOrder;
 			sourceTree = "<group>";
@@ -884,6 +889,7 @@
 				3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */,
 				3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
+				3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
