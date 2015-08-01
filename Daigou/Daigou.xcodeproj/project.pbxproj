@@ -35,6 +35,8 @@
 		3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021721B5140E3001A741D /* ErrorHelper.m */; };
 		3C3021761B514B3B001A741D /* MShowProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021751B514B3B001A741D /* MShowProductDetailViewController.m */; };
 		3C3021791B514B60001A741D /* MEditProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021781B514B60001A741D /* MEditProductViewController.m */; };
+		3C344AA81B6CD46500818F19 /* OrderBasketPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */; };
+		3C344AAE1B6CED2D00818F19 /* ProductWithCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */; };
 		3C5661701B679B2E0082F49E /* OrderPickProductsMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */; };
 		3C5661731B679B650082F49E /* OrderProductDockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5661721B679B650082F49E /* OrderProductDockView.m */; };
 		3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5661751B679B910082F49E /* OrderProductsRightTableView.m */; };
@@ -132,6 +134,10 @@
 		3C3021751B514B3B001A741D /* MShowProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MShowProductDetailViewController.m; sourceTree = "<group>"; };
 		3C3021771B514B60001A741D /* MEditProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEditProductViewController.h; sourceTree = "<group>"; };
 		3C3021781B514B60001A741D /* MEditProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEditProductViewController.m; sourceTree = "<group>"; };
+		3C344AA61B6CD46500818F19 /* OrderBasketPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderBasketPickerViewController.h; path = PickOrder/OrderBasketPickerViewController.h; sourceTree = "<group>"; };
+		3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderBasketPickerViewController.m; path = PickOrder/OrderBasketPickerViewController.m; sourceTree = "<group>"; };
+		3C344AAC1B6CED2D00818F19 /* ProductWithCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductWithCount.h; path = ProductCategory/ProductWithCount.h; sourceTree = "<group>"; };
+		3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductWithCount.m; path = ProductCategory/ProductWithCount.m; sourceTree = "<group>"; };
 		3C56616E1B679B2E0082F49E /* OrderPickProductsMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderPickProductsMainViewController.h; path = PickOrder/OrderPickProductsMainViewController.h; sourceTree = "<group>"; };
 		3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderPickProductsMainViewController.m; path = PickOrder/OrderPickProductsMainViewController.m; sourceTree = "<group>"; };
 		3C5661711B679B650082F49E /* OrderProductDockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderProductDockView.h; path = PickOrder/OrderProductDockView.h; sourceTree = "<group>"; };
@@ -504,6 +510,8 @@
 				3C5661781B679D850082F49E /* OrderDockCell.m */,
 				3C56617A1B67AC6A0082F49E /* OrderProductsRightCell.h */,
 				3C56617B1B67AC6A0082F49E /* OrderProductsRightCell.m */,
+				3C344AA61B6CD46500818F19 /* OrderBasketPickerViewController.h */,
+				3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */,
 			);
 			name = PickOrder;
 			sourceTree = "<group>";
@@ -570,6 +578,8 @@
 				3C6D85691B4DDFD20076F4AE /* Product.m */,
 				3C6D856B1B4DDFE70076F4AE /* ProductManagement.h */,
 				3C6D856C1B4DDFE70076F4AE /* ProductManagement.m */,
+				3C344AAC1B6CED2D00818F19 /* ProductWithCount.h */,
+				3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */,
 			);
 			name = Product;
 			sourceTree = "<group>";
@@ -897,8 +907,10 @@
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,
 				3C6DDF291B4412EC000B8152 /* MEditDetailCell.m in Sources */,
 				3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */,
+				3C344AAE1B6CED2D00818F19 /* ProductWithCount.m in Sources */,
 				19B0F2A5A729CC3A56F1B82E /* MineViewController.m in Sources */,
 				3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */,
+				3C344AA81B6CD46500818F19 /* OrderBasketPickerViewController.m in Sources */,
 				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,
 				3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */,
 				3C6DDF261B441156000B8152 /* MEditCustomInfoViewController.m in Sources */,

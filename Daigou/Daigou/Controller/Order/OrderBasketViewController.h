@@ -11,4 +11,6 @@
 @class OrderItem;
 @interface OrderBasketViewController : UIViewController
 - (instancetype)initwithOrderItem :(OrderItem *)orderitem withProducts:(NSArray *)products;
+- (void)refreshBasketContent;
+
 @end

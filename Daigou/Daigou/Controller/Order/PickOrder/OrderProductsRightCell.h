@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 @class Product;
 @interface OrderProductsRightCell : UITableViewCell
-@property (nonatomic, strong) Product *rightData;
+@property (nonatomic, strong) Product *product;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
-@property (nonatomic, copy) void (^TapActionBlock)(NSInteger pageIndex, NSInteger money, NSInteger key);
+@property (nonatomic, copy) void (^TapActionBlock)(NSInteger pageIndex, NSInteger money, Product * product);
 @end

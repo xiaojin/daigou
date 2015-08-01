@@ -58,8 +58,7 @@
 }
 
 - (void)testInsertCustomInfo{
-    NSArray *customes = [customManage getCustomInfo];
-
+    //NSArray *customes = [customManage getCustomInfo];
     CustomInfo *custom = [[CustomInfo alloc]init];
     [custom setName:@"Lani"];
     [custom setEmail:@"Lani@163.com"];

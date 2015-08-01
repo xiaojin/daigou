@@ -90,12 +90,12 @@
     
 }
 
--(void)setRightData:(Product *)rightData
+-(void)setProduct:(Product *)rightData
 {
     
-    _rightData=rightData;
+    _product=rightData;
     _prodImage.frame=(CGRect){5,15,65,65};
-    NSString *prodImageString = _rightData.picture? _rightData.picture : @"default";
+    NSString *prodImageString = _product.picture? _product.picture : @"default";
     _prodImage.image=[UIImage imageNamed:prodImageString];
     _prodImage.layer.masksToBounds=YES;
     _prodImage.layer.cornerRadius=6;
@@ -117,7 +117,7 @@
     
     
     
-    NSString *prodNameText =_rightData.name;
+    NSString *prodNameText =_product.name;
     CGRect prodNameRect =[prodNameText boundingRectWithSize:CGSizeMake(kWindowWidth-75-CGRectGetMaxX(_prodImage.frame)-10, 35) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil] context:nil];
     
     _prodName.text=prodNameText;
@@ -126,17 +126,17 @@
     _prodName.textAlignment=NSTextAlignmentJustified;
     _prodName.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame)+5,10},prodNameRect.size};
     
-    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_rightData.sellprice];
+    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_product.sellprice];
     CGSize prodMoneySize =[prodMoneyText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil]];
     _prodMoney.text=prodMoneyText;
     _prodMoney.font=Font(14);
     _prodMoney.textColor=RGB(255, 127, 0);
     _prodMoney.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame),CGRectGetMaxY(_prodImage.frame)-prodMoneySize.height-prodMoneySize.height*0.5},prodMoneySize};
     
-    if(_rightData.agentprice!=0.0f)
+    if(_product.agentprice!=0.0f)
     {
         _prodMoneyOriginalPrice.hidden=NO;
-        NSString *prodMoneyOriginalPriceText =[NSString stringWithFormat:@"代理价:%.2f",_rightData.agentprice];
+        NSString *prodMoneyOriginalPriceText =[NSString stringWithFormat:@"代理价:%.2f",_product.agentprice];
         CGSize prodMoneyOriginalPriceSize =[prodMoneyOriginalPriceText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(11),NSFontAttributeName, nil]];
         _prodMoneyOriginalPrice.text=prodMoneyOriginalPriceText;
         _prodMoneyOriginalPrice.font=Font(11);
@@ -185,7 +185,7 @@
     
     _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
     _quantity = [_prodQuantity.text integerValue];
-    _TapActionBlock(_quantity,_rightData.saleprice ,_rightData.pid);
+    _TapActionBlock(_quantity,_product.saleprice ,_product);
 }
 
 -(void)minusLeftClick
@@ -197,7 +197,7 @@
     --NumberInt;
     _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
     _quantity = [_prodQuantity.text integerValue];
-    _TapActionBlock(_quantity,_rightData.saleprice ,_rightData.pid);
+    _TapActionBlock(_quantity,_product.saleprice ,_product);
     if (NumberInt ==0) {
         return;
     }

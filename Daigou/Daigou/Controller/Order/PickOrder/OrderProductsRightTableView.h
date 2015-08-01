@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Product.h"
 @protocol RightTableViewDelegate <NSObject>
 
--(void)quantity:(NSInteger)quantity money:(NSInteger)money key:(NSInteger )key;
+-(void)quantity:(NSInteger)quantity money:(NSInteger)money product:(Product *)product;
 
 @end
 

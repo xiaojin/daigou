@@ -18,17 +18,19 @@
 #import <Masonry/Masonry.h>
 #import <ionicons/ionicons-codes.h>
 #import <ionicons/IonIcons.h>
-
+#import "OrderBasketPickerViewController.h"
+#import "ProductWithCount.h"
 
 @interface OrderPickProductsMainViewController () <DockTableViewDelegate,RightTableViewDelegate>
 @property (nonatomic, strong)OrderProductDockView *dockTableView;
 @property (nonatomic, strong)NSMutableArray *docksArray;
 @property (nonatomic, strong)OrderProductsRightTableView *rightProductsTableView;
-@property(nonatomic, weak) UILabel *totalSingular;
-@property(nonatomic, weak) UIImageView *cartImage;
-@property(nonatomic, strong) NSMutableArray *offsArray;
-//@property(nonatomic, weak) BALabel *bottomLabel;
-
+@property (nonatomic, weak) UILabel *totalSingular;
+@property (nonatomic, weak) UIImageView *cartImage;
+@property (nonatomic, strong) NSMutableArray *offsArray;
+@property (nonatomic, strong) NSMutableDictionary *cartDict;
+@property (nonatomic, strong) NSMutableDictionary *cartProductDict;
+@property (nonatomic, strong) UILabel *countlbl;
 @end
 
 @implementation OrderPickProductsMainViewController
@@ -80,14 +82,31 @@
     self.navigationController.navigationBar.translucent=NO;
     self.tabBarController.tabBar.translucent = NO;
     
-    //self.navigationItem.leftBarButtonItem =
-    UIView *cartButton = [[UIView alloc]init];
-    [cartButton setFrame:CGRectMake(0, 0, 35, 35)];
+    UIButton *cartButton = [[UIButton alloc]init];
+    [self.view addSubview:cartButton];
+    [cartButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).with.offset(15);
+        make.bottom.equalTo(self.view).with.offset(-10);
+        make.width.equalTo(@35);
+        make.height.equalTo(@35);
+    }];
     UIImage *cart = [IonIcons imageWithIcon:ion_ios_cart_outline iconColor:[UIColor blackColor] iconSize:35.0f imageSize:CGSizeMake(35.0f, 35.0f)];
     UIImageView *carView = [[UIImageView alloc]initWithImage:cart];
-    [carView setFrame:cartButton.frame];
     [cartButton addSubview:carView];
-    UILabel *countlbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 15, 15)];
+    [carView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cartButton);
+        make.top.equalTo(cartButton);
+        make.right.equalTo(cartButton);
+        make.bottom.equalTo(cartButton);
+    }];
+    UILabel *countlbl = [[UILabel alloc]init];
+    [cartButton addSubview:countlbl];
+    [countlbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cartButton);
+        make.top.equalTo(cartButton);
+        make.width.equalTo(@15);
+        make.height.equalTo(@15);
+    }];
     [countlbl setText:@"0"];
     countlbl.layer.masksToBounds = YES;
     countlbl.layer.cornerRadius = 7.5;
@@ -95,8 +114,13 @@
     countlbl.backgroundColor = [UIColor redColor];
     [countlbl setTextColor:[UIColor whiteColor]];
     [countlbl setFont:[UIFont systemFontOfSize:12.0f]];
-    [cartButton addSubview:countlbl];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithCustomView:cartButton];
+    _countlbl = countlbl;
+    [cartButton addTarget:self action:@selector(showCartContent) forControlEvents:UIControlEventTouchUpInside];
+   
+
+    _cartDict = [NSMutableDictionary dictionary];
+    _cartProductDict = [NSMutableDictionary dictionary];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(finishSelect)];
     self.navigationItem.rightBarButtonItem = rightButton;
     
 // 结算栏
@@ -153,7 +177,6 @@
 //    [bottomView addSubview:totalSingular];
 //    _totalSingular = totalSingular;
 //    
-//    _dic = [NSMutableDictionary dictionary];
 //    _key = [NSMutableArray array];
 }
 
@@ -164,35 +187,26 @@
 
 - (void)quantity:(NSInteger)quantity
            money:(NSInteger)money
-             key:(NSInteger)key {
-//    NSInteger addend = quantity * money;
-//    
-//    [_dic setObject:[NSString stringWithFormat:@"%ld", addend] forKey:key];
-//    //得到词典中所有KEY值
-//    NSEnumerator *enumeratorKey = [_dic keyEnumerator];
-//    //遍历所有KEY的值
-//    NSInteger total = 0;
-//    NSInteger totalSingularInt = 0;
-//    for (NSObject *object in enumeratorKey) {
-//        total += [_dic[object] integerValue];
-//        if ([_dic[object] integerValue] != 0) {
-//            totalSingularInt += 1;
-//            _totalSingular.hidden = NO;
-//        }
-//    }
-//    if (totalSingularInt == 0) {
-//        _totalSingular.hidden = YES;
-//        _bottomLabel.backgroundColor = [UIColor lightGrayColor];
-//        _bottomLabel.userInteractionEnabled = NO;
-//        _bottomLabel.text = @"请选购";
-//    } else {
-//        _bottomLabel.backgroundColor = [UIColor clearColor];
-//        _bottomLabel.userInteractionEnabled = YES;
-//        _bottomLabel.text=@"去结算";
-//    }
-//    _totalSingular.text=[NSString stringWithFormat:@"%ld",totalSingularInt];
-//    _totalPrice.text=[NSString stringWithFormat:@"￥%ld",total];
-    
+             product:(Product *)product{
+    NSInteger prodId = product.pid;
+    NSInteger addend = quantity;
+    ProductWithCount *productWithCount = [ProductWithCount new];
+    productWithCount.product = product;
+    productWithCount.productNum = addend;
+    [_cartDict setObject:productWithCount forKey:@(prodId)];
+    //得到词典中所有KEY值
+    NSEnumerator *enumeratorKey = [_cartDict keyEnumerator];
+    //遍历所有KEY的值
+    NSInteger totalSingularInt = 0;
+    for (NSObject *object in enumeratorKey) {
+        NSInteger number = [(ProductWithCount *)_cartDict[object] productNum];
+        if (number != 0) {
+            totalSingularInt += 1;
+        } else {
+            [_cartDict removeObjectForKey:object];
+        }
+    }
+    _countlbl.text = [NSString stringWithFormat:@"%ld",totalSingularInt];
 }
 
 - (void)dockClickIndexRow:(NSMutableArray *)array index:(NSIndexPath *)index indexPath:(NSIndexPath *)indexPath {
@@ -205,10 +219,28 @@
 //     [_rightProductsTableView setContentOffset:point];
 }
 
+- (void)finishSelect {
+    NSArray *controllers = self.navigationController.childViewControllers;
+    NSInteger length = [controllers count];
+    if ([[controllers objectAtIndex:length-2] isKindOfClass:[OrderBasketPickerViewController class]]) {
+//        OrderBasketViewController *showBaskView =  (OrderBasketViewController *)[controllers lastObject];
+        //showDetailView.customInfo = _customInfo;
+        //[showBaskView refreshBasketContent];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
--(void)cartImageClick
+
+- (void)showCartContent
 {
-    
+    NSMutableArray *products = [NSMutableArray array];
+    [_cartDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [products addObject:obj];
+    }];
+    OrderBasketPickerViewController *basketViewController = [[OrderBasketPickerViewController alloc]initWithProducts:products];
+    [self.navigationController presentViewController:basketViewController animated:YES completion:^{
+        
+    }];
 }
 
 - (NSArray *)fetchAllProduct:(ProductCategory *)category {
