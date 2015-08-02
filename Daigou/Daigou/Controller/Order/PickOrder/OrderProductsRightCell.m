@@ -30,6 +30,8 @@
 @property (weak ,nonatomic) UIView *prodMoneyOriginalPriceShow;
 
 @property (assign ,nonatomic)NSInteger quantity;
+
+@property (nonatomic, strong)UIButton *addToCart;
 @end
 
 @implementation OrderProductsRightCell
@@ -63,17 +65,9 @@
         [self.contentView addSubview:prodMoneyOriginalPriceShow];
         _prodMoneyOriginalPriceShow=prodMoneyOriginalPriceShow;
         
-        UILabel *prodQuantity = [[UILabel alloc]init];
-        [self.contentView addSubview:prodQuantity];
-        _prodQuantity=prodQuantity;
-        
-        UIButton *minusLeft=[[UIButton alloc]init];
-        [self.contentView addSubview:minusLeft];
-        _minusLeft=minusLeft;
-        
-        UIButton *plusRight=[[UIButton alloc]init];
-        [self.contentView addSubview:plusRight];
-        _plusRight=plusRight;
+        UIButton *addCartView = [[UIButton alloc]init];
+        [self.contentView addSubview:addCartView];
+        _addToCart = addCartView;
         
         UIView *viewShow =[[UIView alloc]initWithFrame:(CGRect){0,89.5,kWindowWidth,0.5}];
         viewShow.backgroundColor=[UIColor blackColor];
@@ -147,61 +141,20 @@
         _prodMoneyOriginalPrice.hidden=YES;
         
     }
-    //吧台加号
-    _plusRight.frame=(CGRect){kWindowWidth-75-10 -30,90-40,30,30};
-    _plusRight.layer.masksToBounds=YES;
-    _plusRight.layer.cornerRadius=30/2;
-    [_plusRight setTitle:@"+" forState:UIControlStateNormal];
-    [_plusRight setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_plusRight addTarget:self action:@selector(plusRightClick) forControlEvents:UIControlEventTouchUpInside];
-    _plusRight.titleLabel.font=Font(13);
-    _plusRight.layer.borderWidth = 1;
-    _plusRight.layer.borderColor = [[UIColor redColor] CGColor];
-    //吧台减号
-    _minusLeft.frame=(CGRect){kWindowWidth-75 -10 -30 -30 - 30 ,90-40,30,30};
-    _minusLeft.layer.masksToBounds=YES;
-    _minusLeft.layer.cornerRadius=30/2;
-    [_minusLeft setTitle:@"-" forState:UIControlStateNormal];
-    [_minusLeft setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_minusLeft addTarget:self action:@selector(minusLeftClick) forControlEvents:UIControlEventTouchUpInside];
-    _minusLeft.titleLabel.font=Font(13);
-    _minusLeft.layer.borderWidth = 1;
-    _minusLeft.layer.borderColor = [[UIColor redColor] CGColor];
     
-    CGFloat W =(kWindowWidth-75-10 -30)-CGRectGetMaxX(_minusLeft.frame);
-    _prodQuantity.frame=(CGRect){CGRectGetMaxX(_minusLeft.frame),90-40,W,30};
-    _prodQuantity.text=@"0";
-    _prodQuantity.textAlignment=NSTextAlignmentCenter;
-    _prodQuantity.font=Font(16);
+    [_addToCart setFrame:CGRectMake(kWindowWidth-165, 60, 80, 26)];
+    [_addToCart setTitle:@"加入购物车" forState:UIControlStateNormal];
+    [_addToCart setBackgroundColor:RGB(255, 127, 0)];
+    [_addToCart setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];
+    _addToCart.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+    [_addToCart addTarget:self action:@selector(addToCartAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)plusRightClick
+- (void)addToCartAction
 {
-    int NumberInt =[_prodQuantity.text intValue];
-    if (NumberInt ==99) {
-        return;
-    }
-    ++NumberInt;
-    
-    _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
-    _quantity = [_prodQuantity.text integerValue];
-    _TapActionBlock(_quantity,_product.saleprice ,_product);
+    _TapActionBlock(1,_product.saleprice ,_product);
 }
 
--(void)minusLeftClick
-{
-    int NumberInt =[_prodQuantity.text intValue];
-    if (NumberInt ==0) {
-        return;
-    }
-    --NumberInt;
-    _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
-    _quantity = [_prodQuantity.text integerValue];
-    _TapActionBlock(_quantity,_product.saleprice ,_product);
-    if (NumberInt ==0) {
-        return;
-    }
-}
 
 + (instancetype)cellWithTableView:(UITableView *)tableView
 {
