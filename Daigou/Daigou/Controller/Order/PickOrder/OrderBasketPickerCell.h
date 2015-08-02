@@ -11,5 +11,7 @@
 @interface OrderBasketPickerCell : UITableViewCell
 @property (nonatomic, strong) ProductWithCount *productCount;
 
-+ (instancetype)cellWithTableView:(UITableView *)tableView;
++ (instancetype)cellWithTableView:(UITableView *)tableView withCellIndex:(NSInteger)index;
+@property (nonatomic, copy) void (^TapActionBlock)(NSInteger cellIndex, ProductWithCount * product);
+
 @end

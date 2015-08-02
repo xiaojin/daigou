@@ -15,7 +15,7 @@
 
 @interface OrderBasketPickerViewController()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *products;
+@property (nonatomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) UIView *headView;
 @end
 
@@ -24,7 +24,7 @@
 
 - (instancetype)initWithProducts:(NSArray *)products {
     if (self = [super init]) {
-        _products = products;
+        _products = [NSMutableArray arrayWithArray:products];
     }
     return self;
 }
@@ -76,6 +76,14 @@
 }
 
 - (void)dismissBasketView {
+    NSMutableDictionary *cartProduct = [self getCartProductFromCache];
+    [_products enumerateObjectsUsingBlock:^(ProductWithCount * obj, NSUInteger idx, BOOL *stop) {
+        NSInteger prodID= obj.product.pid;
+        [cartProduct setObject:obj forKey:@(prodID)];
+    }];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:cartProduct forKey:CARTPRODUCTSCACHE];
+    
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -92,13 +100,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OrderBasketPickerCell *cell =[OrderBasketPickerCell cellWithTableView:tableView];
-//    cell.TapActionBlock=^(NSInteger pageIndex ,NSInteger money,Product *product){
-//        if ([self.rightDelegate respondsToSelector:@selector(quantity:money:product:)]) {
-//            [self.rightDelegate quantity:pageIndex money:money product:product];
-//        }
-//        
-//    };
+    OrderBasketPickerCell *cell =[OrderBasketPickerCell cellWithTableView:tableView withCellIndex:indexPath.row];
+    cell.TapActionBlock=^(NSInteger cellIndex, ProductWithCount * product){
+        [self refreshProductDataSource:cellIndex WithProduct:product];
+    };
     cell.backgroundColor=RGB(246, 246, 246);
     cell.productCount=_products[indexPath.row];
     return cell;
@@ -106,9 +111,18 @@
     
 }
 
+- (void)refreshProductDataSource:(NSInteger) cellIndex WithProduct:(ProductWithCount *)productWithCount {
+    [_products replaceObjectAtIndex:cellIndex withObject:productWithCount];
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+- (NSMutableDictionary *)getCartProductFromCache {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return (NSMutableDictionary *)[userDefaults valueForKey:CARTPRODUCTSCACHE];
 }
 
 @end

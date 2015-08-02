@@ -35,6 +35,23 @@
 
 @implementation OrderPickProductsMainViewController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self removeCareProductFromCache];
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSMutableDictionary *cartProduct = [self getCartProductFromCache];
+    if (cartProduct != nil) {
+        _cartDict = cartProduct;
+        [self refreshCartCount];
+    } else {
+        _cartDict = [NSMutableDictionary dictionary];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //
@@ -118,7 +135,6 @@
     [cartButton addTarget:self action:@selector(showCartContent) forControlEvents:UIControlEventTouchUpInside];
    
 
-    _cartDict = [NSMutableDictionary dictionary];
     _cartProductDict = [NSMutableDictionary dictionary];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(finishSelect)];
     self.navigationItem.rightBarButtonItem = rightButton;
@@ -189,23 +205,25 @@
            money:(NSInteger)money
              product:(Product *)product{
     NSInteger prodId = product.pid;
-    NSInteger addend = quantity;
-    ProductWithCount *productWithCount = [ProductWithCount new];
-    productWithCount.product = product;
-    productWithCount.productNum = addend;
+    ProductWithCount *productWithCount = nil;
+    if ([_cartDict objectForKey:@(prodId)]) {
+        productWithCount = [_cartDict objectForKey:@(prodId)];
+        productWithCount.productNum = productWithCount.productNum + quantity;
+    } else {
+        productWithCount = [ProductWithCount new];
+        productWithCount.product = product;
+        productWithCount.productNum = quantity;
+    }
     [_cartDict setObject:productWithCount forKey:@(prodId)];
+    [self refreshCartCount];
+}
+
+- (void)refreshCartCount {
     //得到词典中所有KEY值
     NSEnumerator *enumeratorKey = [_cartDict keyEnumerator];
     //遍历所有KEY的值
-    NSInteger totalSingularInt = 0;
-    for (NSObject *object in enumeratorKey) {
-        NSInteger number = [(ProductWithCount *)_cartDict[object] productNum];
-        if (number != 0) {
-            totalSingularInt += 1;
-        } else {
-            [_cartDict removeObjectForKey:object];
-        }
-    }
+    NSInteger totalSingularInt = [[enumeratorKey allObjects] count];
+    
     _countlbl.text = [NSString stringWithFormat:@"%ld",totalSingularInt];
 }
 
@@ -253,5 +271,18 @@
     return [categoryManage getCategory];
 }
 
+- (NSMutableDictionary *)getCartProductFromCache {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults valueForKey:CARTPRODUCTSCACHE];
+}
 
+- (void)storeCartProductInCache {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:_cartDict forKey:CARTPRODUCTSCACHE];
+}
+
+- (void)removeCareProductFromCache {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:CARTPRODUCTSCACHE];
+}
 @end

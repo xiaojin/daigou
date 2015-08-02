@@ -18,3 +18,4 @@ dispatch_once(&oncetoken, BLOCK); \
 #define kWindowWidth                        ([[UIScreen mainScreen] bounds].size.width)
 #define kWindowHeight                       ([[UIScreen mainScreen] bounds].size.height)
 #define Font(F) [UIFont systemFontOfSize:(F)]
+#define CARTPRODUCTSCACHE @"CARTPRODUCTSCACHE"

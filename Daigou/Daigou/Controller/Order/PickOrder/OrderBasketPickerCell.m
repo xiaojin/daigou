@@ -30,6 +30,8 @@
 @property (weak ,nonatomic) UIView *prodMoneyOriginalPriceShow;
 
 @property (assign ,nonatomic)NSInteger quantity;
+
+@property (assign ,nonatomic) NSInteger cellIndex;
 @end
 
 @implementation OrderBasketPickerCell
@@ -107,14 +109,7 @@
         _imageShow.textAlignment=NSTextAlignmentCenter;
         _imageShow.backgroundColor=RGB(255, 127, 0);
     }
-    //    }else
-    //    {
-    //        _imageShow.hidden=YES;
-    //    }
-    
-    
-    
-    
+ 
     NSString *prodNameText =_productCount.product.name;
     CGRect prodNameRect =[prodNameText boundingRectWithSize:CGSizeMake(kWindowWidth-75-CGRectGetMaxX(_prodImage.frame)-10, 35) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil] context:nil];
     
@@ -168,7 +163,7 @@
     
     CGFloat W =(kWindowWidth-75-10 -30)-CGRectGetMaxX(_minusLeft.frame);
     _prodQuantity.frame=(CGRect){CGRectGetMaxX(_minusLeft.frame),90-40,W,30};
-    _prodQuantity.text=@"0";
+    _prodQuantity.text= [NSString stringWithFormat:@"%ld" , _productCount.productNum];
     _prodQuantity.textAlignment=NSTextAlignmentCenter;
     _prodQuantity.font=Font(16);
 }
@@ -183,7 +178,8 @@
     
     _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
     _quantity = [_prodQuantity.text integerValue];
-   // _TapActionBlock(_quantity,_product.saleprice ,_productCount.product);
+    _productCount.productNum = _quantity;
+   _TapActionBlock(_cellIndex ,_productCount);
 }
 
 -(void)minusLeftClick
@@ -195,20 +191,21 @@
     --NumberInt;
     _prodQuantity.text =[NSString stringWithFormat:@"%d",NumberInt];
     _quantity = [_prodQuantity.text integerValue];
-    //_TapActionBlock(_quantity,_productCount.product.saleprice ,_productCount.product);
+    _productCount.productNum = _quantity;
+    _TapActionBlock(_cellIndex ,_productCount);
     if (NumberInt ==0) {
         return;
     }
 }
 
-+ (instancetype)cellWithTableView:(UITableView *)tableView
++ (instancetype)cellWithTableView:(UITableView *)tableView withCellIndex:(NSInteger)index
 {
     static NSString *ID = @"OrderBasketPickerCell";
     OrderBasketPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {
         cell = [[OrderBasketPickerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        //取消选中状态
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        cell.cellIndex = index;
     }
     return cell;
 }
