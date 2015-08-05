@@ -147,4 +147,61 @@
 - (void)setEname:(NSString *)ename {
     _ename = ename ? ename :@"";
 }
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeInteger:self.pid forKey:@"pid"];
+    [aCoder encodeInteger:self.categoryid forKey:@"categoryid"];
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.model forKey:@"model"];
+    [aCoder encodeInteger:self.brandid forKey:@"brandid"];
+    [aCoder encodeObject:self.barcode forKey:@"barcode"];
+    [aCoder encodeObject:self.quickid forKey:@"quickid"];
+    [aCoder encodeObject:self.picture forKey:@"picture"];
+    [aCoder encodeInteger:self.onshelf forKey:@"onshelf"];
+    [aCoder encodeFloat:self.rrp forKey:@"rrp"];
+    [aCoder encodeFloat:self.purchaseprice forKey:@"purchaseprice"];
+    [aCoder encodeFloat:self.costprice forKey:@"costprice"];
+    [aCoder encodeFloat:self.lowestprice forKey:@"lowestprice"];
+    [aCoder encodeFloat:self.agentprice forKey:@"agentprice"];
+    [aCoder encodeFloat:self.saleprice forKey:@"saleprice"];
+    [aCoder encodeFloat:self.sellprice forKey:@"sellprice"];
+    [aCoder encodeFloat:self.wight forKey:@"wight"];
+    [aCoder encodeObject:self.prodDescription forKey:@"prodDescription"];
+    [aCoder encodeInteger:self.want forKey:@"want"];
+    [aCoder encodeObject:self.avaibility forKey:@"avaibility"];
+    [aCoder encodeObject:self.function forKey:@"function"];
+    [aCoder encodeObject:self.sellpoint forKey:@"sellpoint"];
+    [aCoder encodeObject:self.note forKey:@"note"];
+    [aCoder encodeObject:self.ename forKey:@"ename"];
+}
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        self.pid = [aDecoder decodeIntegerForKey:@"pid"];
+        self.categoryid = [aDecoder decodeIntegerForKey:@"categoryid"];
+        self.name = [aDecoder decodeObjectForKey:@"name"];
+        self.model = [aDecoder decodeObjectForKey:@"model"];
+        self.brandid = [aDecoder decodeIntegerForKey:@"brandid"];
+        self.barcode = [aDecoder decodeObjectForKey:@"barcode"];
+        self.quickid = [aDecoder decodeObjectForKey:@"quickid"];
+        self.picture = [aDecoder decodeObjectForKey:@"picture"];
+        self.onshelf = [aDecoder decodeIntegerForKey:@"onshelf"];
+        self.rrp = [aDecoder decodeFloatForKey:@"rrp"];
+        self.purchaseprice = [aDecoder decodeFloatForKey:@"purchaseprice"];
+        self.costprice = [aDecoder decodeFloatForKey:@"costprice"];
+        self.lowestprice = [aDecoder decodeFloatForKey:@"lowestprice"];
+        self.agentprice = [aDecoder decodeFloatForKey:@"agentprice"];
+        self.saleprice = [aDecoder decodeFloatForKey:@"saleprice"];
+        self.sellprice = [aDecoder decodeFloatForKey:@"sellprice"];
+        self.wight = [aDecoder decodeFloatForKey:@"wight"];
+        self.prodDescription = [aDecoder decodeObjectForKey:@"prodDescription"];
+        self.want = [aDecoder decodeIntegerForKey:@"want"];
+        self.avaibility = [aDecoder decodeObjectForKey:@"avaibility"];
+        self.function = [aDecoder decodeObjectForKey:@"function"];
+        self.sellpoint = [aDecoder decodeObjectForKey:@"sellpoint"];
+        self.note = [aDecoder decodeObjectForKey:@"note"];
+        self.ename = [aDecoder decodeObjectForKey:@"ename"];
+    }
+    return self;
+}
+
 @end

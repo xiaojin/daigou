@@ -81,9 +81,7 @@
         NSInteger prodID= obj.product.pid;
         [cartProduct setObject:obj forKey:@(prodID)];
     }];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setValue:cartProduct forKey:CARTPRODUCTSCACHE];
-    
+    [self storeCartProductIntoCacheWithObejct:cartProduct];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -122,7 +120,14 @@
 
 - (NSMutableDictionary *)getCartProductFromCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    return (NSMutableDictionary *)[userDefaults valueForKey:CARTPRODUCTSCACHE];
+    NSMutableDictionary *carProducts = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:CARTPRODUCTSCACHE]];
+    return carProducts;
 }
 
+- (void)storeCartProductIntoCacheWithObejct:(NSObject *)obj{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:obj];
+    [userDefaults setValue:personEncodedObject forKey:CARTPRODUCTSCACHE];
+    [userDefaults synchronize];
+}
 @end

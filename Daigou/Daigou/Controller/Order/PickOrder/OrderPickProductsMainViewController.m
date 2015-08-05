@@ -204,17 +204,17 @@
 - (void)quantity:(NSInteger)quantity
            money:(NSInteger)money
              product:(Product *)product{
-    NSInteger prodId = product.pid;
+    NSString *prodId = [NSString stringWithFormat:@"%ld",(long)product.pid];
     ProductWithCount *productWithCount = nil;
-    if ([_cartDict objectForKey:@(prodId)]) {
-        productWithCount = [_cartDict objectForKey:@(prodId)];
+    if ([_cartDict objectForKey:prodId]) {
+        productWithCount = [_cartDict objectForKey:prodId];
         productWithCount.productNum = productWithCount.productNum + quantity;
     } else {
         productWithCount = [ProductWithCount new];
         productWithCount.product = product;
         productWithCount.productNum = quantity;
     }
-    [_cartDict setObject:productWithCount forKey:@(prodId)];
+    [_cartDict setObject:productWithCount forKey:prodId];
     [self refreshCartCount];
 }
 
@@ -255,6 +255,7 @@
     [_cartDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [products addObject:obj];
     }];
+    [self storeCartProductInCache];
     OrderBasketPickerViewController *basketViewController = [[OrderBasketPickerViewController alloc]initWithProducts:products];
     [self.navigationController presentViewController:basketViewController animated:YES completion:^{
         
@@ -273,12 +274,24 @@
 
 - (NSMutableDictionary *)getCartProductFromCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    return [userDefaults valueForKey:CARTPRODUCTSCACHE];
+    NSMutableDictionary *cartDict = [userDefaults objectForKey:CARTPRODUCTSCACHE];
+
+    [cartDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        ProductWithCount *carProduct = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
+        [cartDict setObject:carProduct forKey:key];
+    }];
+    
+    return cartDict;
 }
 
 - (void)storeCartProductInCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setValue:_cartDict forKey:CARTPRODUCTSCACHE];
+    [_cartDict enumerateKeysAndObjectsUsingBlock:^(id key, ProductWithCount * product, BOOL *stop) {
+        NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:product];
+        [_cartDict setObject:personEncodedObject forKey:key];
+    }];
+    [userDefaults setObject:_cartDict forKey:CARTPRODUCTSCACHE];
+    [userDefaults synchronize];
 }
 
 - (void)removeCareProductFromCache {

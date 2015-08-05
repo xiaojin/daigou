@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Product.h"
-@interface ProductWithCount : NSObject
+@interface ProductWithCount : NSObject<NSCoding>
 @property(nonatomic, strong)Product *product;
 @property(nonatomic, assign)NSInteger productNum;
 @end

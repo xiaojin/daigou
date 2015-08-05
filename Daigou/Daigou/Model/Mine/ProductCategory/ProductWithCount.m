@@ -10,4 +10,18 @@
 
 @implementation ProductWithCount
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:_product forKey:@"productobject"];
+    [aCoder encodeInteger:_productNum forKey:@"productNum"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        self.product = [aDecoder decodeObjectForKey:@"productobject"];
+        self.productNum = [aDecoder decodeIntForKey:@"productNum"];
+    }
+    return self;
+}
+
+
 @end
