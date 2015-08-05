@@ -43,7 +43,12 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
   // Dispose of any resources that can be recreated.
 }
 
+- (void)addOrderStatusView {
+    UIScrollView *orderStatusView = [[UIScrollView alloc]init];
+    [self.view addSubview:orderStatusView];
+    
 
+}
 - (void)addNewOrder {
     OAddNewOrderViewController *addNewOrderViewController = [[OAddNewOrderViewController alloc]
                                                              init];

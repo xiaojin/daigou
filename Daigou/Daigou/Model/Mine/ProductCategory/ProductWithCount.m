@@ -18,7 +18,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         self.product = [aDecoder decodeObjectForKey:@"productobject"];
-        self.productNum = [aDecoder decodeIntForKey:@"productNum"];
+        self.productNum = [aDecoder decodeIntegerForKey:@"productNum"];
     }
     return self;
 }

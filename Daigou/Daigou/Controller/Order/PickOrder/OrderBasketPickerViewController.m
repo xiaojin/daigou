@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) UIView *headView;
+@property (nonatomic, strong) NSMutableDictionary *cartDict;
 @end
 
 @implementation OrderBasketPickerViewController
@@ -73,15 +74,12 @@
         make.height.equalTo(@1);
     }];
     
+    _cartDict = [self getCartProductFromCache];
+    
 }
 
 - (void)dismissBasketView {
-    NSMutableDictionary *cartProduct = [self getCartProductFromCache];
-    [_products enumerateObjectsUsingBlock:^(ProductWithCount * obj, NSUInteger idx, BOOL *stop) {
-        NSInteger prodID= obj.product.pid;
-        [cartProduct setObject:obj forKey:@(prodID)];
-    }];
-    [self storeCartProductIntoCacheWithObejct:cartProduct];
+    [self storeCartProductIntoCache];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -120,14 +118,26 @@
 
 - (NSMutableDictionary *)getCartProductFromCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *carProducts = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:CARTPRODUCTSCACHE]];
-    return carProducts;
+    NSMutableDictionary *cartDict = [userDefaults objectForKey:CARTPRODUCTSCACHE];
+    NSMutableDictionary *newCartDict = [NSMutableDictionary dictionary];
+    [cartDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        ProductWithCount *carProduct = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
+        NSString *cartKey = key;
+        [newCartDict setObject:carProduct forKey:cartKey];
+    }];
+    
+    return newCartDict;
 }
 
-- (void)storeCartProductIntoCacheWithObejct:(NSObject *)obj{
+- (void)storeCartProductIntoCache{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:obj];
-    [userDefaults setValue:personEncodedObject forKey:CARTPRODUCTSCACHE];
+    [_products enumerateObjectsUsingBlock:^(ProductWithCount *obj, NSUInteger idx, BOOL *stop) {
+        NSString *cartKey = [NSString stringWithFormat:@"%ld",obj.product.pid];
+        NSData *productEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:obj];
+        [_cartDict setObject:productEncodedObject forKey:cartKey];
+    }];
+
+    [userDefaults setObject:_cartDict forKey:CARTPRODUCTSCACHE];
     [userDefaults synchronize];
 }
 @end

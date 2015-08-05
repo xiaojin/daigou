@@ -29,7 +29,6 @@
 @property (nonatomic, weak) UIImageView *cartImage;
 @property (nonatomic, strong) NSMutableArray *offsArray;
 @property (nonatomic, strong) NSMutableDictionary *cartDict;
-@property (nonatomic, strong) NSMutableDictionary *cartProductDict;
 @property (nonatomic, strong) UILabel *countlbl;
 @end
 
@@ -37,7 +36,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self removeCareProductFromCache];
+        [self removeCartProductFromCache];
     }
     return self;
 }
@@ -135,65 +134,9 @@
     [cartButton addTarget:self action:@selector(showCartContent) forControlEvents:UIControlEventTouchUpInside];
    
 
-    _cartProductDict = [NSMutableDictionary dictionary];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(finishSelect)];
     self.navigationItem.rightBarButtonItem = rightButton;
-    
-// 结算栏
-//    UIView *bottomView = [[UIView alloc]
-//                          initWithFrame:(CGRect){0, kWindowHeight - 50, kWindowWidth, 50}];
-//    bottomView.backgroundColor = UIColorRGBA(29, 29, 29, 1);
-//    [self.view addSubview:bottomView];
-//    
-//    BALabel *bottomLabel = [[BALabel alloc]
-//                            initWithFrame:(CGRect){kWindowWidth - 55 - 10, 50 / 2 - 24 / 2, 55, 24}];
-//    bottomLabel.text = @"请选购";
-//    bottomLabel.textColor = [UIColor whiteColor];
-//    bottomLabel.textAlignment = NSTextAlignmentCenter;
-//    bottomLabel.font = Font(13);
-//    bottomLabel.backgroundColor = [UIColor lightGrayColor];
-//    bottomLabel.layer.masksToBounds = YES;
-//    bottomLabel.layer.cornerRadius = 6;
-//    bottomLabel.layer.borderWidth = 1;
-//    bottomLabel.userInteractionEnabled = NO;
-//    [bottomLabel addTarget:self
-//                    action:@selector(bottomLabelClick)
-//          forControlEvents:BALabelControlEventTap];
-//    bottomLabel.layer.borderColor = [[UIColor whiteColor] CGColor];
-//    [bottomView addSubview:bottomLabel];
-//    _bottomLabel = bottomLabel;
-//    ion_ios_cart_outline
-//    UIImageView *cartImage =
-//    [[UIImageView alloc] initWithFrame:(CGRect){10, 5, 40, 40}];
-//    cartImage.image = [UIImage imageNamed:@"Home_Cart.jpg"];
-//    [bottomView addSubview:cartImage];
-//    _cartImage = cartImage;
-//    _quantityInt = 0;
-//    
-//    UILabel *totalPrice = [[UILabel alloc]
-//                           initWithFrame:(CGRect){CGRectGetMaxX(cartImage.frame) + 20,
-//                               50 / 2 - 16 / 2, 200, 16}];
-//    
-//    totalPrice.text = @"￥0";
-//    totalPrice.textColor = [UIColor whiteColor];
-//    totalPrice.font = Font(16);
-//    [bottomView addSubview:totalPrice];
-//    _totalPrice = totalPrice;
-//    
-//    UILabel *totalSingular =
-//    [[UILabel alloc] initWithFrame:(CGRect){35, 5, 15, 15}];
-//    totalSingular.text = @"0";
-//    totalSingular.hidden = YES;
-//    totalSingular.layer.masksToBounds = YES;
-//    totalSingular.layer.cornerRadius = 7.5;
-//    totalSingular.textAlignment = NSTextAlignmentCenter;
-//    totalSingular.backgroundColor = [UIColor redColor];
-//    totalSingular.textColor = [UIColor whiteColor];
-//    totalSingular.font = Font(13);
-//    [bottomView addSubview:totalSingular];
-//    _totalSingular = totalSingular;
-//    
-//    _key = [NSMutableArray array];
+
 }
 
 - (void)bottomLabelClick {
@@ -206,7 +149,7 @@
              product:(Product *)product{
     NSString *prodId = [NSString stringWithFormat:@"%ld",(long)product.pid];
     ProductWithCount *productWithCount = nil;
-    if ([_cartDict objectForKey:prodId]) {
+    if ([_cartDict valueForKey:prodId]) {
         productWithCount = [_cartDict objectForKey:prodId];
         productWithCount.productNum = productWithCount.productNum + quantity;
     } else {
@@ -228,16 +171,12 @@
 }
 
 - (void)dockClickIndexRow:(NSMutableArray *)array index:(NSIndexPath *)index indexPath:(NSIndexPath *)indexPath {
-
-//    [_rightProductsTableView setContentOffset:_rightProductsTableView.contentOffset animated:NO];
-//    _offsArray[index.row] =NSStringFromCGPoint(_rightProductsTableView.contentOffset);
     _rightProductsTableView.rightArray=array;
     [_rightProductsTableView reloadData];
-//    CGPoint point=CGPointFromString([_offsArray objectAtIndex:indexPath.row]);
-//     [_rightProductsTableView setContentOffset:point];
 }
 
 - (void)finishSelect {
+    [self updateOrderDataBase];
     NSArray *controllers = self.navigationController.childViewControllers;
     NSInteger length = [controllers count];
     if ([[controllers objectAtIndex:length-2] isKindOfClass:[OrderBasketPickerViewController class]]) {
@@ -275,27 +214,31 @@
 - (NSMutableDictionary *)getCartProductFromCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *cartDict = [userDefaults objectForKey:CARTPRODUCTSCACHE];
-
+    NSMutableDictionary *newCartDict = [NSMutableDictionary dictionary];
     [cartDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         ProductWithCount *carProduct = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
-        [cartDict setObject:carProduct forKey:key];
+        [newCartDict setObject:carProduct forKey:key];
     }];
     
-    return cartDict;
+    return newCartDict;
 }
 
 - (void)storeCartProductInCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [_cartDict enumerateKeysAndObjectsUsingBlock:^(id key, ProductWithCount * product, BOOL *stop) {
-        NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:product];
-        [_cartDict setObject:personEncodedObject forKey:key];
+        NSData *productEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:product];
+        [_cartDict setObject:productEncodedObject forKey:key];
     }];
     [userDefaults setObject:_cartDict forKey:CARTPRODUCTSCACHE];
     [userDefaults synchronize];
 }
 
-- (void)removeCareProductFromCache {
+- (void)removeCartProductFromCache {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:CARTPRODUCTSCACHE];
+}
+
+- (void)updateOrderDataBase {
+
 }
 @end

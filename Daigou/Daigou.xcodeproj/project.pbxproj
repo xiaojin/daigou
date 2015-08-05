@@ -178,7 +178,6 @@
 		3C6249991B3C268A008F34C7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3C64832F1B494BE800EFAE4E /* CustomInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomInfoTests.m; path = Model/Mine/CustomInfoTests.m; sourceTree = "<group>"; };
 		3C6483391B49642700EFAE4E /* daigou.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = daigou.db; sourceTree = "<group>"; };
-		3C64833B1B49643900EFAE4E /* daigou.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = daigou.db; path = Daigou/Main/daigou.db; sourceTree = "<group>"; };
 		3C6D85611B4BFBB10076F4AE /* DropDownListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropDownListView.h; path = DropDownMenu/DropDownListView.h; sourceTree = "<group>"; };
 		3C6D85621B4BFBB10076F4AE /* DropDownListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropDownListView.m; path = DropDownMenu/DropDownListView.m; sourceTree = "<group>"; };
 		3C6D85681B4DDFD20076F4AE /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Product.h; path = ProductCategory/Product.h; sourceTree = "<group>"; };
@@ -612,7 +611,6 @@
 		3C6EECB11B2C3D7B00C7478F = {
 			isa = PBXGroup;
 			children = (
-				3C64833B1B49643900EFAE4E /* daigou.db */,
 				3C6EECBC1B2C3D7B00C7478F /* Daigou */,
 				3C6EECD91B2C3D7B00C7478F /* DaigouTests */,
 				3C6EECBB1B2C3D7B00C7478F /* Products */,
