@@ -14,6 +14,9 @@
 #import "OAddNewOrderViewController.h"
 #import "CustomInfoManagement.h"
 #import "CustomInfo.h"
+#import <Masonry/Masonry.h>
+#import "CommonDefines.h"
+
 @interface OrderViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong)UITableView *orderListTableView;
 @property (nonatomic, strong)NSArray *orderItems;
@@ -35,6 +38,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
     self.navigationItem.rightBarButtonItem =editButton;
     [self.orderListTableView reloadData];
+    [self addOrderStatusView];
   // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -45,8 +49,81 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)addOrderStatusView {
     UIScrollView *orderStatusView = [[UIScrollView alloc]init];
+    [orderStatusView setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:orderStatusView];
     
+    [orderStatusView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.equalTo(@44);
+    }];
+    UILabel *purchaseStatusLbl = [[UILabel alloc]init];
+    [purchaseStatusLbl setText:@""];
+    [purchaseStatusLbl setFont:[UIFont systemFontOfSize:12.0f]];
+    purchaseStatusLbl.textColor = RGB(255, 255, 255);
+    [purchaseStatusLbl setTextAlignment:NSTextAlignmentCenter];
+    [orderStatusView addSubview:purchaseStatusLbl];
+    [purchaseStatusLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(orderStatusView);
+        make.top.equalTo(orderStatusView);
+        make.bottom.equalTo(orderStatusView);
+        make.width.equalTo(@30);
+    }];
+    
+    UILabel *unpestachedStatusLbl = [[UILabel alloc]init];
+    [unpestachedStatusLbl setText:@""];
+    [unpestachedStatusLbl setFont:[UIFont systemFontOfSize:12.0f]];
+    unpestachedStatusLbl.textColor = RGB(255, 255, 255);
+    [unpestachedStatusLbl setTextAlignment:NSTextAlignmentCenter];
+    [orderStatusView addSubview:unpestachedStatusLbl];
+    [unpestachedStatusLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(purchaseStatusLbl);
+        make.top.equalTo(orderStatusView);
+        make.bottom.equalTo(orderStatusView);
+        make.width.equalTo(@30);
+    }];
+
+    UILabel *transportedStatusLbl = [[UILabel alloc]init];
+    [transportedStatusLbl setText:@""];
+    [transportedStatusLbl setFont:[UIFont systemFontOfSize:12.0f]];
+    transportedStatusLbl.textColor = RGB(255, 255, 255);
+    [transportedStatusLbl setTextAlignment:NSTextAlignmentCenter];
+    [orderStatusView addSubview:transportedStatusLbl];
+    [transportedStatusLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(unpestachedStatusLbl);
+        make.top.equalTo(orderStatusView);
+        make.bottom.equalTo(orderStatusView);
+        make.width.equalTo(@30);
+    }];
+    
+    UILabel *receivedStatusLbl = [[UILabel alloc]init];
+    [receivedStatusLbl setText:@""];
+    [receivedStatusLbl setFont:[UIFont systemFontOfSize:12.0f]];
+    receivedStatusLbl.textColor = RGB(255, 255, 255);
+    [receivedStatusLbl setTextAlignment:NSTextAlignmentCenter];
+    [orderStatusView addSubview:receivedStatusLbl];
+    [receivedStatusLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(transportedStatusLbl);
+        make.top.equalTo(orderStatusView);
+        make.bottom.equalTo(orderStatusView);
+        make.width.equalTo(@30);
+    }];
+    
+    UILabel *finishStatusLbl = [[UILabel alloc]init];
+    [finishStatusLbl setText:@""];
+    [finishStatusLbl setFont:[UIFont systemFontOfSize:12.0f]];
+    finishStatusLbl.textColor = RGB(255, 255, 255);
+    [finishStatusLbl setTextAlignment:NSTextAlignmentCenter];
+    [orderStatusView addSubview:finishStatusLbl];
+    [finishStatusLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(receivedStatusLbl);
+        make.top.equalTo(orderStatusView);
+        make.bottom.equalTo(orderStatusView);
+        make.width.equalTo(@30);
+    }];
+    
+    orderStatusView.contentSize = CGSizeMake(CGRectGetMaxX(finishStatusLbl.frame), 44.0f);
 
 }
 - (void)addNewOrder {

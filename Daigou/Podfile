@@ -1,0 +1,17 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '6.0'
+
+target 'Daigou' do
+pod "AFNetworking", "~> 2.5.0"
+pod "FMDB", "~>2.5.0"
+pod "ionicons", "~> 2.0.1"
+pod "MJRefresh"
+pod "Masonry","~> 0.5.3"
+
+
+end
+
+target 'DaigouTests' do
+
+end
+
