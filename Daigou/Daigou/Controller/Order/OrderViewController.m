@@ -104,7 +104,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
         make.width.equalTo(self.view);
     }];
     self.unpestachedTableView.dataSource = self;
-    self.unpestachedTableView.dataSource = self;
+    self.unpestachedTableView.delegate = self;
     self.unpestachedTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.unpestachedTableView.bounds.size.width, 0.01f)];
 }
 
@@ -119,7 +119,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
         make.width.equalTo(self.view);
     }];
     self.transportTableView.dataSource = self;
-    self.transportTableView.dataSource = self;
+    self.transportTableView.delegate = self;
     self.transportTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.transportTableView.bounds.size.width, 0.01f)];
 }
 
@@ -134,7 +134,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
         make.width.equalTo(self.view);
     }];
     self.receivedTableView.dataSource = self;
-    self.receivedTableView.dataSource = self;
+    self.receivedTableView.delegate = self;
     self.receivedTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.receivedTableView.bounds.size.width, 0.01f)];
 }
 
@@ -149,7 +149,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
         make.width.equalTo(self.view);
     }];
     self.finishedTableView.dataSource = self;
-    self.finishedTableView.dataSource = self;
+    self.finishedTableView.delegate = self;
     self.finishedTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.finishedTableView.bounds.size.width, 0.01f)];
 }
 

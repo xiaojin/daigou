@@ -11,8 +11,8 @@
 #import "CustomInfo.h"
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
-#define ICONSIZE 35.0f
-#define IMAGEVIEWSIZE 45.0f
+#define ICONSIZE 25.0f
+#define IMAGEVIEWSIZE 35.0f
 #define CONTENTPADDINGLEFT 10.0f
 #define CONTENTPADDINGTOP 10.0f
 #define CONTENTPADDING 5.0f
@@ -37,6 +37,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    UIButton *statusButton = [[UIButton alloc]init];
+    statusButton setBackgroundImage:<#(UIImage *)#> forState:<#(UIControlState)#>
     self.statusImageView = [[UIImageView alloc]initWithImage:[self statusImage:self.orderItem.statu]];
     self.statusImageView.frame = CGRectMake(CONTENTPADDINGLEFT, CONTENTPADDINGTOP, IMAGEVIEWSIZE, IMAGEVIEWSIZE);
     [self.contentView addSubview:self.statusImageView];
