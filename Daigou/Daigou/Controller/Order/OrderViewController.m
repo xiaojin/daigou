@@ -18,11 +18,17 @@
 #import "CommonDefines.h"
 #define SCROLL_VIEW_HEIGHT 34
 #define LBL_DISTANCE 90
+#define CELL_HEIGHT 65
 @interface OrderViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong)UITableView *orderListTableView;
+@property (nonatomic, strong) UITableView *orderListTableView;
+@property (nonatomic, strong) UITableView *unpestachedTableView;
+@property (nonatomic, strong) UITableView *transportTableView;
+@property (nonatomic, strong) UITableView *receivedTableView;
+@property (nonatomic, strong) UITableView *finishedTableView;
 @property (nonatomic, strong) NSArray *orderItems;
 @property (nonatomic, strong) NSArray *custominfos;
 @property (nonatomic, strong) UIScrollView *orderStatusView;
+@property (nonatomic, strong) UIScrollView *orderMainScrollView;
 @property (nonatomic, strong) UILabel *purchaseStatusLbl;
 @property (nonatomic, strong) UILabel *unpestachedStatusLbl;
 @property (nonatomic, strong) UILabel *transportedStatusLbl;
@@ -39,22 +45,114 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self fetchAllOrders];
     [self fetchAllClients];
     [self addOrderStatusView];
-    self.orderListTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    [self.view addSubview:self.orderListTableView];
-    [self.orderListTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view);
-        make.top.equalTo(_orderStatusView.mas_bottom);
-        make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-    }];
-    self.orderListTableView.dataSource = self;
-    self.orderListTableView.delegate = self;
-    self.orderListTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.orderListTableView.bounds.size.width, 0.01f)];
+    [self initScrollView];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
     self.navigationItem.rightBarButtonItem =editButton;
     [self.orderListTableView reloadData];
   // Do any additional setup after loading the view, typically from a nib.
 }
+- (void)initScrollView {
+    _orderMainScrollView = [[UIScrollView alloc] initWithFrame: CGRectZero];
+    [self.view addSubview:_orderMainScrollView];
+    [_orderMainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_orderStatusView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
+    UIView *container = [UIView new];
+    [_orderMainScrollView addSubview:container];
+    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_orderMainScrollView);
+        make.height.equalTo(_orderMainScrollView);
+    }];
+    
+    [self initOrderTableView];
+    [self initUnpestachedTableView];
+    [self initTransportTableView];
+    [self initReceivedTableView];
+    [self initFinishedTableView];
+    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_finishedTableView.mas_right);
+    }];
+    _orderMainScrollView.pagingEnabled = YES;
+}
+
+- (void)initOrderTableView {
+    self.orderListTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.orderListTableView.rowHeight = CELL_HEIGHT;
+    [self.orderMainScrollView addSubview:self.orderListTableView];
+    [self.orderListTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.orderMainScrollView);
+        make.top.equalTo(_orderStatusView.mas_bottom);
+        make.width.equalTo(self.view);
+        make.bottom.equalTo(self.orderMainScrollView);
+    }];
+    self.orderListTableView.dataSource = self;
+    self.orderListTableView.delegate = self;
+    self.orderListTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.orderListTableView.bounds.size.width, 0.01f)];
+}
+
+- (void)initUnpestachedTableView {
+    self.unpestachedTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.unpestachedTableView.rowHeight = CELL_HEIGHT;
+    [self.orderMainScrollView addSubview:self.unpestachedTableView];
+    [self.unpestachedTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_orderListTableView.mas_right);
+        make.top.equalTo(_orderStatusView.mas_bottom);
+        make.bottom.equalTo(self.orderMainScrollView);
+        make.width.equalTo(self.view);
+    }];
+    self.unpestachedTableView.dataSource = self;
+    self.unpestachedTableView.dataSource = self;
+    self.unpestachedTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.unpestachedTableView.bounds.size.width, 0.01f)];
+}
+
+- (void)initTransportTableView {
+    self.transportTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.transportTableView.rowHeight = CELL_HEIGHT;
+    [self.orderMainScrollView addSubview:self.transportTableView];
+    [self.transportTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_unpestachedTableView.mas_right);
+        make.top.equalTo(_orderStatusView.mas_bottom);
+        make.bottom.equalTo(self.orderMainScrollView);
+        make.width.equalTo(self.view);
+    }];
+    self.transportTableView.dataSource = self;
+    self.transportTableView.dataSource = self;
+    self.transportTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.transportTableView.bounds.size.width, 0.01f)];
+}
+
+- (void)initReceivedTableView {
+    self.receivedTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.receivedTableView.rowHeight = CELL_HEIGHT;
+    [self.orderMainScrollView addSubview:self.receivedTableView];
+    [self.receivedTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_transportTableView.mas_right);
+        make.top.equalTo(_orderStatusView.mas_bottom);
+        make.bottom.equalTo(self.orderMainScrollView);
+        make.width.equalTo(self.view);
+    }];
+    self.receivedTableView.dataSource = self;
+    self.receivedTableView.dataSource = self;
+    self.receivedTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.receivedTableView.bounds.size.width, 0.01f)];
+}
+
+- (void)initFinishedTableView {
+    self.finishedTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.finishedTableView.rowHeight = CELL_HEIGHT;
+    [self.orderMainScrollView addSubview:self.finishedTableView];
+    [self.finishedTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_receivedTableView.mas_right);
+        make.top.equalTo(_orderStatusView.mas_bottom);
+        make.bottom.equalTo(self.orderMainScrollView);
+        make.width.equalTo(self.view);
+    }];
+    self.finishedTableView.dataSource = self;
+    self.finishedTableView.dataSource = self;
+    self.finishedTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.finishedTableView.bounds.size.width, 0.01f)];
+}
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
@@ -82,8 +180,8 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     
     _purchaseStatusLbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, LBL_DISTANCE, SCROLL_VIEW_HEIGHT-1)];
     [_purchaseStatusLbl setText:@"采购中"];
-    [_purchaseStatusLbl setFont:[UIFont systemFontOfSize:14.0f]];
-    _purchaseStatusLbl.textColor = RGB(0, 0, 0);
+    [_purchaseStatusLbl setFont:[UIFont systemFontOfSize:16.0f]];
+    _purchaseStatusLbl.textColor = RGB(241, 109, 52);
     [_purchaseStatusLbl setTextAlignment:NSTextAlignmentCenter];
     [_purchaseStatusLbl setUserInteractionEnabled:YES];
     UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectPurchageLbl)];
@@ -147,22 +245,37 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)selectPurchageLbl {
     [self updateLblstatus:_purchaseStatusLbl];
+    [self scrollToPage:0];
 }
 
 - (void)selectUnpestachedStatusLbl {
     [self updateLblstatus:_unpestachedStatusLbl];
+    [_orderStatusView scrollRectToVisible:_purchaseStatusLbl.frame animated:YES];
+    [self scrollToPage:1];
+
 }
 
 - (void)selectTransportedStatusLbl {
     [self updateLblstatus:_transportedStatusLbl];
+    [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
+    [self scrollToPage:2];
+
 }
 
 - (void)selectReceivedStatusLbl {
     [self updateLblstatus:_receivedStatusLbl];
+    [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
+    [self scrollToPage:3];
+
 }
 
 - (void)selectFinishStatusLbl {
     [self updateLblstatus:_finishStatusLbl];
+    [self scrollToPage:4];
+}
+
+- (void)scrollToPage:(NSInteger)index {
+    [_orderMainScrollView setContentOffset:CGPointMake(CGRectGetWidth(self.view.frame)*index, 0) animated:YES];
 }
 
 - (void)updateLblstatus:(UILabel *)selectedLbl {
@@ -231,11 +344,6 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 #pragma mark - tableview delegate
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 65.0f;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderItem *orderItem = (OrderItem *)[self.orderItems objectAtIndex:indexPath.row];
