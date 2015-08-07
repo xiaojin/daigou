@@ -19,3 +19,4 @@ dispatch_once(&oncetoken, BLOCK); \
 #define kWindowHeight                       ([[UIScreen mainScreen] bounds].size.height)
 #define Font(F) [UIFont systemFontOfSize:(F)]
 #define CARTPRODUCTSCACHE @"CARTPRODUCTSCACHE"
+#define THEMECOLOR [UIColor colorWithRed:241.0f/255.0 green:109.0f/255.0 blue:52.0f/255.0f alpha:1.0]
