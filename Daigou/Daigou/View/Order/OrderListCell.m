@@ -24,12 +24,24 @@
 #define LEABELINPUTFIELDGAPPING 10.0f
 #define FONTSIZE 12.0f
 @interface OrderListCell()
-@property(nonatomic, strong)UILabel *titleName;
-@property(nonatomic, strong)UILabel *detailInfo;
-@property(nonatomic, strong)UIImageView *statusImageView;
+@property(nonatomic, strong) UILabel *titleName;
+@property(nonatomic, strong) UILabel *detailInfo;
+@property(nonatomic, strong) UIImageView *statusImageView;
+@property(nonatomic, assign) OrderStatus orderStatus;
+@property(nonatomic, assign) NSInteger cellIndex;
 @end
 
+
+
 @implementation OrderListCell
+
+- (instancetype) initWithOrderStatus:(OrderStatus)status withIndex:(NSInteger)index{
+    self.cellIndex = index;
+    self.orderStatus = status;
+    return [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"orderlistcellIdentity"];
+}
+
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
     
@@ -54,7 +66,7 @@
     UIButton *editButton = [[UIButton alloc]init];
     [editButton setTitle:@"编辑" forState:UIControlStateNormal];
     [editButton setTitleColor:THEMECOLOR forState:UIControlStateNormal];
-    [editButton.titleLabel setFont:[UIFont systemFontOfSize:FONTSIZE]];
+    [editButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [editButton addTarget:self action:@selector(editOrder) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:editButton];
     [editButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -110,12 +122,11 @@
 }
 
 - (void)updateOrderStatus {
-
-
+    _TapStatusButtonBlock(_orderStatus, _cellIndex);
 }
 
 - (void)editOrder {
-
+    _TapEditBlock(_orderStatus, _cellIndex);
 }
 
 - (CGSize) initSizeWithText:(NSString *) text withSize:(CGSize) Size withFont:(UIFont*)font
