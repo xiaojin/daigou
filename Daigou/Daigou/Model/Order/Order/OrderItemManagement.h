@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class OrderItem,OProductItem;
+#import "OrderItem.h"
+@class OProductItem;
 @interface OrderItemManagement : NSObject
 + (instancetype)shareInstance;
 - (NSArray *)getOrderItems;
 - (BOOL)updateOrderItem:(OrderItem *)orderItem;
 - (NSArray *)getOrderProductsByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid;
+- (NSArray*)getOrderItemsByOrderStatus:(OrderStatus)status;
 @end

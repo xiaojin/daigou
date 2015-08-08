@@ -77,6 +77,39 @@
     return orderItemsArray;
 }
 
+- (NSArray*)getOrderItemsByOrderStatus:(OrderStatus)status {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from orderitem where statu = (?)",@(status)];
+    NSMutableArray *orderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        OrderItem *orderItem = [[OrderItem alloc]init];
+        orderItem.oid = (NSInteger)[rs intForColumn:@"oid"];
+        orderItem.clientid = (NSInteger)[rs intForColumn:@"clientid"];
+        orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
+        orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
+        orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
+        orderItem.address = [rs stringForColumn:@"address"];
+        orderItem.totoal = (float)[rs doubleForColumn:@"total"];
+        orderItem.discount = [rs doubleForColumn:@"discount"];
+        orderItem.delivery = [rs doubleForColumn:@"delivery"];
+        orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
+        orderItem.profit = [rs doubleForColumn:@"profit"];
+        orderItem.creatDate = [rs intForColumn:@"createDate"];
+        orderItem.shipDate = [rs intForColumn:@"shipDate"];
+        orderItem.deliverDate = [rs intForColumn:@"deliverDate"];
+        orderItem.payDate = [rs intForColumn:@"payDate"];
+        orderItem.note = [rs stringForColumn:@"note"];
+        orderItem.barcode = [rs stringForColumn:@"barcode"];
+        [orderItemsArray addObject:orderItem];
+    }
+    [_db close];
+    return orderItemsArray;
+
+}
+
 - (BOOL)checkIfOrderItmExists:(OrderItem *)ordeItem {
     if (![_db open]) {
         NSLog(@"Could not open db.");

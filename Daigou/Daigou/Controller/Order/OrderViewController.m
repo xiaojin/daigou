@@ -16,16 +16,17 @@
 #import "CustomInfo.h"
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
+#import "OrderStausListTableView.h"
+
 #define SCROLL_VIEW_HEIGHT 34
 #define LBL_DISTANCE 90
 #define CELL_HEIGHT 65
-@interface OrderViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) UITableView *orderListTableView;
-@property (nonatomic, strong) UITableView *unpestachedTableView;
-@property (nonatomic, strong) UITableView *transportTableView;
-@property (nonatomic, strong) UITableView *receivedTableView;
-@property (nonatomic, strong) UITableView *finishedTableView;
-@property (nonatomic, strong) NSArray *orderItems;
+@interface OrderViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@property (nonatomic, strong) OrderStausListTableView *orderListTableView;
+@property (nonatomic, strong) OrderStausListTableView *unpestachedTableView;
+@property (nonatomic, strong) OrderStausListTableView *transportTableView;
+@property (nonatomic, strong) OrderStausListTableView *receivedTableView;
+@property (nonatomic, strong) OrderStausListTableView *finishedTableView;
 @property (nonatomic, strong) NSArray *custominfos;
 @property (nonatomic, strong) UIScrollView *orderStatusView;
 @property (nonatomic, strong) UIScrollView *orderMainScrollView;
@@ -34,7 +35,7 @@
 @property (nonatomic, strong) UILabel *transportedStatusLbl;
 @property (nonatomic, strong) UILabel *receivedStatusLbl;
 @property (nonatomic, strong) UILabel *finishStatusLbl;
-
+@property (nonatomic, strong) OrderItem *orderItem;
 @end
 
 @implementation OrderViewController
@@ -42,13 +43,16 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-    [self fetchAllOrders];
     [self fetchAllClients];
     [self addOrderStatusView];
     [self initScrollView];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
     self.navigationItem.rightBarButtonItem =editButton;
     [self.orderListTableView reloadData];
+    [self.unpestachedTableView reloadData];
+    [self.transportTableView reloadData];
+    [self.receivedTableView reloadData];
+    [self.finishedTableView reloadData];
   // Do any additional setup after loading the view, typically from a nib.
 }
 - (void)initScrollView {
@@ -79,7 +83,9 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (void)initOrderTableView {
-    self.orderListTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.orderListTableView = [[OrderStausListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.orderListTableView.allowsSelection = NO;
+    self.orderListTableView.status = PURCHASED;
     self.orderListTableView.rowHeight = CELL_HEIGHT;
     [self.orderMainScrollView addSubview:self.orderListTableView];
     [self.orderListTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,7 +100,9 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (void)initUnpestachedTableView {
-    self.unpestachedTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.unpestachedTableView = [[OrderStausListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.unpestachedTableView.status = UNDISPATCH;
+    self.unpestachedTableView.allowsSelection = NO;
     self.unpestachedTableView.rowHeight = CELL_HEIGHT;
     [self.orderMainScrollView addSubview:self.unpestachedTableView];
     [self.unpestachedTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -109,7 +117,9 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (void)initTransportTableView {
-    self.transportTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.transportTableView = [[OrderStausListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.transportTableView.status = SHIPPED;
+    self.transportTableView.allowsSelection = NO;
     self.transportTableView.rowHeight = CELL_HEIGHT;
     [self.orderMainScrollView addSubview:self.transportTableView];
     [self.transportTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -124,7 +134,9 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (void)initReceivedTableView {
-    self.receivedTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.receivedTableView = [[OrderStausListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.receivedTableView.status = DELIVERD;
+    self.receivedTableView.allowsSelection = NO;
     self.receivedTableView.rowHeight = CELL_HEIGHT;
     [self.orderMainScrollView addSubview:self.receivedTableView];
     [self.receivedTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -139,7 +151,9 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (void)initFinishedTableView {
-    self.finishedTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.finishedTableView = [[OrderStausListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.finishedTableView.status = DONE;
+    self.finishedTableView.allowsSelection = NO;
     self.finishedTableView.rowHeight = CELL_HEIGHT;
     [self.orderMainScrollView addSubview:self.finishedTableView];
     [self.finishedTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -303,11 +317,6 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 
-- (void)fetchAllOrders {
-    self.orderItems = [NSArray array];
-    self.orderItems = [[OrderItemManagement shareInstance] getOrderItems];
-}
-
 - (void)fetchAllClients {
     CustomInfoManagement *customManagement = [CustomInfoManagement shareInstance];
     self.custominfos = [customManagement getCustomInfo];
@@ -328,7 +337,24 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.orderItems count];
+    NSInteger orderCount = 0;
+    if (tableView == self.orderListTableView) {
+         orderCount = [[self.orderListTableView orderList] count];
+    }
+    if (tableView == self.unpestachedTableView) {
+        orderCount = [[self.unpestachedTableView orderList] count];
+    }
+    if (tableView == self.transportTableView) {
+        orderCount = [[self.transportTableView orderList] count];
+    }
+    if (tableView == self.receivedTableView) {
+       orderCount = [[self.receivedTableView orderList] count];
+    }
+    if (tableView == self.finishedTableView) {
+        orderCount = [[self.finishedTableView orderList] count];
+    }
+    return orderCount;
+
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -337,18 +363,61 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     if (cell == nil) {
         cell = [[OrderListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderlistcellIdentity];
     }
-    OrderItem *item = [self.orderItems objectAtIndex:indexPath.row];
+    OrderStausListTableView *orderListTableView = nil;
+    if (tableView == self.orderListTableView) {
+        orderListTableView = self.orderListTableView;
+    }
+    if (tableView == self.unpestachedTableView) {
+        orderListTableView = self.unpestachedTableView;
+    }
+    if (tableView == self.transportTableView) {
+        orderListTableView = self.transportTableView;
+    }
+    if (tableView == self.receivedTableView) {
+         orderListTableView = self.receivedTableView;
+    }
+    if (tableView == self.finishedTableView) {
+        orderListTableView = self.finishedTableView;
+    }
+    cell.TapEditBlock = ^{
+        [self handleTapEditButtonWithIndex:indexPath withTableView:orderListTableView];
+    };
+    
+    cell.TapStatusButtonBlock = ^{
+        [self handleTapStatusButtonWithIndex:indexPath  withTableView:orderListTableView];
+    };
+    
+    OrderItem *item = (OrderItem *)[[orderListTableView orderList] objectAtIndex:indexPath.row];
     cell.orderItem = item;
     cell.custom = [self getCustomInfobyId:item.clientid];
     return cell;
 }
 
-#pragma mark - tableview delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OrderItem *orderItem = (OrderItem *)[self.orderItems objectAtIndex:indexPath.row];
+- (void)handleTapEditButtonWithIndex:(NSIndexPath *)indexPath withTableView:(OrderStausListTableView *) tableView{
+    NSArray *orderList = [tableView orderList];
+    OrderItem *orderItem = (OrderItem *)[orderList objectAtIndex:indexPath.row];
     OAddNewOrderViewController *editOrderViewContorller = [[OAddNewOrderViewController alloc]initWithOrderItem:orderItem withClientDetail:[self getCustomInfobyId:orderItem.clientid]];
     [self.navigationController pushViewController:editOrderViewContorller animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+- (void)handleTapStatusButtonWithIndex:(NSIndexPath *)indexPath withTableView:(OrderStausListTableView *) tableView{
+    NSArray *orderList = [tableView orderList];
+    self.orderItem = (OrderItem *)[orderList objectAtIndex:indexPath.row];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"修改订单状态" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [[OrderItemManagement shareInstance] updateOrderItem:self.orderItem];
+        [self.orderListTableView reloadData];
+        [self.unpestachedTableView reloadData];
+        [self.transportTableView reloadData];
+        [self.receivedTableView reloadData];
+        [self.finishedTableView reloadData];
+    }
+}
+
 @end

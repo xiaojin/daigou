@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 typedef enum {
     PURCHASED = 0,
-    PACKAGE = 10,
-    DELIVERD = 20,
-    SHIPPED = 30,
+    UNDISPATCH = 10,
+    SHIPPED = 20,
+    DELIVERD = 30,
     DONE = 40
 } OrderStatus;
 

@@ -12,7 +12,7 @@
 @interface OrderListCell : UITableViewCell
 @property(nonatomic, strong)OrderItem *orderItem;
 @property(nonatomic, strong)CustomInfo *custom;
-@property (nonatomic, copy) void (^TapEditBlock)(OrderStatus status,NSInteger index);
-@property (nonatomic, copy) void (^TapStatusButtonBlock)(OrderStatus status,NSInteger index);
+@property (nonatomic, copy) void (^TapEditBlock)();
+@property (nonatomic, copy) void (^TapStatusButtonBlock)();
 - (instancetype) initWithOrderStatus:(OrderStatus)status withIndex:(NSInteger)index;
 @end

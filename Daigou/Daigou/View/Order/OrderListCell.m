@@ -122,11 +122,11 @@
 }
 
 - (void)updateOrderStatus {
-    _TapStatusButtonBlock(_orderStatus, _cellIndex);
+    _TapStatusButtonBlock();
 }
 
 - (void)editOrder {
-    _TapEditBlock(_orderStatus, _cellIndex);
+    _TapEditBlock();
 }
 
 - (CGSize) initSizeWithText:(NSString *) text withSize:(CGSize) Size withFont:(UIFont*)font
@@ -138,9 +138,9 @@
 
 /**
  *红  PURCHASED
- *橙色 PACKAGE = 10,
- *黄色 DELIVERD = 20,
- *蓝色 SHIPPED = 30,
+ *橙色 UNDISPATCH = 10,
+ *黄色 DSHIPPED = 20,
+ *蓝色 ELIVERD = 30,
  *绿色 DONE = 40
  */
 - (UIImage *)statusImage:(OrderStatus)orderStatus {
@@ -149,13 +149,13 @@
         case PURCHASED:
             color = [UIColor redColor];
             break;
-        case PACKAGE:
+        case UNDISPATCH:
             color = [UIColor orangeColor];
             break;
-        case DELIVERD:
+        case SHIPPED:
             color = [UIColor yellowColor];
             break;
-        case SHIPPED:
+        case DELIVERD:
             color = [UIColor blueColor];
             break;
         case DONE:
