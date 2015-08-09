@@ -12,14 +12,14 @@
 
 
 // 发布时间
-- (NSString *)newsTime:(NSString *)newsTimes
+- (NSString *)newsTime:(NSDate *)dateTime;
 {
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = knewsTimeFormat;
     formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:kLocaleIdentifier];
-    
-    NSDate *date = [formatter dateFromString:newsTimes];
-    
+
+    NSDate *date = dateTime;
     NSDate *now = [NSDate date];
     
     // 比较帖子发布时间和当前时间

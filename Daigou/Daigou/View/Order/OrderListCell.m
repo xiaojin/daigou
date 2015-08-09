@@ -13,6 +13,10 @@
 #import <ionicons/ionicons-codes.h>
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
+#import "DateUtil.h"
+#import "DateUtil.h"
+#import "OrderItemManagement.h"
+#import "OProductItem.h"
 
 #define ICONSIZE 25.0f
 #define IMAGEVIEWSIZE 35.0f
@@ -87,7 +91,8 @@
         make.height.equalTo(@15);
     }];
     
-    NSString *priceString = @"总价: ¥123123 下单时间 1 分钟前";
+    
+    NSString *priceString = [NSString stringWithFormat:@"总价: $%.2f 下单时间 %@", [self caculateOrderTotalPrice],[self customeDateString]];
     UILabel *totalPriceLbl = [[UILabel alloc]init];
     totalPriceLbl = [[UILabel alloc]init];
     totalPriceLbl.font = [UIFont systemFontOfSize:FONTSIZE];
@@ -118,6 +123,20 @@
         make.bottom.equalTo(self.contentView).with.offset(-5);
     }];
 
+}
+
+- (NSString *)customeDateString {
+    NSDate *current = [NSDate dateWithTimeIntervalSince1970:self.orderItem.creatDate];
+    return [[[DateUtil alloc]init] newsTime:current];
+}
+
+- (float)caculateOrderTotalPrice {
+   NSArray *orderProducts = [[OrderItemManagement shareInstance] getOrderProductsByOrderId:self.orderItem.oid];
+    __block float totalPrice = 0.0f;
+    [orderProducts enumerateObjectsUsingBlock:^(OProductItem *obj, NSUInteger idx, BOOL *stop) {
+        totalPrice = totalPrice + obj.price;
+    }];
+    return totalPrice;
 }
 
 - (void)layoutSubviews

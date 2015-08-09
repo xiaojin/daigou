@@ -27,10 +27,10 @@ typedef enum {
 @property(nonatomic, assign)float delivery;
 @property(nonatomic, assign)float subtotal;
 @property(nonatomic, assign)float profit;
-@property(nonatomic,assign)NSInteger creatDate;
-@property(nonatomic,assign)NSInteger shipDate;
-@property(nonatomic,assign)NSInteger deliverDate;
-@property(nonatomic,assign)NSInteger payDate;
+@property(nonatomic,assign)double creatDate;
+@property(nonatomic,assign)double shipDate;
+@property(nonatomic,assign)double deliverDate;
+@property(nonatomic,assign)double payDate;
 @property(nonatomic, copy)NSString *note;
 @property(nonatomic, copy)NSString *barcode;
 

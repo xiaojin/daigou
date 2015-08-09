@@ -58,12 +58,14 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 {
     [super loadView];
     self.statusStringArray = @[@"采购中",@"待发货",@"运输中",@"已收获",@"已完成"];
-
+    
+    
     if (self.customInfo == nil) {
         self.customInfo = [[CustomInfo alloc]init];
     }
     if (self.orderItem == nil) {
         self.orderItem = [[OrderItem alloc]init];
+        self.orderItem.creatDate = [[NSDate date] timeIntervalSince1970];
     }
     
     [self fetchOrderProducts];

@@ -10,5 +10,5 @@
 #define knewsTimeFormat @"yyyyMMddHHmmss" //你要传过来日期的格式
 #define kLocaleIdentifier @"en_US"
 @interface DateUtil : NSObject
-- (NSString *)newsTime:(NSString *)newsTimes;
+- (NSString *)newsTime:(NSDate *)dateTime;
 @end
