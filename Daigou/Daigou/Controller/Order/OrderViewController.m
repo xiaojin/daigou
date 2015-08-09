@@ -406,11 +406,29 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     NSArray *orderList = [tableView orderList];
     self.orderItem = (OrderItem *)[orderList objectAtIndex:indexPath.row];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"修改订单状态" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [alertView show];
+    if (self.orderItem.statu != DONE) {
+        [alertView show];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+        switch (self.orderItem.statu) {
+            case PURCHASED:
+                self.orderItem.statu = UNDISPATCH;
+                break;
+            case UNDISPATCH:
+                self.orderItem.statu = SHIPPED;
+                break;
+            case SHIPPED:
+                self.orderItem.statu = DELIVERD;
+                break;
+            case DELIVERD:
+                self.orderItem.statu = DONE;
+                break;
+            case DONE:
+                break;
+        }
         [[OrderItemManagement shareInstance] updateOrderItem:self.orderItem];
         [self.orderListTableView reloadData];
         [self.unpestachedTableView reloadData];

@@ -44,14 +44,11 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-    
     }
     return self;
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
+- (void)makeSubView {
     UIButton *statusButton = [[UIButton alloc]init];
     [statusButton setBackgroundImage:[self statusImage:self.orderItem.statu] forState:UIControlStateNormal];
     [statusButton addTarget:self action:@selector(updateOrderStatus) forControlEvents:UIControlEventTouchUpInside];
@@ -77,6 +74,7 @@
     }];
     
     self.titleName = [[UILabel alloc]init];
+    self.titleName.text = @"";
     self.titleName.font = [UIFont systemFontOfSize:FONTSIZE];
     self.titleName.textColor = RGB(89, 89, 89);
     self.titleName.textAlignment = NSTextAlignmentLeft;
@@ -103,8 +101,9 @@
         make.right.equalTo(editButton).with.offset(-CONTENTPADDINGLEFT);
         make.height.equalTo(@(15));
     }];
-
+    
     self.detailInfo = [[UILabel alloc]init];
+    self.detailInfo.text = @"";
     self.detailInfo.font = [UIFont systemFontOfSize:FONTSIZE];
     self.detailInfo.textColor = RGB(89, 89, 89);
     self.detailInfo.textAlignment = NSTextAlignmentLeft;
@@ -118,7 +117,13 @@
         make.right.equalTo(editButton).with.offset(-CONTENTPADDINGLEFT);
         make.bottom.equalTo(self.contentView).with.offset(-5);
     }];
-    
+
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self makeSubView];
 }
 
 - (void)updateOrderStatus {

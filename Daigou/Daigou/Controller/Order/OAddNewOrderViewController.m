@@ -14,12 +14,19 @@
 #import "CustomInfo.h"
 #import "OrderItemManagement.h"
 #import "OProductItem.h"
+#import "UIPickerViewCell.h"
+
 #define ORDERTAGBASE 6000
-@interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate>
+#define kStatusPickerCellHeight 164
+
+@interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 @property(nonatomic, strong)UITableView *editTableView;
 @property(nonatomic, strong)NSArray *titleArray;
 @property(nonatomic, strong)NSArray *detailArray;
 @property(nonatomic, strong)NSArray *products;
+@property(nonatomic, strong)UIPickerViewCell *pickViewCell;
+@property(nonatomic, strong)NSArray *statusStringArray;
+@property(assign) BOOL statusPickerIsShowing;
 @end
 
 
@@ -42,10 +49,16 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     [self.editTableView reloadData];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self hideStatusPickerCell];
+}
 
 - (void)loadView
 {
     [super loadView];
+    self.statusStringArray = @[@"采购中",@"待发货",@"运输中",@"已收获",@"已完成"];
+
     if (self.customInfo == nil) {
         self.customInfo = [[CustomInfo alloc]init];
     }
@@ -85,14 +98,14 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 // TODO 小记，总计，youhui
 - (void) initValueForCell{
-    NSArray *firstSection = @[@"客户姓名",@"客户地址",@"货品清单"];
+    NSArray *firstSection = @[@"客户姓名",@"客户地址",@"货品清单",@"订单状态",@"状态选择"];
     NSArray *detailFirstSection = nil;
     NSArray *detailSecSection  = nil;
     if (self.orderItem.oid != 0) {
-        detailFirstSection = @[self.customInfo.name,self.customInfo.address,@(self.products.count)];
-        detailSecSection = @[@0,@0,@0,@""];
+        detailFirstSection = @[self.customInfo.name,self.customInfo.address,@(self.products.count),self.statusStringArray[self.orderItem.statu/10],@""];
+        detailSecSection = @[@0,@0,@0,@"",@""];
     } else {
-        detailFirstSection = @[@"",@"",@0];
+        detailFirstSection = @[@"",@"",@0,@"采购中",@""];
         detailSecSection = @[@0,@0,@0,@""];
     }
     NSArray *secSection = @[@"小记",@"优惠",@"总价",@"注释"];
@@ -103,17 +116,42 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OrderItemView *cell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
-    if (cell == nil) {
-        cell = [[OrderItemView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
-        cell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
-        if (indexPath.section == 0) {
-            cell.orderCellDelegate = self;
+    UITableViewCell *cell = nil;
+    if(indexPath.section == 0 && indexPath.row == 4) {
+        _pickViewCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
+        if (_pickViewCell == nil) {
+            _pickViewCell = [[UIPickerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
         }
+        _pickViewCell.pickView.dataSource = self;
+        _pickViewCell.pickView.delegate = self;
+        cell = _pickViewCell;
+        _pickViewCell.pickView.hidden = YES;
+        [_pickViewCell.pickView selectRow:(self.orderItem.statu/10) inComponent:0 animated:NO];
+    } else {
+        OrderItemView *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
+        if (orderCell == nil) {
+            orderCell = [[OrderItemView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
+            orderCell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
+            if (indexPath.section == 0) {
+                orderCell.orderCellDelegate = self;
+            }
+        }
+        
+        [orderCell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:[NSString stringWithFormat:@"%@",self.detailArray[indexPath.section][indexPath.row]]];
+        cell = orderCell;
+    }
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = self.editTableView.rowHeight;
+    
+    if (indexPath.section == 0 && indexPath.row == 4 ) {
+        height = self.statusPickerIsShowing ? kStatusPickerCellHeight : 0.0f;
     }
     
-    [cell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:[NSString stringWithFormat:@"%@",self.detailArray[indexPath.section][indexPath.row]]];
-    return cell;
+    return height;
 }
 
 #pragma mark - UITableViewDelegate
@@ -131,17 +169,76 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     NSInteger index = orderItemView.tag - ORDERTAGBASE;
     if (index/4 == 0) {
         if ((4-index) == 4) {
-            MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
-            [self.navigationController pushViewController:customInfo animated:YES];
+            [self handCustomCellTap];
         } else if ((4-index) ==2) {
-            OrderBasketViewController *orderBasket = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withProducts:self.products];
-           [self.navigationController pushViewController:orderBasket animated:YES];
+            [self handleProductCellTap];
+        } else if ((4 - index) == 1) {
+            [self handleStatusCellTap];
         }
     } else {
     
     
     }
    
+}
+
+- (void)handCustomCellTap {
+    MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
+    [self.navigationController pushViewController:customInfo animated:YES];
+}
+
+- (void)handleProductCellTap {
+    OrderBasketViewController *orderBasket = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withProducts:self.products];
+    [self.navigationController pushViewController:orderBasket animated:YES];
+}
+
+- (void)handleStatusCellTap {
+    if (self.statusPickerIsShowing) {
+        self.orderItem.statu =  (OrderStatus)[self.pickViewCell.pickView selectedRowInComponent:0]*10;
+        [self hideStatusPickerCell];
+        [self initValueForCell];
+        [self.editTableView reloadData];
+    } else {
+        [self resignFirstResponder];
+        [self showStatusPickerCell];
+    }
+}
+
+- (void) showStatusPickerCell {
+    self.statusPickerIsShowing = YES;
+    [self.editTableView beginUpdates];
+    [self.editTableView endUpdates];
+    self.pickViewCell.pickView.alpha = 0.0f;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.pickViewCell.pickView.alpha = 1.0f;
+    }];
+}
+
+- (void) hideStatusPickerCell {
+    self.statusPickerIsShowing = NO;
+    [self.editTableView beginUpdates];
+    [self.editTableView endUpdates];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.pickViewCell.pickView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.pickViewCell.pickView.hidden = YES;
+    }];
+}
+
+#pragma mark - UIPickerViewDelegate
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.statusStringArray.count;
+}
+#pragma mark - UIPickerViewDataSource
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return self.statusStringArray[row];
 }
 
 

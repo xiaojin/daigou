@@ -40,6 +40,7 @@
 		3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */; };
 		3C442A351B74D8E8008BF244 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C442A341B74D8E8008BF244 /* DateUtil.m */; };
 		3C442A381B760ACE008BF244 /* OrderStausListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C442A371B760ACE008BF244 /* OrderStausListTableView.m */; };
+		3C442A3C1B770B14008BF244 /* UIPickerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C442A3B1B770B14008BF244 /* UIPickerViewCell.m */; };
 		3C5661701B679B2E0082F49E /* OrderPickProductsMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */; };
 		3C5661731B679B650082F49E /* OrderProductDockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5661721B679B650082F49E /* OrderProductDockView.m */; };
 		3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5661751B679B910082F49E /* OrderProductsRightTableView.m */; };
@@ -147,6 +148,8 @@
 		3C442A341B74D8E8008BF244 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
 		3C442A361B760ACE008BF244 /* OrderStausListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStausListTableView.h; sourceTree = "<group>"; };
 		3C442A371B760ACE008BF244 /* OrderStausListTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderStausListTableView.m; sourceTree = "<group>"; };
+		3C442A3A1B770B14008BF244 /* UIPickerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPickerViewCell.h; path = Help/UIPickerViewCell.h; sourceTree = "<group>"; };
+		3C442A3B1B770B14008BF244 /* UIPickerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPickerViewCell.m; path = Help/UIPickerViewCell.m; sourceTree = "<group>"; };
 		3C56616E1B679B2E0082F49E /* OrderPickProductsMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderPickProductsMainViewController.h; path = PickOrder/OrderPickProductsMainViewController.h; sourceTree = "<group>"; };
 		3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderPickProductsMainViewController.m; path = PickOrder/OrderPickProductsMainViewController.m; sourceTree = "<group>"; };
 		3C5661711B679B650082F49E /* OrderProductDockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderProductDockView.h; path = PickOrder/OrderProductDockView.h; sourceTree = "<group>"; };
@@ -314,6 +317,7 @@
 		19B0F5CE6A77B4016CEF46B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3C442A391B770AC2008BF244 /* Help */,
 				19B0FC8D05008E59E2B085CA /* Add */,
 				19B0F100AB9F65AA637957B8 /* Mine */,
 				19B0F8DDCA4A348E3D3D3F95 /* Order */,
@@ -505,6 +509,15 @@
 				3C3021721B5140E3001A741D /* ErrorHelper.m */,
 				3C442A331B74D8E8008BF244 /* DateUtil.h */,
 				3C442A341B74D8E8008BF244 /* DateUtil.m */,
+			);
+			name = Help;
+			sourceTree = "<group>";
+		};
+		3C442A391B770AC2008BF244 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				3C442A3A1B770B14008BF244 /* UIPickerViewCell.h */,
+				3C442A3B1B770B14008BF244 /* UIPickerViewCell.m */,
 			);
 			name = Help;
 			sourceTree = "<group>";
@@ -921,6 +934,7 @@
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,
+				3C442A3C1B770B14008BF244 /* UIPickerViewCell.m in Sources */,
 				3C6DDF291B4412EC000B8152 /* MEditDetailCell.m in Sources */,
 				3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */,
 				3C344AAE1B6CED2D00818F19 /* ProductWithCount.m in Sources */,
