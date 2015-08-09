@@ -73,6 +73,9 @@
 
 - (void)showOrderItemsTableView {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.rowHeight = 100.0f;
     [self.view addSubview:self.tableView];
 }
 
@@ -87,10 +90,9 @@
 
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ORDERBASKETCELL"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ORDERBASKETCELL"];
-    }
+    OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
+    OrderBasketCellFrame * orderFrame = _orderItemFrames[indexPath.row];
+    cell.orderBasketCellFrame = orderFrame;
     return cell;
 }
 
@@ -98,7 +100,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 0;
+    return [self.products count];
 
 }
 

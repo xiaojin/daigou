@@ -104,7 +104,8 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     NSArray *detailFirstSection = nil;
     NSArray *detailSecSection  = nil;
     if (self.orderItem.oid != 0) {
-        detailFirstSection = @[self.customInfo.name,self.customInfo.address,@(self.products.count),self.statusStringArray[self.orderItem.statu/10],@""];
+        NSString *productList = [NSString stringWithFormat:@"一共有 %lu 件商品",(unsigned long)self.products.count];
+        detailFirstSection = @[self.customInfo.name,self.customInfo.address,productList,self.statusStringArray[self.orderItem.statu/10],@""];
         detailSecSection = @[@0,@0,@0,@"",@""];
     } else {
         detailFirstSection = @[@"",@"",@0,@"采购中",@""];
@@ -127,7 +128,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         _pickViewCell.pickView.dataSource = self;
         _pickViewCell.pickView.delegate = self;
         cell = _pickViewCell;
-        _pickViewCell.pickView.hidden = YES;
+         _pickViewCell.pickView.hidden = YES;
         [_pickViewCell.pickView selectRow:(self.orderItem.statu/10) inComponent:0 animated:NO];
     } else {
         OrderItemView *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
@@ -210,6 +211,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     self.statusPickerIsShowing = YES;
     [self.editTableView beginUpdates];
     [self.editTableView endUpdates];
+    self.pickViewCell.pickView.hidden = NO;
     self.pickViewCell.pickView.alpha = 0.0f;
     [UIView animateWithDuration:0.25 animations:^{
         self.pickViewCell.pickView.alpha = 1.0f;
