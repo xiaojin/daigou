@@ -10,9 +10,12 @@
 #import <ionicons/ionicons-codes.h>
 #import "OrderBasketCellFrame.h"
 #import "Product.h"
+#import <Masonry/Masonry.h>
+#import "CommonDefines.h"
+
 @interface OrderBasketCell()
 @property(nonatomic, retain)IBOutlet UILabel *lblTitle;
-@property(nonatomic, retain)IBOutlet UILabel *countLbl;
+@property(nonatomic, retain)IBOutlet UITextField *countField;
 @property(nonatomic, retain)IBOutlet UIImageView *imagePic;
 @property(nonatomic, retain)IBOutlet UIButton *editButton;
 @property(nonatomic, retain)IBOutlet UIButton *addButton;
@@ -34,44 +37,138 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self.contentView setBackgroundColor:RGB(238, 238, 238)];
+        UIView *bgView = [[UIView alloc] init];
+        [bgView setBackgroundColor:RGB(255, 255, 255)];
+        [self.contentView addSubview:bgView];
+        [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.contentView);
+            make.left.equalTo(self.contentView);
+            make.right.equalTo(self.contentView);
+            make.height.equalTo(@45);
+        }];
+        
+        
+        
         UILabel *lblTitle = [[UILabel alloc]init];
         [lblTitle setFont:ProductTitleFont];
-        [lblTitle setTextColor:[UIColor colorWithRed:36.0f/255.0f green:51.0f/255.0f blue:108.0f/255.0f alpha:1.0f]];
+        [lblTitle setTextColor:RGB(115, 115, 115)];
         [lblTitle setNumberOfLines:0];
-        [self addSubview:lblTitle];
+        [lblTitle setTextAlignment:NSTextAlignmentLeft];
+        [bgView addSubview:lblTitle];
         self.lblTitle = lblTitle;
+        [self.lblTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(bgView);
+            make.left.equalTo(bgView).with.offset(5);
+            make.right.equalTo(bgView).with.offset(-45);
+            make.bottom.equalTo(bgView);
+        }];
+        
+        
         
         UIButton *editProduct = [[UIButton alloc]init];
         [editProduct setTitle:@"编辑" forState:UIControlStateNormal];
         [editProduct addTarget:self action:@selector(editProductInfo:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:editProduct];
+        [editProduct setTitleColor:RGB(115, 115, 115) forState:UIControlStateNormal];
+        [bgView addSubview:editProduct];
         self.editButton = editProduct;
+        [self.editButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(bgView);
+            make.right.equalTo(bgView);
+            make.left.equalTo(self.lblTitle.mas_right);
+            make.bottom.equalTo(bgView);
+        }];
         
+        UIView *contentView = [[UIView alloc]init];
+        [contentView setBackgroundColor:RGB(248, 248, 248)];
+        [self.contentView addSubview:contentView];
+        [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(bgView.mas_bottom);
+            make.left.equalTo(self.contentView);
+            make.right.equalTo(self.contentView);
+            make.height.equalTo(@92);
+        }];
+        
+        UIImageView *imagePic = [[UIImageView alloc] init];
+        [contentView addSubview:imagePic];
+        self.imagePic = imagePic;
+        [self.imagePic mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(contentView).with.offset(5);
+            make.left.equalTo(contentView).with.offset(10);
+            make.width.equalTo(@82);
+            make.height.equalTo(@82);
+        }];
+        
+//        UIView *showDetailView = [[UIView alloc] init];
+//        showDetailView.hidden = YES;
+//        [contentView addSubview:showDetailView];
+//        [showDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(self.imagePic.mas_right).with.offset(5);
+//            make.right.equalTo(contentView);
+//            make.top.equalTo(contentView);
+//            make.bottom.equalTo(contentView);
+//        }];
+        
+        UIView *showEditView = [[UIView alloc] init];
+        [showEditView setBackgroundColor:[UIColor clearColor]];
+        showEditView.hidden = NO;
+        [contentView addSubview:showEditView];
+        [showEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.imagePic.mas_right).with.offset(5);
+            make.right.equalTo(contentView);
+            make.top.equalTo(contentView);
+            make.bottom.equalTo(contentView);
+        }];
         
         UIButton *addButton = [[UIButton alloc]init];
         [addButton addTarget:self action:@selector(addProductCount:) forControlEvents:UIControlEventTouchUpInside];
-        [addButton setBackgroundImage:[IonIcons imageWithIcon:ion_plus_round size:addButton.frame.size.width color:[UIColor blackColor]] forState:UIControlStateNormal];
-        [self addSubview:addButton];
+        [addButton setImage:[IonIcons imageWithIcon:ion_plus_round size:20.0f color:[UIColor blackColor]] forState:UIControlStateNormal];
+        [showEditView addSubview:addButton];
         self.addButton = addButton;
+
+        [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(showEditView);
+            make.top.equalTo(showEditView);
+            make.width.equalTo(@35.0f);
+            make.height.equalTo(self.addButton.mas_width);
+        }];
         
+        
+        UITextField *countField = [[UITextField alloc]init];
+        [countField setFont:ProductTitleFont];
+        [countField setTextColor:RGB(115, 115, 115)];
+        [showEditView addSubview:countField];
+        [countField setKeyboardType:UIKeyboardTypeNumberPad];
+        self.countField = countField;
+        [countField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.addButton.mas_right);
+            make.top.equalTo(showEditView);
+            make.height.equalTo(self.addButton.mas_height);
+            make.width.equalTo(@45);
+        }];
+        
+//
         UIButton *minButton = [[UIButton alloc]init];
         [minButton setBackgroundImage:[IonIcons imageWithIcon:ion_minus_round size:minButton.frame.size.width color:[UIColor blackColor]] forState:UIControlStateNormal];
-        [self addSubview:minButton];
+        [showEditView addSubview:minButton];
         self.minusButton = minButton;
-        
-        UILabel *countLbl = [[UILabel alloc]init];
-        [countLbl setFont:ProductTitleFont];
-        [countLbl setTextColor:[UIColor colorWithRed:36.0f/255.0f green:51.0f/255.0f blue:108.0f/255.0f alpha:1.0f]];
-        [countLbl setNumberOfLines:0];
-        [self addSubview:countLbl];
-        self.countLbl = countLbl;
-        
+        [minButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(countField.mas_right);
+            make.top.equalTo(showEditView);
+            make.width.equalTo(@35.0f);
+            make.height.equalTo(self.minusButton.mas_width);
+        }];
+ 
+//
 
-        UIImageView *imagePic = [[UIImageView alloc] init];
-        [self addSubview:imagePic];
-        self.imagePic = imagePic;
+     
     }
     return  self;
+}
+
+- (void) showEditView {
+
+
 }
 
 - (void)setOrderBasketCellFrame:(OrderBasketCellFrame *)orderBasketCellFrame
@@ -83,12 +180,12 @@
 
 - (void)updateFrame
 {
-    _lblTitle.frame = _orderBasketCellFrame.titleFrame;
-    _editButton.frame = _orderBasketCellFrame.editButtonFrame;
-    _addButton.frame = _orderBasketCellFrame.plusBtnFrame;
-    _minusButton.frame = _orderBasketCellFrame.minusLblFrame;
-    _countLbl.frame = _orderBasketCellFrame.countLblFrame;
-    _imagePic.frame = _orderBasketCellFrame.pictureFrame;
+//    _lblTitle.frame = _orderBasketCellFrame.titleFrame;
+//    _editButton.frame = _orderBasketCellFrame.editButtonFrame;
+//    _addButton.frame = _orderBasketCellFrame.plusBtnFrame;
+//    _minusButton.frame = _orderBasketCellFrame.minusLblFrame;
+//    _countLbl.frame = _orderBasketCellFrame.countLblFrame;
+//    _imagePic.frame = _orderBasketCellFrame.pictureFrame;
 }
 
 - (void)updateData
@@ -97,7 +194,7 @@
     Product *product = [_orderBasketCellFrame getProduct];
     _imagePic.image = [UIImage imageNamed:@"default.jpg"];
     [_lblTitle setText:[product name]];
-    [_countLbl setText:[NSString stringWithFormat:@"%@", @([productItem amount])]];
+    [_countField setText:[NSString stringWithFormat:@"%@", @([productItem amount])]];
     //TODO setProductImage
     
 }

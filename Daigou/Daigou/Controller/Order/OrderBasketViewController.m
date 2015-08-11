@@ -14,6 +14,7 @@
 #import "OrderBasketCell.h"
 #import "OProductItem.h"
 #import "OrderPickProductsMainViewController.h"
+#import "CommonDefines.h"
 
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong)UITableView *tableView;
@@ -75,7 +76,9 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 100.0f;
+    self.tableView.rowHeight = 142.0f;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView setBackgroundColor:RGB(238, 238, 238)];
     [self.view addSubview:self.tableView];
 }
 
@@ -91,6 +94,7 @@
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     OrderBasketCellFrame * orderFrame = _orderItemFrames[indexPath.row];
     cell.orderBasketCellFrame = orderFrame;
     return cell;
