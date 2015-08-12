@@ -12,14 +12,21 @@
 #import "Product.h"
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
+#import "UILabelStrikeThrough.h"
 
-@interface OrderBasketCell()
-@property(nonatomic, retain)IBOutlet UILabel *lblTitle;
-@property(nonatomic, retain)IBOutlet UITextField *countField;
-@property(nonatomic, retain)IBOutlet UIImageView *imagePic;
-@property(nonatomic, retain)IBOutlet UIButton *editButton;
-@property(nonatomic, retain)IBOutlet UIButton *addButton;
-@property(nonatomic, retain)IBOutlet UIButton *minusButton;
+#define ORIANGECOLOR RGB(255, 85, 3)
+#define TITLECOLOR RGB(115, 115, 115)
+@interface OrderBasketCell() {
+    BOOL editStatus;
+}
+@property(nonatomic, strong) UILabel *lblTitle;
+@property(nonatomic, strong) UITextField *countField;
+@property(nonatomic, strong) UIImageView *imagePic;
+@property(nonatomic, strong) UIButton *editButton;
+@property(nonatomic, strong) UIButton *addButton;
+@property(nonatomic, strong) UIButton *minusButton;
+@property(nonatomic, strong) UIView *showEditView;
+@property(nonatomic, strong) UIView *showDetailView;
 
 @end
 
@@ -52,7 +59,7 @@
         
         UILabel *lblTitle = [[UILabel alloc]init];
         [lblTitle setFont:ProductTitleFont];
-        [lblTitle setTextColor:RGB(115, 115, 115)];
+        [lblTitle setTextColor:TITLECOLOR];
         [lblTitle setNumberOfLines:0];
         [lblTitle setTextAlignment:NSTextAlignmentLeft];
         [bgView addSubview:lblTitle];
@@ -68,8 +75,9 @@
         
         UIButton *editProduct = [[UIButton alloc]init];
         [editProduct setTitle:@"编辑" forState:UIControlStateNormal];
+        [editProduct.titleLabel setFont:[UIFont systemFontOfSize:13.0f]];
         [editProduct addTarget:self action:@selector(editProductInfo:) forControlEvents:UIControlEventTouchUpInside];
-        [editProduct setTitleColor:RGB(115, 115, 115) forState:UIControlStateNormal];
+        [editProduct setTitleColor:TITLECOLOR forState:UIControlStateNormal];
         [bgView addSubview:editProduct];
         self.editButton = editProduct;
         [self.editButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -99,19 +107,61 @@
             make.height.equalTo(@82);
         }];
         
-//        UIView *showDetailView = [[UIView alloc] init];
-//        showDetailView.hidden = YES;
-//        [contentView addSubview:showDetailView];
-//        [showDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(self.imagePic.mas_right).with.offset(5);
-//            make.right.equalTo(contentView);
-//            make.top.equalTo(contentView);
-//            make.bottom.equalTo(contentView);
-//        }];
+        UIView *showDetailView = [[UIView alloc] init];
+        showDetailView.hidden = NO;
+        [contentView addSubview:showDetailView];
+        [showDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.imagePic.mas_right).with.offset(5);
+            make.right.equalTo(contentView);
+            make.top.equalTo(contentView);
+            make.bottom.equalTo(contentView);
+        }];
+        
+        UILabel *salePrice = [[UILabel alloc]init];
+        [salePrice setTextColor:ORIANGECOLOR];
+        salePrice.font = [UIFont systemFontOfSize:13.0f];
+        [salePrice setTextAlignment:NSTextAlignmentLeft];
+        [salePrice setText:@"$29"];
+        [showDetailView addSubview:salePrice];
+        [salePrice mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(showDetailView);
+            make.bottom.equalTo(showDetailView);
+            make.height.equalTo(@25);
+            make.width.equalTo(@45);
+        }];
+        
+        UILabelStrikeThrough *refPrice = [[UILabelStrikeThrough alloc]init];
+        refPrice.isWIthStrikeThrough = YES;
+        [refPrice setTextColor:[UIColor lightGrayColor]];
+        [refPrice setFont:[UIFont systemFontOfSize:11.0f]];
+        [refPrice setTextAlignment:NSTextAlignmentLeft];
+        [refPrice setText:@"$39"];
+        [showDetailView addSubview:refPrice];
+        [refPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(salePrice.mas_right);
+            make.bottom.equalTo(showDetailView);
+            make.height.equalTo(@25);
+            make.width.equalTo(@45);
+        }];
+        
+        UILabel *prodCount = [[UILabel alloc]init];
+        [prodCount setTextColor:TITLECOLOR];
+        [prodCount setFont:[UIFont systemFontOfSize:13.0f]];
+        [prodCount setTextAlignment:NSTextAlignmentLeft];
+        [prodCount setText:@"x12"];
+        [showDetailView addSubview:prodCount];
+        [prodCount mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(showDetailView).with.offset(-10);
+            make.bottom.equalTo(showDetailView);
+            make.height.equalTo(@25);
+            make.width.equalTo(@45);
+        }];
+        self.showDetailView = showDetailView;
+
         
         UIView *showEditView = [[UIView alloc] init];
         [showEditView setBackgroundColor:[UIColor clearColor]];
-        showEditView.hidden = NO;
+        showEditView.hidden = YES;
         [contentView addSubview:showEditView];
         [showEditView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.imagePic.mas_right).with.offset(5);
@@ -119,24 +169,36 @@
             make.top.equalTo(contentView);
             make.bottom.equalTo(contentView);
         }];
+
         
         UIButton *addButton = [[UIButton alloc]init];
-        [addButton addTarget:self action:@selector(addProductCount:) forControlEvents:UIControlEventTouchUpInside];
-        [addButton setImage:[IonIcons imageWithIcon:ion_plus_round size:20.0f color:[UIColor blackColor]] forState:UIControlStateNormal];
+        [addButton addTarget:self action:@selector(minusProductCount:) forControlEvents:UIControlEventTouchUpInside];
+        [addButton setImage:[IonIcons imageWithIcon:ion_minus_round size:18.0f color:RGB(115, 115, 115)] forState:UIControlStateNormal];
         [showEditView addSubview:addButton];
         self.addButton = addButton;
 
         [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(showEditView);
             make.top.equalTo(showEditView);
-            make.width.equalTo(@35.0f);
+            make.width.equalTo(@45.0f);
             make.height.equalTo(self.addButton.mas_width);
+        }];
+        
+        UIView *addBtnlineView = [[UIView alloc] init];
+        addBtnlineView.backgroundColor = [UIColor whiteColor];
+        [self.addButton addSubview:addBtnlineView];
+        [addBtnlineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.addButton);
+            make.top.equalTo(self.addButton).with.offset(6);
+            make.bottom.equalTo(self.addButton).with.offset(-6);
+            make.width.equalTo(@2);
         }];
         
         
         UITextField *countField = [[UITextField alloc]init];
         [countField setFont:ProductTitleFont];
-        [countField setTextColor:RGB(115, 115, 115)];
+        [countField setTextColor:RGB(48, 48, 48)];
+        [countField setTextAlignment:NSTextAlignmentCenter];
         [showEditView addSubview:countField];
         [countField setKeyboardType:UIKeyboardTypeNumberPad];
         self.countField = countField;
@@ -144,31 +206,58 @@
             make.left.equalTo(self.addButton.mas_right);
             make.top.equalTo(showEditView);
             make.height.equalTo(self.addButton.mas_height);
-            make.width.equalTo(@45);
+            make.width.equalTo(@65);
         }];
         
 //
         UIButton *minButton = [[UIButton alloc]init];
-        [minButton setBackgroundImage:[IonIcons imageWithIcon:ion_minus_round size:minButton.frame.size.width color:[UIColor blackColor]] forState:UIControlStateNormal];
+        [addButton addTarget:self action:@selector(addProductCount:) forControlEvents:UIControlEventTouchUpInside];
+        [minButton setImage:[IonIcons imageWithIcon:ion_plus_round size:18.0f color:RGB(115, 115, 115)] forState:UIControlStateNormal];
         [showEditView addSubview:minButton];
         self.minusButton = minButton;
-        [minButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.minusButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(countField.mas_right);
             make.top.equalTo(showEditView);
-            make.width.equalTo(@35.0f);
+            make.width.equalTo(@45.0f);
             make.height.equalTo(self.minusButton.mas_width);
+        }];
+        
+        UIView *lineView = [[UIView alloc] init];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [minButton addSubview:lineView];
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(minButton);
+            make.top.equalTo(minButton).with.offset(6);
+            make.bottom.equalTo(minButton).with.offset(-6);
+            make.width.equalTo(@2);
         }];
  
 //
-
+        UIButton *deleteButton = [[UIButton alloc]init];
+        [deleteButton setBackgroundColor:ORIANGECOLOR];
+        [deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+        [deleteButton setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];
+        [showEditView addSubview:deleteButton];
+        [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.minusButton.mas_right).with.offset(30);
+            make.top.equalTo(showEditView);
+            make.bottom.equalTo(showEditView);
+            make.right.equalTo(showEditView);
+        }];
+        
+        UIView *otherView = [[UIView alloc]init];
+        [otherView setBackgroundColor:[UIColor whiteColor]];
+        [showEditView addSubview:otherView];
+        [otherView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.equalTo(showEditView);
+            make.top.equalTo(self.addButton.mas_bottom);
+            make.trailing.equalTo(self.minusButton.mas_trailing);
+            make.height.equalTo(@2);
+        }];
+        self.showEditView = showEditView;
      
     }
     return  self;
-}
-
-- (void) showEditView {
-
-
 }
 
 - (void)setOrderBasketCellFrame:(OrderBasketCellFrame *)orderBasketCellFrame
@@ -202,13 +291,28 @@
 
 
 - (IBAction)addProductCount:(id)sender {
-
+    [self.countField resignFirstResponder];
 
 }
 
+- (IBAction)minusProductCount:(id)sender {
+    [self.countField resignFirstResponder];
+}
+
 - (IBAction)editProductInfo:(id)sender {
-    
-    
+    [self.countField resignFirstResponder];
+    if (!editStatus) {
+        editStatus = YES;
+        [self.editButton setTitle:@"完成" forState:UIControlStateNormal];
+        self.showDetailView.hidden = YES;
+        self.showEditView.hidden = NO;
+    } else {
+        editStatus = NO;
+        [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
+        self.showDetailView.hidden = NO;
+        self.showEditView.hidden = YES;
+
+    }
 }
 
 

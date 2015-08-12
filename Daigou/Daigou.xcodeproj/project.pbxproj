@@ -79,6 +79,7 @@
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
 		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
 		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
+		3CBF22ED1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +224,8 @@
 		3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductsViewController.m; sourceTree = "<group>"; };
 		3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketViewController.h; sourceTree = "<group>"; };
 		3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketViewController.m; sourceTree = "<group>"; };
+		3CBF22EB1B7B6A4D00F3EB72 /* UILabelStrikeThrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILabelStrikeThrough.h; path = Extension/UILabelStrikeThrough.h; sourceTree = "<group>"; };
+		3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UILabelStrikeThrough.m; path = Extension/UILabelStrikeThrough.m; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC5C4AF44B02D95DE319F4 /* Pods-Daigou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9DE06086462CEABFF0A4F0 /* Pods-Daigou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.release.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.release.xcconfig"; sourceTree = "<group>"; };
@@ -627,6 +630,8 @@
 			children = (
 				3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */,
 				3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */,
+				3CBF22EB1B7B6A4D00F3EB72 /* UILabelStrikeThrough.h */,
+				3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -948,6 +953,7 @@
 				3C6DDF231B440D4A000B8152 /* MAddCusInfoViewController.m in Sources */,
 				3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */,
 				3C3021761B514B3B001A741D /* MShowProductDetailViewController.m in Sources */,
+				3CBF22ED1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m in Sources */,
 				3C5661791B679D850082F49E /* OrderDockCell.m in Sources */,
 				3C3021621B4FDF09001A741D /* Brand.m in Sources */,
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
