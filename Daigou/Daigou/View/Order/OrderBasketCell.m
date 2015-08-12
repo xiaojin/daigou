@@ -171,26 +171,26 @@
         }];
 
         
-        UIButton *addButton = [[UIButton alloc]init];
-        [addButton addTarget:self action:@selector(minusProductCount:) forControlEvents:UIControlEventTouchUpInside];
-        [addButton setImage:[IonIcons imageWithIcon:ion_minus_round size:18.0f color:RGB(115, 115, 115)] forState:UIControlStateNormal];
-        [showEditView addSubview:addButton];
-        self.addButton = addButton;
+        UIButton *minusButton = [[UIButton alloc]init];
+        [minusButton addTarget:self action:@selector(minusProductCount:) forControlEvents:UIControlEventTouchUpInside];
+        [minusButton setImage:[IonIcons imageWithIcon:ion_minus_round size:18.0f color:RGB(115, 115, 115)] forState:UIControlStateNormal];
+        [showEditView addSubview:minusButton];
+        self.minusButton = minusButton;
 
-        [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.minusButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(showEditView);
             make.top.equalTo(showEditView);
             make.width.equalTo(@45.0f);
-            make.height.equalTo(self.addButton.mas_width);
+            make.height.equalTo(self.minusButton.mas_width);
         }];
         
-        UIView *addBtnlineView = [[UIView alloc] init];
-        addBtnlineView.backgroundColor = [UIColor whiteColor];
-        [self.addButton addSubview:addBtnlineView];
-        [addBtnlineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.addButton);
-            make.top.equalTo(self.addButton).with.offset(6);
-            make.bottom.equalTo(self.addButton).with.offset(-6);
+        UIView *minBtnlineView = [[UIView alloc] init];
+        minBtnlineView.backgroundColor = [UIColor whiteColor];
+        [self.minusButton addSubview:minBtnlineView];
+        [minBtnlineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.minusButton);
+            make.top.equalTo(self.minusButton).with.offset(6);
+            make.bottom.equalTo(self.minusButton).with.offset(-6);
             make.width.equalTo(@2);
         }];
         
@@ -203,34 +203,34 @@
         [countField setKeyboardType:UIKeyboardTypeNumberPad];
         self.countField = countField;
         [countField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.addButton.mas_right);
+            make.left.equalTo(self.minusButton.mas_right);
             make.top.equalTo(showEditView);
-            make.height.equalTo(self.addButton.mas_height);
+            make.height.equalTo(self.minusButton.mas_height);
             make.width.equalTo(@65);
         }];
         
 //
-        UIButton *minButton = [[UIButton alloc]init];
+        UIButton *addButton = [[UIButton alloc]init];
         [addButton addTarget:self action:@selector(addProductCount:) forControlEvents:UIControlEventTouchUpInside];
-        [minButton setImage:[IonIcons imageWithIcon:ion_plus_round size:18.0f color:RGB(115, 115, 115)] forState:UIControlStateNormal];
-        [showEditView addSubview:minButton];
-        self.minusButton = minButton;
-        [self.minusButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        [addButton setImage:[IonIcons imageWithIcon:ion_plus_round size:18.0f color:RGB(115, 115, 115)] forState:UIControlStateNormal];
+        [showEditView addSubview:addButton];
+        [addButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(countField.mas_right);
             make.top.equalTo(showEditView);
             make.width.equalTo(@45.0f);
-            make.height.equalTo(self.minusButton.mas_width);
+            make.height.equalTo(addButton.mas_width);
         }];
         
         UIView *lineView = [[UIView alloc] init];
         lineView.backgroundColor = [UIColor whiteColor];
-        [minButton addSubview:lineView];
+        [addButton addSubview:lineView];
         [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(minButton);
-            make.top.equalTo(minButton).with.offset(6);
-            make.bottom.equalTo(minButton).with.offset(-6);
+            make.left.equalTo(addButton);
+            make.top.equalTo(addButton).with.offset(6);
+            make.bottom.equalTo(addButton).with.offset(-6);
             make.width.equalTo(@2);
         }];
+        self.addButton = addButton;
  
 //
         UIButton *deleteButton = [[UIButton alloc]init];
@@ -239,7 +239,7 @@
         [deleteButton setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];
         [showEditView addSubview:deleteButton];
         [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.minusButton.mas_right).with.offset(30);
+            make.left.equalTo(addButton.mas_right).with.offset(30);
             make.top.equalTo(showEditView);
             make.bottom.equalTo(showEditView);
             make.right.equalTo(showEditView);
@@ -250,8 +250,8 @@
         [showEditView addSubview:otherView];
         [otherView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.equalTo(showEditView);
-            make.top.equalTo(self.addButton.mas_bottom);
-            make.trailing.equalTo(self.minusButton.mas_trailing);
+            make.top.equalTo(self.minusButton.mas_bottom);
+            make.trailing.equalTo(self.addButton.mas_trailing);
             make.height.equalTo(@2);
         }];
         self.showEditView = showEditView;
@@ -292,11 +292,26 @@
 
 - (IBAction)addProductCount:(id)sender {
     [self.countField resignFirstResponder];
-
+    NSString *countString = [self.countField text];
+    NSInteger count = countString.integerValue;
+    if (count > 98 || count == 99) {
+        count = 99;
+    } else {
+        count = count + 1;
+    }
+    [self.countField setText:[NSString stringWithFormat:@"%ld",(long)count]];
 }
 
 - (IBAction)minusProductCount:(id)sender {
     [self.countField resignFirstResponder];
+    NSString *countString = [self.countField text];
+    NSInteger count = countString.integerValue;
+    if (count < 1 || count == 1) {
+        count = 0;
+    } else {
+        count = count - 1;
+    }
+    [self.countField setText:[NSString stringWithFormat:@"%ld",(long)count]];
 }
 
 - (IBAction)editProductInfo:(id)sender {
