@@ -16,7 +16,7 @@
 
 #define ORIANGECOLOR RGB(255, 85, 3)
 #define TITLECOLOR RGB(115, 115, 115)
-@interface OrderBasketCell() {
+@interface OrderBasketCell() <UITextFieldDelegate>{
     BOOL editStatus;
 }
 @property(nonatomic, strong) UILabel *lblTitle;
@@ -196,6 +196,7 @@
         
         
         UITextField *countField = [[UITextField alloc]init];
+        countField.delegate = self;
         [countField setFont:ProductTitleFont];
         [countField setTextColor:RGB(48, 48, 48)];
         [countField setTextAlignment:NSTextAlignmentCenter];
@@ -208,6 +209,15 @@
             make.height.equalTo(self.minusButton.mas_height);
             make.width.equalTo(@65);
         }];
+        
+        UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+        numberToolbar.barStyle = UIBarStyleDefault;
+        numberToolbar.items = [NSArray arrayWithObjects:
+                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(doneWithNumberPad)],
+                               nil];
+        [numberToolbar sizeToFit];
+        countField.inputAccessoryView = numberToolbar;
         
 //
         UIButton *addButton = [[UIButton alloc]init];
@@ -330,5 +340,27 @@
     }
 }
 
+#pragma mark - UITextFieldDelege
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    _EditQuantiyActionBlock(12);
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSString *countString = [textField text];
+    NSInteger count = countString.integerValue;
+    if (count > 98 ) {
+        count = 99;
+    } else if(count == 0) {
+        count = 0;
+    }
+    [self.countField setText:[NSString stringWithFormat:@"%ld",(long)count]];
+}
+
+- (void) doneWithNumberPad {
+    [self.countField resignFirstResponder];
+}
 
 @end

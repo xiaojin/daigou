@@ -18,14 +18,6 @@
 #import "OProductItem.h"
 @class Product;
 @interface OrderBasketCellFrame : NSObject
-@property (nonatomic, assign, readonly) CGRect titleFrame;
-@property (nonatomic, assign, readonly) CGRect pictureFrame;
-@property (nonatomic, assign, readonly) CGFloat cellHeight;
-@property (nonatomic, assign, readonly) CGRect editButtonFrame;
-@property (nonatomic, assign, readonly) CGRect plusBtnFrame;
-@property (nonatomic, assign, readonly) CGRect countLblFrame;
-@property (nonatomic, assign, readonly) CGRect minusLblFrame;
-
 
 - (instancetype)initFrameWithOrderProduct:(OProductItem *)oProduct withViewFrame:(CGRect) rect;
 

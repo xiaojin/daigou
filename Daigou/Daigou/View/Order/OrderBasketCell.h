@@ -10,6 +10,7 @@
 @class OrderBasketCellFrame;
 @interface OrderBasketCell : UITableViewCell
 @property (nonatomic, strong) OrderBasketCellFrame *orderBasketCellFrame;
+@property (nonatomic, copy) void (^EditQuantiyActionBlock)(NSInteger number);
 
 + (instancetype) OrderWithCell:(UITableView *)tableview;
 

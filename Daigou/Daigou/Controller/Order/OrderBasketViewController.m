@@ -16,7 +16,9 @@
 #import "OrderPickProductsMainViewController.h"
 #import "CommonDefines.h"
 
-@interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate>
+@interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate> {
+    CGSize keyboardSize;
+}
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong) OrderItem *orderItem;
 @property(nonatomic, strong) UIView *emptyView;
@@ -40,6 +42,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addProduct)];
     [self checkBasketItems];
 }
@@ -91,12 +95,34 @@
     
 }
 
+#pragma mark - UINotification
+- (void)keyboardWillHide:(NSNotification *)sender {
+    NSTimeInterval duration = [[sender userInfo][UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = [[self tableView] contentInset];
+        edgeInsets.bottom = 0;
+        [[self tableView] setContentInset:edgeInsets];
+        edgeInsets = [[self tableView] scrollIndicatorInsets];
+        edgeInsets.bottom = 0;
+        [[self tableView] setScrollIndicatorInsets:edgeInsets];
+    }];
+}
+
+- (void)keyboardDidShow:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    keyboardSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+}
+
+
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     OrderBasketCellFrame * orderFrame = _orderItemFrames[indexPath.row];
     cell.orderBasketCellFrame = orderFrame;
+    cell.EditQuantiyActionBlock = ^(NSInteger number){
+        [self beginEditNumber:indexPath];
+    };
     return cell;
 }
 
@@ -113,4 +139,20 @@
 
 }
 
+
+#pragma mark - BasketCellDelegate 
+
+- (void)beginEditNumber:(NSIndexPath *)cellIndex {
+    CGFloat kbHeight = keyboardSize.height;
+    [UIView animateWithDuration:0.1 animations:^{
+        UIEdgeInsets edgeInsets = [[self tableView] contentInset];
+        edgeInsets.bottom = kbHeight;
+        [[self tableView] setContentInset:edgeInsets];
+        edgeInsets = [[self tableView] scrollIndicatorInsets];
+        edgeInsets.bottom = kbHeight;
+        [[self tableView] setScrollIndicatorInsets:edgeInsets];
+        [self.tableView scrollToRowAtIndexPath:cellIndex
+                              atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }];
+}
 @end
