@@ -75,6 +75,7 @@
 		3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED1C1B2C5E2300C7478F /* Images.xcassets */; };
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
+		3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */; };
 		3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */; };
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
 		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
@@ -216,6 +217,8 @@
 		3C6EED201B2C5E6100C7478F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3C6EED211B2C5E6100C7478F /* DGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGViewController.h; sourceTree = "<group>"; };
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
+		3C7794311B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+UITextFieldAccessory.h"; path = "Extension/UITextField+UITextFieldAccessory.h"; sourceTree = "<group>"; };
+		3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+UITextFieldAccessory.m"; path = "Extension/UITextField+UITextFieldAccessory.m"; sourceTree = "<group>"; };
 		3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAddNewOrderViewController.h; sourceTree = "<group>"; };
 		3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAddNewOrderViewController.m; sourceTree = "<group>"; };
 		3CA1A2951B56884200C0A74C /* OrderItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemView.h; path = Daigou/View/Order/OrderItemView.h; sourceTree = SOURCE_ROOT; };
@@ -632,6 +635,8 @@
 				3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */,
 				3CBF22EB1B7B6A4D00F3EB72 /* UILabelStrikeThrough.h */,
 				3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */,
+				3C7794311B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.h */,
+				3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -929,6 +934,7 @@
 				3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */,
 				3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
+				3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */,
 				3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */,

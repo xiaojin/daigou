@@ -64,19 +64,6 @@
         make.width.equalTo(@IMAGEVIEWSIZE);
     }];
     
-    UIButton *editButton = [[UIButton alloc]init];
-    [editButton setTitle:@"编辑" forState:UIControlStateNormal];
-    [editButton setTitleColor:THEMECOLOR forState:UIControlStateNormal];
-    [editButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
-    [editButton addTarget:self action:@selector(editOrder) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:editButton];
-    [editButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.contentView);
-        make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
-        make.bottom.equalTo(self.contentView).with.offset(CONTENTPADDINGTOP);
-        make.width.equalTo(@60);
-    }];
-    
     self.titleName = [[UILabel alloc]init];
     self.titleName.text = @"";
     self.titleName.font = [UIFont systemFontOfSize:FONTSIZE];
@@ -87,7 +74,7 @@
     [self.titleName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(CONTENTPADDINGTOP);
         make.left.equalTo(statusButton.mas_right).with.offset(CONTENTPADDINGLEFT);
-        make.right.equalTo(editButton).with.offset(-CONTENTPADDINGLEFT);
+        make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
         make.height.equalTo(@15);
     }];
     
@@ -103,7 +90,7 @@
     [totalPriceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.titleName.mas_bottom).with.offset(2);
         make.left.equalTo(statusButton.mas_right).with.offset(CONTENTPADDINGLEFT);
-        make.right.equalTo(editButton).with.offset(-CONTENTPADDINGLEFT);
+        make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
         make.height.equalTo(@(15));
     }];
     
@@ -119,9 +106,20 @@
     [self.detailInfo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(totalPriceLbl.mas_bottom).with.offset(2);
         make.left.equalTo(statusButton.mas_right).with.offset(CONTENTPADDINGLEFT);
-        make.right.equalTo(editButton).with.offset(-CONTENTPADDINGLEFT);
+        make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
         make.bottom.equalTo(self.contentView).with.offset(-5);
     }];
+    
+    UIButton *editButton = [[UIButton alloc]init];
+    [editButton addTarget:self action:@selector(editOrder) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:editButton];
+    [editButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView);
+        make.right.equalTo(self.contentView);
+        make.bottom.equalTo(self.contentView);
+        make.left.equalTo(self.detailInfo.mas_left);
+    }];
+    
 
 }
 

@@ -120,6 +120,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = nil;
+
     if(indexPath.section == 0 && indexPath.row == 4) {
         _pickViewCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
         if (_pickViewCell == nil) {

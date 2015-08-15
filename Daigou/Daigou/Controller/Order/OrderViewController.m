@@ -359,7 +359,16 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    
     OrderListCell * cell = [tableView dequeueReusableCellWithIdentifier:orderlistcellIdentity];
+    
+    for (UIView *view in cell.contentView.subviews) {
+        if ([view isKindOfClass:[UIView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
     if (cell == nil) {
         cell = [[OrderListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderlistcellIdentity];
     }

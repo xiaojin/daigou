@@ -13,7 +13,7 @@
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
 #import "UILabelStrikeThrough.h"
-
+#import "UITextField+UITextFieldAccessory.h"
 #define ORIANGECOLOR RGB(255, 85, 3)
 #define TITLECOLOR RGB(115, 115, 115)
 @interface OrderBasketCell() <UITextFieldDelegate>{
@@ -195,7 +195,7 @@
         }];
         
         
-        UITextField *countField = [[UITextField alloc]init];
+        UITextField *countField = [[UITextField alloc]initHasAccessory];
         countField.delegate = self;
         [countField setFont:ProductTitleFont];
         [countField setTextColor:RGB(48, 48, 48)];
@@ -210,14 +210,6 @@
             make.width.equalTo(@65);
         }];
         
-        UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-        numberToolbar.barStyle = UIBarStyleDefault;
-        numberToolbar.items = [NSArray arrayWithObjects:
-                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                               [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(doneWithNumberPad)],
-                               nil];
-        [numberToolbar sizeToFit];
-        countField.inputAccessoryView = numberToolbar;
         
 //
         UIButton *addButton = [[UIButton alloc]init];
@@ -264,7 +256,65 @@
             make.trailing.equalTo(self.addButton.mas_trailing);
             make.height.equalTo(@2);
         }];
+        
+        UILabel *sellPressTitle = [[UILabel alloc]init];
+        [sellPressTitle setTextColor:TITLECOLOR];
+        [sellPressTitle setFont:[UIFont systemFontOfSize:10.0f]];
+        [sellPressTitle setTextAlignment:NSTextAlignmentLeft];
+        [sellPressTitle setText:@"销售价格: ¥"];
+        [showEditView addSubview:sellPressTitle];
+        [sellPressTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(showEditView);
+            make.top.equalTo(otherView.mas_bottom);
+            make.height.equalTo(@20);
+            make.width.equalTo(@55);
+        }];
+        
+        UITextField *sellPrice = [[UITextField alloc]initHasAccessory];
+        sellPrice.delegate = self;
+        [sellPrice setFont:[UIFont systemFontOfSize:10.0f]];
+        [sellPrice setTextColor:TITLECOLOR];
+        [sellPrice setTextAlignment:NSTextAlignmentCenter];
+        [sellPrice setText:@"246"];
+        [showEditView addSubview:sellPrice];
+        [sellPrice setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+        [sellPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(showEditView);
+            make.top.equalTo(sellPressTitle.mas_bottom);
+            make.bottom.equalTo(showEditView);
+            make.right.equalTo(sellPressTitle.mas_right);
+        }];
+        
+        UILabel *boughtProductPriceTitle = [[UILabel alloc]init];
+        [boughtProductPriceTitle setTextColor:TITLECOLOR];
+        [boughtProductPriceTitle setFont:[UIFont systemFontOfSize:10.0f]];
+        [boughtProductPriceTitle setTextAlignment:NSTextAlignmentLeft];
+        [boughtProductPriceTitle setText:@"采购价格: $"];
+        [showEditView addSubview:boughtProductPriceTitle];
+        [boughtProductPriceTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(otherView.mas_right);
+            make.top.equalTo(otherView.mas_bottom);
+            make.height.equalTo(@20);
+            make.width.equalTo(@55);
+        }];
+        
+        UITextField *boughtPrice = [[UITextField alloc]initHasAccessory];
+        boughtPrice.delegate = self;
+        [boughtPrice setFont:[UIFont systemFontOfSize:10.0f]];
+        [boughtPrice setTextColor:TITLECOLOR];
+        [boughtPrice setTextAlignment:NSTextAlignmentCenter];
+        [boughtPrice setText:@"246"];
+        [showEditView addSubview:boughtPrice];
+        [boughtPrice setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+        [boughtPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(boughtProductPriceTitle.mas_left);
+            make.top.equalTo(boughtProductPriceTitle.mas_bottom);
+            make.bottom.equalTo(showEditView);
+            make.right.equalTo(boughtProductPriceTitle.mas_right);
+        }];
+        
         self.showEditView = showEditView;
+
      
     }
     return  self;
@@ -349,7 +399,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSString *countString = [textField text];
+    NSString *countString = [self.countField text];
     NSInteger count = countString.integerValue;
     if (count > 98 ) {
         count = 99;
@@ -357,10 +407,6 @@
         count = 0;
     }
     [self.countField setText:[NSString stringWithFormat:@"%ld",(long)count]];
-}
-
-- (void) doneWithNumberPad {
-    [self.countField resignFirstResponder];
 }
 
 @end
