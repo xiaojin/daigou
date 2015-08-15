@@ -17,8 +17,8 @@
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
 #import "OrderStausListTableView.h"
+#import "OrderDetailViewController.h"
 
-#define SCROLL_VIEW_HEIGHT 34
 #define LBL_DISTANCE 90
 #define CELL_HEIGHT 65
 @interface OrderViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
@@ -36,6 +36,7 @@
 @property (nonatomic, strong) UILabel *receivedStatusLbl;
 @property (nonatomic, strong) UILabel *finishStatusLbl;
 @property (nonatomic, strong) OrderItem *orderItem;
+@property (nonatomic, strong) NSArray *statusLabels;
 @end
 
 @implementation OrderViewController
@@ -57,6 +58,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 - (void)initScrollView {
     _orderMainScrollView = [[UIScrollView alloc] initWithFrame: CGRectZero];
+    _orderMainScrollView.delegate = self;
     [self.view addSubview:_orderMainScrollView];
     [_orderMainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
@@ -209,12 +211,12 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [_unpestachedStatusLbl setFont:[UIFont systemFontOfSize:14.0f]];
     _unpestachedStatusLbl.textColor = RGB(0, 0, 0);
     [_unpestachedStatusLbl setTextAlignment:NSTextAlignmentCenter];
-    [_orderStatusView addSubview:_unpestachedStatusLbl];
     [_unpestachedStatusLbl setUserInteractionEnabled:YES];
     UITapGestureRecognizer *unpestachedTapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectUnpestachedStatusLbl)];
     unpestachedTapgesture.numberOfTapsRequired = 1;
     [_unpestachedStatusLbl addGestureRecognizer:unpestachedTapgesture];
-    [_orderStatusView addSubview:_purchaseStatusLbl];
+    [_orderStatusView addSubview:_unpestachedStatusLbl];
+
  
 //
     _transportedStatusLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_unpestachedStatusLbl.frame), 0, LBL_DISTANCE, SCROLL_VIEW_HEIGHT-1)];
@@ -254,41 +256,59 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 //
     _orderStatusView.contentSize = CGSizeMake(CGRectGetMaxX(_finishStatusLbl.frame), SCROLL_VIEW_HEIGHT-1);
     [_orderStatusView setShowsHorizontalScrollIndicator:NO];
+    
+    _statusLabels = @[_purchaseStatusLbl,_unpestachedStatusLbl,_transportedStatusLbl,_receivedStatusLbl,_finishStatusLbl];
 
 }
 
 - (void)selectPurchageLbl {
-    [self updateLblstatus:_purchaseStatusLbl];
-    [self scrollToPage:0];
+    [self scrollToStaus:0];
 }
 
 - (void)selectUnpestachedStatusLbl {
-    [self updateLblstatus:_unpestachedStatusLbl];
-    [_orderStatusView scrollRectToVisible:_purchaseStatusLbl.frame animated:YES];
-    [self scrollToPage:1];
+    [self scrollToStaus:1];
 
 }
 
 - (void)selectTransportedStatusLbl {
-    [self updateLblstatus:_transportedStatusLbl];
-    [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
-    [self scrollToPage:2];
+    [self scrollToStaus:2];
 
 }
 
 - (void)selectReceivedStatusLbl {
-    [self updateLblstatus:_receivedStatusLbl];
-    [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
-    [self scrollToPage:3];
+    [self scrollToStaus:3];
 
 }
 
 - (void)selectFinishStatusLbl {
-    [self updateLblstatus:_finishStatusLbl];
-    [self scrollToPage:4];
+    [self scrollToStaus:4];
 }
 
-- (void)scrollToPage:(NSInteger)index {
+- (void)scrollToStaus:(NSInteger)index {
+    UILabel *statusLabel = _statusLabels[index];
+    [self updateLblstatus:statusLabel];
+    switch (index) {
+        case 0:
+            break;
+        case 1:
+            [_orderStatusView scrollRectToVisible:_purchaseStatusLbl.frame animated:YES];
+            break;
+        case 2:
+            [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
+            break;
+        case 3:
+            [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
+            break;
+        case 4:
+            break;
+        default:
+            index = 0;
+            break;
+    }
+    [self moveToPage:index];
+}
+
+- (void)moveToPage:(NSInteger)index {
     [_orderMainScrollView setContentOffset:CGPointMake(CGRectGetWidth(self.view.frame)*index, 0) animated:YES];
 }
 
@@ -311,7 +331,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (void)addNewOrder {
-    OAddNewOrderViewController *addNewOrderViewController = [[OAddNewOrderViewController alloc]
+    OrderDetailViewController *addNewOrderViewController = [[OrderDetailViewController alloc]
                                                              init];
     [self.navigationController pushViewController:addNewOrderViewController animated:YES];
 }
@@ -406,7 +426,8 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 - (void)handleTapEditButtonWithIndex:(NSIndexPath *)indexPath withTableView:(OrderStausListTableView *) tableView{
     NSArray *orderList = [tableView orderList];
     OrderItem *orderItem = (OrderItem *)[orderList objectAtIndex:indexPath.row];
-    OAddNewOrderViewController *editOrderViewContorller = [[OAddNewOrderViewController alloc]initWithOrderItem:orderItem withClientDetail:[self getCustomInfobyId:orderItem.clientid]];
+    
+    OrderDetailViewController *editOrderViewContorller = [[OrderDetailViewController alloc]initWithOrderItem:orderItem withClientDetail:[self getCustomInfobyId:orderItem.clientid]];
     [self.navigationController pushViewController:editOrderViewContorller animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -446,5 +467,14 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
         [self.finishedTableView reloadData];
     }
 }
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat width = scrollView.frame.size.width;
+    NSInteger page = (scrollView.contentOffset.x + (0.5f * width)) / width;
+    [self scrollToStaus:page];
+}
+
 
 @end
