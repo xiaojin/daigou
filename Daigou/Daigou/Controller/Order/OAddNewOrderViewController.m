@@ -100,15 +100,15 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 // TODO 小记，总计，youhui
 - (void) initValueForCell{
-    NSArray *firstSection = @[@"客户姓名",@"客户地址",@"货品清单",@"订单状态",@"状态选择"];
+    NSArray *firstSection = @[@"客户姓名",@"货品清单",@"订单状态",@"状态选择"];
     NSArray *detailFirstSection = nil;
     NSArray *detailSecSection  = nil;
     if (self.orderItem.oid != 0) {
         NSString *productList = [NSString stringWithFormat:@"一共有 %lu 件商品",(unsigned long)self.products.count];
-        detailFirstSection = @[self.customInfo.name,self.customInfo.address,productList,self.statusStringArray[self.orderItem.statu/10],@""];
+        detailFirstSection = @[self.customInfo.name,productList,self.statusStringArray[self.orderItem.statu/10],@""];
         detailSecSection = @[@0,@0,@0,@"",@""];
     } else {
-        detailFirstSection = @[@"",@"",@0,@"采购中",@""];
+        detailFirstSection = @[@"",@0,@"采购中",@""];
         detailSecSection = @[@0,@0,@0,@""];
     }
     NSArray *secSection = @[@"小记",@"优惠",@"总价",@"注释"];
@@ -121,7 +121,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 {
     UITableViewCell *cell = nil;
 
-    if(indexPath.section == 0 && indexPath.row == 4) {
+    if(indexPath.section == 0 && indexPath.row == 3) {
         _pickViewCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
         if (_pickViewCell == nil) {
             _pickViewCell = [[UIPickerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
@@ -151,7 +151,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = self.editTableView.rowHeight;
     
-    if (indexPath.section == 0 && indexPath.row == 4 ) {
+    if (indexPath.section == 0 && indexPath.row == 3 ) {
         height = self.statusPickerIsShowing ? kStatusPickerCellHeight : 0.0f;
     }
     
@@ -171,12 +171,12 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)clickEditingField:(OrderItemView *)orderItemView {
     NSInteger index = orderItemView.tag - ORDERTAGBASE;
-    if (index/4 == 0) {
-        if ((4-index) == 4) {
+    if (index/3 == 0) {
+        if ((3-index) == 3) {
             [self handCustomCellTap];
-        } else if ((4-index) ==2) {
+        } else if ((3-index) ==2) {
             [self handleProductCellTap];
-        } else if ((4 - index) == 1) {
+        } else if ((3 - index) == 1) {
             [self handleStatusCellTap];
         }
     } else {
@@ -245,6 +245,5 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     return self.statusStringArray[row];
 }
-
 
 @end

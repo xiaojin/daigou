@@ -224,7 +224,13 @@
 }
 
 #pragma mark - UIPageViewControllerDelegate
-
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
+    if (finished) {
+        NSInteger pageIndex =  ((UIViewController *)pageViewController.viewControllers[0]).view.tag - ORDERDETAILTAG;
+        UILabel *statusLabel = _statusLbls[pageIndex];
+        [self updateLblstatus:statusLabel];
+    }
+}
 
 #pragma mark - UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
