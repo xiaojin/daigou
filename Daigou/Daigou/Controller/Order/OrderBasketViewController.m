@@ -15,6 +15,9 @@
 #import "OProductItem.h"
 #import "OrderPickProductsMainViewController.h"
 #import "CommonDefines.h"
+#import <Masonry/Masonry.h>
+#import <ionicons/IonIcons.h>
+#import <ionicons/ionicons-codes.h>
 
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate> {
     CGSize keyboardSize;
@@ -43,7 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addProduct)];
     [self checkBasketItems];
 }
@@ -80,7 +83,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 142.0f;
+   // self.tableView.rowHeight = 142.0f;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:RGB(238, 238, 238)];
     [self.view addSubview:self.tableView];
@@ -110,28 +113,62 @@
 
 - (void)keyboardDidShow:(NSNotification *)aNotification {
     NSDictionary *info = [aNotification userInfo];
-    keyboardSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    keyboardSize = CGSizeMake(keyboardSize.width, keyboardSize.height + 100.0f);
+
 }
 
 
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    OrderBasketCellFrame * orderFrame = _orderItemFrames[indexPath.row];
-    cell.orderBasketCellFrame = orderFrame;
-    cell.EditQuantiyActionBlock = ^(NSInteger number){
+    
+    if (indexPath.row != [self.products count]) {
+        OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        OrderBasketCellFrame * orderFrame = _orderItemFrames[indexPath.row];
+        cell.orderBasketCellFrame = orderFrame;
+        cell.EditQuantiyActionBlock = ^(NSInteger number){
         [self beginEditNumber:indexPath];
-    };
-    return cell;
+        };
+        return cell;
+    } else {
+        UITableViewCell *addCell = [tableView dequeueReusableCellWithIdentifier:@"orderBasketCell"];
+        [addCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        if (addCell == nil) {
+            addCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"orderBasketCell"];
+        }
+        UIButton *addButton = [[UIButton alloc]init];
+        [addCell.contentView addSubview:addButton];
+        [addButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(addCell.contentView);
+            make.left.equalTo(addCell.contentView);
+            make.right.equalTo(addCell.contentView);
+            make.bottom.equalTo(addCell.contentView);
+        }];
+        [addButton setImage:[IonIcons imageWithIcon:ion_android_add size:35.0f color:[UIColor blackColor]] forState:UIControlStateNormal];
+    
+        [addButton setTitle:@"新增" forState:UIControlStateNormal];
+        [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [addButton.titleLabel setFont:[UIFont systemFontOfSize:18.0f]];
+        [addButton addTarget:self action:@selector(addProduct) forControlEvents:UIControlEventTouchUpInside];
+        return addCell;
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [self.products count];
+    return ([self.products count] +1 );
 
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == [self.products count]) {
+        return 60.0f;
+    } else {
+        return 142.0f;
+    }
 }
 
 #pragma mark - RefreshBasket 
@@ -144,6 +181,9 @@
 
 - (void)beginEditNumber:(NSIndexPath *)cellIndex {
     CGFloat kbHeight = keyboardSize.height;
+    if (keyboardSize.height == 0) {
+        kbHeight = 402.f;
+    }
     [UIView animateWithDuration:0.1 animations:^{
         UIEdgeInsets edgeInsets = [[self tableView] contentInset];
         edgeInsets.bottom = kbHeight;

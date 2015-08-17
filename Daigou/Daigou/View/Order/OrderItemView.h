@@ -16,5 +16,8 @@
 
 @interface OrderItemView : UITableViewCell
 @property(nonatomic, assign) id <OrderCellDelegate> orderCellDelegate;
+@property(nonatomic, strong)UITextField *detailInfo;
+@property(nonatomic, strong)UILabel *titleName;
+
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo;
 @end

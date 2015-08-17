@@ -11,4 +11,5 @@
 @interface UITextField (UITextFieldAccessory)
 
 - (instancetype) initHasAccessory;
+- (void) addAccessoryView;
 @end

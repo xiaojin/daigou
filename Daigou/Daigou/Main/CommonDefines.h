@@ -22,4 +22,6 @@ dispatch_once(&oncetoken, BLOCK); \
 #define THEMECOLOR [UIColor colorWithRed:241.0f/255.0 green:109.0f/255.0 blue:52.0f/255.0f alpha:1.0]
 #define ORDERDETAILTAG 90000
 #define SCROLL_VIEW_HEIGHT 34
+#define ORIANGECOLOR RGB(255, 85, 3)
+#define TITLECOLOR RGB(89, 89, 89)
 

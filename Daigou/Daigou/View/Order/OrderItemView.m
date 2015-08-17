@@ -9,6 +9,8 @@
 #import "OrderItemView.h"
 #import "CommonDefines.h"
 #import "MCustInfoViewController.h"
+#import "UITextField+UITextFieldAccessory.h"
+
 #define CUSTOMINFOTITLEWIDTH 90.0f
 #define CONTENTPADDINGLEFT 10.0f
 #define CONTENTPADDINGRIGHT 10.0f
@@ -16,8 +18,6 @@
 #define FONTSIZE 16.0f
 
 @interface OrderItemView()<UITextFieldDelegate>
-@property(nonatomic, strong)UILabel *titleName;
-@property(nonatomic, strong)UITextField *detailInfo;
 @property(nonatomic, strong)NSString *title;
 @property(nonatomic, strong)NSString *value;
 
@@ -41,15 +41,16 @@
     [super layoutSubviews];
     self.titleName = [[UILabel alloc]initWithFrame:CGRectMake(CONTENTPADDINGLEFT, 0, CUSTOMINFOTITLEWIDTH, CGRectGetHeight(self.contentView.frame))];
     self.titleName.font = [UIFont systemFontOfSize:FONTSIZE];
-    self.titleName.textColor = RGB(89, 89, 89);
+    self.titleName.textColor = TITLECOLOR;
     self.titleName.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:self.titleName];
     
     CGFloat textFieldX = CGRectGetWidth(self.titleName.frame) + CONTENTPADDINGLEFT+ LEABELINPUTFIELDGAPPING;
     CGFloat textFieldwith = CGRectGetWidth(self.contentView.frame) - textFieldX- CONTENTPADDINGRIGHT;
     self.detailInfo = [[UITextField alloc]initWithFrame:CGRectMake(textFieldX , 0, textFieldwith, CGRectGetHeight(self.contentView.frame))];
+    [self.detailInfo addAccessoryView];
     [self.detailInfo setFont:[UIFont systemFontOfSize:FONTSIZE]];
-    [self.detailInfo setTextColor:RGB(89, 89, 89)];
+    [self.detailInfo setTextColor:TITLECOLOR];
     self.detailInfo.textAlignment = NSTextAlignmentLeft;
     self.detailInfo.delegate = self;
     [self.contentView addSubview:self.detailInfo];

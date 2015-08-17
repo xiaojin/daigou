@@ -14,8 +14,7 @@
 #import "CommonDefines.h"
 #import "UILabelStrikeThrough.h"
 #import "UITextField+UITextFieldAccessory.h"
-#define ORIANGECOLOR RGB(255, 85, 3)
-#define TITLECOLOR RGB(115, 115, 115)
+
 @interface OrderBasketCell() <UITextFieldDelegate>{
     BOOL editStatus;
 }

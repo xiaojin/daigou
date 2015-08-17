@@ -54,6 +54,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //
+    CGFloat topOff = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+
     OrderProductDockView *prodDockView = [[OrderProductDockView alloc]init];
     prodDockView.rowHeight = 50;
     prodDockView.dockDelegate = self;
@@ -72,12 +74,12 @@
     rightTableView.rowHeight = 90;
     rightTableView.rightDelegate = self;
     rightTableView.backgroundColor = RGB(238, 238, 238);
-    rightTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 0.01f)];
+    //rightTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 0.01f)];
     [rightTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:rightTableView];
     [rightTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dockTableView.mas_top);
-        make.left.equalTo(self.dockTableView.mas_right);
+        make.top.equalTo(_dockTableView.mas_top).with.offset(topOff);
+        make.left.equalTo(_dockTableView.mas_right);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
@@ -94,9 +96,9 @@
     
     _dockTableView.dockArray = _docksArray;
    [_dockTableView reloadData];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.navigationController.navigationBar.translucent=NO;
-    self.tabBarController.tabBar.translucent = NO;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.navigationController.navigationBar.translucent=NO;
+//    self.tabBarController.tabBar.translucent = NO;
     
     UIButton *cartButton = [[UIButton alloc]init];
     [self.view addSubview:cartButton];

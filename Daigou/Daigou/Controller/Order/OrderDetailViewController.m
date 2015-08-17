@@ -61,6 +61,7 @@
 
 }
 
+
 - (void) setPageIndicator {
     _subTabView = [[UIView alloc]init];
     [_subTabView setBackgroundColor:[UIColor whiteColor]];
@@ -113,6 +114,7 @@
     [_subTabView addSubview:deliveryInfoLbl];
     
     _statusLbls = @[orderInfoLbl,prodListLbl,deliveryInfoLbl];
+    
 
 }
 

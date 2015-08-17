@@ -221,7 +221,7 @@ NSString *const mEditProductDetailCellIdentify = @"MEditProductDetailCell";
 
 - (void)keyboardDidShow:(NSNotification *)aNotification {
     NSDictionary *info = [aNotification userInfo];
-    keyboardSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 }
 
 #pragma mark - ScrollTableViewWhenKeyboard 
