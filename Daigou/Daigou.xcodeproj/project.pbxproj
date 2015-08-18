@@ -22,7 +22,7 @@
 		3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */; };
 		3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */; };
 		3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */; };
-		3C127AE41B81FD2B008D47DF /* OrderTextInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C127AE31B81FD2B008D47DF /* OrderTextInputView.m */; };
+		3C127AE71B834554008D47DF /* OrderItemBenifitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C127AE61B834554008D47DF /* OrderItemBenifitCell.m */; };
 		3C2603181B65034E00AA8BFC /* OrderBasketCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2603171B65034E00AA8BFC /* OrderBasketCellFrame.m */; };
 		3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021561B4F98DF001A741D /* ProductItemCell.m */; };
 		3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021581B4F98DF001A741D /* ProductItemFrame.m */; };
@@ -120,8 +120,8 @@
 		3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketCell.m; sourceTree = "<group>"; };
 		3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Extension/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Extension/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
-		3C127AE21B81FD2B008D47DF /* OrderTextInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTextInputView.h; sourceTree = "<group>"; };
-		3C127AE31B81FD2B008D47DF /* OrderTextInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTextInputView.m; sourceTree = "<group>"; };
+		3C127AE51B834554008D47DF /* OrderItemBenifitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItemBenifitCell.h; sourceTree = "<group>"; };
+		3C127AE61B834554008D47DF /* OrderItemBenifitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemBenifitCell.m; sourceTree = "<group>"; };
 		3C2603161B65034E00AA8BFC /* OrderBasketCellFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketCellFrame.h; sourceTree = "<group>"; };
 		3C2603171B65034E00AA8BFC /* OrderBasketCellFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketCellFrame.m; sourceTree = "<group>"; };
 		3C3021551B4F98DF001A741D /* ProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemCell.h; sourceTree = "<group>"; };
@@ -395,8 +395,8 @@
 				3C2603171B65034E00AA8BFC /* OrderBasketCellFrame.m */,
 				3C56783C1B5B6AC2001B6B40 /* OrderListCell.h */,
 				3C56783D1B5B6AC2001B6B40 /* OrderListCell.m */,
-				3C127AE21B81FD2B008D47DF /* OrderTextInputView.h */,
-				3C127AE31B81FD2B008D47DF /* OrderTextInputView.m */,
+				3C127AE51B834554008D47DF /* OrderItemBenifitCell.h */,
+				3C127AE61B834554008D47DF /* OrderItemBenifitCell.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -931,6 +931,7 @@
 				3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */,
 				3C77943C1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m in Sources */,
 				3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */,
+				3C127AE71B834554008D47DF /* OrderItemBenifitCell.m in Sources */,
 				3C5661731B679B650082F49E /* OrderProductDockView.m in Sources */,
 				3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */,
 				3C3021731B5140E3001A741D /* ErrorHelper.m in Sources */,
@@ -959,7 +960,6 @@
 				3C56617C1B67AC6A0082F49E /* OrderProductsRightCell.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
-				3C127AE41B81FD2B008D47DF /* OrderTextInputView.m in Sources */,
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,

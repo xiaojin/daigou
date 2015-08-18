@@ -1,13 +1,13 @@
 //
-//  OrderTextInputView.h
+//  OrderItemBenifitCell.h
 //  Daigou
 //
-//  Created by jin on 17/08/2015.
+//  Created by jin on 18/08/2015.
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
-#import "OrderItemView.h"
+#import <UIKit/UIKit.h>
 
-@interface OrderTextInputView : OrderItemView
+@interface OrderItemBenifitCell : UITableViewCell
 @property (nonatomic, copy) void (^EditPriceActionBlock)(NSInteger number);
 @end

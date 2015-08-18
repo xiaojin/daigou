@@ -24,4 +24,5 @@ dispatch_once(&oncetoken, BLOCK); \
 #define SCROLL_VIEW_HEIGHT 34
 #define ORIANGECOLOR RGB(255, 85, 3)
 #define TITLECOLOR RGB(89, 89, 89)
+#define GRAYCOLOR RGB(45,45,45)
 

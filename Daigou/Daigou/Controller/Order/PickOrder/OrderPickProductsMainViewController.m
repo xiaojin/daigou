@@ -61,6 +61,7 @@
     prodDockView.dockDelegate = self;
     prodDockView.backgroundColor = RGB(255, 255, 255);
     [prodDockView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    prodDockView.tableHeaderView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:prodDockView];
     [prodDockView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);

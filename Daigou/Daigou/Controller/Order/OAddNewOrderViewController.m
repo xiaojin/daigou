@@ -17,7 +17,7 @@
 #import "UIPickerViewCell.h"
 #import "CommonDefines.h"
 #import "OrderDetailViewController.h"
-#import "OrderTextInputView.h"
+#import "OrderItemBenifitCell.h"
 
 #define ORDERTAGBASE 6000
 #define kStatusPickerCellHeight 164
@@ -116,12 +116,12 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     if (self.orderItem.oid != 0) {
         NSString *productList = [NSString stringWithFormat:@"一共有 %lu 件商品",(unsigned long)self.products.count];
         detailFirstSection = @[self.customInfo.name,productList,self.statusStringArray[self.orderItem.statu/10],@""];
-        detailSecSection = @[@0,@0,@0,@0,@0,@0,@0];
+        detailSecSection = @[@0];
     } else {
         detailFirstSection = @[@"",@0,@"采购中",@""];
-        detailSecSection = @[@0,@0,@0,@0,@0,@0,@0];
+        detailSecSection = @[@0];
     }
-    NSArray *secSection = @[@"小记",@"优惠",@"总价",@"采购成本",@"其它成本",@"利润",@"注释"];
+    NSArray *secSection = @[@"利润"];
     self.titleArray = @[firstSection, secSection];
     self.detailArray = @[detailFirstSection, detailSecSection];
 }
@@ -189,16 +189,16 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     return  orderCell;
 }
 
-- (OrderTextInputView *) setOrderTextInputView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OrderTextInputView *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
+- (OrderItemBenifitCell *) setOrderTextInputView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    OrderItemBenifitCell *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
     if (orderCell == nil) {
-        orderCell = [[OrderTextInputView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
+        orderCell = [[OrderItemBenifitCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
         orderCell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
     }
     orderCell.EditPriceActionBlock = ^(NSInteger number) {
         [self beginEditNumber:indexPath];
     };
-    [orderCell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:[NSString stringWithFormat:@"%@",self.detailArray[indexPath.section][indexPath.row]]];
+
     return  orderCell;
 }
 
@@ -210,6 +210,8 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     
     if (indexPath.section == 0 && indexPath.row == 3 ) {
         height = self.statusPickerIsShowing ? kStatusPickerCellHeight : 0.0f;
+    } else if(indexPath.section == 1 && indexPath.row == 0) {
+        height = 300.0f;
     }
     
     return height;
@@ -318,6 +320,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         edgeInsets = [[self editTableView] scrollIndicatorInsets];
         edgeInsets.bottom = kbHeight;
         [[self editTableView] setScrollIndicatorInsets:edgeInsets];
+    //    [self.editTableView scrollRectToVisible:CGRectMake(0, 402, 60, 320) animated:YES];
         [self.editTableView scrollToRowAtIndexPath:cellIndex
                               atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }];
