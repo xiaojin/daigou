@@ -55,7 +55,8 @@
     [subTotalField setTextColor:TITLECOLOR];
     subTotalField.textAlignment = NSTextAlignmentLeft;
     subTotalField.delegate = self;
-    [subTotalField setText:@"0.0"];
+    [subTotalField setPlaceholder:@"0.0"];
+    subTotalField.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:subTotalField];
     [subTotalField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(subTotalLbl.mas_bottom).with.offset(LEFTSIDEPADDING);
@@ -104,7 +105,8 @@
     [discountField setTextColor:TITLECOLOR];
     discountField.textAlignment = NSTextAlignmentLeft;
     discountField.delegate = self;
-    [discountField setText:@"0.0"];
+    [discountField setPlaceholder:@"0.0"];
+    discountField.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:discountField];
     [discountField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(discountLbl.mas_bottom).with.offset(10);
@@ -156,7 +158,8 @@
     [totalPriceField setTextColor:TITLECOLOR];
     totalPriceField.textAlignment = NSTextAlignmentLeft;
     totalPriceField.delegate = self;
-    [totalPriceField setText:@"0.0"];
+    [totalPriceField setPlaceholder:@"0.0"];
+    totalPriceField.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:totalPriceField];
     [totalPriceField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(totalPriceLbl.mas_bottom).with.offset(10);
@@ -208,7 +211,8 @@
     [purchasePriceFiled setTextColor:TITLECOLOR];
     purchasePriceFiled.textAlignment = NSTextAlignmentLeft;
     purchasePriceFiled.delegate = self;
-    [purchasePriceFiled setText:@"0.0"];
+    [purchasePriceFiled setPlaceholder:@"0.0"];
+    purchasePriceFiled.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:purchasePriceFiled];
     [purchasePriceFiled mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(purchasePriceLbl.mas_bottom).with.offset(10);
@@ -258,7 +262,8 @@
     [otherPriceFiled setTextColor:TITLECOLOR];
     otherPriceFiled.textAlignment = NSTextAlignmentLeft;
     otherPriceFiled.delegate = self;
-    [otherPriceFiled setText:@"0.0"];
+    [otherPriceFiled setPlaceholder:@"0.0"];
+    otherPriceFiled.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:otherPriceFiled];
     [otherPriceFiled mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(otherPriceLbl.mas_bottom).with.offset(10);
@@ -308,7 +313,8 @@
     [benefitPriceFiled setTextColor:TITLECOLOR];
     benefitPriceFiled.textAlignment = NSTextAlignmentLeft;
     benefitPriceFiled.delegate = self;
-    [benefitPriceFiled setText:@"0.0"];
+    [benefitPriceFiled setPlaceholder:@"0.0"];
+    benefitPriceFiled.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:benefitPriceFiled];
     [benefitPriceFiled mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(benefitPriceLbl.mas_bottom).with.offset(10);
@@ -346,7 +352,7 @@
     [notePriceFiled setTextColor:TITLECOLOR];
     notePriceFiled.textAlignment = NSTextAlignmentLeft;
     notePriceFiled.delegate = self;
-    [notePriceFiled setText:@"备注"];
+    [notePriceFiled setPlaceholder:@"备注"];
     [self.subView addSubview:notePriceFiled];
     [notePriceFiled mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(benefitPriceUnderLine.mas_bottom).with.offset(20);
@@ -364,9 +370,6 @@
         make.right.equalTo(notePriceFiled.mas_right);
         make.height.equalTo(@1);
     }];
-    
-    
-    
     
 }
 

@@ -10,17 +10,20 @@
 #import "ErrorHelper.h"
 #import "MShowProductDetailViewController.h"
 #import "MEditProductViewController.h"
+#import <Masonry/Masonry.h>
+
 @interface MProductCatalogViewController ()<UITableViewDataSource,UITableViewDelegate,DropDownChooseDataSource,DropDownChooseDelegate>
 @property(nonatomic, strong) UITableView *productTableView;
 @property(nonatomic, strong) NSMutableArray *productFrameItems;
 @property(nonatomic, strong) NSArray *chooseArray;
 @property(nonatomic, strong) NSArray *brands;
 @property(nonatomic, strong) NSArray *categories;
+@property(nonatomic, strong) DropDownListView *dropDownView;
 @end
 
 @implementation MProductCatalogViewController
 const float categroyViewPaddingTop = 60.0f;
-const float categoryViewHeight = 40.0f;
+const float categoryViewHeight = 60.0f;
 - (void)loadView{
     [super loadView];
 }
@@ -34,14 +37,19 @@ const float categoryViewHeight = 40.0f;
 {
     [super viewWillAppear:animated];
     [self fetchAllProduct];
-    self.productTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    [self showProductCategoryView];
+    self.productTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.productTableView.dataSource = self;
     self.productTableView.delegate = self;
     self.productTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.productTableView.bounds.size.width, 0.01f)];
     [self.view addSubview:self.productTableView];
-    [self.productTableView setContentInset:UIEdgeInsetsMake(categoryViewHeight, 0, 0, 0)];
+    [_productTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_dropDownView.mas_bottom);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
-    [self showProductCategoryView];
     [self.productTableView reloadData];
 }
 
@@ -60,9 +68,11 @@ const float categoryViewHeight = 40.0f;
         [categoryNames addObject:category.name];
     }
     self.chooseArray = @[categoryNames, brandNames ];
-    DropDownListView *dropDownView = [[DropDownListView alloc] initWithFrame:CGRectMake(0, categroyViewPaddingTop, self.view.frame.size.width, categoryViewHeight) dataSource:self delegate:self];
-    dropDownView.mSuperView = self.view;
-    [self.view addSubview:dropDownView];
+    CGFloat topOff = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+
+    _dropDownView = [[DropDownListView alloc] initWithFrame:CGRectMake(0, topOff, self.view.frame.size.width, categoryViewHeight) dataSource:self delegate:self];
+    _dropDownView.mSuperView = self.view;
+    [self.view addSubview:_dropDownView];
 }
 
 - (NSArray *)fetchAllBrand {
