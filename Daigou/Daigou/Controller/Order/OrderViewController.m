@@ -44,6 +44,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
     [self fetchAllClients];
     [self addOrderStatusView];
     [self initScrollView];
@@ -56,6 +57,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self.finishedTableView reloadData];
   // Do any additional setup after loading the view, typically from a nib.
 }
+
 - (void)initScrollView {
     _orderMainScrollView = [[UIScrollView alloc] initWithFrame: CGRectZero];
     _orderMainScrollView.delegate = self;

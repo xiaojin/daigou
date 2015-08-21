@@ -12,6 +12,8 @@
 #import "MEditCustomInfoViewController.h"
 #import "CustomInfoManagement.h"
 #import "OAddNewOrderViewController.h"
+#import "OrderDetailViewController.h"
+
 @interface MCustInfoViewController ()
 @property(nonatomic, strong) NSArray *contacts;
 @property(nonatomic, strong) NSArray *indexList;
@@ -143,7 +145,7 @@
     NSArray *viewController = self.navigationController.viewControllers;
     __block BOOL result = NO;
     [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[OAddNewOrderViewController class]]) {
+        if ([obj isKindOfClass:[OrderDetailViewController class]]) {
             result = YES;
         }
     }];
@@ -153,11 +155,13 @@
     if ([self checkIsFromOrder]) {
         NSArray *viewController = self.navigationController.viewControllers;
         [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if ([obj isKindOfClass:[OAddNewOrderViewController class]]) {
-                OAddNewOrderViewController *editNewOrderViewController = (OAddNewOrderViewController *)obj;
-                editNewOrderViewController.customInfo =[_contacts objectAtIndex:indexPath.section][indexPath.row];
-                [self.navigationController popViewControllerAnimated:YES];
-                return ;
+            if ([obj isKindOfClass:[OrderDetailViewController class]]) {
+                UIViewController *viewcontroler = [[(OrderDetailViewController *)obj childViewControllers][0]  childViewControllers][0];
+                if ([viewcontroler isKindOfClass:[OAddNewOrderViewController class]]) {
+                        OAddNewOrderViewController *editNewOrderViewController = (OAddNewOrderViewController *)viewcontroler;
+                        editNewOrderViewController.customInfo =[_contacts objectAtIndex:indexPath.section][indexPath.row];
+                        [self.navigationController popViewControllerAnimated:YES];
+                }
             }
         }];
     } else {

@@ -16,14 +16,16 @@
 #import "OProductItem.h"
 #import "CustomInfo.h"
 
-@interface OrderDetailViewController  () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface OrderDetailViewController  () <UIScrollViewDelegate>
 @property (nonatomic, strong)UIPageViewController *pageController;
-@property (nonatomic, strong)NSArray *childPages;
-@property (nonatomic, strong)UIView *subTabView;
-@property (nonatomic, strong)NSArray *subTabString;
-@property (nonatomic, strong)NSArray *statusLbls;
-@property(nonatomic, strong)NSArray *products;
-
+@property (nonatomic, strong) UIScrollView *orderDetailMainScrollView;
+@property (nonatomic, strong) UIView *subTabView;
+@property (nonatomic, strong) NSArray *subTabString;
+@property (nonatomic, strong) NSArray *statusLbls;
+@property (nonatomic, strong) NSArray *products;
+@property (nonatomic, strong) OAddNewOrderViewController *addNewOrderViewController;
+@property (nonatomic, strong) OrderBasketViewController *orderBasketViewController;
+@property (nonatomic, strong) OrderDeliveryStatusViewController *deliveryStatusViewController;
 @end
 
 @implementation OrderDetailViewController
@@ -38,29 +40,39 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self initOrderData];
     [self setPageIndicator];
-    _pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageController.dataSource = self;
-    _pageController.delegate = self;
-    _childPages = @[[self setProductDetailController],[self setProdcutCollectionController],[self setProductMailingInfoController]];
-    [_pageController setViewControllers:@[_childPages[0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
-        
-    }];
-    
-    [self addChildViewController:_pageController];
-    [self.view addSubview:_pageController.view];
-    [_pageController.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_subTabView.mas_bottom);
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-    }];
-    [self.pageController didMoveToParentViewController:self];
-
+    [self initScrollView];
 }
 
+- (void)initScrollView {
+    _orderDetailMainScrollView = [[UIScrollView alloc] initWithFrame: CGRectZero];
+    _orderDetailMainScrollView.delegate = self;
+    [self.view addSubview:_orderDetailMainScrollView];
+    CGFloat topOff = self.tabBarController.tabBar.frame.size.height;
+    [_orderDetailMainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_subTabView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).with.offset(-topOff);
+    }];
+    UIView *container = [UIView new];
+    [_orderDetailMainScrollView addSubview:container];
+    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_orderDetailMainScrollView);
+    }];
+    
+    [self setProductDetailController];
+    [self setProdcutCollectionController];
+    [self setProductMailingInfoController];
+    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_deliveryStatusViewController.view.mas_right);
+    }];
+    _orderDetailMainScrollView.pagingEnabled = YES;
+    _orderDetailMainScrollView.showsHorizontalScrollIndicator = NO;
+}
 
 - (void) setPageIndicator {
     _subTabView = [[UIView alloc]init];
@@ -138,9 +150,7 @@
 }
 
 - (void)moveToPage:(NSInteger)index {
-    [_pageController setViewControllers:@[_childPages[index]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
-        
-    }];
+   [_orderDetailMainScrollView setContentOffset:CGPointMake(CGRectGetWidth(self.view.frame)*index, 0) animated:YES];
 }
 
 - (void)updateLblstatus:(UILabel *)selectedLbl {
@@ -187,73 +197,61 @@
 
 #pragma mark -initControllers
 
-- (UIViewController *) setProductDetailController {
-    OAddNewOrderViewController *addNewOrderViewController = nil;
+- (void) setProductDetailController {
     if (self.orderItem.parentoid == 0) {
-        addNewOrderViewController = [[OAddNewOrderViewController alloc]
+        _addNewOrderViewController = [[OAddNewOrderViewController alloc]
                                       init];
-    }
-    addNewOrderViewController = [[OAddNewOrderViewController alloc]
-                                 initWithOrderItem:self.orderItem withClientDetail:self.customInfo];
-    addNewOrderViewController.view.frame = self.view.bounds;
-    addNewOrderViewController.view.tag = ORDERDETAILTAG +0;
-    return addNewOrderViewController;
-}
-
-- (UIViewController *) setProdcutCollectionController {
-    OrderBasketViewController *orderBasket = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withProducts:self.products];
-    orderBasket.view.frame = self.view.bounds;
-    orderBasket.view.tag = ORDERDETAILTAG +1;
-    return orderBasket;
-}
-
-
-- (UIViewController *) setProductMailingInfoController {
-    OrderDeliveryStatusViewController *deliveryStatusViewController = [[OrderDeliveryStatusViewController alloc]init];
-
-    deliveryStatusViewController.view.frame = self.view.bounds;
-    deliveryStatusViewController.view.tag = ORDERDETAILTAG +2;
-    return deliveryStatusViewController;
-
-}
-
-- (UIViewController *)viewControllerAtIndex:(NSInteger)index {
-    if ([_childPages count] == 0 || index >= [_childPages count]) {
-        return nil;
+    } else {
+        _addNewOrderViewController = [[OAddNewOrderViewController alloc]
+                                      initWithOrderItem:self.orderItem withClientDetail:self.customInfo];
     }
     
-    return [_childPages objectAtIndex:index];
+    
+    _addNewOrderViewController.view.tag = ORDERDETAILTAG +0;
+    [self addChildViewController:_addNewOrderViewController];
+    [self.orderDetailMainScrollView addSubview:_addNewOrderViewController.view];
+    [_addNewOrderViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_orderDetailMainScrollView);
+        make.top.equalTo(_subTabView.mas_bottom);
+        make.bottom.equalTo(_orderDetailMainScrollView);
+        make.width.equalTo(self.view);
+    }];
 }
 
-#pragma mark - UIPageViewControllerDelegate
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-    if (finished) {
-        NSInteger pageIndex =  ((UIViewController *)pageViewController.viewControllers[0]).view.tag - ORDERDETAILTAG;
-        UILabel *statusLabel = _statusLbls[pageIndex];
-        [self updateLblstatus:statusLabel];
-    }
+- (void) setProdcutCollectionController {
+    _orderBasketViewController = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withProducts:self.products];
+    _orderBasketViewController.view.tag = ORDERDETAILTAG +1;
+    [self addChildViewController:_orderBasketViewController];
+    [self.orderDetailMainScrollView addSubview:_orderBasketViewController.view];
+    [_orderBasketViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_addNewOrderViewController.view.mas_right);
+        make.top.equalTo(_subTabView.mas_bottom);
+        make.bottom.equalTo(_orderDetailMainScrollView);
+        make.width.equalTo(self.view);
+    }];
 }
 
-#pragma mark - UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
-    NSUInteger pageIndex = viewController.view.tag - ORDERDETAILTAG;
-    if ((pageIndex == 0) || pageIndex == NSNotFound) {
-        return nil;
-    }
-    pageIndex --;
-    return [self viewControllerAtIndex:pageIndex];
+
+- (void) setProductMailingInfoController {
+    _deliveryStatusViewController = [[OrderDeliveryStatusViewController alloc]init];
+    _deliveryStatusViewController.view.tag = ORDERDETAILTAG +2;
+    [self addChildViewController:_deliveryStatusViewController];
+    [self.orderDetailMainScrollView addSubview:_deliveryStatusViewController.view];
+    [_deliveryStatusViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_orderBasketViewController.view.mas_right);
+        make.top.equalTo(_subTabView.mas_bottom);
+        make.bottom.equalTo(_orderDetailMainScrollView);
+        make.width.equalTo(self.view);
+    }];
+
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
-    NSUInteger pageIndex = viewController.view.tag - ORDERDETAILTAG;
-    if (pageIndex == NSNotFound) {
-        return nil;
-    }
-    pageIndex ++;
-    if (pageIndex == [_childPages count]) {
-        return nil;
-    }
-    return [self viewControllerAtIndex:pageIndex];
-}
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat width = scrollView.frame.size.width;
+    NSInteger page = (scrollView.contentOffset.x + (0.5f * width)) / width;
+    [self scrollToStaus:page];
+}
 @end

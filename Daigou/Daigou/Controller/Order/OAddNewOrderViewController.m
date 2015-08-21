@@ -91,8 +91,9 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     self.editTableView.delegate = self;
     self.editTableView.dataSource = self;
     self.editTableView.allowsSelection = NO;
-    [self.view addSubview:self.editTableView];
     
+    [self.view addSubview:self.editTableView];
+   // self.editTableView.contentInset = UIEdgeInsetsMake(0, 0, 140.0f, 0);
 }
 
 - (void)saveOrderInfo {
@@ -251,7 +252,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 
 - (void)handleProductCellTap {
-    [(OrderDetailViewController *)self.parentViewController.parentViewController scrollToStaus:1];
+    [(OrderDetailViewController *)self.parentViewController scrollToStaus:1];
 }
 
 - (void)handleStatusCellTap:(OrderItemView *)orderItemView {

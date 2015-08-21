@@ -87,6 +87,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:RGB(238, 238, 238)];
     [self.view addSubview:self.tableView];
+   // self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 140.0f, 0);
+
 }
 
 - (void)initOrderBasketItemsFrameWithOrderItems:(NSArray *)orderItems {

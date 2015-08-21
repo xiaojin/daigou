@@ -66,7 +66,10 @@
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-   //TODO  MCustInfoViewController
-    return YES;
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+    [self.orderCellDelegate clickEditingField:self];
+    //TODO  MCustInfoViewController
+    return NO;
+
 }
 @end
