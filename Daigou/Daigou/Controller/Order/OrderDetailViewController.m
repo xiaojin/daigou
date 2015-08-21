@@ -17,7 +17,6 @@
 #import "CustomInfo.h"
 
 @interface OrderDetailViewController  () <UIScrollViewDelegate>
-@property (nonatomic, strong)UIPageViewController *pageController;
 @property (nonatomic, strong) UIScrollView *orderDetailMainScrollView;
 @property (nonatomic, strong) UIView *subTabView;
 @property (nonatomic, strong) NSArray *subTabString;
