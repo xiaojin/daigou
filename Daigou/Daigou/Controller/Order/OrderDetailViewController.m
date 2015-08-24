@@ -213,7 +213,7 @@
     [_addNewOrderViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.orderDetailMainScrollView);
         make.top.equalTo(_subTabView.mas_bottom);
-        make.bottom.equalTo(self.orderDetailMainScrollView);
+        make.height.equalTo(self.orderDetailMainScrollView);
         make.width.equalTo(self.view);
     }];
 }
@@ -229,7 +229,7 @@
     [_orderBasketViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_addNewOrderViewController.view.mas_right);
         make.top.equalTo(_subTabView.mas_bottom);
-        make.bottom.equalTo(_orderDetailMainScrollView);
+        make.height.equalTo(self.orderDetailMainScrollView);
         make.width.equalTo(self.view);
     }];
 }
@@ -243,7 +243,7 @@
     [_deliveryStatusViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_orderBasketViewController.view.mas_right);
         make.top.equalTo(_subTabView.mas_bottom);
-        make.bottom.equalTo(_orderDetailMainScrollView);
+        make.height.equalTo(self.orderDetailMainScrollView);
         make.width.equalTo(self.view);
     }];
 

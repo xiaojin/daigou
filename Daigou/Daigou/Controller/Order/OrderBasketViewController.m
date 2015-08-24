@@ -105,7 +105,7 @@
     NSTimeInterval duration = [[sender userInfo][UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:duration animations:^{
         UIEdgeInsets edgeInsets = [[self tableView] contentInset];
-        edgeInsets.bottom = 0;
+        edgeInsets.bottom = 140.0f;
         [[self tableView] setContentInset:edgeInsets];
         edgeInsets = [[self tableView] scrollIndicatorInsets];
         edgeInsets.bottom = 0;

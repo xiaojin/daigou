@@ -48,24 +48,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self initValueForCell];
-    [self.editTableView reloadData];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self hideStatusPickerCell];
-}
-
-- (void)loadView
-{
-    [super loadView];
     self.statusStringArray = @[@"采购中",@"待发货",@"运输中",@"已收获",@"已完成"];
     
     
@@ -82,6 +64,19 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     self.navigationItem.rightBarButtonItem = saveBarItem;
     self.title = @"填写订单";
     [self addTableVIew];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self initValueForCell];
+    [self.editTableView reloadData];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self hideStatusPickerCell];
 }
 
 
@@ -132,7 +127,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     NSTimeInterval duration = [[sender userInfo][UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:duration animations:^{
         UIEdgeInsets edgeInsets = [[self editTableView] contentInset];
-        edgeInsets.bottom = 0;
+        edgeInsets.bottom = 140.0f;
         [[self editTableView] setContentInset:edgeInsets];
         edgeInsets = [[self editTableView] scrollIndicatorInsets];
         edgeInsets.bottom = 0;
