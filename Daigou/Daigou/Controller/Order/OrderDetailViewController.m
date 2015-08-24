@@ -61,12 +61,13 @@
     [_orderDetailMainScrollView addSubview:container];
     [container mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(_orderDetailMainScrollView);
+        make.height.equalTo(_orderDetailMainScrollView);
     }];
     
     [self setProductDetailController];
     [self setProdcutCollectionController];
     [self setProductMailingInfoController];
-    [container mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.orderDetailMainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_deliveryStatusViewController.view.mas_right);
     }];
     _orderDetailMainScrollView.pagingEnabled = YES;
@@ -210,9 +211,9 @@
     [self addChildViewController:_addNewOrderViewController];
     [self.orderDetailMainScrollView addSubview:_addNewOrderViewController.view];
     [_addNewOrderViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_orderDetailMainScrollView);
+        make.left.equalTo(self.orderDetailMainScrollView);
         make.top.equalTo(_subTabView.mas_bottom);
-        make.bottom.equalTo(_orderDetailMainScrollView);
+        make.bottom.equalTo(self.orderDetailMainScrollView);
         make.width.equalTo(self.view);
     }];
 }

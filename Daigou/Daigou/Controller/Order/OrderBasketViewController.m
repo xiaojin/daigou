@@ -87,7 +87,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:RGB(238, 238, 238)];
     [self.view addSubview:self.tableView];
-   // self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 140.0f, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 142.0f, 0);
 
 }
 
@@ -134,10 +134,10 @@
         };
         return cell;
     } else {
-        UITableViewCell *addCell = [tableView dequeueReusableCellWithIdentifier:@"orderBasketCell"];
+        UITableViewCell *addCell = [tableView dequeueReusableCellWithIdentifier:@"orderAddCell"];
         [addCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         if (addCell == nil) {
-            addCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"orderBasketCell"];
+            addCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"orderAddCell"];
         }
         UIButton *addButton = [[UIButton alloc]init];
         [addCell.contentView addSubview:addButton];

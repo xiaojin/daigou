@@ -93,7 +93,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     self.editTableView.allowsSelection = NO;
     
     [self.view addSubview:self.editTableView];
-   // self.editTableView.contentInset = UIEdgeInsetsMake(0, 0, 140.0f, 0);
+    self.editTableView.contentInset = UIEdgeInsetsMake(0, 0, 140.0f, 0);
 }
 
 - (void)saveOrderInfo {
