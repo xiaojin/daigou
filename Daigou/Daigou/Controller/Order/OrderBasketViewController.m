@@ -53,7 +53,7 @@
 
 - (void)addProduct {
     OrderPickProductsMainViewController *orderPickMainViewController =  [[OrderPickProductsMainViewController alloc]init];
-    [self.navigationController pushViewController:orderPickMainViewController animated:YES];
+    [self presentViewController:orderPickMainViewController animated:YES completion:nil];
 }
 
 - (void)checkBasketItems {

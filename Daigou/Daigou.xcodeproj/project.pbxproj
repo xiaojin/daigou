@@ -51,6 +51,8 @@
 		3C5678381B5B25E1001B6B40 /* OProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5678371B5B25E1001B6B40 /* OProductItem.m */; };
 		3C56783B1B5B2A08001B6B40 /* OrderItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C56783A1B5B2A08001B6B40 /* OrderItemTest.m */; };
 		3C56783E1B5B6AC2001B6B40 /* OrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C56783D1B5B6AC2001B6B40 /* OrderListCell.m */; };
+		3C5D0B511B8C9730006FFC87 /* OrderSiderBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */; };
+		3C5D0B541B8C9904006FFC87 /* LLBlurSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5D0B531B8C9904006FFC87 /* LLBlurSidebar.m */; };
 		3C62497C1B3C1151008F34C7 /* MProductCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */; };
 		3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C62497E1B3C1173008F34C7 /* MDeliveryManagementViewController.m */; };
 		3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249811B3C11A5008F34C7 /* MFinanceViewController.m */; };
@@ -175,6 +177,10 @@
 		3C56783A1B5B2A08001B6B40 /* OrderItemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemTest.m; sourceTree = "<group>"; };
 		3C56783C1B5B6AC2001B6B40 /* OrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListCell.h; sourceTree = "<group>"; };
 		3C56783D1B5B6AC2001B6B40 /* OrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListCell.m; sourceTree = "<group>"; };
+		3C5D0B4F1B8C9730006FFC87 /* OrderSiderBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderSiderBarViewController.h; path = PickOrder/OrderSiderBarViewController.h; sourceTree = "<group>"; };
+		3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderSiderBarViewController.m; path = PickOrder/OrderSiderBarViewController.m; sourceTree = "<group>"; };
+		3C5D0B521B8C9904006FFC87 /* LLBlurSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBlurSidebar.h; sourceTree = "<group>"; };
+		3C5D0B531B8C9904006FFC87 /* LLBlurSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBlurSidebar.m; sourceTree = "<group>"; };
 		3C62497A1B3C1151008F34C7 /* MProductCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductCatalogViewController.h; sourceTree = "<group>"; };
 		3C62497B1B3C1151008F34C7 /* MProductCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductCatalogViewController.m; sourceTree = "<group>"; };
 		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
@@ -565,6 +571,8 @@
 				3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */,
 				3C344AAF1B6CF6B600818F19 /* OrderBasketPickerCell.h */,
 				3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */,
+				3C5D0B4F1B8C9730006FFC87 /* OrderSiderBarViewController.h */,
+				3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */,
 			);
 			name = PickOrder;
 			sourceTree = "<group>";
@@ -575,6 +583,15 @@
 				3C56783A1B5B2A08001B6B40 /* OrderItemTest.m */,
 			);
 			name = Order;
+			sourceTree = "<group>";
+		};
+		3C5D0B551B8C990A006FFC87 /* LLBlurSiderBar */ = {
+			isa = PBXGroup;
+			children = (
+				3C5D0B521B8C9904006FFC87 /* LLBlurSidebar.h */,
+				3C5D0B531B8C9904006FFC87 /* LLBlurSidebar.m */,
+			);
+			name = LLBlurSiderBar;
 			sourceTree = "<group>";
 		};
 		3C64832D1B494BB600EFAE4E /* Model */ = {
@@ -651,6 +668,7 @@
 		3C6DDF1D1B43FA3F000B8152 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D0B551B8C990A006FFC87 /* LLBlurSiderBar */,
 				3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */,
 				3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */,
 				3CBF22EB1B7B6A4D00F3EB72 /* UILabelStrikeThrough.h */,
@@ -946,6 +964,7 @@
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
+				3C5D0B541B8C9904006FFC87 /* LLBlurSidebar.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
 				3C442A351B74D8E8008BF244 /* DateUtil.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
@@ -953,6 +972,7 @@
 				3C5661701B679B2E0082F49E /* OrderPickProductsMainViewController.m in Sources */,
 				3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */,
 				3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */,
+				3C5D0B511B8C9730006FFC87 /* OrderSiderBarViewController.m in Sources */,
 				3C5678381B5B25E1001B6B40 /* OProductItem.m in Sources */,
 				3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */,
 				3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */,

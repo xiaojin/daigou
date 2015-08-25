@@ -20,6 +20,7 @@
 #import <ionicons/IonIcons.h>
 #import "OrderBasketPickerViewController.h"
 #import "ProductWithCount.h"
+#import "OrderSiderBarViewController.h"
 
 @interface OrderPickProductsMainViewController () <DockTableViewDelegate,RightTableViewDelegate>
 @property (nonatomic, strong)OrderProductDockView *dockTableView;
@@ -30,6 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *offsArray;
 @property (nonatomic, strong) NSMutableDictionary *cartDict;
 @property (nonatomic, strong) UILabel *countlbl;
+@property (nonatomic, strong) OrderSiderBarViewController *sidebarVC;
 @end
 
 @implementation OrderPickProductsMainViewController
@@ -54,8 +56,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //
-    CGFloat topOff = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    
+    UIView *topBarView = [[UIView alloc]init];
+    [topBarView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:topBarView];
+    [topBarView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.equalTo(@64);
+    }];
+    
+    UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:[UIColor blackColor] iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
+    UIButton *menuButton = [[UIButton alloc] init];
+    [menuButton setImage:menuIcon forState:UIControlStateNormal];
+    [topBarView addSubview:menuButton];
+    [menuButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topBarView.mas_top).with.offset(28);
+        make.left.equalTo(topBarView.mas_left).with.offset(10);
+        make.width.equalTo(@34);
+        make.height.equalTo(@34);
+    }];
+    [menuButton addTarget:self action:@selector(showProductsList) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *doneButton = [[UIButton alloc]init];
+    [doneButton setTitle:@"完成" forState:UIControlStateNormal];
+    [doneButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [doneButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+    [topBarView addSubview:doneButton];
+    [doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(menuButton.mas_top);
+        make.right.equalTo(topBarView.mas_right).with.offset(-10);
+        make.width.equalTo(@34);
+        make.height.equalTo(@34);
+    }];
+    [doneButton addTarget:self action:@selector(finishSelect) forControlEvents:UIControlEventTouchUpInside];
 
+    
     OrderProductDockView *prodDockView = [[OrderProductDockView alloc]init];
     prodDockView.rowHeight = 50;
     prodDockView.dockDelegate = self;
@@ -64,7 +101,7 @@
     prodDockView.tableHeaderView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:prodDockView];
     [prodDockView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view);
+        make.top.equalTo(topBarView.mas_bottom);
         make.left.equalTo(self.view);
         make.bottom.equalTo(self.view);
         make.width.equalTo(@75);
@@ -79,7 +116,7 @@
     [rightTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:rightTableView];
     [rightTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_dockTableView.mas_top).with.offset(topOff);
+        make.top.equalTo(topBarView.mas_bottom);
         make.left.equalTo(_dockTableView.mas_right);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
@@ -135,11 +172,36 @@
     [countlbl setFont:[UIFont systemFontOfSize:12.0f]];
     _countlbl = countlbl;
     [cartButton addTarget:self action:@selector(showCartContent) forControlEvents:UIControlEventTouchUpInside];
-   
+    
 
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(finishSelect)];
-    self.navigationItem.rightBarButtonItem = rightButton;
+    
+    
+//    UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:[UIColor blackColor] iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
+//    UIBarButtonItem *leftListButton = [[UIBarButtonItem alloc] initWithImage:menuIcon style:UIBarButtonItemStylePlain target:self action:@selector(showProductsList)];
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(finishSelect)];
+//    self.navigationItem.leftBarButtonItem = leftListButton;
+//    self.navigationItem.rightBarButtonItem = rightButton;
+    
+    // 左侧边栏开始
+    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
+    [panGesture delaysTouchesBegan];
+    [self.view addGestureRecognizer:panGesture];
+    
+    self.sidebarVC = [[OrderSiderBarViewController alloc] init];
+    [self.sidebarVC setBgRGB:0x000000];
+    [self.view addSubview:self.sidebarVC.view];
+    self.sidebarVC.view.frame  = self.view.bounds;
+    // 左侧边栏结束
 
+}
+
+- (void) showProductsList {
+    [self.sidebarVC showHideSidebar];
+}
+
+- (void)panDetected:(UIPanGestureRecognizer*)recoginzer
+{
+    [self.sidebarVC panDetected:recoginzer];
 }
 
 - (void)bottomLabelClick {
@@ -187,7 +249,7 @@
         //showDetailView.customInfo = _customInfo;
         //[showBaskView refreshBasketContent];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
