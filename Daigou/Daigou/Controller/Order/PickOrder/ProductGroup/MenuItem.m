@@ -16,7 +16,8 @@
 
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-#define kLeftWidth 100
+#define kLeftWidth 60
+#define kRightSelectWidth 40
 
 @interface MenuItem()<UITableViewDataSource,UITableViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -83,7 +84,7 @@
         flowLayout.minimumInteritemSpacing=0.f;//左右间隔
         flowLayout.minimumLineSpacing=0.f;
         float leftMargin =0;
-        self.rightCollection=[[UICollectionView alloc] initWithFrame:CGRectMake(kLeftWidth+leftMargin,0,kScreenWidth-kLeftWidth-leftMargin*2,frame.size.height) collectionViewLayout:flowLayout];
+        self.rightCollection=[[UICollectionView alloc] initWithFrame:CGRectMake(kLeftWidth+leftMargin,0,kScreenWidth-kLeftWidth-leftMargin*2-kRightSelectWidth,frame.size.height) collectionViewLayout:flowLayout];
         
         self.rightCollection.delegate=self;
         self.rightCollection.dataSource=self;
@@ -106,7 +107,19 @@
         
         self.rightCollection.backgroundColor=self.leftSelectBgColor;
         
-        self.backgroundColor=self.leftSelectBgColor;
+        //self.backgroundColor=self.leftSelectBgColor;
+        self.backgroundColor = [UIColor clearColor];
+        UIView *dismissView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.rightCollection.frame), 0, kRightSelectWidth, frame.size.height)];
+        [dismissView setBackgroundColor:[UIColor colorWithRed:0/255.0f green:0/255.0f  blue:0/255.0f  alpha:0.8f]];
+        
+        UILabel *backLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, dismissView.frame.size.width, dismissView.frame.size.height)];
+        [backLable setFont:[UIFont systemFontOfSize:12.0f]];
+        [backLable setTextColor:[UIColor whiteColor]];
+        [backLable setText:@"点\n击\n此\n处\n返\n回\n"];
+        [backLable setTextAlignment:NSTextAlignmentCenter];
+        backLable.numberOfLines = [backLable.text length];
+        [dismissView addSubview:backLable];
+        [self addSubview:dismissView];
         
     }
     return self;
@@ -165,7 +178,7 @@
     
     
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    rightMeun * title=self.allData[indexPath.row];
+    rightMeun *title=self.allData[indexPath.row];
     
     cell.titile.text=title.meunName;
     

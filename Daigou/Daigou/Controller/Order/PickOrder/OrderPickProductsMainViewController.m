@@ -93,31 +93,30 @@
     [doneButton addTarget:self action:@selector(finishSelect) forControlEvents:UIControlEventTouchUpInside];
 
     
-    OrderProductDockView *prodDockView = [[OrderProductDockView alloc]init];
-    prodDockView.rowHeight = 50;
-    prodDockView.dockDelegate = self;
-    prodDockView.backgroundColor = RGB(255, 255, 255);
-    [prodDockView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    prodDockView.tableHeaderView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:prodDockView];
-    [prodDockView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topBarView.mas_bottom);
-        make.left.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-        make.width.equalTo(@75);
-    }];
-    
-    _dockTableView = prodDockView;
+//    OrderProductDockView *prodDockView = [[OrderProductDockView alloc]init];
+//    prodDockView.rowHeight = 50;
+//    prodDockView.dockDelegate = self;
+//    prodDockView.backgroundColor = RGB(255, 255, 255);
+//    [prodDockView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+//    prodDockView.tableHeaderView.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:prodDockView];
+//    [prodDockView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(topBarView.mas_bottom);
+//        make.left.equalTo(self.view);
+//        make.bottom.equalTo(self.view);
+//        make.width.equalTo(@75);
+//    }];
+//    
+//    _dockTableView = prodDockView;
     OrderProductsRightTableView *rightTableView = [[OrderProductsRightTableView alloc]init];
     rightTableView.rowHeight = 90;
     rightTableView.rightDelegate = self;
     rightTableView.backgroundColor = RGB(238, 238, 238);
-    //rightTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 0.01f)];
     [rightTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:rightTableView];
     [rightTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topBarView.mas_bottom);
-        make.left.equalTo(_dockTableView.mas_right);
+        make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
@@ -134,9 +133,6 @@
     
     _dockTableView.dockArray = _docksArray;
    [_dockTableView reloadData];
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
-//    self.navigationController.navigationBar.translucent=NO;
-//    self.tabBarController.tabBar.translucent = NO;
     
     UIButton *cartButton = [[UIButton alloc]init];
     [self.view addSubview:cartButton];
@@ -172,15 +168,6 @@
     [countlbl setFont:[UIFont systemFontOfSize:12.0f]];
     _countlbl = countlbl;
     [cartButton addTarget:self action:@selector(showCartContent) forControlEvents:UIControlEventTouchUpInside];
-    
-
-    
-    
-//    UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:[UIColor blackColor] iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
-//    UIBarButtonItem *leftListButton = [[UIBarButtonItem alloc] initWithImage:menuIcon style:UIBarButtonItemStylePlain target:self action:@selector(showProductsList)];
-//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(finishSelect)];
-//    self.navigationItem.leftBarButtonItem = leftListButton;
-//    self.navigationItem.rightBarButtonItem = rightButton;
     
     // 左侧边栏开始
     UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];

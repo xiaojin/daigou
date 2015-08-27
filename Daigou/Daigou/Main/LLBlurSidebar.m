@@ -57,7 +57,7 @@
     [recognizer delaysTouchesBegan];
     [self.view addGestureRecognizer:recognizer];
     
-    sideBarWith = self.view.bounds.size.width - 80.0f;
+    sideBarWith = self.view.bounds.size.width;
     // 列表
     CGRect rect = CGRectMake(-sideBarWith, 0, sideBarWith, self.view.bounds.size.height);
     self.contentView = [[UIView alloc] initWithFrame:rect];
@@ -281,7 +281,8 @@
     LLLog(@"blur alpha = %f", percent);
     
     percent = 0.5 + (0.7-0.5)*(percent);
-    self.contentView.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:percent];
+//    self.contentView.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:percent];
+    self.contentView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setBgRGB:(long)rgb
