@@ -7,7 +7,6 @@
 //
 
 #import "OrderPickProductsMainViewController.h"
-#import "OrderProductDockView.h"
 #import "OrderProductsRightTableView.h"
 #import "CommonDefines.h"
 #import "OrderProductsRightTableView.h"
@@ -22,8 +21,7 @@
 #import "ProductWithCount.h"
 #import "OrderSiderBarViewController.h"
 
-@interface OrderPickProductsMainViewController () <DockTableViewDelegate,RightTableViewDelegate>
-@property (nonatomic, strong)OrderProductDockView *dockTableView;
+@interface OrderPickProductsMainViewController () <RightTableViewDelegate>
 @property (nonatomic, strong)NSMutableArray *docksArray;
 @property (nonatomic, strong)OrderProductsRightTableView *rightProductsTableView;
 @property (nonatomic, weak) UILabel *totalSingular;
@@ -92,22 +90,6 @@
     }];
     [doneButton addTarget:self action:@selector(finishSelect) forControlEvents:UIControlEventTouchUpInside];
 
-    
-//    OrderProductDockView *prodDockView = [[OrderProductDockView alloc]init];
-//    prodDockView.rowHeight = 50;
-//    prodDockView.dockDelegate = self;
-//    prodDockView.backgroundColor = RGB(255, 255, 255);
-//    [prodDockView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-//    prodDockView.tableHeaderView.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:prodDockView];
-//    [prodDockView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(topBarView.mas_bottom);
-//        make.left.equalTo(self.view);
-//        make.bottom.equalTo(self.view);
-//        make.width.equalTo(@75);
-//    }];
-//    
-//    _dockTableView = prodDockView;
     OrderProductsRightTableView *rightTableView = [[OrderProductsRightTableView alloc]init];
     rightTableView.rowHeight = 90;
     rightTableView.rightDelegate = self;
@@ -121,19 +103,11 @@
         make.bottom.equalTo(self.view);
     }];
     _rightProductsTableView = rightTableView;
-    NSArray *categorys = [self fetchAllCategory];
-    _docksArray = [NSMutableArray array];
-    for (ProductCategory *category in categorys) {
-        NSArray *products = [self fetchAllProduct:category];
-        NSDictionary *dict = @{@"category":category,
-                               @"products":products };
-        [_docksArray addObject:dict];
-        
-    }
     
-    _dockTableView.dockArray = _docksArray;
-   [_dockTableView reloadData];
-    
+    NSArray *categories = [self fetchAllCategory];
+    NSArray *productUnderCategory = [self fetchAllProduct:categories[0]];
+    [self showSelectedProducts:productUnderCategory];
+
     UIButton *cartButton = [[UIButton alloc]init];
     [self.view addSubview:cartButton];
     [cartButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -222,8 +196,8 @@
     _countlbl.text = [NSString stringWithFormat:@"%ld",totalSingularInt];
 }
 
-- (void)dockClickIndexRow:(NSMutableArray *)array index:(NSIndexPath *)index indexPath:(NSIndexPath *)indexPath {
-    _rightProductsTableView.rightArray=array;
+- (void)showSelectedProducts:(NSArray *)array {
+    _rightProductsTableView.rightArray = array;
     [_rightProductsTableView reloadData];
 }
 

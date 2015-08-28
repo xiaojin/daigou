@@ -88,31 +88,31 @@
 {
     
     _product=rightData;
-    _prodImage.frame=(CGRect){5,15,65,65};
-    NSString *prodImageString = _product.picture? _product.picture : @"default";
+    _prodImage.frame=(CGRect){10,10,75,75};
+    NSString *prodImageString = ([_product.picture isEqualToString:@""] || _product.picture == nil)? @"default" : _product.picture;
     _prodImage.image=[UIImage imageNamed:prodImageString];
     _prodImage.layer.masksToBounds=YES;
-    _prodImage.layer.cornerRadius=6;
-    _imageShow.frame=(CGRect){0,65-10,65,10};
+    _prodImage.layer.cornerRadius=2;
+    _imageShow.frame=(CGRect){0,70-10,75,10};
     
-    if (YES) {
-        _imageShow.hidden=NO;
-        _imageShow.text=@"7折";
-        _imageShow.textColor=[UIColor whiteColor];
-        _imageShow.font=Font(10);
-        _imageShow.textAlignment=NSTextAlignmentCenter;
-        _imageShow.backgroundColor=RGB(255, 127, 0);
-    }
+//    if (YES) {
+//        _imageShow.hidden=NO;
+//        _imageShow.text=@"7折";
+//        _imageShow.textColor=[UIColor whiteColor];
+//        _imageShow.font=Font(10);
+//        _imageShow.textAlignment=NSTextAlignmentCenter;
+//        _imageShow.backgroundColor=RGB(255, 127, 0);
+//    }
 //    }else
 //    {
-//        _imageShow.hidden=YES;
+        _imageShow.hidden=YES;
 //    }
     
     
     
     
     NSString *prodNameText =_product.name;
-    CGRect prodNameRect =[prodNameText boundingRectWithSize:CGSizeMake(kWindowWidth-75-CGRectGetMaxX(_prodImage.frame)-10, 35) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil] context:nil];
+    CGRect prodNameRect =[prodNameText boundingRectWithSize:CGSizeMake(kWindowWidth-CGRectGetMaxX(_prodImage.frame)-10, 35) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil] context:nil];
     
     _prodName.text=prodNameText;
     _prodName.font=Font(14);
@@ -125,7 +125,7 @@
     _prodMoney.text=prodMoneyText;
     _prodMoney.font=Font(14);
     _prodMoney.textColor=RGB(255, 127, 0);
-    _prodMoney.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame),CGRectGetMaxY(_prodImage.frame)-prodMoneySize.height-prodMoneySize.height*0.5},prodMoneySize};
+    _prodMoney.frame =(CGRect){{CGRectGetMinX(_prodName.frame),CGRectGetMaxY(_prodImage.frame)-prodMoneySize.height-prodMoneySize.height},prodMoneySize};
     
     if(_product.agentprice!=0.0f)
     {
@@ -135,14 +135,14 @@
         _prodMoneyOriginalPrice.text=prodMoneyOriginalPriceText;
         _prodMoneyOriginalPrice.font=Font(11);
         _prodMoneyOriginalPrice.textColor=[UIColor lightGrayColor];
-        _prodMoneyOriginalPrice.frame=(CGRect){{CGRectGetMaxX(_prodImage.frame),CGRectGetMaxY(_prodMoney.frame)+3},prodMoneyOriginalPriceSize};
+        _prodMoneyOriginalPrice.frame=(CGRect){{CGRectGetMinX(_prodName.frame),CGRectGetMaxY(_prodMoney.frame)+3},prodMoneyOriginalPriceSize};
     }else
     {
         _prodMoneyOriginalPrice.hidden=YES;
         
     }
     
-    [_addToCart setFrame:CGRectMake(kWindowWidth-165, 60, 80, 26)];
+    [_addToCart setFrame:CGRectMake(kWindowWidth-100, 60, 80, 26)];
     [_addToCart setTitle:@"加入购物车" forState:UIControlStateNormal];
     [_addToCart setBackgroundColor:RGB(255, 127, 0)];
     [_addToCart setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];

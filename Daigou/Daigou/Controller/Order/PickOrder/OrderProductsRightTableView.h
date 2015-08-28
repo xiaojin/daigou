@@ -15,7 +15,7 @@
 @end
 
 @interface OrderProductsRightTableView : UITableView
-@property (nonatomic ,strong) NSMutableArray *rightArray;
+@property (nonatomic ,strong) NSArray *rightArray;
 @property (nonatomic ,weak) id<RightTableViewDelegate>rightDelegate;
 
 @end
