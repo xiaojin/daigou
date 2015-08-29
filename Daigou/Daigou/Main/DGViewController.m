@@ -10,6 +10,7 @@
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
 #import "MProductCatalogViewController.h"
+#import "MProductsViewController.h"
 #define kTabICONSIZE 26.0f
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 
@@ -31,8 +32,10 @@
     secVC.title = @"订单";
     secVC.tabBarItem.image = [IonIcons imageWithIcon:ion_document_text size:kTabICONSIZE color:kICONCOLOR];
     UIStoryboard *addStoryboard = [UIStoryboard storyboardWithName:@"Add" bundle:nil];
-    MProductCatalogViewController *thirdVC = [[MProductCatalogViewController alloc]init];
-    thirdVC.title = @"商品";
+    MProductsViewController *productsViewController = [[MProductsViewController alloc]init];
+    UINavigationController *thirdVC =[[UINavigationController alloc] initWithRootViewController:productsViewController];
+   // MProductCatalogViewController *thirdVC = [[MProductCatalogViewController alloc]init];
+    productsViewController.title = @"商品";
     thirdVC.tabBarItem.image = [IonIcons imageWithIcon:ion_plus size:kTabICONSIZE color:kICONCOLOR];
 
     UIStoryboard *stockStoryboard = [UIStoryboard storyboardWithName:@"Stock" bundle:nil];

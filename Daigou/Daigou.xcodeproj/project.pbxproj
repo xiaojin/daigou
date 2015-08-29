@@ -92,6 +92,9 @@
 		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
 		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
 		3CBF22ED1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */; };
+		3CFC01DB1B909E8000995CAB /* MProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFC01DA1B909E8000995CAB /* MProductsViewController.m */; };
+		3CFC01E11B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */; };
+		3CFC01E41B91490900995CAB /* MProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFC01E31B91490900995CAB /* MProductItemCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +262,12 @@
 		3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketViewController.m; sourceTree = "<group>"; };
 		3CBF22EB1B7B6A4D00F3EB72 /* UILabelStrikeThrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILabelStrikeThrough.h; path = Extension/UILabelStrikeThrough.h; sourceTree = "<group>"; };
 		3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UILabelStrikeThrough.m; path = Extension/UILabelStrikeThrough.m; sourceTree = "<group>"; };
+		3CFC01D91B909E8000995CAB /* MProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductsViewController.h; sourceTree = "<group>"; };
+		3CFC01DA1B909E8000995CAB /* MProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductsViewController.m; sourceTree = "<group>"; };
+		3CFC01DF1B913BD400995CAB /* UISearchBar+UISearchBarAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UISearchBar+UISearchBarAccessory.h"; path = "Extension/UISearchBar+UISearchBarAccessory.h"; sourceTree = "<group>"; };
+		3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+UISearchBarAccessory.m"; path = "Extension/UISearchBar+UISearchBarAccessory.m"; sourceTree = "<group>"; };
+		3CFC01E21B91490900995CAB /* MProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MProductItemCell.h; sourceTree = "<group>"; };
+		3CFC01E31B91490900995CAB /* MProductItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MProductItemCell.m; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC5C4AF44B02D95DE319F4 /* Pods-Daigou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.debug.xcconfig"; sourceTree = "<group>"; };
 		8E9DE06086462CEABFF0A4F0 /* Pods-Daigou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daigou.release.xcconfig"; path = "Pods/Target Support Files/Pods-Daigou/Pods-Daigou.release.xcconfig"; sourceTree = "<group>"; };
@@ -463,6 +472,10 @@
 				3C6249871B3C11CB008F34C7 /* MSharingViewController.m */,
 				3C6249891B3C11D6008F34C7 /* MAboutViewController.h */,
 				3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */,
+				3CFC01D91B909E8000995CAB /* MProductsViewController.h */,
+				3CFC01DA1B909E8000995CAB /* MProductsViewController.m */,
+				3CFC01E21B91490900995CAB /* MProductItemCell.h */,
+				3CFC01E31B91490900995CAB /* MProductItemCell.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -702,6 +715,8 @@
 				3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */,
 				3C7794311B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.h */,
 				3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */,
+				3CFC01DF1B913BD400995CAB /* UISearchBar+UISearchBarAccessory.h */,
+				3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -991,6 +1006,7 @@
 				3C5D0B721B8CA890006FFC87 /* CollectionHeader.m in Sources */,
 				3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */,
 				3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */,
+				3CFC01E41B91490900995CAB /* MProductItemCell.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
 				3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
@@ -1003,6 +1019,7 @@
 				3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */,
 				3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */,
 				3C5D0B511B8C9730006FFC87 /* OrderSiderBarViewController.m in Sources */,
+				3CFC01E11B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m in Sources */,
 				3C5678381B5B25E1001B6B40 /* OProductItem.m in Sources */,
 				3C6DDF201B44018F000B8152 /* MShowCustomDetailViewController.m in Sources */,
 				3C5D0B741B8CA890006FFC87 /* MultilevelCollectionViewCell.m in Sources */,
@@ -1017,6 +1034,7 @@
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
+				3CFC01DB1B909E8000995CAB /* MProductsViewController.m in Sources */,
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,
 				3C7794391B7F647E0034D91D /* OrderDetailViewController.m in Sources */,
