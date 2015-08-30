@@ -56,24 +56,27 @@
     UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
     [panGesture delaysTouchesBegan];
     [self.view addGestureRecognizer:panGesture];
-    
     self.sidebarVC = [[OrderSiderBarViewController alloc] init];
+    
+    self.sidebarVC.navHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    
+    self.sidebarVC.tabHeight = (kWindowHeight- CGRectGetMinY(self.tabBarController.tabBar.frame));
+    self.sidebarVC.hideHeaderView = YES;
     [self.sidebarVC setBgRGB:0x000000];
-    //[self.view addSubview:self.sidebarVC.view];
     [self.view insertSubview:self.sidebarVC.view aboveSubview:_productsCollectionView];
-
     [_sidebarVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        //UIView *topLayGrid = (id)self.topLayoutGuide;
+        UIView *topLayGrid = (id)self.topLayoutGuide;
         UIView *bottomLayGrid = (id)self.bottomLayoutGuide;
-        make.top.equalTo(self.view);
+        make.top.equalTo(topLayGrid.mas_bottom);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(bottomLayGrid.mas_top);
+        make.bottom.equalTo(_productsCollectionView.mas_bottom);
     }];
     // 左侧边栏结束
 }
 
 - (void) selectProductCategory {
+   // self.hidesBottomBarWhenPushed = YES;
     [self.sidebarVC showHideSidebar];
 }
 

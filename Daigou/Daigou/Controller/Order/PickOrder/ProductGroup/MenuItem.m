@@ -9,6 +9,8 @@
 #import "MenuItem.h"
 #import "MultilevelTableViewCell.h"
 #import "MultilevelCollectionViewCell.h"
+#import <Masonry/Masonry.h>
+
 #define kImageDefaultName @"tempShop"
 #define kMultilevelCollectionViewCell @"MultilevelCollectionViewCell"
 #define kMultilevelCollectionHeader   @"CollectionHeader"//CollectionHeader
@@ -75,8 +77,7 @@
             self.leftTablew.separatorInset=UIEdgeInsetsZero;
         }
         self.leftTablew.separatorColor=self.leftSeparatorColor;
-        
-        
+
         /**
          右边的视图
          */

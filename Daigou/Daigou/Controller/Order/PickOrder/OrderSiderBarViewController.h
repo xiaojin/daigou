@@ -10,5 +10,7 @@
 #import "LLBlurSidebar.h"
 
 @interface OrderSiderBarViewController : LLBlurSidebar
-
+@property(nonatomic, assign) BOOL hideHeaderView;
+@property(nonatomic, assign) CGFloat tabHeight;
+@property(nonatomic, assign) CGFloat navHeight;
 @end
