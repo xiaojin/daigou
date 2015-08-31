@@ -13,6 +13,12 @@ typedef enum {
     PRODUCT_SHIPPED = 20
 } ItemStatus;
 
+
+typedef enum {
+    OrderProduct = 0,
+    UnOrderProduct = 1
+} ProcurementStatus;
+
 @interface OProductItem : NSObject
 @property(nonatomic,assign)NSInteger iid;
 @property(nonatomic,assign)NSInteger productid;
@@ -23,6 +29,7 @@ typedef enum {
 @property(nonatomic,assign)NSInteger orderdate;
 @property(nonatomic,assign)ItemStatus statu;
 @property(nonatomic, copy)NSString *note;
+@property(nonatomic, assign)ProcurementStatus procurementStatus;
 
 - (NSArray *)orderProductToArray;
 @end

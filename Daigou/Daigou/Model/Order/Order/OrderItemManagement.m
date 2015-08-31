@@ -193,5 +193,36 @@
     return result;
     
 }
+
+- (NSArray *)getprocurementProductItemsByStatus:(ProcurementStatus)procurementStatus {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = nil;
+    if (procurementStatus == OrderProduct) {
+        rs = [_db executeQuery:@"select * from item where orderid is not NULL and statu = 0"];
+    } else {
+        rs = [_db executeQuery:@"select * from item where orderid is NULL and statu = 0"];
+    }
+
+    NSMutableArray *orderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        OProductItem *productItem = [[OProductItem alloc]init];
+        productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
+        productItem.productid = (NSInteger)[rs intForColumn:@"productid"];
+        productItem.refprice = (float) [rs doubleForColumn:@"refprice"];
+        productItem.price = (float) [rs doubleForColumn:@"price"];
+        productItem.amount = (float)[rs doubleForColumn:@"amount"];
+        productItem.orderid = [rs intForColumn:@"orderid"];
+        productItem.orderdate = (float)[rs intForColumn:@"orderdate"];
+        productItem.statu = [rs intForColumn:@"statu"];
+        productItem.note = [rs stringForColumn:@"note"];
+        [orderItemsArray addObject:productItem];
+    }
+    [_db close];
+    return orderItemsArray;
+
+}
     
 @end

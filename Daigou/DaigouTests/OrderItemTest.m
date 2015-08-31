@@ -79,6 +79,16 @@
     XCTAssertTrue(result,@"should insert the product successfully");
 }
 
+
+- (void)testGetOrderProductByprocumentStatus {
+    NSArray *oriderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:OrderProduct];
+    NSArray *unOrderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:UnOrderProduct];
+    XCTAssertGreaterThan([oriderProducts count], 0,@"There should be more than 1 product in the database");
+    XCTAssertGreaterThan([unOrderProducts count], 0,@"There should be more than 1 product in the database");
+
+
+}
+
 //- (void)testgetProductByBrand {
 //    Brand *brand = [Brand new];
 //    brand.bid = 10;

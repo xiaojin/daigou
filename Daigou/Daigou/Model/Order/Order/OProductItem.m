@@ -21,4 +21,13 @@
                         self.note?self.note :@""];
     return result;
 }
+
+
+- (ProcurementStatus) procurementStatus {
+    if (self.orderid == 0) {
+        return UnOrderProduct;
+    } else
+        return OrderProduct;
+};
+
 @end

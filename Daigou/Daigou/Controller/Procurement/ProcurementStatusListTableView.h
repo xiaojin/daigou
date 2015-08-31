@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ProcurementItem.h"
+#import "OProductItem.h"
+
 @interface ProcurementStatusListTableView : UITableView
 @property(nonatomic, assign)ProcurementStatus status;
 @property(nonatomic, strong)NSArray *procurementProductList;

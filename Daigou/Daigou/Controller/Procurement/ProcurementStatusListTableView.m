@@ -7,7 +7,13 @@
 //
 
 #import "ProcurementStatusListTableView.h"
+#import "OrderItemManagement.h"
 
 @implementation ProcurementStatusListTableView
 
+- (NSArray *)procurementProductList {
+    NSArray *procurementList = [NSArray array];
+    procurementList = [[OrderItemManagement shareInstance] getprocurementProductItemsByStatus:self.status];
+    return procurementList;
+}
 @end
