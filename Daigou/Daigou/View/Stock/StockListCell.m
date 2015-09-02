@@ -1,23 +1,23 @@
 //
-//  ProcurementListCell.m
+//  StockListCell.m
 //  Daigou
 //
-//  Created by jin on 31/08/2015.
+//  Created by jin on 2/09/2015.
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
-#import "ProcurementListCell.h"
-#import <Masonry/Masonry.h>
-#import "CommonDefines.h"
-#import "ProductManagement.h"
+#import "StockListCell.h"
 #import "Product.h"
+#import <Masonry/Masonry.h>
+#import "ProductManagement.h"
+#import "CommonDefines.h"
 
 #define IMAGEVIEWSIZE 35.0f
 #define CONTENTPADDINGLEFT 10.0f
 #define FONTSIZE 12.0f
 #define CONTENTPADDINGTOP 10.0f
 
-@interface ProcurementListCell ()
+@interface StockListCell()
 @property (nonatomic, assign)NSInteger cellIndex;
 @property(nonatomic, strong) UILabel *noteInfo;
 @property (nonatomic, assign)ProductOrderStatus procurementStatus;
@@ -25,13 +25,11 @@
 @property (nonatomic, strong) Product *product;
 @end
 
-@implementation ProcurementListCell
-- (instancetype) initWithOrderStatus:(ProductOrderStatus)status withIndex:(NSInteger)index {
+@implementation StockListCell
+- (instancetype) initWithIndex:(NSInteger)index {
     self.cellIndex = index;
-    self.procurementStatus = status;
     return [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"procurementListcellIdentity"];
 }
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
     }
@@ -43,7 +41,6 @@
     [super layoutSubviews];
     [self makeSubView];
 }
-
 
 - (void)makeSubView {
     UIImageView *productImage = [[UIImageView alloc]init];
@@ -126,5 +123,4 @@
 - (NSString *)getNote {
     return self.procurementItem.note;
 }
-
 @end

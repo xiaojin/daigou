@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--商品订单-->
+        <!--Procurement View Controller-->
         <scene sceneID="8Xd-jf-Eg0">
             <objects>
                 <viewController id="LlD-AX-c9l" customClass="ProcurementViewController" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="商品订单" id="Ivo-WU-gl8"/>
+                    <navigationItem key="navigationItem" id="Ivo-WU-gl8"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kiq-nK-Kmo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

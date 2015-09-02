@@ -11,5 +11,5 @@
 
 @interface ProcurementListCell : UITableViewCell
 @property(nonatomic, strong)OProductItem *procurementItem;
-- (instancetype) initWithOrderStatus:(ProcurementStatus)status withIndex:(NSInteger)index;
+- (instancetype) initWithOrderStatus:(ProductOrderStatus)status withIndex:(NSInteger)index;
 @end

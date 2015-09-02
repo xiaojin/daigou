@@ -22,6 +22,7 @@
 		3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */; };
 		3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */; };
 		3C0BBDA61B94601700BA0E1E /* ProcurementListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0BBDA51B94601700BA0E1E /* ProcurementListCell.m */; };
+		3C0BBDA91B9484E100BA0E1E /* StockStatusListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0BBDA81B9484E100BA0E1E /* StockStatusListTableView.m */; };
 		3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */; };
 		3C127AE71B834554008D47DF /* OrderItemBenifitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C127AE61B834554008D47DF /* OrderItemBenifitCell.m */; };
 		3C127AEA1B836831008D47DF /* OrderItemPhoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C127AE91B836831008D47DF /* OrderItemPhoneView.m */; };
@@ -88,6 +89,7 @@
 		3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */; };
 		3C7794391B7F647E0034D91D /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794381B7F647E0034D91D /* OrderDetailViewController.m */; };
 		3C77943C1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */; };
+		3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A1F4A1B9705580030647B /* StockListCell.m */; };
 		3CA1A2941B551FCD00C0A74C /* OAddNewOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */; };
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
 		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
@@ -133,6 +135,8 @@
 		3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketCell.m; sourceTree = "<group>"; };
 		3C0BBDA41B94601700BA0E1E /* ProcurementListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcurementListCell.h; sourceTree = "<group>"; };
 		3C0BBDA51B94601700BA0E1E /* ProcurementListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcurementListCell.m; sourceTree = "<group>"; };
+		3C0BBDA71B9484E100BA0E1E /* StockStatusListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockStatusListTableView.h; sourceTree = "<group>"; };
+		3C0BBDA81B9484E100BA0E1E /* StockStatusListTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockStatusListTableView.m; sourceTree = "<group>"; };
 		3C0EEC6B1B4896B900FC4782 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Extension/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		3C0EEC6C1B4896B900FC4782 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Extension/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		3C127AE51B834554008D47DF /* OrderItemBenifitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItemBenifitCell.h; sourceTree = "<group>"; };
@@ -256,6 +260,8 @@
 		3C7794381B7F647E0034D91D /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
 		3C77943A1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDeliveryStatusViewController.h; sourceTree = "<group>"; };
 		3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDeliveryStatusViewController.m; sourceTree = "<group>"; };
+		3C9A1F491B9705580030647B /* StockListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockListCell.h; sourceTree = "<group>"; };
+		3C9A1F4A1B9705580030647B /* StockListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockListCell.m; sourceTree = "<group>"; };
 		3CA1A2921B551FCD00C0A74C /* OAddNewOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAddNewOrderViewController.h; sourceTree = "<group>"; };
 		3CA1A2931B551FCD00C0A74C /* OAddNewOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAddNewOrderViewController.m; sourceTree = "<group>"; };
 		3CA1A2951B56884200C0A74C /* OrderItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemView.h; path = Daigou/View/Order/OrderItemView.h; sourceTree = SOURCE_ROOT; };
@@ -335,6 +341,8 @@
 				19B0F1B4311BCA42CF7B3AE9 /* Stock.storyboard */,
 				19B0F245CE78B94CFB16ED10 /* StockViewController.h */,
 				19B0F1B595271C47494B85C4 /* StockViewController.m */,
+				3C0BBDA71B9484E100BA0E1E /* StockStatusListTableView.h */,
+				3C0BBDA81B9484E100BA0E1E /* StockStatusListTableView.m */,
 			);
 			path = Stock;
 			sourceTree = "<group>";
@@ -353,6 +361,8 @@
 		19B0F549668E525B1D07A561 /* Stock */ = {
 			isa = PBXGroup;
 			children = (
+				3C9A1F491B9705580030647B /* StockListCell.h */,
+				3C9A1F4A1B9705580030647B /* StockListCell.m */,
 			);
 			path = Stock;
 			sourceTree = "<group>";
@@ -1029,6 +1039,7 @@
 				3C5D0B741B8CA890006FFC87 /* MultilevelCollectionViewCell.m in Sources */,
 				3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
+				3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */,
 				3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */,
@@ -1038,6 +1049,7 @@
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
+				3C0BBDA91B9484E100BA0E1E /* StockStatusListTableView.m in Sources */,
 				3CFC01DB1B909E8000995CAB /* MProductsViewController.m in Sources */,
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,

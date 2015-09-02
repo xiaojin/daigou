@@ -47,9 +47,8 @@
     UIViewController *fifthVC = [mineStoryboard instantiateInitialViewController];
     fifthVC.title = @"我的";
     fifthVC.tabBarItem.image = [IonIcons imageWithIcon:ion_android_person size:kTabICONSIZE color:kICONCOLOR];
-
     [self setViewControllers:[NSArray arrayWithObjects:firstVC,secVC,thirdVC,forthVC,fifthVC, nil]];
-  
+    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
 

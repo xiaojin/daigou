@@ -62,7 +62,7 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
     
     
     _orderProductsLbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, LBL_DISTANCE, SCROLL_VIEW_HEIGHT-1)];
-    [_orderProductsLbl setText:@"非订单商品"];
+    [_orderProductsLbl setText:@"订单商品"];
     [_orderProductsLbl setFont:[UIFont systemFontOfSize:16.0f]];
     _orderProductsLbl.textColor = RGB(241, 109, 52);
     [_orderProductsLbl setTextAlignment:NSTextAlignmentCenter];
@@ -74,7 +74,7 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
     
     //
     _unOrderProductsLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_orderProductsLbl.frame), 0, LBL_DISTANCE, SCROLL_VIEW_HEIGHT-1)];
-    [_unOrderProductsLbl setText:@"待发货"];
+    [_unOrderProductsLbl setText:@"非订单商品"];
     [_unOrderProductsLbl setFont:[UIFont systemFontOfSize:14.0f]];
     _unOrderProductsLbl.textColor = RGB(0, 0, 0);
     [_unOrderProductsLbl setTextAlignment:NSTextAlignmentCenter];
