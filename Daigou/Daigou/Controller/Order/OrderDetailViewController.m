@@ -25,6 +25,7 @@
 @property (nonatomic, strong) OAddNewOrderViewController *addNewOrderViewController;
 @property (nonatomic, strong) OrderBasketViewController *orderBasketViewController;
 @property (nonatomic, strong) OrderDeliveryStatusViewController *deliveryStatusViewController;
+@property (nonatomic, strong) UIView *bottomView;
 @end
 
 @implementation OrderDetailViewController
@@ -41,21 +42,74 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    [self addBottomView];
     [self initOrderData];
     [self setPageIndicator];
     [self initScrollView];
+}
+
+- (void)addBottomView {
+    CGFloat topOff = self.tabBarController.tabBar.frame.size.height;
+    _bottomView = [[UIView alloc]initWithFrame:CGRectZero];
+    [_bottomView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:_bottomView];
+    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.height.equalTo(@(topOff));
+    }];
+    UIButton *saveOrder = [[UIButton alloc]initWithFrame:CGRectZero];
+    [saveOrder setTitle:@"保存订单" forState:UIControlStateNormal];
+    [saveOrder.titleLabel setFont:Font(14)];
+    [saveOrder setBackgroundColor:THEMECOLOR];
+    [saveOrder.titleLabel setTextColor:[UIColor whiteColor]];
+    
+    [_bottomView addSubview:saveOrder];
+    [saveOrder mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bottomView.mas_top);
+        make.left.equalTo(_bottomView.mas_left);
+        make.bottom.equalTo(_bottomView.mas_bottom);
+        make.width.equalTo(@(kWindowWidth/3));
+    }];
+    
+    UIButton *shareButton = [[UIButton alloc]initWithFrame:CGRectZero];
+    [shareButton setTitle:@"分享订单" forState:UIControlStateNormal];
+    [shareButton.titleLabel setFont:Font(14)];
+    [shareButton setBackgroundColor:[UIColor redColor]];
+    [shareButton.titleLabel setTextColor:[UIColor blackColor]];
+    
+    [_bottomView addSubview:shareButton];
+    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bottomView.mas_top);
+        make.left.equalTo(saveOrder.mas_right);
+        make.bottom.equalTo(_bottomView.mas_bottom);
+        make.width.equalTo(@(kWindowWidth/3));
+    }];
+    
+    UIButton *moreButton = [[UIButton alloc]initWithFrame:CGRectZero];
+    [moreButton setTitle:@"更多" forState:UIControlStateNormal];
+    [moreButton.titleLabel setFont:Font(14)];
+    [moreButton setBackgroundColor:[UIColor orangeColor]];
+    [_bottomView addSubview:moreButton];
+    [moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bottomView.mas_top);
+        make.left.equalTo(shareButton.mas_right);
+        make.bottom.equalTo(_bottomView.mas_bottom);
+        make.width.equalTo(@(kWindowWidth/3));
+    }];
+    
 }
 
 - (void)initScrollView {
     _orderDetailMainScrollView = [[UIScrollView alloc] initWithFrame: CGRectZero];
     _orderDetailMainScrollView.delegate = self;
     [self.view addSubview:_orderDetailMainScrollView];
-    CGFloat topOff = self.tabBarController.tabBar.frame.size.height;
     [_orderDetailMainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.top.equalTo(_subTabView.mas_bottom);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).with.offset(-topOff);
+        make.bottom.equalTo(_bottomView.mas_top);
     }];
     UIView *container = [UIView new];
     [_orderDetailMainScrollView addSubview:container];

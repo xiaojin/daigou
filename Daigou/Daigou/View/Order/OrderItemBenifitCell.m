@@ -11,8 +11,13 @@
 #import "UITextField+UITextFieldAccessory.h"
 
 #import <Masonry/Masonry.h>
+
+#import <ionicons/IonIcons.h>
+#import <ionicons/ionicons-codes.h>
 #define DiscountFONT  [UIFont systemFontOfSize:14.0f]
 #define LEFTSIDEPADDING 10
+#define kTabICONSIZE 26.0f
+#define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 @interface OrderItemBenifitCell ()<UITextFieldDelegate>
 @property(nonatomic, strong)UIView *subView;
 @end
@@ -370,7 +375,54 @@
         make.right.equalTo(notePriceFiled.mas_right);
         make.height.equalTo(@1);
     }];
+    //********************
     
+
+    
+    UIImage *cameraImage = [IonIcons imageWithIcon:ion_camera size:kTabICONSIZE color:[UIColor whiteColor]];
+    UIButton *cameraButton = [[UIButton alloc]init];
+    [cameraButton setBackgroundColor:THEMECOLOR];
+    [cameraButton setTitle:@"拍照" forState:UIControlStateNormal];
+    [cameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cameraButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 40.0f)];
+    [cameraButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0.0f)];
+    [cameraButton setImage:cameraImage forState:UIControlStateNormal];
+    [self.subView addSubview:cameraButton];
+    [cameraButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(notePriceUnderLine.mas_bottom).with.offset(10);
+        make.left.equalTo(notePriceUnderLine.mas_left);
+        make.width.equalTo(@((kWindowWidth-42)/2));
+        make.height.equalTo(@44);
+    }];
+    
+    UIView *buttonsLine = [[UIView alloc]init];
+    [buttonsLine setBackgroundColor:[UIColor grayColor]];
+    [self.subView addSubview:buttonsLine];
+    [buttonsLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(cameraButton.mas_top).with.offset(6);
+        make.bottom.equalTo(cameraButton.mas_bottom).with.offset(-6);
+        make.left.equalTo(cameraButton.mas_right).with.offset(10);
+        make.width.equalTo(@2);
+    }];
+    
+    UIImage *pictureImage = [IonIcons imageWithIcon:ion_image size:kTabICONSIZE color:[UIColor whiteColor]];
+    UIButton *picutreButton = [[UIButton alloc]init];
+    [picutreButton setBackgroundColor:THEMECOLOR];
+
+    [picutreButton setTitle:@"相册" forState:UIControlStateNormal];
+    [picutreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [picutreButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 40.0f)];
+
+    [picutreButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0.0f)];
+
+    [picutreButton setImage:pictureImage forState:UIControlStateNormal];
+    [self.subView addSubview:picutreButton];
+    [picutreButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(cameraButton.mas_top);
+        make.left.equalTo(buttonsLine.mas_right).with.offset(10);
+        make.bottom.equalTo(cameraButton.mas_bottom);
+        make.right.equalTo(notePriceFiled.mas_right);
+    }];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField

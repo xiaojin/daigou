@@ -49,8 +49,12 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
     _searchBar.frame = CGRectMake(0, 0, 200, 44);
     _searchBar.layer.cornerRadius = 12;
     self.navigationItem.titleView = _searchBar;
-
-    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc]initWithTitle:@"库存" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [lable setFont:[UIFont systemFontOfSize:14.0f]];
+    lable.text = @"库存";
+    [lable setTextColor:[UIColor blackColor]];
+    
+    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithCustomView:lable];
     self.navigationItem.leftBarButtonItems = @[titleButton];
 }
 

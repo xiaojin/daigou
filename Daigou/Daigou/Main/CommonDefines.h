@@ -26,4 +26,3 @@ dispatch_once(&oncetoken, BLOCK); \
 #define TITLECOLOR RGB(89, 89, 89)
 #define GRAYCOLOR RGB(45,45,45)
 #define PRODUCTTITLEFONT [UIFont systemFontOfSize:14.0f]
-

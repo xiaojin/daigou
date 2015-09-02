@@ -430,6 +430,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     OrderItem *orderItem = (OrderItem *)[orderList objectAtIndex:indexPath.row];
     
     OrderDetailViewController *editOrderViewContorller = [[OrderDetailViewController alloc]initWithOrderItem:orderItem withClientDetail:[self getCustomInfobyId:orderItem.clientid]];
+    editOrderViewContorller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:editOrderViewContorller animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
