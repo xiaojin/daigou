@@ -310,7 +310,7 @@
         NSArray *viewController = self.navigationController.viewControllers;
         [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[OrderDetailViewController class]]) {
-                UIViewController *viewcontroler = [[(OrderDetailViewController *)obj childViewControllers][0]  childViewControllers][0];
+                UIViewController *viewcontroler = [(OrderDetailViewController *)obj childViewControllers][0];
                 if ([viewcontroler isKindOfClass:[OAddNewOrderViewController class]]) {
                         OAddNewOrderViewController *editNewOrderViewController = (OAddNewOrderViewController *)viewcontroler;
                         editNewOrderViewController.customInfo =[_contacts objectAtIndex:indexPath.section][indexPath.row];

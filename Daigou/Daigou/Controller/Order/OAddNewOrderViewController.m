@@ -50,7 +50,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     [super viewDidLoad];
     self.statusStringArray = @[@"采购中",@"待发货",@"运输中",@"已收获",@"已完成"];
     
-    
     if (self.customInfo == nil) {
         self.customInfo = [[CustomInfo alloc]init];
     }
@@ -106,20 +105,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 // TODO 小记，总计，youhui
 - (void) initValueForCell{
-    NSArray *firstSection = @[@"客户姓名",@"货品清单",@"订单状态",@"状态选择"];
-    NSArray *detailFirstSection = nil;
-    NSArray *detailSecSection  = nil;
-    if (self.orderItem.oid != 0) {
-        NSString *productList = [NSString stringWithFormat:@"一共有 %lu 件商品",(unsigned long)self.products.count];
-        detailFirstSection = @[self.customInfo.name,productList,self.statusStringArray[self.orderItem.statu/10],@""];
-        detailSecSection = @[@0];
-    } else {
-        detailFirstSection = @[@"",@0,@"采购中",@""];
-        detailSecSection = @[@0];
-    }
-    NSArray *secSection = @[@"利润"];
-    self.titleArray = @[firstSection, secSection];
-    self.detailArray = @[detailFirstSection, detailSecSection];
+    
 }
 
 #pragma mark - UINotification
@@ -147,18 +133,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
-
-    if(indexPath.section == 0 && indexPath.row == 3) {
-        [self setStatusPickView:tableView cellForRowAtIndexPath:indexPath];
-        cell = _pickViewCell;
-    } else {
-        if (indexPath.section == 0) {
-            cell = [self setOrderItemView:tableView cellForRowAtIndexPath:indexPath];
-        } else {
-            cell = [self setOrderTextInputView:tableView cellForRowAtIndexPath:indexPath];
-        }
-    }
+    UITableViewCell *cell = [self setOrderTextInputView:tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
 
@@ -202,26 +177,14 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = self.editTableView.rowHeight;
-    
-    if (indexPath.section == 0 && indexPath.row == 3 ) {
-        height = self.statusPickerIsShowing ? kStatusPickerCellHeight : 0.0f;
-    } else if(indexPath.section == 1 && indexPath.row == 0) {
-        height = 300.0f;
-    }
-    
-    return height;
+    return 460.0f;
 }
 
 #pragma mark - UITableViewDelegate
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return [self.titleArray count];
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.titleArray[section] count];
+    return 1;
 }
 
 #pragma mark - handlerCellTap

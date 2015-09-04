@@ -18,6 +18,9 @@
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 @interface OrderItemBenifitCell ()<UITextFieldDelegate>
 @property(nonatomic, strong)UIView *subView;
+@property(nonatomic, strong)UITextField *productInfoField;
+@property(nonatomic, strong)UITextField *customInfoField;
+
 @end
 
 @implementation OrderItemBenifitCell
@@ -38,6 +41,101 @@
     [_subView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.contentView);
     }];
+    UILabel *customInfo = [[UILabel alloc]init];
+    customInfo.font = DiscountFONT;
+    customInfo.textColor = TITLECOLOR;
+    customInfo.textAlignment = NSTextAlignmentLeft;
+    [customInfo setText:@"客户"];
+    [self.subView addSubview:customInfo];
+    [customInfo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.subView).with.offset(10);
+        make.left.equalTo(self.subView).with.offset(10);
+        make.right.equalTo(self.subView).with.offset(-10);
+        make.height.equalTo(@10);
+    }];
+    
+    _customInfoField = [[UITextField alloc]initHasAccessory];
+    [_customInfoField setFont:DiscountFONT];
+    [_customInfoField setTextColor:TITLECOLOR];
+    _customInfoField.textAlignment = NSTextAlignmentLeft;
+    _customInfoField.delegate = self;
+    [_customInfoField setPlaceholder:@"客户姓名"];
+    _customInfoField.delegate = self;
+    _customInfoField.keyboardType = UIKeyboardTypeDecimalPad;
+    [self.subView addSubview:_customInfoField];
+    [_customInfoField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(customInfo.mas_bottom).with.offset(LEFTSIDEPADDING);
+        make.left.equalTo(customInfo.mas_left);
+        make.right.equalTo(customInfo.mas_right).with.offset(-80);
+        make.height.equalTo(@30);
+    }];
+    
+    UIView *customInfoFieldUnderLine  = [[UIView alloc] init];
+    [customInfoFieldUnderLine setBackgroundColor:GRAYCOLOR];
+    [self.subView addSubview:customInfoFieldUnderLine];
+    [customInfoFieldUnderLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_customInfoField.mas_bottom);
+        make.left.equalTo(_customInfoField.mas_left);
+        make.right.equalTo(_customInfoField.mas_right);
+        make.height.equalTo(@1);
+    }];
+    
+    UIButton *payStatus = [[UIButton alloc] init];
+    [payStatus setTitle:@"未付款" forState:UIControlStateNormal];
+    [payStatus setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [payStatus setBackgroundColor:[UIColor lightGrayColor]];
+    [self.subView addSubview:payStatus];
+    [payStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(customInfoFieldUnderLine.mas_top).with.offset(-5);
+        make.left.equalTo(_customInfoField.mas_right).with.offset(5);
+        make.right.equalTo(self.subView).with.offset(-10);
+        make.height.equalTo(@30);
+    }];
+    
+//****
+    UILabel *productInfo = [[UILabel alloc]init];
+    productInfo.font = DiscountFONT;
+    productInfo.textColor = TITLECOLOR;
+    productInfo.textAlignment = NSTextAlignmentLeft;
+    [productInfo setText:@"货品清单"];
+    
+    [self.subView addSubview:productInfo];
+    [productInfo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(customInfoFieldUnderLine.mas_top).with.offset(10);
+        make.left.equalTo(self.subView).with.offset(10);
+        make.right.equalTo(self.subView).with.offset(-10);
+        make.height.equalTo(@10);
+    }];
+    
+    _productInfoField = [[UITextField alloc]initHasAccessory];
+    [_productInfoField setFont:DiscountFONT];
+    [_productInfoField setTextColor:TITLECOLOR];
+    _productInfoField.textAlignment = NSTextAlignmentLeft;
+    _productInfoField.delegate = self;
+    [_productInfoField setPlaceholder:@"商品清单"];
+    _productInfoField.delegate = self;
+    _productInfoField.keyboardType = UIKeyboardTypeDecimalPad;
+    [self.subView addSubview:_productInfoField];
+    [_productInfoField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(productInfo.mas_bottom).with.offset(LEFTSIDEPADDING);
+        make.left.equalTo(productInfo.mas_left);
+        make.right.equalTo(productInfo.mas_right);
+        make.height.equalTo(@30);
+    }];
+    
+    UIView *productInfoFieldUnderLine  = [[UIView alloc] init];
+    [productInfoFieldUnderLine setBackgroundColor:GRAYCOLOR];
+    [self.subView addSubview:productInfoFieldUnderLine];
+    [productInfoFieldUnderLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_productInfoField.mas_bottom);
+        make.left.equalTo(_productInfoField.mas_left);
+        make.right.equalTo(_productInfoField.mas_right);
+        make.height.equalTo(@1);
+    }];
+    
+    
+//***********
+    
     UILabel *subTotalLbl = [[UILabel alloc]init];
     subTotalLbl.font = DiscountFONT;
     subTotalLbl.textColor = TITLECOLOR;
@@ -45,8 +143,8 @@
     [subTotalLbl setText:@"小计"];
     [self.subView addSubview:subTotalLbl];
     [subTotalLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.subView).with.offset(10);
-        make.left.equalTo(self.subView).with.offset(10);
+        make.top.equalTo(productInfoFieldUnderLine.mas_bottom).with.offset(10);
+        make.left.equalTo(self.subView).with.offset(LEFTSIDEPADDING);
         make.right.equalTo(self.subView.mas_centerX).with.offset(-5);
         make.height.equalTo(@10);
     }];
@@ -97,7 +195,7 @@
     [discountLbl setText:@"优惠"];
     [self.subView addSubview:discountLbl];
     [discountLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.subView).with.offset(10);
+        make.top.equalTo(subTotalLbl.mas_top);
         make.left.equalTo(self.subView.mas_centerX).with.offset(5);
         make.right.equalTo(self.subView).with.offset(-10);
         make.height.equalTo(@10);
@@ -423,11 +521,19 @@
     }];
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    _EditPriceActionBlock(12);
-}
 
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == _productInfoField) {
+        NSLog(@"goto CustomInfo");
+        _EditPriceActionBlock(12);
+        return NO;
+    } else if (textField == _customInfoField) {
+        NSLog(@"gotoProductInfo");
+        return NO;
+    }
+    return YES;
+}
 
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{
 //    self.titleName.text = @"";
