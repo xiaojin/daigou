@@ -8,12 +8,12 @@
 #import "OrderBasketCell.h"
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
-#import "OrderBasketCellFrame.h"
 #import "Product.h"
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
 #import "UILabelStrikeThrough.h"
 #import "UITextField+UITextFieldAccessory.h"
+#import "ProductManagement.h"
 
 @interface OrderBasketCell() <UITextFieldDelegate>{
     BOOL editStatus;
@@ -57,7 +57,7 @@
         
         
         UILabel *lblTitle = [[UILabel alloc]init];
-        [lblTitle setFont:ProductTitleFont];
+        [lblTitle setFont:PRODUCTTITLEFONT];
         [lblTitle setTextColor:TITLECOLOR];
         [lblTitle setNumberOfLines:0];
         [lblTitle setTextAlignment:NSTextAlignmentLeft];
@@ -196,7 +196,7 @@
         
         UITextField *countField = [[UITextField alloc]initHasAccessory];
         countField.delegate = self;
-        [countField setFont:ProductTitleFont];
+        [countField setFont:PRODUCTTITLEFONT];
         [countField setTextColor:RGB(48, 48, 48)];
         [countField setTextAlignment:NSTextAlignmentCenter];
         [showEditView addSubview:countField];
@@ -276,7 +276,7 @@
         [sellPrice setTextAlignment:NSTextAlignmentCenter];
         [sellPrice setText:@"246"];
         [showEditView addSubview:sellPrice];
-        [sellPrice setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+        [sellPrice setKeyboardType:UIKeyboardTypeDecimalPad];
         [sellPrice mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(showEditView);
             make.top.equalTo(sellPressTitle.mas_bottom);
@@ -304,7 +304,7 @@
         [boughtPrice setTextAlignment:NSTextAlignmentCenter];
         [boughtPrice setText:@"246"];
         [showEditView addSubview:boughtPrice];
-        [boughtPrice setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+        [boughtPrice setKeyboardType:UIKeyboardTypeDecimalPad];
         [boughtPrice mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(boughtProductPriceTitle.mas_left);
             make.top.equalTo(boughtProductPriceTitle.mas_bottom);
@@ -319,34 +319,32 @@
     return  self;
 }
 
-- (void)setOrderBasketCellFrame:(OrderBasketCellFrame *)orderBasketCellFrame
-{
-    _orderBasketCellFrame = orderBasketCellFrame;
+- (void)setProductDict:(NSDictionary *)productDict {
+    _productDict = productDict;
     [self updateFrame];
     [self updateData];
 }
 
+
 - (void)updateFrame
 {
-//    _lblTitle.frame = _orderBasketCellFrame.titleFrame;
-//    _editButton.frame = _orderBasketCellFrame.editButtonFrame;
-//    _addButton.frame = _orderBasketCellFrame.plusBtnFrame;
-//    _minusButton.frame = _orderBasketCellFrame.minusLblFrame;
-//    _countLbl.frame = _orderBasketCellFrame.countLblFrame;
-//    _imagePic.frame = _orderBasketCellFrame.pictureFrame;
+
 }
 
 - (void)updateData
 {
-    OProductItem *productItem =  [_orderBasketCellFrame getOrderProductItem];
-    Product *product = [_orderBasketCellFrame getProduct];
+    OProductItem *productItem =  [_productDict objectForKey:@"product"];
+    Product *product = [self getProductForOrderItem:productItem.productid];
     _imagePic.image = [UIImage imageNamed:@"default.jpg"];
     [_lblTitle setText:[product name]];
     [_countField setText:[NSString stringWithFormat:@"%@", @([productItem amount])]];
     //TODO setProductImage
     
 }
-
+- (Product *)getProductForOrderItem:(NSInteger)pid {
+    ProductManagement *productManage = [ProductManagement shareInstance];
+    return [productManage getProductById:pid];
+}
 
 
 - (IBAction)addProductCount:(id)sender {

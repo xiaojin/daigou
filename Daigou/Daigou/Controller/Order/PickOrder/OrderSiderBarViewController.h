@@ -13,4 +13,5 @@
 @property(nonatomic, assign) BOOL hideHeaderView;
 @property(nonatomic, assign) CGFloat tabHeight;
 @property(nonatomic, assign) CGFloat navHeight;
+@property(nonatomic, strong) NSArray *brandList;
 @end

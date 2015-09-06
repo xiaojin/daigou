@@ -7,7 +7,7 @@ pod "FMDB", "~>2.5.0"
 pod "ionicons", "~> 2.0.1"
 pod "MJRefresh"
 pod "Masonry","~> 0.5.3"
-pod "Parse"
+pod "JVFloatLabeledTextField"
 
 end
 

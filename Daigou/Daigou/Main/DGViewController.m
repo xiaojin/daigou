@@ -24,13 +24,16 @@
 
     [super viewDidLoad];
     UIStoryboard *procurementStoryboard = [UIStoryboard storyboardWithName:@"Procurement" bundle:nil];
-    UIViewController *firstVC = [procurementStoryboard instantiateInitialViewController];
-    firstVC.title = @"采购";
-    firstVC.tabBarItem.image = [IonIcons imageWithIcon:ion_android_cart size:kTabICONSIZE color:kICONCOLOR];
+ 
     UIStoryboard *orderStoryboard = [UIStoryboard storyboardWithName:@"Order" bundle:nil];
-    UIViewController *secVC = [orderStoryboard instantiateInitialViewController];
-    secVC.title = @"订单";
-    secVC.tabBarItem.image = [IonIcons imageWithIcon:ion_document_text size:kTabICONSIZE color:kICONCOLOR];
+    UIViewController *firstVC = [orderStoryboard instantiateInitialViewController];
+    firstVC.title = @"订单";
+    firstVC.tabBarItem.image = [IonIcons imageWithIcon:ion_document_text size:kTabICONSIZE color:kICONCOLOR];
+    
+    UIViewController *secVC = [procurementStoryboard instantiateInitialViewController];
+    secVC.title = @"采购";
+    secVC.tabBarItem.image = [IonIcons imageWithIcon:ion_android_cart size:kTabICONSIZE color:kICONCOLOR];
+    
     UIStoryboard *addStoryboard = [UIStoryboard storyboardWithName:@"Add" bundle:nil];
     MProductsViewController *productsViewController = [[MProductsViewController alloc]init];
     UINavigationController *thirdVC =[[UINavigationController alloc] initWithRootViewController:productsViewController];

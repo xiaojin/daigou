@@ -12,7 +12,10 @@
 #import <Masonry/Masonry.h>
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
+#import "JVFloatLabeledTextField.h"
+
 #define DiscountFONT  [UIFont systemFontOfSize:14.0f]
+#define FLOADTINGFONTSIZE 14.0f
 #define LEFTSIDEPADDING 10
 #define kTabICONSIZE 26.0f
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
@@ -20,7 +23,7 @@
 @property(nonatomic, strong)UIView *subView;
 @property(nonatomic, strong)UITextField *productInfoField;
 @property(nonatomic, strong)UITextField *customInfoField;
-
+@property(nonatomic, strong)UIButton *payStatus;
 @end
 
 @implementation OrderItemBenifitCell
@@ -54,12 +57,13 @@
         make.height.equalTo(@10);
     }];
     
-    _customInfoField = [[UITextField alloc]initHasAccessory];
+    _customInfoField = [[UITextField alloc] initHasAccessory];
     [_customInfoField setFont:DiscountFONT];
     [_customInfoField setTextColor:TITLECOLOR];
     _customInfoField.textAlignment = NSTextAlignmentLeft;
     _customInfoField.delegate = self;
     [_customInfoField setPlaceholder:@"客户姓名"];
+    [_customInfoField setText:_customInfo.name];
     _customInfoField.delegate = self;
     _customInfoField.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:_customInfoField];
@@ -69,6 +73,8 @@
         make.right.equalTo(customInfo.mas_right).with.offset(-80);
         make.height.equalTo(@30);
     }];
+
+    
     
     UIView *customInfoFieldUnderLine  = [[UIView alloc] init];
     [customInfoFieldUnderLine setBackgroundColor:GRAYCOLOR];
@@ -80,12 +86,12 @@
         make.height.equalTo(@1);
     }];
     
-    UIButton *payStatus = [[UIButton alloc] init];
-    [payStatus setTitle:@"未付款" forState:UIControlStateNormal];
-    [payStatus setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [payStatus setBackgroundColor:[UIColor lightGrayColor]];
-    [self.subView addSubview:payStatus];
-    [payStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+    _payStatus = [[UIButton alloc] init];
+    [_payStatus setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self updatePaymentStatus];
+    [self.subView addSubview:_payStatus];
+    [_payStatus addTarget:self action:@selector(updatePaymentStatus) forControlEvents:UIControlEventTouchUpInside];
+    [_payStatus mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(customInfoFieldUnderLine.mas_top).with.offset(-5);
         make.left.equalTo(_customInfoField.mas_right).with.offset(5);
         make.right.equalTo(self.subView).with.offset(-10);
@@ -113,6 +119,7 @@
     _productInfoField.textAlignment = NSTextAlignmentLeft;
     _productInfoField.delegate = self;
     [_productInfoField setPlaceholder:@"商品清单"];
+    [_productInfoField setText:_productDesc];
     _productInfoField.delegate = self;
     _productInfoField.keyboardType = UIKeyboardTypeDecimalPad;
     [self.subView addSubview:_productInfoField];
@@ -519,6 +526,8 @@
         make.bottom.equalTo(cameraButton.mas_bottom);
         make.right.equalTo(notePriceFiled.mas_right);
     }];
+    
+
 }
 
 
@@ -526,14 +535,45 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == _productInfoField) {
         NSLog(@"goto CustomInfo");
-        _EditPriceActionBlock(12);
+        _EditPriceActionBlock(12, textField.frame);
         return NO;
     } else if (textField == _customInfoField) {
         NSLog(@"gotoProductInfo");
+        _EditPriceActionBlock(11, textField.frame);
         return NO;
+    } else {
+        CGPoint originInSuperview = [self.contentView convertPoint:CGPointZero fromView:textField];
+        textField.frame = CGRectMake(originInSuperview.x, originInSuperview.y, textField.frame.size.width, textField.frame.size.height);
+         _EditPriceActionBlock(30, textField.frame);
     }
     return YES;
 }
+
+- (void)updatePaymentStatus {
+    if (_orderItem.payDate != 0) {
+        [_payStatus setTitle:@"已付款" forState:UIControlStateNormal];
+        [_payStatus setBackgroundColor:THEMECOLOR];
+        _orderItem.payDate = 0;
+    } else {
+        [_payStatus setTitle:@"未付款" forState:UIControlStateNormal];
+        [_payStatus setBackgroundColor:[UIColor lightGrayColor]];
+        _orderItem.payDate = [NSDate timeIntervalSinceReferenceDate];
+    }
+    
+}
+
+//- (void)setCustomInfo:(CustomInfo *)customInfo {
+////    if (![customInfo.name isEqualToString:@""]) {
+////       
+////    }
+//     [_customInfoField setText:customInfo.name];
+//}
+//
+//- (void)setOrderItem:(OrderItem *)orderItem {
+//
+//}
+
+
 
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{
 //    self.titleName.text = @"";

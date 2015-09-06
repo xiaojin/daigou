@@ -11,9 +11,11 @@
 #import "CommonDefines.h"
 #import "OrderProductsRightTableView.h"
 #import "ProductManagement.h"
+#import "ProductCategoryManagement.h"
+#import "BrandManagement.h"
+#import "Brand.h"
 #import "Product.h"
 #import "ProductCategory.h"
-#import "ProductCategoryManagement.h"
 #import <Masonry/Masonry.h>
 #import <ionicons/ionicons-codes.h>
 #import <ionicons/IonIcons.h>
@@ -149,11 +151,17 @@
     [self.view addGestureRecognizer:panGesture];
     
     self.sidebarVC = [[OrderSiderBarViewController alloc] init];
+    self.sidebarVC.brandList = [self getBrands];
     [self.sidebarVC setBgRGB:0x000000];
     [self.view addSubview:self.sidebarVC.view];
     self.sidebarVC.view.frame  = self.view.bounds;
     // 左侧边栏结束
 
+}
+
+- (NSArray *)getBrands{
+    BrandManagement *brandManagement = [BrandManagement shareInstance];
+    return [brandManagement getBrand];
 }
 
 - (void) showProductsList {
@@ -193,7 +201,7 @@
     //遍历所有KEY的值
     NSInteger totalSingularInt = [[enumeratorKey allObjects] count];
     
-    _countlbl.text = [NSString stringWithFormat:@"%ld",totalSingularInt];
+    _countlbl.text = [NSString stringWithFormat:@"%ld",(long)totalSingularInt];
 }
 
 - (void)showSelectedProducts:(NSArray *)array {

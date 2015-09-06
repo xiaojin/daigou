@@ -10,7 +10,6 @@
 #import "OrderItem.h"
 #import "OrderItemManagement.h"
 #import "OrderProductsViewController.h"
-#import "OrderBasketCellFrame.h"
 #import "OrderBasketCell.h"
 #import "OProductItem.h"
 #import "OrderPickProductsMainViewController.h"
@@ -93,11 +92,18 @@
 
 - (void)initOrderBasketItemsFrameWithOrderItems:(NSArray *)orderItems {
     self.orderItemFrames = [NSMutableArray array];
-    for (OProductItem *item in orderItems) {
-        OrderBasketCellFrame *itemFrame = [[OrderBasketCellFrame alloc]initFrameWithOrderProduct:item withViewFrame:self.view.bounds];
-        [self.orderItemFrames addObject:itemFrame];
-    }
-    
+     for (OProductItem *item in orderItems) {
+         NSMutableDictionary *prodocstdict = [NSMutableDictionary dictionary];
+         __block NSInteger count = 0;
+         [orderItems enumerateObjectsUsingBlock:^(OProductItem *productitem, NSUInteger idx, BOOL *stop) {
+             if (productitem.productid == item.productid) {
+                 count ++;
+             }
+         }];
+         [prodocstdict setValue:item forKey:@"product"];
+         [prodocstdict setValue:[NSNumber numberWithInteger:count] forKey:@"count"];
+         [self.orderItemFrames addObject:prodocstdict];
+     }
 }
 
 #pragma mark - UINotification
@@ -127,8 +133,8 @@
     if (indexPath.row != [self.products count]) {
         OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        OrderBasketCellFrame * orderFrame = _orderItemFrames[indexPath.row];
-        cell.orderBasketCellFrame = orderFrame;
+        NSDictionary * productDict = _orderItemFrames[indexPath.row];
+        cell.productDict = productDict;
         cell.EditQuantiyActionBlock = ^(NSInteger number){
         [self beginEditNumber:indexPath];
         };
@@ -161,7 +167,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return ([self.products count] +1 );
+    return ([self.orderItemFrames count] +1);
 
 }
 

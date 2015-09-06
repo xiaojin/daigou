@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomInfo.h"
+#import "OrderItem.h"
 
 @interface OrderItemBenifitCell : UITableViewCell
-@property (nonatomic, copy) void (^EditPriceActionBlock)(NSInteger number);
+@property (nonatomic, copy) void (^EditPriceActionBlock)(NSInteger number,CGRect frame);
+@property (nonatomic, strong) CustomInfo *customInfo;
+@property (nonatomic, strong) OrderItem *orderItem;
+@property (nonatomic, strong) NSString *productDesc;
 @end

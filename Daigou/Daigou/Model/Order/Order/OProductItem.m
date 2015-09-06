@@ -11,14 +11,17 @@
 @implementation OProductItem
 
 - (NSArray *)orderProductToArray {
-    NSArray *result = @[@(self.productid)?@(self.productid) :0,
-                        @(self.refprice)?@(self.refprice) :0,
-                        @(self.price)?@(self.price) :0,
-                        @(self.amount)?@(self.amount) :0,
-                        @(self.orderid)?@(self.orderid) :0,
-                        @(self.orderdate)?@(self.orderdate) :0,
-                        @(self.statu)?@(self.statu) :0,
-                        self.note?self.note :@""];
+    NSArray *result = @[@(self.productid)?@(self.productid) :[NSNull null],
+                        @(self.refprice)?@(self.refprice) :[NSNull null],
+                        @(self.price)?@(self.price) :[NSNull null],
+                        @(self.sellprice)?@(self.sellprice) :[NSNull null],
+                        @(self.amount)?@(self.amount) :[NSNull null],
+                        @(self.orderid)?@(self.orderid) :[NSNull null],
+                        @(self.orderdate)?@(self.orderdate) :[NSNull null],
+                        @(self.statu)?@(self.statu) :[NSNull null],
+                        self.note?self.note :[NSNull null],
+                        @(self.proxy)?@(self.proxy) :[NSNull null],
+                        @(self.syncDate)?@(self.syncDate) :[NSNull null]];
     return result;
 }
 

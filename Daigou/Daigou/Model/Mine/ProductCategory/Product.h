@@ -10,6 +10,7 @@
 
 @interface Product : NSObject
 @property(nonatomic,assign)NSInteger pid;
+@property(nonatomic,strong)NSString *uid;
 @property(nonatomic,assign)NSInteger categoryid;
 @property(nonatomic,copy)NSString *name;
 @property(nonatomic,copy)NSString *model;
@@ -30,7 +31,11 @@
 @property(nonatomic,assign)NSInteger want;
 @property(nonatomic,copy)NSString *avaibility;
 @property(nonatomic,copy)NSString *function;
-@property(nonatomic,copy)NSString *sellpoint;
+@property(nonatomic,copy)NSString *storage;
+@property(nonatomic,copy)NSString *usage;
+@property(nonatomic,copy)NSString *caution;
+@property(nonatomic,copy)NSString *ingredient;
+@property(nonatomic,assign)double syncDate;
 @property(nonatomic,copy)NSString *note;
 @property(nonatomic,copy)NSString *ename;
 

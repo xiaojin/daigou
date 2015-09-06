@@ -59,18 +59,27 @@
         orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
         orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
         orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
+        orderItem.freeShip = (NSInteger) [rs intForColumn:@"free_ship"];
         orderItem.address = [rs stringForColumn:@"address"];
+        orderItem.reviever = [rs stringForColumn:@"reviever"];
+        orderItem.phonenumber = [rs stringForColumn:@"phonenumber"];
+        orderItem.postcode = [rs stringForColumn:@"postcode"];
         orderItem.totoal = (float)[rs doubleForColumn:@"total"];
         orderItem.discount = [rs doubleForColumn:@"discount"];
         orderItem.delivery = [rs doubleForColumn:@"delivery"];
         orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
         orderItem.profit = [rs doubleForColumn:@"profit"];
+        orderItem.othercost = [rs doubleForColumn:@"othercost"];
         orderItem.creatDate = [rs doubleForColumn:@"createDate"];
         orderItem.shipDate = [rs doubleForColumn:@"shipDate"];
         orderItem.deliverDate = [rs doubleForColumn:@"deliverDate"];
         orderItem.payDate = [rs doubleForColumn:@"payDate"];
         orderItem.note = [rs stringForColumn:@"note"];
         orderItem.barcode = [rs stringForColumn:@"barcode"];
+        orderItem.idnum = [rs stringForColumn:@"idnum"];
+        orderItem.proxy = [rs intForColumn:@"proxy"];
+        orderItem.noteImage = [rs stringForColumn:@"noteImage"];
+        orderItem.syncDate = [rs doubleForColumn:@"syncDate"];
         [orderItemsArray addObject:orderItem];
     }
     [_db close];
@@ -91,18 +100,27 @@
         orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
         orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
         orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
+        orderItem.freeShip = (NSInteger) [rs intForColumn:@"free_ship"];
         orderItem.address = [rs stringForColumn:@"address"];
+        orderItem.reviever = [rs stringForColumn:@"reviever"];
+        orderItem.phonenumber = [rs stringForColumn:@"phonenumber"];
+        orderItem.postcode = [rs stringForColumn:@"postcode"];
         orderItem.totoal = (float)[rs doubleForColumn:@"total"];
         orderItem.discount = [rs doubleForColumn:@"discount"];
         orderItem.delivery = [rs doubleForColumn:@"delivery"];
         orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
         orderItem.profit = [rs doubleForColumn:@"profit"];
+        orderItem.othercost = [rs doubleForColumn:@"othercost"];
         orderItem.creatDate = [rs doubleForColumn:@"createDate"];
         orderItem.shipDate = [rs doubleForColumn:@"shipDate"];
         orderItem.deliverDate = [rs doubleForColumn:@"deliverDate"];
         orderItem.payDate = [rs doubleForColumn:@"payDate"];
         orderItem.note = [rs stringForColumn:@"note"];
         orderItem.barcode = [rs stringForColumn:@"barcode"];
+        orderItem.idnum = [rs stringForColumn:@"idnum"];
+        orderItem.proxy = [rs intForColumn:@"proxy"];
+        orderItem.noteImage = [rs stringForColumn:@"noteImage"];
+        orderItem.syncDate = [rs doubleForColumn:@"syncDate"];
         [orderItemsArray addObject:orderItem];
     }
     [_db close];
@@ -113,7 +131,7 @@
 - (BOOL)checkIfOrderItmExists:(OrderItem *)ordeItem {
     if (![_db open]) {
         NSLog(@"Could not open db.");
-        return nil ;
+        return NO ;
     }
     FMResultSet *rs = [_db executeQuery:@"select * from orderitem where oid =(?)",@(ordeItem.oid)];
     if (rs.next) {
@@ -124,7 +142,7 @@
 
 - (BOOL)addOrder:(OrderItem *)orderItem{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into orderitem (clientid,statu,expressid,parentoid,address,total,discount,delivery,subtotal,profit,createDate,shipDate,deliverDate,payDate,note,barcode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderItem orderToArray]];
+    BOOL result = [_db executeUpdate:@"insert into orderitem (clientid,statu,expressid,parentoid,free_ship,address,reviever,phonenumber,postcode,total,discount,delivery,subtotal,profit,othercost,createDate,shipDate,deliverDate,payDate,note,barcode,idnum,proxy,noteImage,syncDate) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderItem orderToArray]];
     if (result) {
         [_db commit];
         [_db close];
@@ -139,7 +157,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[orderItem orderToArray]];
         [updateData addObject:@(orderItem.oid)];
-        result= [_db executeUpdate:@"update orderitem set clientid=?,statu=?,expressid=?,parentoid=?,address=?,total=?,discount=?,delivery=?,subtotal=?,profit=?,createDate=?,shipDate=?,deliverDate=?,payDate=? ,note=?,barcode = ?  where oid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update orderitem set clientid=?,statu=?,expressid=?,parentoid=?,free_ship=?,address=?,reviever=?,phonenumber=?,postcode=?,total=?,discount=?,delivery=?,subtotal=?,profit=?,othercost=?,createDate=?,shipDate=?,deliverDate=?,payDate=? ,note=?,barcode = ?,idnum =?,proxy=?,noteImage=?,syncDate=?  where oid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];
@@ -164,12 +182,15 @@
         orderProd.iid = (NSInteger)[rs intForColumn:@"iid"];
         orderProd.productid = (NSInteger)[rs intForColumn:@"productid"];
         orderProd.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
-        orderProd.price = (NSInteger) [rs doubleForColumn:@"price"];
-        orderProd.amount = (NSInteger)[rs doubleForColumn:@"amount"];
+        orderProd.price = (float) [rs doubleForColumn:@"price"];
+        orderProd.sellprice = (float) [rs doubleForColumn:@"sellprice"];
+        orderProd.amount = (float)[rs doubleForColumn:@"amount"];
         orderProd.orderid = [rs intForColumn:@"orderid"];
         orderProd.orderdate = (float)[rs intForColumn:@"orderdate"];
         orderProd.statu = [rs intForColumn:@"statu"];
         orderProd.note = [rs stringForColumn:@"note"];
+        orderProd.proxy = [rs intForColumn:@"proxy"];
+        orderProd.syncDate = [rs doubleForColumn:@"syncDate"];
         [orderProductsArray addObject:orderProd];
     }
     [_db close];
@@ -179,11 +200,11 @@
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid  {
     
     BOOL result;
-    result = [_db executeQuery:@"delete from item where orderid = (?)",@(orderid)];
+    result = [_db executeUpdate:@"delete from item where orderid = (?)",@(orderid)];
     [_db commit];
     if (result) {
         for (OProductItem *productItem in products) {
-              [_db executeUpdate:@"insert into item (productid,refprice,price,amount,orderid,orderdate,statu,note) values (?,?,?,?,?,?,?,?)" withArgumentsInArray:[productItem orderProductToArray]];
+              [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[productItem orderProductToArray]];
         }
     } else {
         NSLog(@"Delete product item error");
@@ -211,13 +232,16 @@
         OProductItem *productItem = [[OProductItem alloc]init];
         productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
         productItem.productid = (NSInteger)[rs intForColumn:@"productid"];
-        productItem.refprice = (float) [rs doubleForColumn:@"refprice"];
+        productItem.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
         productItem.price = (float) [rs doubleForColumn:@"price"];
+        productItem.sellprice = (float) [rs doubleForColumn:@"sellprice"];
         productItem.amount = (float)[rs doubleForColumn:@"amount"];
         productItem.orderid = [rs intForColumn:@"orderid"];
         productItem.orderdate = (float)[rs intForColumn:@"orderdate"];
         productItem.statu = [rs intForColumn:@"statu"];
         productItem.note = [rs stringForColumn:@"note"];
+        productItem.proxy = [rs intForColumn:@"proxy"];
+        productItem.syncDate = [rs doubleForColumn:@"syncDate"];
         [orderItemsArray addObject:productItem];
     }
     [_db close];
@@ -237,13 +261,16 @@
         OProductItem *productItem = [[OProductItem alloc]init];
         productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
         productItem.productid = (NSInteger)[rs intForColumn:@"productid"];
-        productItem.refprice = (float) [rs doubleForColumn:@"refprice"];
+        productItem.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
         productItem.price = (float) [rs doubleForColumn:@"price"];
+        productItem.sellprice = (float) [rs doubleForColumn:@"sellprice"];
         productItem.amount = (float)[rs doubleForColumn:@"amount"];
         productItem.orderid = [rs intForColumn:@"orderid"];
         productItem.orderdate = (float)[rs intForColumn:@"orderdate"];
         productItem.statu = [rs intForColumn:@"statu"];
         productItem.note = [rs stringForColumn:@"note"];
+        productItem.proxy = [rs intForColumn:@"proxy"];
+        productItem.syncDate = [rs doubleForColumn:@"syncDate"];
         [orderItemsArray addObject:productItem];
     }
     [_db close];

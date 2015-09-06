@@ -56,6 +56,7 @@
         category.cateid = (NSInteger)[rs intForColumn:@"cateid"];
         category.name = [rs stringForColumn:@"name"];
         category.image = [rs stringForColumn:@"image"];
+        category.syncDate = [rs doubleForColumn:@"syncDate"];
         [categoryArray addObject:category];
     }
     [_db close];
@@ -65,7 +66,7 @@
 - (BOOL)checkIfCategoryExists:(ProductCategory *)category {
     if (![_db open]) {
         NSLog(@"Could not open db.");
-        return nil ;
+        return NO ;
     }
     FMResultSet *rs = [_db executeQuery:@"select * from category where cateid =(?)",[NSNumber numberWithInteger:category.cateid]];
     if (rs.next) {
@@ -75,7 +76,7 @@
 
 - (BOOL)addCategoryInfo:(ProductCategory *)category{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into category (name,image) values (?,?)" withArgumentsInArray:[category categoryToArray]];
+    BOOL result = [_db executeUpdate:@"insert into category (name,image,syncDate) values (?,?,?)" withArgumentsInArray:[category categoryToArray]];
     if (result) {
         [_db commit];
         [_db close];

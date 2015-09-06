@@ -105,6 +105,7 @@
 - (Product *)setValueForProduct:(FMResultSet *)rs {
     Product *product = [[Product alloc]init];
     product.pid = (NSInteger)[rs intForColumn:@"pid"];
+    product.uid = [rs stringForColumn:@"uid"];
     product.name = [rs stringForColumn:@"name"];
     product.categoryid = (NSInteger)[rs intForColumn:@"categoryid"];
     product.model = [rs stringForColumn:@"model"];
@@ -125,7 +126,11 @@
     product.want = [rs intForColumn:@"want"];
     product.avaibility = [rs stringForColumn:@"avaibility"];
     product.function = [rs stringForColumn:@"function"];
-    product.sellpoint= [rs stringForColumn:@"sellpoint"];
+    product.storage= [rs stringForColumn:@"storage"];
+    product.usage= [rs stringForColumn:@"usage"];
+    product.caution= [rs stringForColumn:@"caution"];
+    product.ingredient = [rs stringForColumn:@"ingredient"];
+    product.syncDate = [rs doubleForColumn:@"syncDate"];
     product.note= [rs stringForColumn:@"note"];
     product.ename= [rs stringForColumn:@"ename"];
     return product;
@@ -136,7 +141,7 @@
 - (BOOL)checkIfProductExists:(Product *)product {
     if (![_db open]) {
         NSLog(@"Could not open db.");
-        return nil ;
+        return NO ;
     }
     FMResultSet *rs = [_db executeQuery:@"select * from product where pid =(?)",[NSNumber numberWithInteger:product.pid]];
     if (rs.next) {
@@ -151,7 +156,7 @@
 
 - (BOOL)addProduct:(Product *)product{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into product (categoryid,name,model,brandid,barcode,quickid,picture,onshelf,rrp,purchaseprice,costprice,lowestprice,agentprice,saleprice,sellprice,wight,description,want,avaibility,function,sellpoint,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[product productToArray]];
+    BOOL result = [_db executeUpdate:@"insert into product (uid,categoryid,name,model,brandid,barcode,quickid,picture,onshelf,rrp,purchaseprice,costprice,lowestprice,agentprice,saleprice,sellprice,wight,description,want,avaibility,function,storage,usage,caution,ingredient,syncDate,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[product productToArray]];
     if (result) {
         [_db commit];
         [_db close];
@@ -166,7 +171,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[product productToArray]];
         [updateData addObject:@(product.pid)];
-        result= [_db executeUpdate:@"update product set categoryid=?,name=?,model=?,brandid=?,barcode=?,quickid=?,picture=?,onshelf =?,rrp=?,purchaseprice=?,costprice=?,lowestprice=?,agentprice=?,saleprice=?,sellprice=?,wight=?,description=?,want=?,avaibility=?,function=?,sellpoint=?,note=?,ename=?  where pid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update product set uid=?,categoryid=?,name=?,model=?,brandid=?,barcode=?,quickid=?,picture=?,onshelf =?,rrp=?,purchaseprice=?,costprice=?,lowestprice=?,agentprice=?,saleprice=?,sellprice=?,wight=?,description=?,want=?,avaibility=?,function=?,storage=?,usage=?,caution=?,ingredient=?,syncDate=?,note=?,ename=? where pid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];

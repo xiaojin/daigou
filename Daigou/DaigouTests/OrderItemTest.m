@@ -73,21 +73,20 @@
     [self.orderItem setCreatDate:123123123];
     [self.orderItem setShipDate:9123102312];
     [self.orderItem setDeliverDate:123123123];
-    [self.orderItem setPayDate:123123213];
     [self.orderItem setNote:@"这是一个很好的产品"];
     BOOL result = [self.orderItemManagement updateOrderItem:self.orderItem];
     XCTAssertTrue(result,@"should insert the product successfully");
 }
 
 
-- (void)testGetOrderProductByprocumentStatus {
-    NSArray *oriderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:OrderProduct];
-    NSArray *unOrderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:UnOrderProduct];
-    XCTAssertGreaterThan([oriderProducts count], 0,@"There should be more than 1 product in the database");
-    XCTAssertGreaterThan([unOrderProducts count], 0,@"There should be more than 1 product in the database");
-
-
-}
+//- (void)testGetOrderProductByprocumentStatus {
+//    NSArray *oriderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:OrderProduct];
+//    NSArray *unOrderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:UnOrderProduct];
+//    XCTAssertGreaterThan([oriderProducts count], 0,@"There should be more than 1 product in the database");
+//    XCTAssertGreaterThan([unOrderProducts count], 0,@"There should be more than 1 product in the database");
+//
+//
+//}
 
 //- (void)testgetProductByBrand {
 //    Brand *brand = [Brand new];

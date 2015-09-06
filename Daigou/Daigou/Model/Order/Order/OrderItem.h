@@ -22,18 +22,33 @@ typedef enum {
 @property(nonatomic,assign)OrderStatus statu;
 @property(nonatomic,assign)NSInteger expressid;
 @property(nonatomic,assign)NSInteger parentoid;
+@property(nonatomic,assign)NSInteger freeShip;
+
 @property(nonatomic, copy)NSString *address;
+@property(nonatomic, copy)NSString *reviever;
+@property(nonatomic, copy)NSString *phonenumber;
+@property(nonatomic, copy)NSString *postcode;
+
+
 @property(nonatomic, assign)float totoal;
 @property(nonatomic, assign)float discount;
 @property(nonatomic, assign)float delivery;
 @property(nonatomic, assign)float subtotal;
 @property(nonatomic, assign)float profit;
+@property(nonatomic, assign)float othercost;
+
+
 @property(nonatomic,assign)double creatDate;
 @property(nonatomic,assign)double shipDate;
 @property(nonatomic,assign)double deliverDate;
 @property(nonatomic,assign)double payDate;
 @property(nonatomic, copy)NSString *note;
 @property(nonatomic, copy)NSString *barcode;
+
+@property(nonatomic, copy)NSString *idnum;
+@property(nonatomic, assign)NSInteger proxy;
+@property(nonatomic, copy)NSString *noteImage;
+@property(nonatomic, assign)double syncDate;
 
 - (NSArray *)orderToArray;
 @end

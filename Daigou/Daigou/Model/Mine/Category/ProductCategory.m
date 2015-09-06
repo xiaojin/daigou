@@ -12,8 +12,9 @@
 
 - (NSArray *)categoryToArray {
     NSMutableArray *result = [NSMutableArray array];
-    [result addObject:self.name?self.name : @""];
-    [result addObject:self.image?self.image : @""];
+    [result addObject:self.name?self.name : [NSNull null]];
+    [result addObject:self.image?self.image : [NSNull null]];
+    [result addObject:@(self.syncDate)?@(self.syncDate) :[NSNull null]];
     return result;
 }
 @end

@@ -18,6 +18,7 @@
 #import "CommonDefines.h"
 #import "OrderDetailViewController.h"
 #import "OrderItemBenifitCell.h"
+#import "OProductItem.h"
 
 #define ORDERTAGBASE 6000
 #define kStatusPickerCellHeight 164
@@ -31,7 +32,6 @@
 @property(nonatomic, strong)NSArray *products;
 @property(nonatomic, strong)UIPickerViewCell *pickViewCell;
 @property(nonatomic, strong)NSArray *statusStringArray;
-@property(assign) BOOL statusPickerIsShowing;
 @end
 
 
@@ -75,7 +75,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self hideStatusPickerCell];
 }
 
 
@@ -101,6 +100,15 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         self.products = [NSArray array];
     } else {
         self.products = [itemManagement getOrderProductsByOrderId:self.orderItem.oid];
+    }
+}
+
+- (NSString *)setProdcutDesc {
+    if ([self.products count] == 0) {
+        return nil;
+    } else {
+        NSString *epxression = [NSString stringWithFormat:@"一共有%d个商品",[self.products count]];
+        return epxression;
     }
 }
 // TODO 小记，总计，youhui
@@ -137,37 +145,28 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     return cell;
 }
 
-
-- (void) setStatusPickView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    _pickViewCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
-    if (_pickViewCell == nil) {
-        _pickViewCell = [[UIPickerViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
-    }
-    _pickViewCell.pickView.dataSource = self;
-    _pickViewCell.pickView.delegate = self;
-    _pickViewCell.pickView.hidden = YES;
-    [_pickViewCell.pickView selectRow:(self.orderItem.statu/10) inComponent:0 animated:NO];
-}
-
-- (OrderItemView *) setOrderItemView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OrderItemView *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
-    if (orderCell == nil) {
-        orderCell = [[OrderItemView alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
-        orderCell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
-        orderCell.orderCellDelegate = self;
-    }
-    [orderCell updateCellWithTitle:self.titleArray[indexPath.section][indexPath.row] detailInformation:[NSString stringWithFormat:@"%@",self.detailArray[indexPath.section][indexPath.row]]];
-    return  orderCell;
-}
-
 - (OrderItemBenifitCell *) setOrderTextInputView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderItemBenifitCell *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
+    for (UIView *view in orderCell.contentView.subviews) {
+        if ([view isKindOfClass:[UIView class]]) {
+            [view removeFromSuperview];
+        }
+    }
     if (orderCell == nil) {
         orderCell = [[OrderItemBenifitCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
         orderCell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
     }
-    orderCell.EditPriceActionBlock = ^(NSInteger number) {
-        [self beginEditNumber:indexPath];
+    orderCell.customInfo = self.customInfo;
+    orderCell.orderItem = self.orderItem;
+    orderCell.productDesc = [self setProdcutDesc];
+    orderCell.EditPriceActionBlock = ^(NSInteger number, CGRect frame) {
+        if (number == 11) {
+            [self handCustomCellTap];
+        } else if (number == 12) {
+            [self handleProductCellTap];
+        } else {
+            [self beginEditNumber:indexPath withFrame:frame];
+        }
     };
 
     return  orderCell;
@@ -195,8 +194,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
             [self handCustomCellTap];
         } else if ((3-index) ==2) {
             [self handleProductCellTap];
-        } else if ((3 - index) == 1) {
-            [self handleStatusCellTap:orderItemView];
         }
     } else {
         
@@ -213,41 +210,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     [(OrderDetailViewController *)self.parentViewController scrollToStaus:1];
 }
 
-- (void)handleStatusCellTap:(OrderItemView *)orderItemView {
-    if (self.statusPickerIsShowing) {
-        orderItemView.detailInfo.textColor = TITLECOLOR;
-        self.orderItem.statu =  (OrderStatus)[self.pickViewCell.pickView selectedRowInComponent:0]*10;
-        [self hideStatusPickerCell];
-        [self initValueForCell];
-        [self.editTableView reloadData];
-    } else {
-        [self resignFirstResponder];
-        orderItemView.detailInfo.textColor = ORIANGECOLOR;
-        [self showStatusPickerCell];
-    }
-}
-
-- (void) showStatusPickerCell {
-    self.statusPickerIsShowing = YES;
-    [self.editTableView beginUpdates];
-    [self.editTableView endUpdates];
-    self.pickViewCell.pickView.hidden = NO;
-    self.pickViewCell.pickView.alpha = 0.0f;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.pickViewCell.pickView.alpha = 1.0f;
-    }];
-}
-
-- (void) hideStatusPickerCell {
-    self.statusPickerIsShowing = NO;
-    [self.editTableView beginUpdates];
-    [self.editTableView endUpdates];
-    [UIView animateWithDuration:0.25 animations:^{
-        self.pickViewCell.pickView.alpha = 0.0f;
-    } completion:^(BOOL finished) {
-        self.pickViewCell.pickView.hidden = YES;
-    }];
-}
 
 #pragma mark - UIPickerViewDelegate
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -267,7 +229,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 #pragma mark - OrderPriceDelegate
 
-- (void)beginEditNumber:(NSIndexPath *)cellIndex {
+- (void)beginEditNumber:(NSIndexPath *)cellIndex  withFrame:(CGRect)frame{
     CGFloat kbHeight = keyboardSize.height;
     if (keyboardSize.height == 0) {
         kbHeight = 402.f;
@@ -279,9 +241,9 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         edgeInsets = [[self editTableView] scrollIndicatorInsets];
         edgeInsets.bottom = kbHeight;
         [[self editTableView] setScrollIndicatorInsets:edgeInsets];
-    //    [self.editTableView scrollRectToVisible:CGRectMake(0, 402, 60, 320) animated:YES];
-        [self.editTableView scrollToRowAtIndexPath:cellIndex
-                              atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self.editTableView scrollRectToVisible:frame animated:YES];
+//        [self.editTableView scrollToRowAtIndexPath:cellIndex
+//                              atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }];
 }
 

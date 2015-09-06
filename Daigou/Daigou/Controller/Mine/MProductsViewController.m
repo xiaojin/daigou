@@ -14,7 +14,8 @@
 #import "UISearchBar+UISearchBarAccessory.h"
 #import "MProductItemCell.h"
 #import "OrderSiderBarViewController.h"
-
+#import "BrandManagement.h"
+#import "Brand.h"
 @interface MProductsViewController()<UICollectionViewDataSource,UICollectionViewDelegate,UISearchBarDelegate>
 @property (nonatomic, strong) UICollectionView *productsCollectionView;
 @property (nonatomic, strong) NSArray *products;
@@ -57,7 +58,7 @@
     [panGesture delaysTouchesBegan];
     [self.view addGestureRecognizer:panGesture];
     self.sidebarVC = [[OrderSiderBarViewController alloc] init];
-    
+    self.sidebarVC.brandList = [self getBrands];
     self.sidebarVC.navHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     
     self.sidebarVC.tabHeight = (kWindowHeight- CGRectGetMinY(self.tabBarController.tabBar.frame));
@@ -75,8 +76,13 @@
     // 左侧边栏结束
 }
 
+- (NSArray *)getBrands{
+    BrandManagement *brandManagement = [BrandManagement shareInstance];
+    return [brandManagement getBrand];
+}
+
 - (void) selectProductCategory {
-   // self.hidesBottomBarWhenPushed = YES;
+    self.tabBarController.tabBar.hidden = YES;
     [self.sidebarVC showHideSidebar];
 }
 

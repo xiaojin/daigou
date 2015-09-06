@@ -12,8 +12,10 @@
 
 - (NSArray *)brandToArray {
     NSMutableArray *result = [NSMutableArray array];
-    [result addObject:self.name?self.name : @""];
-    [result addObject:self.image?self.image : @""];
+    [result addObject:self.name?self.name : [NSNull null]];
+    [result addObject:self.image?self.image : [NSNull null]];
+    [result addObject:@(self.visible) != 0 ? @(self.visible) :[NSNull null]];
+    [result addObject:@(self.syncDate) != 0 ? @(self.syncDate) : [NSNull null]];
     return result;
 }
 @end

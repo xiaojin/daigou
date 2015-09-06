@@ -262,7 +262,7 @@ NSString *const mEditProductDetailCellIdentify = @"MEditProductDetailCell";
             self.prodcut.function = textView.text;
             break;
         case 52010:
-            self.prodcut.sellpoint = textView.text;
+            self.prodcut.sellprice = [textView.text floatValue];
             break;
         case 52011:
             self.prodcut.note = textView.text;

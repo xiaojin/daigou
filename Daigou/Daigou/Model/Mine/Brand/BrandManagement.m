@@ -55,6 +55,8 @@
         brandInfo.bid = (NSInteger)[rs intForColumn:@"bid"];
         brandInfo.name = [rs stringForColumn:@"name"];
         brandInfo.image = [rs stringForColumn:@"image"];
+        brandInfo.visible = [rs intForColumn:@"visible"];
+        brandInfo.syncDate = [rs doubleForColumn:@"syncDate"];
         [brandArray addObject:brandInfo];
     }
     [_db close];
@@ -64,7 +66,7 @@
 - (BOOL)checkIfBrandExists:(Brand *)brand {
     if (![_db open]) {
         NSLog(@"Could not open db.");
-        return nil ;
+        return NO ;
     }
     FMResultSet *rs = [_db executeQuery:@"select * from  brand where bid =(?)",[NSNumber numberWithInteger:brand.bid]];
     if (rs.next) {
@@ -74,7 +76,7 @@
 
 - (BOOL)addBrandInfo:(Brand *)brand{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into brand (name,image) values (?,?)" withArgumentsInArray:[brand brandToArray]];
+    BOOL result = [_db executeUpdate:@"insert into brand (name,image,visible,syncDate) values (?,?,?,?)" withArgumentsInArray:[brand brandToArray]];
     if (result) {
         [_db commit];
         [_db close];
@@ -90,7 +92,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[brand brandToArray]];
         [updateData addObject:@(brand.bid)];
-        result= [_db executeUpdate:@"update brand set name=?,image=? where bid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update brand set name=?,image=?,visible=?,syncDate=? where bid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];

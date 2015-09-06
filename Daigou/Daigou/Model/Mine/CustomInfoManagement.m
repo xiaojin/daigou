@@ -55,7 +55,10 @@
     customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
     customInfo.name = [rs stringForColumn:@"name"];
     customInfo.email = [rs stringForColumn:@"email"];
+    customInfo.phonenum = [rs  stringForColumn:@"phonenum"];
+    customInfo.wechat = [rs stringForColumn:@"wechat"];
     customInfo.idnum = [rs stringForColumn:@"idnum"];
+    customInfo.postcode = [rs stringForColumn:@"postcode"];
     customInfo.agent = (NSInteger)[rs intForColumn:@"agent"];
     customInfo.address = [rs stringForColumn:@"address"];
     customInfo.address1 = [rs stringForColumn:@"address1"];
@@ -66,6 +69,7 @@
     customInfo.expressAvaible = [rs stringForColumn:@"expressAvaible"];
     customInfo.note = [rs stringForColumn:@"note"];
     customInfo.ename = [rs stringForColumn:@"ename"];
+    customInfo.syncDate = [rs doubleForColumn:@"syncDate"];
     [customArray addObject:customInfo];
   }
     [_db close];
@@ -84,7 +88,10 @@
         customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
         customInfo.name = [rs stringForColumn:@"name"];
         customInfo.email = [rs stringForColumn:@"email"];
+        customInfo.phonenum = [rs  stringForColumn:@"phonenum"];
+        customInfo.wechat = [rs stringForColumn:@"wechat"];
         customInfo.idnum = [rs stringForColumn:@"idnum"];
+        customInfo.postcode = [rs stringForColumn:@"postcode"];
         customInfo.agent = (NSInteger)[rs intForColumn:@"agent"];
         customInfo.address = [rs stringForColumn:@"address"];
         customInfo.address1 = [rs stringForColumn:@"address1"];
@@ -95,6 +102,7 @@
         customInfo.expressAvaible = [rs stringForColumn:@"expressAvaible"];
         customInfo.note = [rs stringForColumn:@"note"];
         customInfo.ename = [rs stringForColumn:@"ename"];
+        customInfo.syncDate = [rs doubleForColumn:@"syncDate"];
     }
     [_db close];
     return customInfo;
@@ -103,7 +111,7 @@
 - (BOOL)checkIfCustomExists:(CustomInfo *)custom {
     if (![_db open]) {
         NSLog(@"Could not open db.");
-        return nil ;
+        return NO ;
     }
     FMResultSet *rs = [_db executeQuery:@"select * from client where cid =(?)",[NSNumber numberWithInteger:custom.cid]];
     if (rs.next) {
@@ -118,7 +126,7 @@
 
 - (BOOL)addCustomInfo:(CustomInfo *)custom{
     [_db beginTransaction];
-    BOOL result = [_db executeUpdate:@"insert into client (name,email,idnum,agent,address,address1,address2,address3,photofront,photoback,expressAvaible,note,ename) values (?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[custom cutomToArray]];
+    BOOL result = [_db executeUpdate:@"insert into client (name,email,phonenum,wechat,idnum,postcode,agent,address,address1,address2,address3,photofront,photoback,expressAvaible,note,ename,syncDate) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[custom cutomToArray]];
     if (result) {
         [_db commit];
         [_db close];
@@ -133,7 +141,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[custom cutomToArray]];
         [updateData addObject:@(custom.cid)];
-        result= [_db executeUpdate:@"update client set name=?,email=?,idnum=?,agent=?,address=?,address1=?,address2=?,address3=?,photofront=?,photoback=?,expressAvaible=?,note=?,ename=? where cid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update client set name=?,email=?,phonenum=?,wechat=?,idnum=?,postcode=?,agent=?,address=?,address1=?,address2=?,address3=?,photofront=?,photoback=?,expressAvaible=?,note=?,ename=?,syncDate=? where cid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];

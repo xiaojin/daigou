@@ -16,7 +16,14 @@ typedef enum {
 @property(nonatomic,assign)NSInteger cid;
 @property(nonatomic, copy)NSString *name;
 @property(nonatomic, copy)NSString *email;
+
+@property(nonatomic, strong)NSString *phonenum;
+@property(nonatomic, strong)NSString *wechat;
+
 @property(nonatomic, copy)NSString *idnum;
+
+@property(nonatomic, strong)NSString *postcode;
+
 @property(nonatomic, assign)NSInteger agent;
 @property(nonatomic, copy)NSString *address;
 @property(nonatomic, copy)NSString *address1;
@@ -27,6 +34,8 @@ typedef enum {
 @property(nonatomic, copy)NSString *expressAvaible;
 @property(nonatomic, copy)NSString *note;
 @property(nonatomic, copy)NSString *ename;
+
+@property(nonatomic, assign)double syncDate;
 
 - (NSArray *)cutomToArray;
 @end

@@ -11,23 +11,33 @@
 @implementation OrderItem
 
 - (NSArray *)orderToArray {
-    NSArray *result = @[ @(self.clientid)?@(self.clientid) :0 ,
-                         @(self.statu)?@(self.statu) :0 ,
-                         @(self.expressid)?@(self.expressid) :0,
-                         @(self.parentoid)?@(self.parentoid) :0,
-                         self.address?self.address :@"",
-                         @(self.totoal)?@(self.totoal) :0,
-                         @(self.discount)?@(self.discount) :0,
-                         @(self.delivery)?@(self.delivery) :0,
-                         @(self.subtotal)?@(self.subtotal) :0,
-                         @(self.profit)?@(self.profit) :0,
-                         @(self.creatDate)?@(self.creatDate) :0,
-                         @(self.shipDate)?@(self.shipDate) :0,
-                         @(self.deliverDate)?@(self.deliverDate) :0,
-                         @(self.payDate)?@(self.payDate) :0,
-                         self.note?self.note :@"",
-                         self.barcode?self.barcode :@""];
+    NSArray *result = @[ @(self.clientid)?@(self.clientid) :[NSNull null] ,
+                         @(self.statu)?@(self.statu) :[NSNull null],
+                         @(self.expressid)?@(self.expressid) :[NSNull null],
+                         @(self.parentoid)?@(self.parentoid) :[NSNull null],
+                         @(self.freeShip)?@(self.freeShip) :[NSNull null],
+                         self.address?self.address :[NSNull null],
+                         self.reviever?self.reviever :[NSNull null],
+                         self.phonenumber?self.phonenumber :[NSNull null],
+                         self.postcode?self.postcode :[NSNull null],
+                         @(self.totoal)?@(self.totoal) :[NSNull null],
+                         @(self.discount)?@(self.discount) :[NSNull null],
+                         @(self.delivery)?@(self.delivery) :[NSNull null],
+                         @(self.subtotal)?@(self.subtotal) :[NSNull null],
+                         @(self.profit)?@(self.profit) :[NSNull null],
+                         @(self.othercost)?@(self.othercost) :[NSNull null],
+                         @(self.creatDate)?@(self.creatDate) :[NSNull null],
+                         @(self.shipDate)?@(self.shipDate) :[NSNull null],
+                         @(self.deliverDate)?@(self.deliverDate) :[NSNull null],
+                         @(self.payDate)?@(self.payDate) :[NSNull null],
+                         self.note?self.note :[NSNull null],
+                         self.barcode?self.barcode :[NSNull null],
+                         self.idnum?self.idnum :[NSNull null],
+                         @(self.proxy)?@(self.proxy) :[NSNull null],
+                         self.noteImage?self.noteImage :[NSNull null],
+                         @(self.syncDate)?@(self.syncDate) :[NSNull null]];
     return result;
+    
 }
 
 @end

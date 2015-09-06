@@ -12,5 +12,7 @@
 @property(nonatomic ,assign) NSInteger bid;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *image;
+@property(nonatomic, assign) NSInteger visible;
+@property(nonatomic, assign) double syncDate;
 - (NSArray *)brandToArray;
 @end

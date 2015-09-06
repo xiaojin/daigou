@@ -114,7 +114,7 @@ NSString *const mShowProductTableviewCell = @"MShowProductDetailCell ";
     [titleArray addObject:@"功效"];
     [valueArray addObject:self.product.function];
     [titleArray addObject:@"卖点说明"];
-    [valueArray addObject:self.product.sellpoint];
+    [valueArray addObject:@(self.product.sellprice)];
     [titleArray addObject:@"备注"];
     [valueArray addObject:self.product.note];
 }

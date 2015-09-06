@@ -12,5 +12,6 @@
 @property(nonatomic ,assign) NSInteger cateid;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *image;
+@property(nonatomic, assign) double syncDate;
 - (NSArray *)categoryToArray;
 @end
