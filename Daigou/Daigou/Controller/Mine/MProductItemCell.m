@@ -24,9 +24,12 @@
     [super layoutSubviews];
 }
 
-- (void)setProductTitle:(NSString *)productTitle {
-    
-    CGSize textFieldSize = [self initSizeWithText:productTitle withSize:CGSizeMake(self.contentView.frame.size.width-20, MAXFLOAT)  withFont:PRODUCTTITLEFONT];
+- (void)setProduct:(Product *)product {
+    _product = product;
+    CGSize textFieldSize = [self initSizeWithText:product.name withSize:CGSizeMake(self.contentView.frame.size.width-20, MAXFLOAT)  withFont:PRODUCTTITLEFONT];
+    if (textFieldSize.height > (kWindowWidth/3 +10)) {
+        textFieldSize = CGSizeMake(textFieldSize.width, (kWindowWidth/3 +10));
+    }
     _productImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"default"]];
     [self.contentView addSubview:_productImageView];
     [_productImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -48,8 +51,8 @@
     _titleLbl = [[UILabel alloc]init];
     _titleLbl.lineBreakMode = NSLineBreakByWordWrapping;
     _titleLbl.numberOfLines = 0;
-    [_titleLbl setText:productTitle];
-
+    [_titleLbl setText:product.name ];
+    
     [_titleLbl setTextAlignment:NSTextAlignmentCenter];
     _titleLbl.font = PRODUCTTITLEFONT;
     [_titleLbl setTextColor:[UIColor whiteColor]];
@@ -67,7 +70,7 @@
         make.left.equalTo(self.contentView);
         make.right.equalTo(self.contentView);
     }];
-    
+
 }
 
 - (CGSize) initSizeWithText:(NSString *) text withSize:(CGSize) Size withFont:(UIFont*)font

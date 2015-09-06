@@ -12,9 +12,7 @@
 		19B0F7C63CDBF2FBC3CD877E /* Stock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F1B4311BCA42CF7B3AE9 /* Stock.storyboard */; };
 		19B0F9C9C08DC6F41566E215 /* Order.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0FA38422F0DFB1AFDD799 /* Order.storyboard */; };
 		19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F72631E39FD08240B2CC /* OrderViewController.m */; };
-		19B0FCBE1BCC44E9A349875D /* Add.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0FE48E1D3824371B4BE48 /* Add.storyboard */; };
 		19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F1B595271C47494B85C4 /* StockViewController.m */; };
-		19B0FF341585D8D16427108F /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F38AE32013E7156EF0E5 /* AddViewController.m */; };
 		19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */; };
 		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
@@ -27,6 +25,10 @@
 		3C127AE71B834554008D47DF /* OrderItemBenifitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C127AE61B834554008D47DF /* OrderItemBenifitCell.m */; };
 		3C127AEA1B836831008D47DF /* OrderItemPhoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C127AE91B836831008D47DF /* OrderItemPhoneView.m */; };
 		3C2C7DB81B9BE07900D1DCC0 /* Express.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C7DB71B9BE07900D1DCC0 /* Express.m */; };
+		3C2C7DBB1B9C05BD00D1DCC0 /* ExpressManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C7DBA1B9C05BD00D1DCC0 /* ExpressManagement.m */; };
+		3C2C7DBE1B9C08EC00D1DCC0 /* ExpressTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C7DBD1B9C08EC00D1DCC0 /* ExpressTest.m */; };
+		3C2C7DC11B9C5C0E00D1DCC0 /* UISearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C7DC01B9C5C0E00D1DCC0 /* UISearchViewController.m */; };
+		3C2C7DC61B9C71B500D1DCC0 /* UIProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */; };
 		3C3021591B4F98DF001A741D /* ProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021561B4F98DF001A741D /* ProductItemCell.m */; };
 		3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3021581B4F98DF001A741D /* ProductItemFrame.m */; };
 		3C30215C1B4FDE1A001A741D /* ProductTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30215B1B4FDE1A001A741D /* ProductTest.m */; };
@@ -113,15 +115,12 @@
 		19B0F245CE78B94CFB16ED10 /* StockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
 		19B0F283014B25096F1FFF78 /* Mine.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Mine.storyboard; sourceTree = "<group>"; };
 		19B0F2D2E926566BD7FA217A /* ProcurementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcurementViewController.h; sourceTree = "<group>"; };
-		19B0F38AE32013E7156EF0E5 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
-		19B0F3DF3E14D0CDC1821C8E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcurementViewController.m; sourceTree = "<group>"; };
 		19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
 		19B0F6F26C67FEFD48FD7CBA /* Procurement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Procurement.storyboard; sourceTree = "<group>"; };
 		19B0F72631E39FD08240B2CC /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
 		19B0FA38422F0DFB1AFDD799 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
 		19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
-		19B0FE48E1D3824371B4BE48 /* Add.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Add.storyboard; sourceTree = "<group>"; };
 		3C036AF51B5913A200DBF0B9 /* OrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItem.h; path = Daigou/Model/Order/Order/OrderItem.h; sourceTree = SOURCE_ROOT; };
 		3C036AF61B5913A200DBF0B9 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItem.m; path = Daigou/Model/Order/Order/OrderItem.m; sourceTree = SOURCE_ROOT; };
 		3C036AF81B59325500DBF0B9 /* OrderItemManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemManagement.h; path = Daigou/Model/Order/Order/OrderItemManagement.h; sourceTree = SOURCE_ROOT; };
@@ -140,6 +139,13 @@
 		3C127AE91B836831008D47DF /* OrderItemPhoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemPhoneView.m; sourceTree = "<group>"; };
 		3C2C7DB61B9BE07900D1DCC0 /* Express.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Express.h; path = Express/Express.h; sourceTree = "<group>"; };
 		3C2C7DB71B9BE07900D1DCC0 /* Express.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Express.m; path = Express/Express.m; sourceTree = "<group>"; };
+		3C2C7DB91B9C05BD00D1DCC0 /* ExpressManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpressManagement.h; path = Express/ExpressManagement.h; sourceTree = "<group>"; };
+		3C2C7DBA1B9C05BD00D1DCC0 /* ExpressManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpressManagement.m; path = Express/ExpressManagement.m; sourceTree = "<group>"; };
+		3C2C7DBD1B9C08EC00D1DCC0 /* ExpressTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpressTest.m; path = Model/ExpressTest.m; sourceTree = "<group>"; };
+		3C2C7DBF1B9C5C0E00D1DCC0 /* UISearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UISearchViewController.h; path = Daigou/Controller/Product/UISearchViewController.h; sourceTree = SOURCE_ROOT; };
+		3C2C7DC01B9C5C0E00D1DCC0 /* UISearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISearchViewController.m; path = Daigou/Controller/Product/UISearchViewController.m; sourceTree = SOURCE_ROOT; };
+		3C2C7DC41B9C71B500D1DCC0 /* UIProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIProductDetailViewController.h; path = Daigou/Controller/Product/UIProductDetailViewController.h; sourceTree = SOURCE_ROOT; };
+		3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIProductDetailViewController.m; path = Daigou/Controller/Product/UIProductDetailViewController.m; sourceTree = SOURCE_ROOT; };
 		3C3021551B4F98DF001A741D /* ProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemCell.h; sourceTree = "<group>"; };
 		3C3021561B4F98DF001A741D /* ProductItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemCell.m; sourceTree = "<group>"; };
 		3C3021571B4F98DF001A741D /* ProductItemFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemFrame.h; sourceTree = "<group>"; };
@@ -399,7 +405,7 @@
 				19B0FA400B7BD39D78297CEC /* Procurement */,
 				19B0F7516A5C6AFDBD135755 /* Order */,
 				19B0FBF2D12C98B6BD76F533 /* Mine */,
-				19B0FE79E07BCDD49D4544E4 /* Add */,
+				19B0FE79E07BCDD49D4544E4 /* Product */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -504,13 +510,15 @@
 			path = Mine;
 			sourceTree = "<group>";
 		};
-		19B0FE79E07BCDD49D4544E4 /* Add */ = {
+		19B0FE79E07BCDD49D4544E4 /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				19B0FE48E1D3824371B4BE48 /* Add.storyboard */,
-				19B0F3DF3E14D0CDC1821C8E /* AddViewController.h */,
-				19B0F38AE32013E7156EF0E5 /* AddViewController.m */,
+				3C2C7DBF1B9C5C0E00D1DCC0 /* UISearchViewController.h */,
+				3C2C7DC01B9C5C0E00D1DCC0 /* UISearchViewController.m */,
+				3C2C7DC41B9C71B500D1DCC0 /* UIProductDetailViewController.h */,
+				3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */,
 			);
+			name = Product;
 			path = Add;
 			sourceTree = "<group>";
 		};
@@ -533,6 +541,16 @@
 			children = (
 				3C2C7DB61B9BE07900D1DCC0 /* Express.h */,
 				3C2C7DB71B9BE07900D1DCC0 /* Express.m */,
+				3C2C7DB91B9C05BD00D1DCC0 /* ExpressManagement.h */,
+				3C2C7DBA1B9C05BD00D1DCC0 /* ExpressManagement.m */,
+			);
+			name = Express;
+			sourceTree = "<group>";
+		};
+		3C2C7DBC1B9C08BE00D1DCC0 /* Express */ = {
+			isa = PBXGroup;
+			children = (
+				3C2C7DBD1B9C08EC00D1DCC0 /* ExpressTest.m */,
 			);
 			name = Express;
 			sourceTree = "<group>";
@@ -626,6 +644,7 @@
 		3C64832D1B494BB600EFAE4E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C2C7DBC1B9C08BE00D1DCC0 /* Express */,
 				3C5678391B5B29F8001B6B40 /* Order */,
 				3C30215D1B4FDE1E001A741D /* Product */,
 				3C64832E1B494BC000EFAE4E /* Mine */,
@@ -939,7 +958,6 @@
 				19B0F7B656D557D701E4603D /* Procurement.storyboard in Resources */,
 				19B0F9C9C08DC6F41566E215 /* Order.storyboard in Resources */,
 				19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */,
-				19B0FCBE1BCC44E9A349875D /* Add.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -991,10 +1009,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C6EECC01B2C3D7B00C7478F /* main.m in Sources */,
+				3C2C7DC61B9C71B500D1DCC0 /* UIProductDetailViewController.m in Sources */,
 				3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */,
 				3C3021791B514B60001A741D /* MEditProductViewController.m in Sources */,
 				3C442A381B760ACE008BF244 /* OrderStausListTableView.m in Sources */,
 				3C6249851B3C11BC008F34C7 /* MSettingViewController.m in Sources */,
+				3C2C7DBB1B9C05BD00D1DCC0 /* ExpressManagement.m in Sources */,
 				3C77943C1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m in Sources */,
 				3C62498E1B3C1395008F34C7 /* MCustInfoViewController.m in Sources */,
 				3C127AE71B834554008D47DF /* OrderItemBenifitCell.m in Sources */,
@@ -1035,6 +1055,7 @@
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
 				3C0BBDA91B9484E100BA0E1E /* StockStatusListTableView.m in Sources */,
+				3C2C7DC11B9C5C0E00D1DCC0 /* UISearchViewController.m in Sources */,
 				3CFC01DB1B909E8000995CAB /* MProductsViewController.m in Sources */,
 				19B0FA792FF04CE87D6706BC /* OrderViewController.m in Sources */,
 				3C6249881B3C11CB008F34C7 /* MSharingViewController.m in Sources */,
@@ -1059,7 +1080,6 @@
 				3C3021621B4FDF09001A741D /* Brand.m in Sources */,
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
 				3C8F6F781B98804C00A920A3 /* AddressBookTableViewController.m in Sources */,
-				19B0FF341585D8D16427108F /* AddViewController.m in Sources */,
 				3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1072,6 +1092,7 @@
 				3C30216F1B50D312001A741D /* CategoryTest.m in Sources */,
 				3C56783B1B5B2A08001B6B40 /* OrderItemTest.m in Sources */,
 				3C30216D1B50D1E6001A741D /* BrandTest.m in Sources */,
+				3C2C7DBE1B9C08EC00D1DCC0 /* ExpressTest.m in Sources */,
 				3C30215C1B4FDE1A001A741D /* ProductTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

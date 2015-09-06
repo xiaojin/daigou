@@ -1,9 +1,14 @@
 #import <UIKit/UIKit.h>
+@protocol LLBlurSidebarDelegate<NSObject>
+@optional
+- (void)sidebarDidHidden;
+@end
+
 @interface LLBlurSidebar : UIViewController
 
 @property (nonatomic, retain) UIView* contentView; // 所有要显示的子控件全添加到这里
 @property (nonatomic, assign) BOOL isSidebarShown;
-
+@property (nonatomic, assign) id<LLBlurSidebarDelegate> delegate;
 /**
  * @brief 当有pan事件时调用，传入UIPanGestureRecognizer
  */

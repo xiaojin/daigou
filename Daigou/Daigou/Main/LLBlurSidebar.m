@@ -110,6 +110,7 @@
         } completion:^(BOOL finished) {
             _isMoving = NO;
             self.view.hidden = YES;
+            [_delegate sidebarDidHidden];
         }];
     }
 }
@@ -195,6 +196,7 @@
             } completion:^(BOOL finished) {
                 _isMoving = NO;
                 self.view.hidden = YES;
+                [_delegate sidebarDidHidden];
             }];
         }
         return;

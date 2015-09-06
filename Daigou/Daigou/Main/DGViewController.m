@@ -34,7 +34,6 @@
     secVC.title = @"采购";
     secVC.tabBarItem.image = [IonIcons imageWithIcon:ion_android_cart size:kTabICONSIZE color:kICONCOLOR];
     
-    UIStoryboard *addStoryboard = [UIStoryboard storyboardWithName:@"Add" bundle:nil];
     MProductsViewController *productsViewController = [[MProductsViewController alloc]init];
     UINavigationController *thirdVC =[[UINavigationController alloc] initWithRootViewController:productsViewController];
    // MProductCatalogViewController *thirdVC = [[MProductCatalogViewController alloc]init];

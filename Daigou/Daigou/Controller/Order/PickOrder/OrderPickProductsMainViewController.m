@@ -12,8 +12,6 @@
 #import "OrderProductsRightTableView.h"
 #import "ProductManagement.h"
 #import "ProductCategoryManagement.h"
-#import "BrandManagement.h"
-#import "Brand.h"
 #import "Product.h"
 #import "ProductCategory.h"
 #import <Masonry/Masonry.h>
@@ -151,7 +149,6 @@
     [self.view addGestureRecognizer:panGesture];
     
     self.sidebarVC = [[OrderSiderBarViewController alloc] init];
-    self.sidebarVC.brandList = [self getBrands];
     [self.sidebarVC setBgRGB:0x000000];
     [self.view addSubview:self.sidebarVC.view];
     self.sidebarVC.view.frame  = self.view.bounds;
@@ -159,10 +156,6 @@
 
 }
 
-- (NSArray *)getBrands{
-    BrandManagement *brandManagement = [BrandManagement shareInstance];
-    return [brandManagement getBrand];
-}
 
 - (void) showProductsList {
     [self.sidebarVC showHideSidebar];

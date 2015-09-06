@@ -15,5 +15,7 @@
 @property(nonatomic, strong) NSString *website;
 @property(nonatomic, strong) NSString *proxy;
 @property(nonatomic, strong) NSString *image;
+@property(nonatomic, assign) double price;
+@property(nonatomic, assign) double syncDate;
 - (NSArray *)expressToArray;
 @end

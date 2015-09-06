@@ -10,20 +10,27 @@
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
 #import "Brand.h"
+#import "BrandManagement.h"
+#import "ProductManagement.h"
+
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 @interface OrderSiderBarViewController()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong)UITableView *brandTableView;
 @property(nonatomic, strong) NSArray *indexList;
-
+@property(nonatomic, strong) NSArray *brandList;
 @end
 
 @implementation OrderSiderBarViewController
 
+- (NSArray *)getBrands{
+    BrandManagement *brandManagement = [BrandManagement shareInstance];
+    return [brandManagement getBrand];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after    loading the view from its nib.
+    self.brandList = [self getBrands];
     CGRect menuRect = CGRectZero;
     if (!self.hideHeaderView) {
         UIView *headView = [[UIView alloc]init];
@@ -74,6 +81,7 @@
     _brandList = [self arrayForSections:brandList];
     [_brandTableView reloadData];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -147,4 +155,12 @@
 {
     return index;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Brand *brandInfo = [_brandList objectAtIndex:indexPath.section][indexPath.row];
+    [_orderDelegate itemDidSelect:brandInfo];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+
 @end

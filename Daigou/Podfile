@@ -8,7 +8,7 @@ pod "ionicons", "~> 2.0.1"
 pod "MJRefresh"
 pod "Masonry","~> 0.5.3"
 pod "JVFloatLabeledTextField"
-
+pod "SDWebImage"
 end
 
 target 'DaigouTests' do

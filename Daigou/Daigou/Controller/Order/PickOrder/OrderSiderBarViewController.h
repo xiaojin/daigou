@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "LLBlurSidebar.h"
+#import "Brand.h"
+
+@protocol OrderSiderDelegate<NSObject>
+@optional
+- (void)itemDidSelect:(Brand *)brand;
+@end
 
 @interface OrderSiderBarViewController : LLBlurSidebar
 @property(nonatomic, assign) BOOL hideHeaderView;
 @property(nonatomic, assign) CGFloat tabHeight;
 @property(nonatomic, assign) CGFloat navHeight;
-@property(nonatomic, strong) NSArray *brandList;
+@property(nonatomic, assign) id<OrderSiderDelegate> orderDelegate;
 @end

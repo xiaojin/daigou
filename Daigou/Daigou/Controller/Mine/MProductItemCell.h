@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Product.h"
 
 @interface MProductItemCell : UICollectionViewCell
-@property (nonatomic, strong) NSString *productTitle;
+@property (nonatomic, strong) Product *product;
 @end

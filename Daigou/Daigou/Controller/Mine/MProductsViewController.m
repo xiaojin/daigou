@@ -14,21 +14,25 @@
 #import "UISearchBar+UISearchBarAccessory.h"
 #import "MProductItemCell.h"
 #import "OrderSiderBarViewController.h"
+#import "Product.h"
+#import "ProductManagement.h"
 #import "BrandManagement.h"
-#import "Brand.h"
-@interface MProductsViewController()<UICollectionViewDataSource,UICollectionViewDelegate,UISearchBarDelegate>
+#import "UISearchViewController.h"
+#import "UIProductDetailViewController.h"
+
+@interface MProductsViewController()<UICollectionViewDataSource,UICollectionViewDelegate,UISearchBarDelegate,LLBlurSidebarDelegate,OrderSiderDelegate>
 @property (nonatomic, strong) UICollectionView *productsCollectionView;
-@property (nonatomic, strong) NSArray *products;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) OrderSiderBarViewController *sidebarVC;
-
+@property (nonatomic, strong) UIView *emptyView;
+@property (nonatomic, strong) NSArray *productsList;
 @end
 @implementation MProductsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initSearchBar];
-    _products = [NSArray arrayWithObjects:@1,@2,@3, nil];
+    [self initWithProducts];
     UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc]init];
     flowLayout.minimumInteritemSpacing = 2.0f;
     flowLayout.minimumLineSpacing =0.0f;
@@ -40,13 +44,25 @@
     [self.view addSubview:_productsCollectionView];
     [_productsCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         UIView *bottomLayoutGuide = (id)self.bottomLayoutGuide;
-        make.top.equalTo(_searchBar.mas_bottom);
+        make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(bottomLayoutGuide.mas_top);
     }];
     [self initNavigationBarMenu];
+    
 
+}
+
+- (void)initWithProducts {
+    BrandManagement *brandManagement = [BrandManagement shareInstance];
+    NSArray *brands = [brandManagement getBrand];
+    _productsList = [NSArray array];
+    if (brands != nil && [brands count]>0) {
+        Brand *firstBrand = brands[0];
+        ProductManagement *prodManagement = [ProductManagement shareInstance];
+        _productsList = [prodManagement getProductByBrand:firstBrand];
+    }
 }
 
 - (void)initNavigationBarMenu {
@@ -58,27 +74,30 @@
     [panGesture delaysTouchesBegan];
     [self.view addGestureRecognizer:panGesture];
     self.sidebarVC = [[OrderSiderBarViewController alloc] init];
-    self.sidebarVC.brandList = [self getBrands];
     self.sidebarVC.navHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
-    
     self.sidebarVC.tabHeight = (kWindowHeight- CGRectGetMinY(self.tabBarController.tabBar.frame));
     self.sidebarVC.hideHeaderView = YES;
+    self.sidebarVC.delegate = self;
+    self.sidebarVC.orderDelegate = self;
     [self.sidebarVC setBgRGB:0x000000];
     [self.view insertSubview:self.sidebarVC.view aboveSubview:_productsCollectionView];
     [_sidebarVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
         UIView *topLayGrid = (id)self.topLayoutGuide;
-        UIView *bottomLayGrid = (id)self.bottomLayoutGuide;
         make.top.equalTo(topLayGrid.mas_bottom);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(_productsCollectionView.mas_bottom);
     }];
     // 左侧边栏结束
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
+    self.navigationItem.rightBarButtonItem =rightButton;
 }
 
-- (NSArray *)getBrands{
-    BrandManagement *brandManagement = [BrandManagement shareInstance];
-    return [brandManagement getBrand];
+- (NSArray *)getProductsByBrand:(Brand *)brand {
+    ProductManagement *productManagement = [ProductManagement shareInstance];
+    NSArray *products =[productManagement getProductByBrand:brand];
+    return products;
 }
 
 - (void) selectProductCategory {
@@ -91,45 +110,59 @@
     [self.sidebarVC panDetected:recoginzer];
 }
 
+- (void)sidebarDidHidden {
+    self.tabBarController.tabBar.hidden = NO;
+}
+
+- (void)itemDidSelect:(Brand *)brand {
+    _productsList = [self getProductsByBrand:brand];
+    [self.sidebarVC showHideSidebar];
+    [_productsCollectionView reloadData];
+}
+
 - (void)initSearchBar {
     _searchBar = [[UISearchBar alloc]initWithAccessory];
     _searchBar.searchBarStyle = UISearchBarStyleProminent;
     _searchBar.delegate = self;
-    [self.view addSubview:_searchBar];
-    [_searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        UIView *topLayoutGuide = (id)self.topLayoutGuide;
-        make.top.equalTo(topLayoutGuide.mas_bottom);
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.height.equalTo(@44);
-    }];
+    self.navigationItem.titleView = _searchBar;
+    [_searchBar sizeToFit];
 }
 
 #pragma mark - Sort & Search
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length > 0) {
-//[self.viewModel filterByString:searchText.uppercaseString];
-    } else {
-       // [self.viewModel cancelFilter];
-    }
+- (void)searchBarTap {
+    UISearchViewController *searchController =[[UISearchViewController alloc]init];
+    UINavigationController *searchNav = [[UINavigationController alloc]initWithRootViewController:searchController];
+    [self presentViewController:searchNav animated:NO completion:nil];
 }
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self searchBarTap];
+    return NO;
+}
+
+- (void)search:(NSString *)query {
+    NSString *normalisedQuery = [NSString stringWithFormat:@"*%@*", [query stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE[cd] %@ or function LIKE[cd] %@", normalisedQuery,normalisedQuery];
+    
+    _productsList = [_productsList filteredArrayUsingPredicate:predicate];
+}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [searchBar resignFirstResponder];
     NSLog(@"search button clicked");
 }
 
 #pragma mark -- UICollectionDatasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 15;
+    return [_productsList count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath; {
-     MProductItemCell *collectionCell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
+    MProductItemCell *collectionCell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     collectionCell.backgroundColor = [UIColor whiteColor];
-    collectionCell.productTitle = @"纽乐护肝宝胶囊100粒";
+    collectionCell.product = [_productsList objectAtIndex:indexPath.row];
     return collectionCell;
 
 }
@@ -137,6 +170,13 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake((kWindowWidth-4)/3, kWindowWidth/3 +10);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    Product *product = [_productsList objectAtIndex:indexPath.row];
+    UIProductDetailViewController *productDetailViewController = [[UIProductDetailViewController alloc]init];
+    productDetailViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:productDetailViewController animated:YES];
 }
 
 @end
