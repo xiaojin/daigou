@@ -104,4 +104,23 @@
     return result;
 
 }
+
+- (Brand *)getBrandById:(NSInteger)brandId {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from brand where bid = (?)",@(brandId)];
+    Brand *brandInfo = [[Brand alloc]init];
+    if (rs.next) {
+        brandInfo.bid = (NSInteger)[rs intForColumn:@"bid"];
+        brandInfo.name = [rs stringForColumn:@"name"];
+        brandInfo.image = [rs stringForColumn:@"image"];
+        brandInfo.visible = [rs intForColumn:@"visible"];
+        brandInfo.syncDate = [rs doubleForColumn:@"syncDate"];
+    }
+    [_db close];
+    return brandInfo;
+    
+}
 @end

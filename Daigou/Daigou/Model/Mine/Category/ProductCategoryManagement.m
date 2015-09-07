@@ -92,7 +92,7 @@
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[category categoryToArray]];
         [updateData addObject:@(category.cateid)];
-        result= [_db executeUpdate:@"update category set name=?,image=? where cateid = ?" withArgumentsInArray:updateData];
+        result= [_db executeUpdate:@"update category set name=?,image=? where cateid = (?)" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
             [_db close];
@@ -105,5 +105,20 @@
     
 }
 
-
+- (ProductCategory *)getCategoryById:(NSInteger)categoryId {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from category where cateid = (?)", @(categoryId)];
+    ProductCategory *category = [[ProductCategory alloc]init];
+    if (rs.next) {
+        category.cateid = (NSInteger)[rs intForColumn:@"cateid"];
+        category.name = [rs stringForColumn:@"name"];
+        category.image = [rs stringForColumn:@"image"];
+        category.syncDate = [rs doubleForColumn:@"syncDate"];
+    }
+    [_db close];
+    return category;
+}
 @end

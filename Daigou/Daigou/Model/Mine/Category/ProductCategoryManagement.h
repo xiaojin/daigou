@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 @class ProductCategory;
+
 @interface ProductCategoryManagement : NSObject
 
 + (instancetype)shareInstance;
 - (NSArray *)getCategory;
 - (BOOL)updateCategory:(ProductCategory *)category;
-
+- (ProductCategory *)getCategoryById:(NSInteger)categoryId;
 @end

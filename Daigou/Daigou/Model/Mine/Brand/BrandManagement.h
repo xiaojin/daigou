@@ -12,4 +12,5 @@
 + (instancetype)shareInstance;
 - (NSArray *)getBrand;
 - (BOOL)updateBrand:(Brand *)brand;
+- (Brand *)getBrandById:(NSInteger)brandId;
 @end

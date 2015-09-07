@@ -175,8 +175,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Product *product = [_productsList objectAtIndex:indexPath.row];
     UIProductDetailViewController *productDetailViewController = [[UIProductDetailViewController alloc]init];
+    productDetailViewController.product = product;
     productDetailViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:productDetailViewController animated:YES];
+    [self.navigationController pushViewController:productDetailViewController animated:NO];
 }
 
 @end

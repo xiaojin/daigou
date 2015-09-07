@@ -75,6 +75,7 @@
 		3C6DDF231B440D4A000B8152 /* MAddCusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF221B440D4A000B8152 /* MAddCusInfoViewController.m */; };
 		3C6DDF261B441156000B8152 /* MEditCustomInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF251B441156000B8152 /* MEditCustomInfoViewController.m */; };
 		3C6DDF291B4412EC000B8152 /* MEditDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF281B4412EC000B8152 /* MEditDetailCell.m */; };
+		3C6E1DF21B9DD50A0062FBF0 /* UIProductInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6E1DF11B9DD50A0062FBF0 /* UIProductInfoEditViewController.m */; };
 		3C6EECC01B2C3D7B00C7478F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EECBF1B2C3D7B00C7478F /* main.m */; };
 		3C6EECCC1B2C3D7B00C7478F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCA1B2C3D7B00C7478F /* Main.storyboard */; };
 		3C6EECD11B2C3D7B00C7478F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EECCF1B2C3D7B00C7478F /* LaunchScreen.xib */; };
@@ -232,6 +233,8 @@
 		3C6DDF251B441156000B8152 /* MEditCustomInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEditCustomInfoViewController.m; path = Custom/MEditCustomInfoViewController.m; sourceTree = "<group>"; };
 		3C6DDF271B4412EC000B8152 /* MEditDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEditDetailCell.h; path = Custom/MEditDetailCell.h; sourceTree = "<group>"; };
 		3C6DDF281B4412EC000B8152 /* MEditDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEditDetailCell.m; path = Custom/MEditDetailCell.m; sourceTree = "<group>"; };
+		3C6E1DF01B9DD50A0062FBF0 /* UIProductInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIProductInfoEditViewController.h; path = Daigou/Controller/Product/UIProductInfoEditViewController.h; sourceTree = SOURCE_ROOT; };
+		3C6E1DF11B9DD50A0062FBF0 /* UIProductInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIProductInfoEditViewController.m; path = Daigou/Controller/Product/UIProductInfoEditViewController.m; sourceTree = SOURCE_ROOT; };
 		3C6EECBA1B2C3D7B00C7478F /* Daigou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daigou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C6EECBE1B2C3D7B00C7478F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C6EECBF1B2C3D7B00C7478F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -517,6 +520,8 @@
 				3C2C7DC01B9C5C0E00D1DCC0 /* UISearchViewController.m */,
 				3C2C7DC41B9C71B500D1DCC0 /* UIProductDetailViewController.h */,
 				3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */,
+				3C6E1DF01B9DD50A0062FBF0 /* UIProductInfoEditViewController.h */,
+				3C6E1DF11B9DD50A0062FBF0 /* UIProductInfoEditViewController.m */,
 			);
 			name = Product;
 			path = Add;
@@ -1032,6 +1037,7 @@
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C5D0B541B8C9904006FFC87 /* LLBlurSidebar.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
+				3C6E1DF21B9DD50A0062FBF0 /* UIProductInfoEditViewController.m in Sources */,
 				3C442A351B74D8E8008BF244 /* DateUtil.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
 				3C56783E1B5B6AC2001B6B40 /* OrderListCell.m in Sources */,
