@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol UIProductInfoEditViewControllerDelegate<NSObject>
+-(void)didFinishEditing:(NSString *)content withTag:(NSInteger)tag;
+@end
 @interface UIProductInfoEditViewController : UIViewController
-
-- (instancetype)initWithContent:(NSString *)content;
+@property(nonatomic, assign)id<UIProductInfoEditViewControllerDelegate> delegate;
+- (instancetype)initWithContent:(NSString *)content withTextFieldTag:(NSInteger)tag;
 @end

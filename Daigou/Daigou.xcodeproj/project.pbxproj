@@ -82,6 +82,7 @@
 		3C6EED1D1B2C5E2300C7478F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EED1C1B2C5E2300C7478F /* Images.xcassets */; };
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
+		3C70BF0C1B9F0B9500C17481 /* UIScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */; };
 		3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */; };
 		3C7794391B7F647E0034D91D /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794381B7F647E0034D91D /* OrderDetailViewController.m */; };
 		3C77943C1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */; };
@@ -247,6 +248,8 @@
 		3C6EED201B2C5E6100C7478F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3C6EED211B2C5E6100C7478F /* DGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGViewController.h; sourceTree = "<group>"; };
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
+		3C70BF0A1B9F0B9500C17481 /* UIScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIScanViewController.h; path = Daigou/Controller/Product/UIScanViewController.h; sourceTree = SOURCE_ROOT; };
+		3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIScanViewController.m; path = Daigou/Controller/Product/UIScanViewController.m; sourceTree = SOURCE_ROOT; };
 		3C7794311B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+UITextFieldAccessory.h"; path = "Extension/UITextField+UITextFieldAccessory.h"; sourceTree = "<group>"; };
 		3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+UITextFieldAccessory.m"; path = "Extension/UITextField+UITextFieldAccessory.m"; sourceTree = "<group>"; };
 		3C7794371B7F647E0034D91D /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
@@ -522,6 +525,8 @@
 				3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */,
 				3C6E1DF01B9DD50A0062FBF0 /* UIProductInfoEditViewController.h */,
 				3C6E1DF11B9DD50A0062FBF0 /* UIProductInfoEditViewController.m */,
+				3C70BF0A1B9F0B9500C17481 /* UIScanViewController.h */,
+				3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */,
 			);
 			name = Product;
 			path = Add;
@@ -1077,6 +1082,7 @@
 				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,
 				3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */,
 				3C6DDF261B441156000B8152 /* MEditCustomInfoViewController.m in Sources */,
+				3C70BF0C1B9F0B9500C17481 /* UIScanViewController.m in Sources */,
 				3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */,
 				3C127AEA1B836831008D47DF /* OrderItemPhoneView.m in Sources */,
 				3C6DDF231B440D4A000B8152 /* MAddCusInfoViewController.m in Sources */,
