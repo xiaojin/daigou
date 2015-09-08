@@ -28,7 +28,9 @@ const static CGFloat kJVFieldMarginTop = 10.0f;
 #define MONEYSYMFONT [UIFont systemFontOfSize:14.0f]
 const static CGFloat kLINEHEIGHT = 1.0f;
 
-@interface UIProductDetailViewController ()<UITextFieldDelegate>
+@interface UIProductDetailViewController ()<UITextFieldDelegate,UIScrollViewDelegate>{
+    CGSize keyboardSize;
+}
 @property(nonatomic, strong)JVFloatLabeledTextField *productNameField;
 @property(nonatomic, strong)UIScrollView *scrollView;
 @property(nonatomic, strong)UIButton *missProduct;
@@ -63,31 +65,73 @@ const static CGFloat kLINEHEIGHT = 1.0f;
 @property(nonatomic, strong)Brand *brand;
 @property(nonatomic, strong)ProductCategory *prodCategory;
 
+@property(nonatomic, strong)UITextField *currentField;
+
+
 @end
 
 @implementation UIProductDetailViewController
 
+
+- (void)registNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+}
+#pragma mark - UINotification
+- (void)keyboardWillHide:(NSNotification *)sender {
+   // NSTimeInterval duration = [[sender userInfo][UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    //[UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = [_scrollView contentInset];
+        edgeInsets.bottom = 140.0f;
+        [_scrollView setContentInset:edgeInsets];
+        edgeInsets = [_scrollView scrollIndicatorInsets];
+        edgeInsets.bottom = 0;
+        [_scrollView setScrollIndicatorInsets:edgeInsets];
+        [_scrollView setContentInset:edgeInsets];
+
+    //}];
+}
+
+- (void)keyboardDidShow:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    keyboardSize = CGSizeMake(keyboardSize.width, keyboardSize.height + 100.0f);
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _scrollView = [[UIScrollView alloc]init];
+    [self registNotification];
+    _scrollView = [UIScrollView new];
+    _scrollView.delegate = self;
     [self.view addSubview:_scrollView];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width,self.view.frame.size.height);
+    
+    UIView *contentView = [[UIView alloc]init];
+    [_scrollView addSubview:contentView];
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_scrollView);
+        make.width.equalTo(_scrollView);
+    }];
+    
+    
+    //_scrollView.contentSize = CGSizeMake(self.view.frame.size.width,self.view.frame.size.height);
 
     UIColor *floatingLabelColor = [UIColor lightGrayColor];
     UIColor *fontColor = FONTCOLOR;
     _productNameField = [[JVFloatLabeledTextField alloc]initHasAccessory];
+    _productNameField.delegate = self;
     _productNameField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _productNameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"商品名称"
                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
     _productNameField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _productNameField.floatingLabelTextColor = floatingLabelColor;
     [_productNameField setText:_product.name];
-    [_scrollView addSubview:_productNameField];
+    [contentView addSubview:_productNameField];
     [_productNameField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_scrollView.mas_top).with.offset(kJVFieldMarginTop);
+        make.top.equalTo(contentView.mas_top).with.offset(kJVFieldMarginTop);
         make.left.equalTo(self.view).with.offset(5);
         make.width.equalTo(self.view).with.offset(-100);
         make.height.equalTo(@44);
@@ -96,7 +140,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div1 = [UIView new];
     div1.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div1];
+    [contentView addSubview:div1];
     [div1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_productNameField.mas_bottom);
         make.left.equalTo(_productNameField.mas_left);
@@ -112,7 +156,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
    // [missProduct setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
     [_missProduct setTitleEdgeInsets:UIEdgeInsetsMake(0, 2, 0, 0.0f)];
     [_missProduct addTarget:self action:@selector(handlerMissProductCheck) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:_missProduct];
+    [contentView addSubview:_missProduct];
     [_missProduct mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_productNameField.mas_right);
         make.bottom.equalTo(div1.mas_bottom).with.offset(2);
@@ -121,13 +165,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     }];
     
     _brandField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _brandField.delegate = self;
     _brandField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _brandField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"品牌"
                                                                               attributes:@{NSForegroundColorAttributeName: fontColor}];
     _brandField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _brandField.floatingLabelTextColor = floatingLabelColor;
     [_brandField setText:_brand.name];
-    [_scrollView addSubview:_brandField];
+    [contentView addSubview:_brandField];
     [_brandField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_productNameField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -138,7 +183,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div2 = [UIView new];
     div2.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div2];
+    [contentView addSubview:div2];
     [div2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_brandField.mas_bottom);
         make.left.equalTo(_brandField.mas_left);
@@ -147,13 +192,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     }];
     
     _categoryField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _categoryField.delegate = self;
     _categoryField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _categoryField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"产品分类"
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
     _categoryField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _categoryField.floatingLabelTextColor = floatingLabelColor;
     [_categoryField setText:_prodCategory.name];
-    [_scrollView addSubview:_categoryField];
+    [contentView addSubview:_categoryField];
     [_categoryField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_brandField.mas_top);
         make.left.equalTo(self.view.mas_centerX).with.offset(5);
@@ -164,7 +210,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div3 = [UIView new];
     div3.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div3];
+    [contentView addSubview:div3];
     [div3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_categoryField.mas_bottom);
         make.left.equalTo(_categoryField.mas_left);
@@ -173,13 +219,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     }];
     
     _modelField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _modelField.delegate = self;
     _modelField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _modelField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"规格"
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _modelField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _modelField.floatingLabelTextColor = floatingLabelColor;
     [_modelField setText:_product.model];
-    [_scrollView addSubview:_modelField];
+    [contentView addSubview:_modelField];
     [_modelField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_brandField.mas_bottom).with.offset(10);;
         make.left.equalTo(_brandField.mas_left);
@@ -190,7 +237,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div4 = [UIView new];
     div4.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div4];
+    [contentView addSubview:div4];
     [div4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_modelField.mas_bottom);
         make.left.equalTo(_modelField.mas_left);
@@ -200,6 +247,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _purchaseField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _purchaseField.delegate = self;
     _purchaseField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _purchaseField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"采购参考价"
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
@@ -207,7 +255,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     _purchaseField.floatingLabelTextColor = floatingLabelColor;
     [_purchaseField setText:[NSString stringWithFormat:@"%.1f", _product.purchaseprice]];
     [_purchaseField setKeyboardType:UIKeyboardTypeDecimalPad];
-    [_scrollView addSubview:_purchaseField];
+    [contentView addSubview:_purchaseField];
     [_purchaseField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_modelField.mas_top);
         make.left.equalTo(self.view.mas_centerX).with.offset(5);
@@ -220,7 +268,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     auLable1.textColor = fontColor;
     auLable1.textAlignment = NSTextAlignmentLeft;
     [auLable1 setText:@"$"];
-    [_scrollView addSubview:auLable1];
+    [contentView addSubview:auLable1];
     [auLable1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_purchaseField.mas_bottom).with.offset(-5);
         make.right.equalTo(self.view.mas_right).with.offset(-5);
@@ -231,7 +279,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div5 = [UIView new];
     div5.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div5];
+    [contentView addSubview:div5];
     [div5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_purchaseField.mas_bottom);
         make.left.equalTo(_purchaseField.mas_left);
@@ -242,6 +290,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _sellField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _sellField.delegate = self;
     _sellField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _sellField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"出售价格"
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
@@ -249,7 +298,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     _sellField.floatingLabelTextColor = floatingLabelColor;
     [_sellField setText:[NSString stringWithFormat:@"%.1f", _product.sellprice]];
     [_sellField setKeyboardType:UIKeyboardTypeDecimalPad];
-    [_scrollView addSubview:_sellField];
+    [contentView addSubview:_sellField];
     [_sellField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_modelField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -263,7 +312,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     rmbLable1.textColor = fontColor;
     rmbLable1.textAlignment = NSTextAlignmentLeft;
     [rmbLable1 setText:@"¥"];
-    [_scrollView addSubview:rmbLable1];
+    [contentView addSubview:rmbLable1];
     [rmbLable1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_sellField.mas_bottom).with.offset(-5);
         make.right.equalTo(self.view.mas_centerX).with.offset(-5);
@@ -272,7 +321,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     }];
     UIView *div6 = [UIView new];
     div6.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div6];
+    [contentView addSubview:div6];
     [div6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_sellField.mas_bottom);
         make.left.equalTo(_sellField.mas_left);
@@ -282,6 +331,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _agentField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _agentField.delegate = self;
     _agentField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _agentField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"代理价格"
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
@@ -289,7 +339,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     _agentField.floatingLabelTextColor = floatingLabelColor;
     [_agentField setText:[NSString stringWithFormat:@"%.1f", _product.agentprice]];
     [_agentField setKeyboardType:UIKeyboardTypeDecimalPad];
-    [_scrollView addSubview:_agentField];
+    [contentView addSubview:_agentField];
     [_agentField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_sellField.mas_top);
         make.left.equalTo(self.view.mas_centerX).with.offset(5);
@@ -303,7 +353,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     rmbLable2.textColor = fontColor;
     rmbLable2.textAlignment = NSTextAlignmentLeft;
     [rmbLable2 setText:@"¥"];
-    [_scrollView addSubview:rmbLable2];
+    [contentView addSubview:rmbLable2];
     [rmbLable2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_agentField.mas_bottom).with.offset(-5);
         make.right.equalTo(self.view.mas_right).with.offset(-5);
@@ -313,7 +363,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div7 = [UIView new];
     div7.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div7];
+    [contentView addSubview:div7];
     [div7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_agentField.mas_bottom);
         make.left.equalTo(_agentField.mas_left);
@@ -323,13 +373,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _barCodeField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _barCodeField.delegate = self;
     _barCodeField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _barCodeField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"条码"
                                                                               attributes:@{NSForegroundColorAttributeName: fontColor}];
     _barCodeField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _barCodeField.floatingLabelTextColor = floatingLabelColor;
     [_agentField setText:_product.barcode];
-    [_scrollView addSubview:_barCodeField];
+    [contentView addSubview:_barCodeField];
     [_barCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_sellField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -340,7 +391,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div8 = [UIView new];
     div8.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div8];
+    [contentView addSubview:div8];
     [div8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_barCodeField.mas_bottom);
         make.left.equalTo(_barCodeField.mas_left);
@@ -352,7 +403,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     UIImage *scanBarImage = [IonIcons imageWithIcon:ion_qr_scanner iconColor:fontColor iconSize:40 imageSize:CGSizeMake(40, 40)];
     [_barButton setImage:scanBarImage forState:UIControlStateNormal];
     [_barButton addTarget:self action:@selector(handleScanBar) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:_barButton];
+    [contentView addSubview:_barButton];
     [_barButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_barCodeField.mas_right).with.offset(10);
         make.bottom.equalTo(_barCodeField.mas_bottom);
@@ -362,6 +413,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _wightField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _wightField.delegate = self;
     _wightField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _wightField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"重量(g)"
                                                                        attributes:@{NSForegroundColorAttributeName: fontColor}];
@@ -369,7 +421,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     _wightField.floatingLabelTextColor = floatingLabelColor;
     [_wightField setText:[NSString stringWithFormat:@"%.1f", _product.wight]];
     [_agentField setKeyboardType:UIKeyboardTypeDecimalPad];
-    [_scrollView addSubview:_wightField];
+    [contentView addSubview:_wightField];
     [_wightField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_barCodeField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -380,7 +432,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div9 = [UIView new];
     div9.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div9];
+    [contentView addSubview:div9];
     [div9 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_wightField.mas_bottom);
         make.left.equalTo(_wightField.mas_left);
@@ -390,13 +442,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _quickidField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _quickidField.delegate = self;
     _quickidField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _quickidField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"检索码"
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
     _quickidField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _quickidField.floatingLabelTextColor = floatingLabelColor;
     [_quickidField setText:_product.quickid];
-    [_scrollView addSubview:_quickidField];
+    [contentView addSubview:_quickidField];
     [_quickidField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_wightField.mas_top);
         make.left.equalTo(self.view.mas_centerX).with.offset(5);
@@ -408,7 +461,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
 
     UIView *div10 = [UIView new];
     div10.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div10];
+    [contentView addSubview:div10];
     [div10 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_quickidField.mas_bottom);
         make.left.equalTo(_quickidField.mas_left);
@@ -419,6 +472,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _functionField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _functionField.delegate = self;
     _functionField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _functionField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"功效"
                                                                               attributes:@{NSForegroundColorAttributeName: fontColor}];
@@ -426,7 +480,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     _functionField.floatingLabelTextColor = floatingLabelColor;
     [_functionField setText:_product.function];
     _functionField.delegate = self;
-    [_scrollView addSubview:_functionField];
+    [contentView addSubview:_functionField];
     [_functionField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_wightField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -437,7 +491,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div11 = [UIView new];
     div11.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div11];
+    [contentView addSubview:div11];
     [div11 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_functionField.mas_bottom);
         make.left.equalTo(_functionField.mas_left);
@@ -446,14 +500,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     }];
     
     _usageField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _usageField.delegate = self;
     _usageField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _usageField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"用法说明"
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _usageField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _usageField.floatingLabelTextColor = floatingLabelColor;
-    _usageField.delegate = self;
     [_usageField setText:_product.usage];
-    [_scrollView addSubview:_usageField];
+    [contentView addSubview:_usageField];
     [_usageField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_functionField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -464,7 +518,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div12 = [UIView new];
     div12.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div12];
+    [contentView addSubview:div12];
     [div12 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_usageField.mas_bottom);
         make.left.equalTo(_usageField.mas_left);
@@ -474,14 +528,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _storageField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _storageField.delegate = self;
     _storageField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _storageField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"存储说明"
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
     _storageField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _storageField.floatingLabelTextColor = floatingLabelColor;
-    _storageField.delegate = self;
     [_storageField setText:_product.storage];
-    [_scrollView addSubview:_storageField];
+    [contentView addSubview:_storageField];
     [_storageField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_usageField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -492,7 +546,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div13 = [UIView new];
     div13.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div13];
+    [contentView addSubview:div13];
     [div13 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_storageField.mas_bottom);
         make.left.equalTo(_storageField.mas_left);
@@ -502,14 +556,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     
     _cautionField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _cautionField.delegate = self;
     _cautionField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _cautionField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"注意事项"
                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
     _cautionField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _cautionField.floatingLabelTextColor = floatingLabelColor;
-    _cautionField.delegate = self;
     [_cautionField setText:_product.caution];
-    [_scrollView addSubview:_cautionField];
+    [contentView addSubview:_cautionField];
     [_cautionField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_storageField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -520,7 +574,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div14 = [UIView new];
     div14.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div14];
+    [contentView addSubview:div14];
     [div14 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_cautionField.mas_bottom);
         make.left.equalTo(_cautionField.mas_left);
@@ -529,14 +583,14 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     }];
     
     _noteField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+    _noteField.delegate = self;
     _noteField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     _noteField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"备注"
                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
     _noteField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _noteField.floatingLabelTextColor = floatingLabelColor;
-    _noteField.delegate = self;
     [_noteField setText:_product.note];
-    [_scrollView addSubview:_noteField];
+    [contentView addSubview:_noteField];
     [_noteField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_cautionField.mas_bottom).with.offset(10);
         make.left.equalTo(_productNameField.mas_left);
@@ -547,19 +601,16 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
     UIView *div15 = [UIView new];
     div15.backgroundColor = LINECOLOR;
-    [_scrollView addSubview:div15];
+    [contentView addSubview:div15];
     [div15 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_noteField.mas_bottom);
         make.left.equalTo(_noteField.mas_left);
         make.right.equalTo(_noteField.mas_right);
         make.height.equalTo(@(kLINEHEIGHT));
     }];
-    
-    
-    [_scrollView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view);
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
+
+//
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(div15.mas_bottom).with.offset(15);
     }];
         // Do any additional setup after loading the view.
@@ -592,21 +643,49 @@ const static CGFloat kLINEHEIGHT = 1.0f;
 
 #pragma mark -UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    UIProductInfoEditViewController *infoEditViewController  = nil;
-    if (textField == _functionField) {
-        infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.function];
-    } else if (textField == _usageField){
-        infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.usage];
-    } else if (textField == _storageField){
-        infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.storage];
-    } else if (textField == _cautionField){
-        infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.caution];
-    } else if (textField == _noteField) {
-        infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.note];
+    if (textField == _functionField || textField == _usageField || textField == _storageField || textField == _cautionField || textField == _noteField) {
+        UIProductInfoEditViewController *infoEditViewController  = nil;
+        if (textField == _functionField) {
+            infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.function];
+        } else if (textField == _usageField){
+            infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.usage];
+        } else if (textField == _storageField){
+            infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.storage];
+        } else if (textField == _cautionField){
+            infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.caution];
+        } else if (textField == _noteField) {
+            infoEditViewController = [[UIProductInfoEditViewController alloc] initWithContent:_product.note];
+        }
+        [self.navigationController pushViewController:infoEditViewController animated:YES];
+        return NO;
+    } else {
+        CGFloat kbHeight = keyboardSize.height;
+        if (keyboardSize.height == 0) {
+            kbHeight = 402.f;
+        }
+        [UIView animateWithDuration:0.1 animations:^{
+            UIEdgeInsets edgeInsets = [_scrollView contentInset];
+            edgeInsets.bottom = kbHeight;
+            [_scrollView setContentInset:edgeInsets];
+            edgeInsets = [[self scrollView] scrollIndicatorInsets];
+            edgeInsets.bottom = kbHeight;
+            [_scrollView setScrollIndicatorInsets:edgeInsets];
+            [_scrollView scrollRectToVisible:textField.frame animated:YES];
+         }];
+    
+        return YES;
     }
-    [self.navigationController pushViewController:infoEditViewController animated:NO];
+}
 
-    return NO;
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    for (UIView *view in self.scrollView.subviews) {
+        if (view.isFirstResponder) {
+            [view resignFirstResponder];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
