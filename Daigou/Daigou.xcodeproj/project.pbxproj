@@ -15,6 +15,7 @@
 		19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F1B595271C47494B85C4 /* StockViewController.m */; };
 		19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */; };
 		19B0FFC0E58C3C9F9C6B8A69 /* Mine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19B0F283014B25096F1FFF78 /* Mine.storyboard */; };
+		19DD3727EA65F8A45D74F491 /* SettingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3DEBDDCB3ECD3F07F1F4 /* SettingItem.m */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
 		3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF61B5913A200DBF0B9 /* OrderItem.m */; };
 		3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */; };
@@ -126,6 +127,8 @@
 		19B0F72631E39FD08240B2CC /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
 		19B0FA38422F0DFB1AFDD799 /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
 		19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
+		19DD3DEBDDCB3ECD3F07F1F4 /* SettingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingItem.m; sourceTree = "<group>"; };
+		19DD3EACA5BAB917345AD66E /* SettingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingItem.h; sourceTree = "<group>"; };
 		3C036AF51B5913A200DBF0B9 /* OrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItem.h; path = Daigou/Model/Order/Order/OrderItem.h; sourceTree = SOURCE_ROOT; };
 		3C036AF61B5913A200DBF0B9 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItem.m; path = Daigou/Model/Order/Order/OrderItem.m; sourceTree = SOURCE_ROOT; };
 		3C036AF81B59325500DBF0B9 /* OrderItemManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemManagement.h; path = Daigou/Model/Order/Order/OrderItemManagement.h; sourceTree = SOURCE_ROOT; };
@@ -517,6 +520,7 @@
 				3C30215E1B4FDEE8001A741D /* Category */,
 				3C6D85671B4DDFAE0076F4AE /* CustomInfo */,
 				3C6D85661B4DDFAA0076F4AE /* Product */,
+				19DD3B8F12BAAA01ED7A26CB /* Setting */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -545,6 +549,15 @@
 			);
 			name = Product;
 			path = Add;
+			sourceTree = "<group>";
+		};
+		19DD3B8F12BAAA01ED7A26CB /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				19DD3DEBDDCB3ECD3F07F1F4 /* SettingItem.m */,
+				19DD3EACA5BAB917345AD66E /* SettingItem.h */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		3C036AF41B59136400DBF0B9 /* Order */ = {
@@ -1111,6 +1124,7 @@
 				3C0EEC6D1B4896B900FC4782 /* UIPlaceHolderTextView.m in Sources */,
 				3C8F6F781B98804C00A920A3 /* AddressBookTableViewController.m in Sources */,
 				3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */,
+				19DD3727EA65F8A45D74F491 /* SettingItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

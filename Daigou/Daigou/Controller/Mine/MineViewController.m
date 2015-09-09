@@ -8,24 +8,20 @@
 
 #import "MineViewController.h"
 #import <ionicons/IonIcons.h>
-#import <ionicons/ionicons-codes.h>
 #import "MCustInfoViewController.h"
-#import "MProductCatalogViewController.h"
 #import "MDeliveryManagementViewController.h"
-#import "MFinanceViewController.h"
-#import "MSettingViewController.h"
-#import "MSharingViewController.h"
-#import "MAboutViewController.h"
+#import "SettingItem.h"
 
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 #define kICONSIZE 20.0f
+
 @interface MineViewController ()
-@property(nonatomic, strong)NSArray *stringArray;
-@property(nonatomic, strong)NSArray *iconArray;
+@property(nonatomic, strong) NSMutableArray *settings;
 @end
 
 @implementation MineViewController
 NSString *const kTableCellID = @"SETTINGCELLID";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self settingArray];
@@ -36,140 +32,66 @@ NSString *const kTableCellID = @"SETTINGCELLID";
 }
 
 - (void)settingArray {
-  NSArray *firstSection = [NSArray arrayWithObjects:@"客户列表",@"商品目录",@"快递管理",@"现状统计",nil];
-  NSMutableArray *firstSectionIcons = [NSMutableArray array];
-  [firstSectionIcons addObject:[IonIcons imageWithIcon:ion_android_person size:kICONSIZE color:kICONCOLOR]];
-  [firstSectionIcons addObject:[IonIcons imageWithIcon:ion_bag size:kICONSIZE color:kICONCOLOR]];
-  [firstSectionIcons addObject:[IonIcons imageWithIcon:ion_android_plane size:kICONSIZE color:kICONCOLOR]];
-  [firstSectionIcons addObject:[IonIcons imageWithIcon:ion_ios_calculator_outline size:kICONSIZE color:kICONCOLOR]];
-  NSArray *secSection = [NSArray arrayWithObjects:@"设置",@"分享",@"关于", nil];
-  NSMutableArray *secSectionIcons = [NSMutableArray array];
-  [secSectionIcons addObject:[IonIcons imageWithIcon:ion_ios_gear_outline size:kICONSIZE color:kICONCOLOR]];
-  [secSectionIcons addObject:[IonIcons imageWithIcon:ion_android_share_alt size:kICONSIZE color:kICONCOLOR]];
-  [secSectionIcons addObject:[IonIcons imageWithIcon:ion_ios_information_outline size:kICONSIZE color:kICONCOLOR]];
-  self.stringArray = [NSArray arrayWithObjects:firstSection,secSection, nil];
-  self.iconArray = [NSArray arrayWithObjects:firstSectionIcons,secSectionIcons, nil];
+    NSMutableArray *firstSection = [
+            @[[SettingItem itemWithIcon:ion_android_person title:@"客户列表" controller:[[MCustInfoViewController alloc] initWithStyle:UITableViewStylePlain]],
+                    [SettingItem itemWithIcon:ion_android_plane title:@"快递管理" controller:[[MDeliveryManagementViewController alloc] init]],
+                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"卖家管理" controller:[[MDeliveryManagementViewController alloc] init]]]
+            mutableCopy];
+
+    NSMutableArray *secondSection = [
+            @[[SettingItem itemWithIcon:ion_android_person title:@"快递助手" controller:[[MCustInfoViewController alloc] initWithStyle:UITableViewStylePlain]],
+                    [SettingItem itemWithIcon:ion_android_plane title:@"经营统计" controller:[[MDeliveryManagementViewController alloc] init]],
+                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"数据导出" controller:[[MDeliveryManagementViewController alloc] init]]]
+            mutableCopy];
+
+    NSMutableArray *thirdSection = [
+            @[[SettingItem itemWithIcon:ion_ios_gear_outline title:@"设置" controller:[[MCustInfoViewController alloc] init]],
+                    [SettingItem itemWithIcon:ion_android_share_alt title:@"分享" controller:[[MDeliveryManagementViewController alloc] init]],
+                    [SettingItem itemWithIcon:ion_ios_information_outline title:@"关于" controller:[[MDeliveryManagementViewController alloc] init]]]
+            mutableCopy];
+
+    self.settings = [@[firstSection, secondSection, thirdSection] mutableCopy];
 }
 
-
-
+- (SettingItem *) getItem:(NSIndexPath *)indexPath {
+    return ((SettingItem *) self.settings[indexPath.section][indexPath.row]);
+}
 
 
 #pragma mark --TableViewDataSource
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTableCellID];
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTableCellID];
-  }
-  cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-  cell.textLabel.text = self.stringArray[indexPath.section][indexPath.row];
-  cell.imageView.image =self.iconArray[indexPath.section][indexPath.row];
-  return cell;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTableCellID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kTableCellID];
+    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.text = [self getItem:indexPath].title;
+    cell.imageView.image = [IonIcons imageWithIcon:[self getItem:indexPath].icon size:kICONSIZE color:kICONCOLOR];
+    return cell;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  NSInteger count = 0;
-  switch (section) {
-    case 0:
-      count = [(NSArray*)self.stringArray[0] count];
-      break;
-    case 1:
-      count = [(NSArray*)self.stringArray[1] count];
-      break;
-  }
-  return count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.settings[section] count];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-  return [self.stringArray count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.settings count];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-  return [[UIView alloc]initWithFrame:CGRectZero];
-  
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectZero];
+
 }
+
 #pragma mark --TableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  UIViewController *pushViewController = nil;
-  switch (indexPath.section) {
-    case 0:
-      switch (indexPath.row) {
-        case 0:
-          pushViewController = [self getCustomInfo];
-          break;
-        case 1:
-          pushViewController = [self getProductCatalog];
-          break;
-        case 2:
-          pushViewController = [self getDeliveryManagement];
-          break;
-        case 3:
-          pushViewController = [self getFinance];
-          break;
-      }
-      break;
-    case 1:
-      switch (indexPath.row) {
-        case 0:
-          pushViewController = [self getSetting];
-          break;
-        case 1:
-          pushViewController = [self getSharing];
-          break;
-        case 2:
-          pushViewController = [self getAbout];
-          break;
-      }
-      break;
-  }
-  pushViewController.title = self.stringArray[indexPath.section][indexPath.row];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIViewController *pushViewController = nil;
+    pushViewController = [self getItem:indexPath].controller;
+    pushViewController.title = [self getItem:indexPath].title;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-  [self.navigationController pushViewController:pushViewController animated:YES];
+    [self.navigationController pushViewController:pushViewController animated:YES];
 }
 
-- (MCustInfoViewController *)getCustomInfo{
-  MCustInfoViewController *customInfor = [[MCustInfoViewController alloc]initWithStyle:UITableViewStylePlain];
-  return customInfor;
-}
-
-- (MProductCatalogViewController *)getProductCatalog{
-  MProductCatalogViewController *productCatalog = [[MProductCatalogViewController alloc]init];
-  return productCatalog;
-}
-
-- (MDeliveryManagementViewController *)getDeliveryManagement{
-  MDeliveryManagementViewController *deliveryManagement = [[MDeliveryManagementViewController alloc]init];
-  return deliveryManagement;
-}
-
-- (MFinanceViewController *)getFinance{
-  MFinanceViewController *finance = [[MFinanceViewController alloc]init];
-  return finance;
-}
-
-- (MSettingViewController *)getSetting{
-  MSettingViewController *setting = [[MSettingViewController alloc]init];
-  return setting;
-}
-
-- (MSharingViewController *)getSharing{
-  MSharingViewController *sharing = [[MSharingViewController alloc]init];
-  return sharing;
-}
-
-- (MAboutViewController *)getAbout{
-  MAboutViewController *about = [[MAboutViewController alloc]init];
-  return about;
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
 @end
