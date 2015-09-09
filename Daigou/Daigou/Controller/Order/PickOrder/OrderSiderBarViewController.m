@@ -12,25 +12,20 @@
 #import "Brand.h"
 #import "BrandManagement.h"
 #import "ProductManagement.h"
-
+#import "MBrandTableView.h"
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
-@interface OrderSiderBarViewController()<UITableViewDataSource, UITableViewDelegate>
-@property(nonatomic, strong)UITableView *brandTableView;
+@interface OrderSiderBarViewController()<MBrandTableViewDelegate>
+@property(nonatomic, strong)MBrandTableView *brandTableView;
 @property(nonatomic, strong) NSArray *indexList;
 @property(nonatomic, strong) NSArray *brandList;
 @end
 
 @implementation OrderSiderBarViewController
 
-- (NSArray *)getBrands{
-    BrandManagement *brandManagement = [BrandManagement shareInstance];
-    return [brandManagement getBrand];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.brandList = [self getBrands];
     CGRect menuRect = CGRectZero;
     if (!self.hideHeaderView) {
         UIView *headView = [[UIView alloc]init];
@@ -61,106 +56,28 @@
         menuRect = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height-(self.tabHeight + self.navHeight));
     }
     
-    
-    _brandTableView = [[UITableView alloc]initWithFrame:CGRectZero];
-    _brandTableView.dataSource = self;
+    _brandTableView = [[MBrandTableView alloc]init];
     _brandTableView.delegate = self;
-    _brandTableView.rowHeight = 65.0f;
+    _brandTableView.brandTableView.rowHeight = 65.0f;
     [self.contentView addSubview:_brandTableView];
     [_brandTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView);
         make.left.equalTo(self.contentView);
         make.right.equalTo(self.contentView);
-        make.bottom.equalTo(self.contentView);
+        make.bottom.equalTo(self.contentView).with.offset(-65.0f);
     }];
-
-}
-
-
-- (void)setBrandList:(NSArray *)brandList {
-    _brandList = [self arrayForSections:brandList];
-    [_brandTableView reloadData];
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return [_brandList count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return [_brandList[section] count];
-}
-- (NSArray *)arrayForSections:(NSArray *)objects {
-    SEL selector = @selector(name);
-    UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
     
-    NSInteger sectionTitlesCount = [[collation sectionTitles] count];
-    NSMutableArray *mutableSections = [[NSMutableArray alloc]initWithCapacity:sectionTitlesCount];
-    for (NSUInteger idx = 0; idx < sectionTitlesCount;idx++) {
-        [mutableSections addObject:[NSMutableArray array]];
-    }
-    
-    for (id object in objects) {
-        NSInteger sectionNumber = [collation sectionForObject:object collationStringSelector:selector];
-        [[mutableSections objectAtIndex:sectionNumber] addObject:object];
-    }
-    
-    for (NSUInteger idx = 0; idx < sectionTitlesCount; idx++) {
-        NSArray *objectsForSection = [mutableSections objectAtIndex:idx];
-        [mutableSections replaceObjectAtIndex:idx withObject:[[UILocalizedIndexedCollation currentCollation] sortedArrayFromArray:objectsForSection collationStringSelector:selector]];
-    }
-    
-    NSMutableArray *existTitleSections = [NSMutableArray array];
-    for (NSArray *section in mutableSections) {
-        if ([section count] > 0) {
-            [existTitleSections addObject:section];
-        }
-    }
-    
-    NSMutableArray *existTitles = [NSMutableArray array];
-    NSArray *allSections = [collation sectionIndexTitles];
-    
-    for (NSUInteger i =0; i < [allSections count]; i++) {
-        if ([mutableSections[i] count] > 0) {
-            [existTitles addObject:allSections[i]];
-        }
-    }
-    self.indexList = existTitles;
-    return existTitleSections;
+
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MYBRAND"];
-    if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MYBRAND"];
-    }
-    Brand *info = [_brandList objectAtIndex:indexPath.section][indexPath.row];
-    cell.textLabel.text =info.name;
-    return cell;
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return _indexList[section];
-}
+#pragma mark - MBrandtableviewDelegate
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-    return _indexList;
+- (void)brandDidSelected:(Brand *)brand {
+    [_orderDelegate itemDidSelect:brand];
 }
-
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
-    return index;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Brand *brandInfo = [_brandList objectAtIndex:indexPath.section][indexPath.row];
-    [_orderDelegate itemDidSelect:brandInfo];
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
 
 @end

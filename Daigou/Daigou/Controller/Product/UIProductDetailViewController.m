@@ -17,8 +17,12 @@
 #import "ProductCategory.h"
 #import "BrandManagement.h"
 #import "ProductCategoryManagement.h"
+#import "ProductManagement.h"
 #import "UIProductInfoEditViewController.h"
 #import "UIScanViewController.h"
+#import "MCategoryTableView.h"
+#import "MBrandTableView.h"
+#import "UISelectContainerViewController.h"
 
 const static CGFloat kJVFieldFontSize = 14.0f;
 
@@ -30,7 +34,7 @@ const static CGFloat kJVFieldMarginTop = 10.0f;
 #define MONEYSYMFONT [UIFont systemFontOfSize:14.0f]
 const static CGFloat kLINEHEIGHT = 1.0f;
 
-@interface UIProductDetailViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,UIProductInfoEditViewControllerDelegate>{
+@interface UIProductDetailViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,UIProductInfoEditViewControllerDelegate,MCategoryTableViewDelegate, MBrandTableViewDelegate,UIAlertViewDelegate>{
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)JVFloatLabeledTextField *productNameField;
@@ -69,7 +73,7 @@ const static CGFloat kLINEHEIGHT = 1.0f;
 @property(nonatomic, strong)ProductCategory *prodCategory;
 
 @property(nonatomic, strong)UITextField *currentField;
-
+@property(nonatomic, strong) UISelectContainerViewController *containerViewController;
 
 @end
 
@@ -98,9 +102,28 @@ const static CGFloat kLINEHEIGHT = 1.0f;
     
 }
 
+- (void)initNavigationBar {
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(finishProduct)];
+    self.navigationItem.rightBarButtonItem = doneItem;
+    
+    UIImage *backImage = [IonIcons imageWithIcon:ion_ios_arrow_left size:26 color:SYSTEMBLUE];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 33)];
+    [backButton addTarget:self action:@selector(backFromDetail) forControlEvents:UIControlEventTouchUpInside];
+    [backButton setImage:backImage forState:UIControlStateNormal];
+    [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -22, 0, 0)];
+    [backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -12, 0, 0)];
+    [backButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:SYSTEMBLUE forState:UIControlStateNormal];
+    
+     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"商品详情页面";
+    [self initNavigationBar];
     [self registNotification];
     _scrollView = [UIScrollView new];
     _scrollView.delegate = self;
@@ -667,6 +690,20 @@ const static CGFloat kLINEHEIGHT = 1.0f;
         infoEditViewController.delegate = self;
         [self.navigationController pushViewController:infoEditViewController animated:YES];
         return NO;
+    } else if (textField == _brandField || textField == _categoryField) {
+        UIView *contenctView = nil;
+        if (textField == _brandField) {
+            MBrandTableView *brandTableView = [[MBrandTableView alloc]init];
+            brandTableView.delegate = self;
+            contenctView = brandTableView;
+        } else if (textField == _categoryField) {
+            MCategoryTableView *categoryTableView = [[MCategoryTableView alloc]init];
+            categoryTableView.delegate = self;
+            contenctView = categoryTableView;
+        }
+        _containerViewController = [[UISelectContainerViewController alloc]initWithSubView:contenctView];
+        [self.navigationController pushViewController:_containerViewController animated:NO];
+        return NO;
     } else {
         CGFloat kbHeight = keyboardSize.height;
         if (keyboardSize.height == 0) {
@@ -737,6 +774,74 @@ const static CGFloat kLINEHEIGHT = 1.0f;
             _noteField.text = content;
             break;
     }
+}
+
+
+#pragma mark -- Product Saving handlre 
+- (void)saveProduct {
+    if ([_productNameField.text isEqualToString:@""] ) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商品详情" message:@"请填写商品名称"
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"好的", nil];
+        alertView.tag = PRODUCTFINFOTAGBEGIN + 101;
+        [alertView show];
+    }
+    Product *product = _product;
+    product.name = _productNameField.text;
+    product.brandid = _brand.bid;
+    product.categoryid = _prodCategory.cateid;
+    product.model = _modelField.text;
+    product.purchaseprice = [_purchaseField.text floatValue];
+    product.sellprice = [_sellField.text floatValue];
+    product.agentprice = [_agentField.text floatValue];
+    product.barcode = _brandField.text;
+    product.wight = [_wightField.text floatValue];
+    product.quickid = _quickidField.text;
+    product.function = _functionField.text;
+    product.usage = _usageField.text;
+    product.storage = _storageField.text;
+    product.caution= _cautionField.text;
+    product.note = _noteField.text;
+    ProductManagement *productManagement = [ProductManagement shareInstance];
+    [productManagement updateProduct:product];
+}
+
+- (void)finishProduct {
+    [self saveProduct];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)backFromDetail {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商品详情" message:@"完成编辑"
+                                                        delegate:self
+                                               cancelButtonTitle:@"继续编辑"
+                                               otherButtonTitles:@"放弃更改", nil];
+    alertView.tag = PRODUCTFINFOTAGBEGIN + 100;
+    [alertView show];
+}
+#pragma mark -- UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ((alertView.tag - PRODUCTFINFOTAGBEGIN)  == 100) {
+        if (buttonIndex == 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
+#pragma mark -- Category Delegate
+- (void)categoryDidSelected:(ProductCategory *)category {
+    _prodCategory = category;
+    _categoryField.text = category.name;
+    [_containerViewController.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark -- Brand Delegate 
+- (void)brandDidSelected:(Brand *)brand {
+    _brand = brand;
+    _brandField.text = brand.name;
+    [_containerViewController.navigationController popViewControllerAnimated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {
