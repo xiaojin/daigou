@@ -66,7 +66,7 @@
 }
 
 - (void)initNavigationBarMenu {
-     UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:[UIColor blackColor] iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
+     UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:SYSTEMBLUE iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc]initWithImage:menuIcon style:UIBarButtonItemStylePlain target:self action:@selector(selectProductCategory)];
     self.navigationItem.leftBarButtonItem = leftBarButton;
     // 左侧边栏开始
@@ -90,7 +90,7 @@
     }];
     // 左侧边栏结束
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
     self.navigationItem.rightBarButtonItem =rightButton;
 }
 
@@ -176,6 +176,14 @@
     Product *product = [_productsList objectAtIndex:indexPath.row];
     UIProductDetailViewController *productDetailViewController = [[UIProductDetailViewController alloc]init];
     productDetailViewController.product = product;
+    productDetailViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:productDetailViewController animated:NO];
+}
+
+#pragma mark -- ProductHandler 
+- (void)addNewProduct {
+    UIProductDetailViewController *productDetailViewController = [[UIProductDetailViewController alloc]init];
+    productDetailViewController.product = [Product new];
     productDetailViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:productDetailViewController animated:NO];
 }

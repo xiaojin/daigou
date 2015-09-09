@@ -779,14 +779,6 @@ const static CGFloat kLINEHEIGHT = 1.0f;
 
 #pragma mark -- Product Saving handlre 
 - (void)saveProduct {
-    if ([_productNameField.text isEqualToString:@""] ) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商品详情" message:@"请填写商品名称"
-                                                           delegate:self
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:@"好的", nil];
-        alertView.tag = PRODUCTFINFOTAGBEGIN + 101;
-        [alertView show];
-    }
     Product *product = _product;
     product.name = _productNameField.text;
     product.brandid = _brand.bid;
@@ -808,8 +800,18 @@ const static CGFloat kLINEHEIGHT = 1.0f;
 }
 
 - (void)finishProduct {
-    [self saveProduct];
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([_productNameField.text isEqualToString:@""] ||[_brandField.text isEqualToString:@""]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商品详情" message:@"请填写商品名称和商品品牌"
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"好的", nil];
+        alertView.tag = PRODUCTFINFOTAGBEGIN + 101;
+        [alertView show];
+    } else {
+        [self saveProduct];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+ 
 }
 
 - (void)backFromDetail {
