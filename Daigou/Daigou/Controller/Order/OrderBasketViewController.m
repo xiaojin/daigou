@@ -29,7 +29,7 @@
 @end
 @implementation OrderBasketViewController
 
-- (instancetype)initwithOrderItem :(OrderItem *)orderitem  withProducts:(NSArray *)products{
+- (instancetype)initwithOrderItem :(OrderItem *)orderitem  withGroupOrderProducts:(NSArray *)products{
     self.orderItem = orderitem;
     self.products = [NSArray array];
     self.products = products;
@@ -92,16 +92,10 @@
 
 - (void)initOrderBasketItemsFrameWithOrderItems:(NSArray *)orderItems {
     self.orderItemFrames = [NSMutableArray array];
-     for (OProductItem *item in orderItems) {
+     for (NSDictionary *item in orderItems) {
          NSMutableDictionary *prodocstdict = [NSMutableDictionary dictionary];
-         __block NSInteger count = 0;
-         [orderItems enumerateObjectsUsingBlock:^(OProductItem *productitem, NSUInteger idx, BOOL *stop) {
-             if (productitem.productid == item.productid) {
-                 count ++;
-             }
-         }];
-         [prodocstdict setValue:item forKey:@"product"];
-         [prodocstdict setValue:[NSNumber numberWithInteger:count] forKey:@"count"];
+         [prodocstdict setValue:[item objectForKey:@"oproductitem"] forKey:@"product"];
+         [prodocstdict setValue:[item objectForKey:@"count"] forKey:@"count"];
          [self.orderItemFrames addObject:prodocstdict];
      }
 }
@@ -135,6 +129,9 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         NSDictionary * productDict = _orderItemFrames[indexPath.row];
         cell.productDict = productDict;
+        cell.OrderProductItemsAllDeleted = ^(){
+            [self cellDeletedWithIndexPath];
+        };
         cell.EditQuantiyActionBlock = ^(NSInteger number){
         [self beginEditNumber:indexPath];
         };
@@ -161,6 +158,13 @@
         [addButton addTarget:self action:@selector(addProduct) forControlEvents:UIControlEventTouchUpInside];
         return addCell;
     }
+}
+
+- (void)cellDeletedWithIndexPath {
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+    self.products = [itemManagement getOrderItemsGroupbyProductidByOrderId:self.orderItem.oid];
+    [self initOrderBasketItemsFrameWithOrderItems:self.products];
+    [_tableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate

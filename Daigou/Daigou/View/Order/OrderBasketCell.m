@@ -14,6 +14,8 @@
 #import "UILabelStrikeThrough.h"
 #import "UITextField+UITextFieldAccessory.h"
 #import "ProductManagement.h"
+#import "JVFloatLabeledTextField.h"
+#import "OrderItemManagement.h"
 
 @interface OrderBasketCell() <UITextFieldDelegate>{
     BOOL editStatus;
@@ -26,7 +28,10 @@
 @property(nonatomic, strong) UIButton *minusButton;
 @property(nonatomic, strong) UIView *showEditView;
 @property(nonatomic, strong) UIView *showDetailView;
-
+@property(nonatomic, strong) JVFloatLabeledTextField *sellPriceField;
+@property(nonatomic, strong) UILabel *salePriceValue;
+@property(nonatomic, strong) UILabel *prodCountValue;
+@property(nonatomic, strong) OProductItem *productItem;
 @end
 
 @implementation OrderBasketCell
@@ -117,43 +122,56 @@
         }];
         
         UILabel *salePrice = [[UILabel alloc]init];
-        [salePrice setTextColor:ORIANGECOLOR];
+        [salePrice setTextColor:TITLECOLOR];
         salePrice.font = [UIFont systemFontOfSize:13.0f];
         [salePrice setTextAlignment:NSTextAlignmentLeft];
-        [salePrice setText:@"$29"];
+        [salePrice setText:@"销售价格:(¥)"];
         [showDetailView addSubview:salePrice];
         [salePrice mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(showDetailView);
-            make.bottom.equalTo(showDetailView);
-            make.height.equalTo(@25);
-            make.width.equalTo(@45);
+            make.left.equalTo(showDetailView).with.offset(5);
+            make.top.equalTo(showDetailView).with.offset(5);
+            make.height.equalTo(@36);
+            make.width.equalTo(@75);
         }];
         
-        UILabelStrikeThrough *refPrice = [[UILabelStrikeThrough alloc]init];
-        refPrice.isWIthStrikeThrough = YES;
-        [refPrice setTextColor:[UIColor lightGrayColor]];
-        [refPrice setFont:[UIFont systemFontOfSize:11.0f]];
-        [refPrice setTextAlignment:NSTextAlignmentLeft];
-        [refPrice setText:@"$39"];
-        [showDetailView addSubview:refPrice];
-        [refPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+        _salePriceValue = [[UILabel alloc]init];
+        [_salePriceValue setTextColor:TITLECOLOR];
+        _salePriceValue.font = [UIFont systemFontOfSize:13.0f];
+        [_salePriceValue setTextAlignment:NSTextAlignmentLeft];
+        [_salePriceValue setText:@""];
+        [showDetailView addSubview:_salePriceValue];
+        [_salePriceValue mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(salePrice.mas_right);
-            make.bottom.equalTo(showDetailView);
-            make.height.equalTo(@25);
-            make.width.equalTo(@45);
+            make.top.equalTo(salePrice.mas_top);
+            make.height.equalTo(@36);
+            make.right.equalTo(showDetailView.mas_right).with.offset(-10);
         }];
+        
+
         
         UILabel *prodCount = [[UILabel alloc]init];
         [prodCount setTextColor:TITLECOLOR];
         [prodCount setFont:[UIFont systemFontOfSize:13.0f]];
         [prodCount setTextAlignment:NSTextAlignmentLeft];
-        [prodCount setText:@"x12"];
+        [prodCount setText:@"采购数量:"];
         [showDetailView addSubview:prodCount];
         [prodCount mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(showDetailView).with.offset(-10);
-            make.bottom.equalTo(showDetailView);
-            make.height.equalTo(@25);
-            make.width.equalTo(@45);
+            make.left.equalTo(showDetailView).with.offset(5);
+            make.top.equalTo(salePrice.mas_bottom).with.offset(5);
+            make.height.equalTo(@36);
+            make.width.equalTo(@75);
+        }];
+        
+        _prodCountValue = [[UILabel alloc]init];
+        [_prodCountValue setTextColor:TITLECOLOR];
+        _prodCountValue.font = [UIFont systemFontOfSize:13.0f];
+        [_prodCountValue setTextAlignment:NSTextAlignmentLeft];
+        [showDetailView addSubview:_prodCountValue];
+        [_prodCountValue mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(prodCount.mas_right);
+            make.top.equalTo(prodCount.mas_top);
+            make.height.equalTo(@36);
+            make.right.equalTo(showDetailView.mas_right).with.offset(-10);
         }];
         self.showDetailView = showDetailView;
 
@@ -238,6 +256,7 @@
         [deleteButton setBackgroundColor:ORIANGECOLOR];
         [deleteButton setTitle:@"删除" forState:UIControlStateNormal];
         [deleteButton setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];
+        [deleteButton addTarget:self action:@selector(deleteOrderProductItems) forControlEvents:UIControlEventTouchUpInside];
         [showEditView addSubview:deleteButton];
         [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(addButton.mas_right).with.offset(30);
@@ -256,65 +275,24 @@
             make.height.equalTo(@2);
         }];
         
-        UILabel *sellPressTitle = [[UILabel alloc]init];
-        [sellPressTitle setTextColor:TITLECOLOR];
-        [sellPressTitle setFont:[UIFont systemFontOfSize:10.0f]];
-        [sellPressTitle setTextAlignment:NSTextAlignmentLeft];
-        [sellPressTitle setText:@"销售价格: ¥"];
-        [showEditView addSubview:sellPressTitle];
-        [sellPressTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        _sellPriceField = [[JVFloatLabeledTextField alloc] initHasAccessory];
+        _sellPriceField.delegate = self;
+        _sellPriceField.font = [UIFont systemFontOfSize:11.0f];
+        _sellPriceField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"销售价格(¥)"
+                                                                               attributes:@{NSForegroundColorAttributeName: [UIColor darkGrayColor]}];
+        _sellPriceField.floatingLabelFont = [UIFont boldSystemFontOfSize:11.0f];
+        _sellPriceField.floatingLabelTextColor = [UIColor lightGrayColor];
+        _sellPriceField.delegate = self;
+        [showEditView addSubview:_sellPriceField];
+        [_sellPriceField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(showEditView);
-            make.top.equalTo(otherView.mas_bottom);
-            make.height.equalTo(@20);
-            make.width.equalTo(@55);
+            make.top.equalTo(otherView.mas_bottom).with.offset(5);
+            make.height.equalTo(@40);
+            make.width.equalTo(@100);
         }];
-        
-        UITextField *sellPrice = [[UITextField alloc]initHasAccessory];
-        sellPrice.delegate = self;
-        [sellPrice setFont:[UIFont systemFontOfSize:10.0f]];
-        [sellPrice setTextColor:TITLECOLOR];
-        [sellPrice setTextAlignment:NSTextAlignmentCenter];
-        [sellPrice setText:@"246"];
-        [showEditView addSubview:sellPrice];
-        [sellPrice setKeyboardType:UIKeyboardTypeDecimalPad];
-        [sellPrice mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(showEditView);
-            make.top.equalTo(sellPressTitle.mas_bottom);
-            make.bottom.equalTo(showEditView);
-            make.right.equalTo(sellPressTitle.mas_right);
-        }];
-        
-        UILabel *boughtProductPriceTitle = [[UILabel alloc]init];
-        [boughtProductPriceTitle setTextColor:TITLECOLOR];
-        [boughtProductPriceTitle setFont:[UIFont systemFontOfSize:10.0f]];
-        [boughtProductPriceTitle setTextAlignment:NSTextAlignmentLeft];
-        [boughtProductPriceTitle setText:@"采购价格: $"];
-        [showEditView addSubview:boughtProductPriceTitle];
-        [boughtProductPriceTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(otherView.mas_right);
-            make.top.equalTo(otherView.mas_bottom);
-            make.height.equalTo(@20);
-            make.width.equalTo(@55);
-        }];
-        
-        UITextField *boughtPrice = [[UITextField alloc]initHasAccessory];
-        boughtPrice.delegate = self;
-        [boughtPrice setFont:[UIFont systemFontOfSize:10.0f]];
-        [boughtPrice setTextColor:TITLECOLOR];
-        [boughtPrice setTextAlignment:NSTextAlignmentCenter];
-        [boughtPrice setText:@"246"];
-        [showEditView addSubview:boughtPrice];
-        [boughtPrice setKeyboardType:UIKeyboardTypeDecimalPad];
-        [boughtPrice mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(boughtProductPriceTitle.mas_left);
-            make.top.equalTo(boughtProductPriceTitle.mas_bottom);
-            make.bottom.equalTo(showEditView);
-            make.right.equalTo(boughtProductPriceTitle.mas_right);
-        }];
-        
+        _sellPriceField.keepBaseline = YES;
+    
         self.showEditView = showEditView;
-
-     
     }
     return  self;
 }
@@ -331,15 +309,17 @@
 
 }
 
-- (void)updateData
-{
-    OProductItem *productItem =  [_productDict objectForKey:@"product"];
-    Product *product = [self getProductForOrderItem:productItem.productid];
+- (void)updateData{
+    _productItem =  [_productDict objectForKey:@"product"];
+    NSNumber *productCount = [_productDict objectForKey:@"count"];
+    Product *product = [self getProductForOrderItem:_productItem.productid];
     _imagePic.image = [UIImage imageNamed:@"default.jpg"];
     [_lblTitle setText:[product name]];
-    [_countField setText:[NSString stringWithFormat:@"%@", @([productItem amount])]];
+    [_countField setText:[NSString stringWithFormat:@"%@", @([productCount intValue])]];
+    [_sellPriceField setText:[NSString stringWithFormat:@"%@",@([_productItem sellprice])]];
+    [_prodCountValue setText:[NSString stringWithFormat:@"%@",@([productCount intValue])]];
+    [_salePriceValue setText:[NSString stringWithFormat:@"%@",@([_productItem sellprice])]];
     //TODO setProductImage
-    
 }
 - (Product *)getProductForOrderItem:(NSInteger)pid {
     ProductManagement *productManage = [ProductManagement shareInstance];
@@ -383,8 +363,39 @@
         [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
         self.showDetailView.hidden = NO;
         self.showEditView.hidden = YES;
-
+        [_prodCountValue setText:_countField.text];
+        [_salePriceValue setText:_sellPriceField.text];
+        _productItem.sellprice = [_sellPriceField.text floatValue];
+        _productItem.orderdate = [[NSDate date] timeIntervalSince1970];
+        [self updateOrderProductInfo];
     }
+}
+
+- (void)updateOrderProductInfo {
+    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+    [orderItemManagement updateOrderProductItemWithProductItem:_productItem];
+    NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
+    NSInteger changeNumber = ([_countField.text integerValue]- [productItems count]);
+    if (changeNumber > 0) {
+        NSMutableArray *array = [NSMutableArray array];
+        for (int x = 0; x < changeNumber; x++) {
+            [array addObject:_productItem];
+        }
+        [orderItemManagement insertOrderProductItems:array];
+    } else if (changeNumber < 0) {
+        NSMutableArray *array = [NSMutableArray array];
+        for (int x = 0; x < -changeNumber; x++) {
+            [array addObject:productItems[x]];
+        }
+        [orderItemManagement removeOrderProductItems:array];
+    }
+}
+
+- (void)deleteOrderProductItems {
+    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+    NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
+    [orderItemManagement removeOrderProductItems:productItems];
+    _OrderProductItemsAllDeleted();
 }
 
 #pragma mark - UITextFieldDelege

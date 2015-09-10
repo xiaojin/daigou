@@ -19,4 +19,9 @@
 - (NSArray *)getOrderItemsByOrderStatus:(OrderStatus)status;
 - (NSArray *)getprocurementProductItemsByStatus:(ProductOrderStatus)procurementStatus;
 - (NSArray *)getstockProductItems;
+- (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
+- (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;
+- (void)insertOrderProductItems:(NSArray *)products;
+- (void)removeOrderProductItems:(NSArray *)products;
+- (NSArray *)getOrderProductItems:(OProductItem *)product;
 @end
