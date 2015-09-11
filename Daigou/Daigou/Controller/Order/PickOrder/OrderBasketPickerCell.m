@@ -9,11 +9,10 @@
 #import "OrderBasketPickerCell.h"
 #import "CommonDefines.h"
 #import "ProductWithCount.h"
+#import <Masonry/Masonry.h>
 
 @interface OrderBasketPickerCell()
 @property (weak ,nonatomic) UIImageView *prodImage;
-
-@property (weak ,nonatomic) UILabel *imageShow;
 
 @property (weak ,nonatomic) UILabel *prodName;
 
@@ -24,10 +23,6 @@
 @property (weak ,nonatomic) UIButton *minusLeft;
 
 @property (weak ,nonatomic) UIButton *plusRight;
-
-@property (weak ,nonatomic) UILabel *prodMoneyOriginalPrice;
-
-@property (weak ,nonatomic) UIView *prodMoneyOriginalPriceShow;
 
 @property (assign ,nonatomic)NSInteger quantity;
 
@@ -45,10 +40,6 @@
         [self.contentView addSubview:prodImage];
         _prodImage=prodImage;
         
-        UILabel *imageShow =[[UILabel alloc]init];
-        [prodImage addSubview:imageShow];
-        _imageShow=imageShow;
-        
         UILabel *prodName =[[UILabel alloc]init];
         [self.contentView addSubview:prodName];
         _prodName=prodName;
@@ -56,14 +47,6 @@
         UILabel *prodMoney =[[UILabel alloc]init];
         [self.contentView addSubview:prodMoney];
         _prodMoney =prodMoney;
-        
-        UILabel *prodMoneyOriginalPrice =[[UILabel alloc]init];
-        [self.contentView addSubview:prodMoneyOriginalPrice];
-        _prodMoneyOriginalPrice=prodMoneyOriginalPrice;
-        
-        UIView *prodMoneyOriginalPriceShow =[[UIView alloc]init];
-        [self.contentView addSubview:prodMoneyOriginalPriceShow];
-        _prodMoneyOriginalPriceShow=prodMoneyOriginalPriceShow;
         
         UILabel *prodQuantity = [[UILabel alloc]init];
         [self.contentView addSubview:prodQuantity];
@@ -94,64 +77,44 @@
 
 - (void) setProductCount:(ProductWithCount *)productCount {
     _productCount=productCount;
-    _prodImage.frame=(CGRect){5,15,65,65};
-    NSString *prodImageString = _productCount.product.picture? _productCount.product.picture : @"default";
+//    NSString *prodImageString = _productCount.product.picture? _productCount.product.picture : @"default";
+    NSString *prodImageString = @"default";
     _prodImage.image=[UIImage imageNamed:prodImageString];
     _prodImage.layer.masksToBounds=YES;
-    _prodImage.layer.cornerRadius=6;
-    _imageShow.frame=(CGRect){0,65-10,65,10};
+    [_prodImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).with.offset(10);
+        make.left.equalTo(self.mas_left).with.offset(10);
+        make.bottom.equalTo(self.mas_bottom).with.offset(-10);
+        make.width.equalTo(_prodImage.mas_height);
+    }];
     
-    if (YES) {
-        _imageShow.hidden=NO;
-        _imageShow.text=@"7折";
-        _imageShow.textColor=[UIColor whiteColor];
-        _imageShow.font=Font(10);
-        _imageShow.textAlignment=NSTextAlignmentCenter;
-        _imageShow.backgroundColor=RGB(255, 127, 0);
-    }
- 
     NSString *prodNameText =_productCount.product.name;
-    CGRect prodNameRect =[prodNameText boundingRectWithSize:CGSizeMake(kWindowWidth-75-CGRectGetMaxX(_prodImage.frame)-10, 35) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil] context:nil];
-    
     _prodName.text=prodNameText;
     _prodName.font=Font(14);
     _prodName.numberOfLines=2;
-    _prodName.textAlignment=NSTextAlignmentJustified;
-    _prodName.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame)+5,10},prodNameRect.size};
+    _prodName.textAlignment=NSTextAlignmentLeft;
+    [_prodName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_prodImage.mas_top);
+        make.left.equalTo(_prodImage.mas_right).with.offset(10);
+        make.right.equalTo(self.mas_right).with.offset(-10);
+        make.height.equalTo(@35);
+    }];
     
-    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_productCount.product.sellprice];
-    CGSize prodMoneySize =[prodMoneyText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil]];
+    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_productCount.product.purchaseprice];
     _prodMoney.text=prodMoneyText;
     _prodMoney.font=Font(14);
     _prodMoney.textColor=RGB(255, 127, 0);
-    _prodMoney.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame),CGRectGetMaxY(_prodImage.frame)-prodMoneySize.height-prodMoneySize.height*0.5},prodMoneySize};
-    
-    if(_productCount.product.agentprice!=0.0f)
-    {
-        _prodMoneyOriginalPrice.hidden=NO;
-        NSString *prodMoneyOriginalPriceText =[NSString stringWithFormat:@"代理价:%.2f",_productCount.product.agentprice];
-        CGSize prodMoneyOriginalPriceSize =[prodMoneyOriginalPriceText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(11),NSFontAttributeName, nil]];
-        _prodMoneyOriginalPrice.text=prodMoneyOriginalPriceText;
-        _prodMoneyOriginalPrice.font=Font(11);
-        _prodMoneyOriginalPrice.textColor=[UIColor lightGrayColor];
-        _prodMoneyOriginalPrice.frame=(CGRect){{CGRectGetMaxX(_prodImage.frame),CGRectGetMaxY(_prodMoney.frame)+3},prodMoneyOriginalPriceSize};
-    }else
-    {
-        _prodMoneyOriginalPrice.hidden=YES;
-        
-    }
-    //吧台加号
-    _plusRight.frame=(CGRect){kWindowWidth-75-10 -30,90-40,30,30};
-    _plusRight.layer.masksToBounds=YES;
-    _plusRight.layer.cornerRadius=30/2;
-    [_plusRight setTitle:@"+" forState:UIControlStateNormal];
-    [_plusRight setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_plusRight addTarget:self action:@selector(plusRightClick) forControlEvents:UIControlEventTouchUpInside];
-    _plusRight.titleLabel.font=Font(13);
-    _plusRight.layer.borderWidth = 1;
-    _plusRight.layer.borderColor = [[UIColor redColor] CGColor];
+    [_prodMoney mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_prodName.mas_bottom).with.offset(10);
+        make.left.equalTo(_prodName.mas_left);
+        make.height.equalTo(@35);
+        make.right.equalTo(self.mas_centerX);
+    }];
+
+
+  
+
     //吧台减号
-    _minusLeft.frame=(CGRect){kWindowWidth-75 -10 -30 -30 - 30 ,90-40,30,30};
     _minusLeft.layer.masksToBounds=YES;
     _minusLeft.layer.cornerRadius=30/2;
     [_minusLeft setTitle:@"-" forState:UIControlStateNormal];
@@ -160,12 +123,37 @@
     _minusLeft.titleLabel.font=Font(13);
     _minusLeft.layer.borderWidth = 1;
     _minusLeft.layer.borderColor = [[UIColor redColor] CGColor];
-    
-    CGFloat W =(kWindowWidth-75-10 -30)-CGRectGetMaxX(_minusLeft.frame);
-    _prodQuantity.frame=(CGRect){CGRectGetMaxX(_minusLeft.frame),90-40,W,30};
+    [_minusLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_centerX);
+        make.top.equalTo(_prodMoney.mas_top);
+        make.width.equalTo(@30);
+        make.height.equalTo(@30);
+    }];
+    //label
     _prodQuantity.text= [NSString stringWithFormat:@"%ld" , _productCount.productNum];
     _prodQuantity.textAlignment=NSTextAlignmentCenter;
     _prodQuantity.font=Font(16);
+    [_prodQuantity mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_minusLeft.mas_right).with.offset(10);
+        make.top.equalTo(_prodMoney.mas_top);
+        make.width.equalTo(@20);
+        make.height.equalTo(@30);
+    }];
+    //吧台加号
+    _plusRight.layer.masksToBounds=YES;
+    _plusRight.layer.cornerRadius=30/2;
+    [_plusRight setTitle:@"+" forState:UIControlStateNormal];
+    [_plusRight setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_plusRight addTarget:self action:@selector(plusRightClick) forControlEvents:UIControlEventTouchUpInside];
+    _plusRight.titleLabel.font=Font(13);
+    _plusRight.layer.borderWidth = 1;
+    _plusRight.layer.borderColor = [[UIColor redColor] CGColor];
+    [_plusRight mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_prodQuantity.mas_right).with.offset(10);
+        make.top.equalTo(_prodMoney.mas_top);
+        make.width.equalTo(@30);
+        make.height.equalTo(@30);
+    }];
 }
 
 -(void)plusRightClick

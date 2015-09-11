@@ -236,11 +236,6 @@
     [self presentViewController:basketViewController animated:NO completion:^{
         
     }];
-//
-
-//    [self.navigationController presentViewController:basketViewController animated:YES completion:^{
-//        
-//    }];
 }
 
 - (NSArray *)fetchAllProduct:(ProductCategory *)category {

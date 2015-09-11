@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _headView = [[UIView alloc]init];
-    _headView.backgroundColor = RGB(255, 255, 255);
+    _headView.backgroundColor = RGB(48, 49, 53);
     [self.view addSubview:_headView];
     [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
@@ -44,6 +44,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 90;
+    _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_headView.mas_bottom);
@@ -55,7 +56,7 @@
     UIButton *dismissButton = [[UIButton alloc]init];
     [dismissButton addTarget:self action:@selector(dismissBasketView) forControlEvents:UIControlEventTouchUpInside];
     [dismissButton setTitle:@"完成" forState:UIControlStateNormal];
-    [dismissButton setTitleColor:RGB(0, 0, 0) forState:UIControlStateNormal];
+    [dismissButton setTitleColor:RGB(255,255,255) forState:UIControlStateNormal];
     [_headView addSubview:dismissButton];
     [dismissButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_headView.mas_left).with.offset(7);
@@ -88,9 +89,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
     return _products.count;
-    
 }
 
 
@@ -100,7 +99,7 @@
     cell.TapActionBlock=^(NSInteger cellIndex, ProductWithCount * product){
         [self refreshProductDataSource:cellIndex WithProduct:product];
     };
-    cell.backgroundColor=RGB(246, 246, 246);
+    cell.backgroundColor=[UIColor whiteColor];
     cell.productCount=_products[indexPath.row];
     return cell;
     
