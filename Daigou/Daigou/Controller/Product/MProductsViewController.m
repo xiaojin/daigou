@@ -20,7 +20,7 @@
 #import "UISearchViewController.h"
 #import "UIProductDetailViewController.h"
 
-@interface MProductsViewController()<UICollectionViewDataSource,UICollectionViewDelegate,UISearchBarDelegate,LLBlurSidebarDelegate,OrderSiderDelegate>
+@interface MProductsViewController()<UICollectionViewDataSource,UICollectionViewDelegate,UISearchBarDelegate,LLBlurSidebarDelegate,OrderSiderBarDelegate>
 @property (nonatomic, strong) UICollectionView *productsCollectionView;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) OrderSiderBarViewController *sidebarVC;
@@ -115,9 +115,11 @@
 }
 
 - (void)itemDidSelect:(Brand *)brand {
-    _productsList = [self getProductsByBrand:brand];
+    if (brand != nil) {
+        _productsList = [self getProductsByBrand:brand];
+        [_productsCollectionView reloadData];
+    }
     [self.sidebarVC showHideSidebar];
-    [_productsCollectionView reloadData];
 }
 
 - (void)initSearchBar {

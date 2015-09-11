@@ -27,9 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     CGRect menuRect = CGRectZero;
+    CGFloat bottomOffset = 0.0f;
     if (!self.hideHeaderView) {
         UIView *headView = [[UIView alloc]init];
-        [headView setBackgroundColor:RGB(243, 244, 246)];
+        [headView setBackgroundColor:RGB(46, 47, 51)];
         [self.contentView addSubview:headView];
         [headView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.contentView);
@@ -40,9 +41,16 @@
         UILabel *headViewTitle = [[UILabel alloc]init];
         [headViewTitle setText:@"全部分类"];
         [headViewTitle setFont:[UIFont systemFontOfSize:14.0f]];
-        [headViewTitle setTextColor:RGB(125, 125, 125)];
+        [headViewTitle setTextColor:[UIColor whiteColor]];
         [headViewTitle setTextAlignment:NSTextAlignmentCenter];
         [headView addSubview:headViewTitle];
+        
+        UIButton *dismissButton = [[UIButton alloc]init];
+        [dismissButton setTitle:@"取消" forState:UIControlStateNormal];
+        [dismissButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+        [dismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [dismissButton addTarget:self action:@selector(dismissCategoryView) forControlEvents:UIControlEventTouchUpInside];
+        [headView addSubview:dismissButton];
         
         [headViewTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(headView.mas_top).with.offset(10);
@@ -50,10 +58,19 @@
             make.bottom.equalTo(headView.mas_bottom);
             make.width.equalTo(@80);
         }];
+        [dismissButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(headViewTitle.mas_top);
+            make.right.equalTo(headView.mas_right);
+            make.width.equalTo(@80);
+            make.bottom.equalTo(headView.mas_bottom);
+        }];
+        
         menuRect = CGRectMake(0, 60, self.contentView.bounds.size.width, self.contentView.bounds.size.height-60);
+        
     } else {
         NSLog(@"%f",self.tabHeight + self.navHeight);
         menuRect = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height-(self.tabHeight + self.navHeight));
+        bottomOffset = -65.0f;
     }
     
     _brandTableView = [[MBrandTableView alloc]init];
@@ -61,10 +78,10 @@
     _brandTableView.brandTableView.rowHeight = 65.0f;
     [self.contentView addSubview:_brandTableView];
     [_brandTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView);
+        make.top.equalTo(self.contentView).with.offset(CGRectGetMinY(menuRect));
         make.left.equalTo(self.contentView);
         make.right.equalTo(self.contentView);
-        make.bottom.equalTo(self.contentView).with.offset(-65.0f);
+        make.bottom.equalTo(self.contentView).with.offset(bottomOffset);
     }];
     
 
@@ -78,6 +95,10 @@
 
 - (void)brandDidSelected:(Brand *)brand {
     [_orderDelegate itemDidSelect:brand];
+}
+
+- (void)dismissCategoryView {
+    [self showHideSidebar];
 }
 
 @end

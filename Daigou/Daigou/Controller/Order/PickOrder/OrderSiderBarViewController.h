@@ -10,7 +10,7 @@
 #import "LLBlurSidebar.h"
 #import "Brand.h"
 
-@protocol OrderSiderDelegate<NSObject>
+@protocol OrderSiderBarDelegate<NSObject>
 @optional
 - (void)itemDidSelect:(Brand *)brand;
 @end
@@ -19,5 +19,5 @@
 @property(nonatomic, assign) BOOL hideHeaderView;
 @property(nonatomic, assign) CGFloat tabHeight;
 @property(nonatomic, assign) CGFloat navHeight;
-@property(nonatomic, assign) id<OrderSiderDelegate> orderDelegate;
+@property(nonatomic, assign) id<OrderSiderBarDelegate> orderDelegate;
 @end

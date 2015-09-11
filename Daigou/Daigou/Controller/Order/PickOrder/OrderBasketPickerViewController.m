@@ -80,7 +80,7 @@
 
 - (void)dismissBasketView {
     [self storeCartProductIntoCache];
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:NO completion:^{
         
     }];
 }

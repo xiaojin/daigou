@@ -21,7 +21,7 @@
 #import "ProductWithCount.h"
 #import "OrderSiderBarViewController.h"
 
-@interface OrderPickProductsMainViewController () <RightTableViewDelegate>
+@interface OrderPickProductsMainViewController () <RightTableViewDelegate,OrderSiderBarDelegate>
 @property (nonatomic, strong)NSMutableArray *docksArray;
 @property (nonatomic, strong)OrderProductsRightTableView *rightProductsTableView;
 @property (nonatomic, weak) UILabel *totalSingular;
@@ -53,8 +53,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //
-    
     UIView *topBarView = [[UIView alloc]init];
     [topBarView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:topBarView];
@@ -65,7 +63,7 @@
         make.height.equalTo(@64);
     }];
     
-    UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:[UIColor blackColor] iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
+    UIImage *menuIcon= [IonIcons imageWithIcon:ion_navicon_round iconColor:SYSTEMBLUE iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
     UIButton *menuButton = [[UIButton alloc] init];
     [menuButton setImage:menuIcon forState:UIControlStateNormal];
     [topBarView addSubview:menuButton];
@@ -79,8 +77,8 @@
     
     UIButton *doneButton = [[UIButton alloc]init];
     [doneButton setTitle:@"完成" forState:UIControlStateNormal];
-    [doneButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [doneButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+    [doneButton setTitleColor:SYSTEMBLUE forState:UIControlStateNormal];
+    [doneButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
     [topBarView addSubview:doneButton];
     [doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(menuButton.mas_top);
@@ -149,11 +147,12 @@
     [self.view addGestureRecognizer:panGesture];
     
     self.sidebarVC = [[OrderSiderBarViewController alloc] init];
+    self.sidebarVC.orderDelegate = self;
     [self.sidebarVC setBgRGB:0x000000];
+    self.sidebarVC.hideHeaderView = NO;
     [self.view addSubview:self.sidebarVC.view];
     self.sidebarVC.view.frame  = self.view.bounds;
     // 左侧边栏结束
-
 }
 
 
@@ -165,15 +164,10 @@
 {
     [self.sidebarVC panDetected:recoginzer];
 }
-
-- (void)bottomLabelClick {
-    UIViewController *vc = [[UIViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
+#pragma mark - OrderProductsRightTableView
 - (void)quantity:(NSInteger)quantity
            money:(NSInteger)money
-             product:(Product *)product{
+         product:(Product *)product{
     NSString *prodId = [NSString stringWithFormat:@"%ld",(long)product.pid];
     ProductWithCount *productWithCount = nil;
     if ([_cartDict valueForKey:prodId]) {
@@ -187,6 +181,22 @@
     [_cartDict setObject:productWithCount forKey:prodId];
     [self refreshCartCount];
 }
+
+#pragma mark - OrderSideBarDelegate
+- (void)itemDidSelect:(Brand *)brand {
+    ProductManagement *productManagement = [ProductManagement shareInstance];
+    NSArray *products =[productManagement getProductByBrand:brand];
+    _rightProductsTableView.rightArray = products;
+    [_rightProductsTableView reloadData];
+    [self.sidebarVC showHideSidebar];
+}
+
+- (void)bottomLabelClick {
+    UIViewController *vc = [[UIViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 
 - (void)refreshCartCount {
     //得到词典中所有KEY值
@@ -223,9 +233,14 @@
     }];
     [self storeCartProductInCache];
     OrderBasketPickerViewController *basketViewController = [[OrderBasketPickerViewController alloc]initWithProducts:products];
-    [self.navigationController presentViewController:basketViewController animated:YES completion:^{
+    [self presentViewController:basketViewController animated:NO completion:^{
         
     }];
+//
+
+//    [self.navigationController presentViewController:basketViewController animated:YES completion:^{
+//        
+//    }];
 }
 
 - (NSArray *)fetchAllProduct:(ProductCategory *)category {

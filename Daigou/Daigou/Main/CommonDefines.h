@@ -15,6 +15,7 @@ dispatch_once(&oncetoken, BLOCK); \
 
 #define DATABASE_PATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"daigou.db"];
 #define RGB(r,g,b) [UIColor colorWithRed:(CGFloat)r/255.0 green:(CGFloat)g/255.0 blue:(CGFloat)b/255.0f alpha:1.0]
+#define RGBA(r,g,b,a) [UIColor colorWithRed:(CGFloat)r/255.0 green:(CGFloat)g/255.0 blue:(CGFloat)b/255.0f alpha:a]
 #define kWindowWidth                        ([[UIScreen mainScreen] bounds].size.width)
 #define kWindowHeight                       ([[UIScreen mainScreen] bounds].size.height)
 #define Font(F) [UIFont systemFontOfSize:(F)]

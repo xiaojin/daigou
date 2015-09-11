@@ -89,7 +89,8 @@
     
     _product=rightData;
     _prodImage.frame=(CGRect){10,10,75,75};
-    NSString *prodImageString = ([_product.picture isEqualToString:@""] || _product.picture == nil)? @"default" : _product.picture;
+//    NSString *prodImageString = ([_product.picture isEqualToString:@""] || _product.picture == nil)? @"default" : _product.picture;
+    NSString *prodImageString = @"default";
     _prodImage.image=[UIImage imageNamed:prodImageString];
     _prodImage.layer.masksToBounds=YES;
     _prodImage.layer.cornerRadius=2;
@@ -120,7 +121,7 @@
     _prodName.textAlignment=NSTextAlignmentJustified;
     _prodName.frame =(CGRect){{CGRectGetMaxX(_prodImage.frame)+5,10},prodNameRect.size};
     
-    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_product.sellprice];
+    NSString *prodMoneyText =[NSString stringWithFormat:@"$%.2f",_product.purchaseprice];
     CGSize prodMoneySize =[prodMoneyText sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(14),NSFontAttributeName, nil]];
     _prodMoney.text=prodMoneyText;
     _prodMoney.font=Font(14);
@@ -152,6 +153,11 @@
 
 - (void)addToCartAction
 {
+    [UIView animateWithDuration:0.3 animations:^{
+        [_addToCart setTransform:CGAffineTransformMakeScale(0.5, 0.5)];
+        [_addToCart setTransform:CGAffineTransformMakeScale(1, 1)];
+    }];
+
     _TapActionBlock(1,_product.saleprice ,_product);
 }
 
