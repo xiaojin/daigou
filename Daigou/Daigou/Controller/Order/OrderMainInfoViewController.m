@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
-#import "OAddNewOrderViewController.h"
+#import "OrderMainInfoViewController.h"
 #import "OrderItemView.h"
 #import "MCustInfoViewController.h"
 #import "OrderBasketViewController.h"
@@ -23,20 +23,18 @@
 #define ORDERTAGBASE 6000
 #define kStatusPickerCellHeight 164
 
-@interface OAddNewOrderViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)UITableView *editTableView;
 @property(nonatomic, strong)NSArray *titleArray;
 @property(nonatomic, strong)NSArray *detailArray;
 @property(nonatomic, strong)NSArray *products;
-@property(nonatomic, strong)UIPickerViewCell *pickViewCell;
-@property(nonatomic, strong)NSArray *statusStringArray;
 @property(nonatomic, strong)NSDictionary *productGroup;
 @end
 
 
-@implementation OAddNewOrderViewController
+@implementation OrderMainInfoViewController
 NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 - (instancetype)initWithOrderItem:(OrderItem *)orderItem withClientDetail:(CustomInfo *)client
 {
@@ -49,7 +47,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.statusStringArray = @[@"采购中",@"待发货",@"运输中",@"已收获",@"已完成"];
     
     if (self.customInfo == nil) {
         self.customInfo = [[CustomInfo alloc]init];
@@ -104,20 +101,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     }
 }
 
-//- (NSMutableDictionary *)groupByProductName:(NSArray *)filteredChecklists {
-//    NSMutableDictionary *checklistGroups = [[NSMutableDictionary alloc] init];
-//    for(Checklist *checklist in filteredChecklists){
-//        if([checklistGroups valueForKey:checklist.code] == nil){
-//            NSMutableArray *group = [NSMutableArray new];
-//            [group addObject:checklist];
-//            
-//            [checklistGroups setValue:group forKey:checklist.code];
-//        } else {
-//            [[checklistGroups valueForKey:checklist.code] addObject:checklist];
-//        }
-//    }
-//    return checklistGroups;
-//}
 
 - (NSString *)setProdcutDesc {
     if ([self.products count] == 0) {
@@ -224,23 +207,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)handleProductCellTap {
     [(OrderDetailViewController *)self.parentViewController scrollToStaus:1];
-}
-
-
-#pragma mark - UIPickerViewDelegate
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return self.statusStringArray.count;
-}
-#pragma mark - UIPickerViewDataSource
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return self.statusStringArray[row];
 }
 
 #pragma mark - OrderPriceDelegate

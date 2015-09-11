@@ -11,7 +11,7 @@
 #import "MShowCustomDetailViewController.h"
 #import "MEditCustomInfoViewController.h"
 #import "CustomInfoManagement.h"
-#import "OAddNewOrderViewController.h"
+#import "OrderMainInfoViewController.h"
 #import "OrderDetailViewController.h"
 #import  <AddressBookUI/AddressBookUI.h>
 #import "CommonDefines.h"
@@ -311,8 +311,8 @@
         [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[OrderDetailViewController class]]) {
                 UIViewController *viewcontroler = [(OrderDetailViewController *)obj childViewControllers][0];
-                if ([viewcontroler isKindOfClass:[OAddNewOrderViewController class]]) {
-                        OAddNewOrderViewController *editNewOrderViewController = (OAddNewOrderViewController *)viewcontroler;
+                if ([viewcontroler isKindOfClass:[OrderMainInfoViewController class]]) {
+                        OrderMainInfoViewController *editNewOrderViewController = (OrderMainInfoViewController *)viewcontroler;
                         editNewOrderViewController.customInfo =[_contacts objectAtIndex:indexPath.section][indexPath.row];
                         [self.navigationController popViewControllerAnimated:YES];
                 }

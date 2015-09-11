@@ -9,7 +9,7 @@
 #import "OrderDetailViewController.h"
 #import "CommonDefines.h"
 #import <Masonry/Masonry.h>
-#import "OAddNewOrderViewController.h"
+#import "OrderMainInfoViewController.h"
 #import "OrderBasketViewController.h"
 #import "OrderDeliveryStatusViewController.h"
 #import "OrderItemManagement.h"
@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSArray *subTabString;
 @property (nonatomic, strong) NSArray *statusLbls;
 @property (nonatomic, strong) NSArray *products;
-@property (nonatomic, strong) OAddNewOrderViewController *addNewOrderViewController;
+@property (nonatomic, strong) OrderMainInfoViewController *addNewOrderViewController;
 @property (nonatomic, strong) OrderBasketViewController *orderBasketViewController;
 @property (nonatomic, strong) OrderDeliveryStatusViewController *deliveryStatusViewController;
 @property (nonatomic, strong) UIView *bottomView;
@@ -253,10 +253,10 @@
 
 - (void) setProductDetailController {
     if (self.orderItem.parentoid == 0) {
-        _addNewOrderViewController = [[OAddNewOrderViewController alloc]
+        _addNewOrderViewController = [[OrderMainInfoViewController alloc]
                                       init];
     } else {
-        _addNewOrderViewController = [[OAddNewOrderViewController alloc]
+        _addNewOrderViewController = [[OrderMainInfoViewController alloc]
                                       initWithOrderItem:self.orderItem withClientDetail:self.customInfo];
     }
     
