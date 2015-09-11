@@ -13,6 +13,7 @@
 #import "SettingItem.h"
 #import "MSettingViewController.h"
 #import "MAboutViewController.h"
+#import "IASKAppSettingsViewController.h"
 
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 #define kICONSIZE 20.0f
@@ -89,6 +90,12 @@ NSString *const kTableCellID = @"SETTINGCELLID";
 #pragma mark --TableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([indexPath row] == 0 && [indexPath section] == 2) {
+        IASKAppSettingsViewController *asvc = [[IASKAppSettingsViewController alloc]init];
+        asvc.showDoneButton = NO;
+        [self.navigationController pushViewController:asvc animated:YES];
+        return;
+    }
     UIViewController *pushViewController = nil;
     pushViewController = (UIViewController *) [[[self getItem:indexPath].controllerClass alloc] init];
     pushViewController.title = [self getItem:indexPath].title;

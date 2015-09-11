@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string></string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>优先使用库存商品</string>
+			<key>Key</key>
+			<string>stockfirst</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>订单运费结算方式</string>
+			<key>Key</key>
+			<string>ship_fee_strategy</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Titles</key>
+			<array>
+				<string>默认免运费</string>
+				<string>默认不免运费</string>
+				<string>代理订单不免运费，普通订单免运费</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>提醒每日备份数据</string>
+			<key>Key</key>
+			<string>backupreminder</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>KeyboardType</key>
+			<string>NumbersAndPunctuation</string>
+			<key>DefaultValue</key>
+			<string>5.1</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>执行汇率</string>
+			<key>Key</key>
+			<string>exchangerate</string>
+		</dict>
+	</array>
+</dict>
+</plist>
