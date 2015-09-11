@@ -245,7 +245,7 @@
     if (self.orderItem.oid == 0) {
         self.products = [NSArray array];
     } else {
-        self.products = [itemManagement getOrderProductsByOrderId:self.orderItem.oid];
+        self.products = [itemManagement getOrderItemsGroupbyProductidByOrderId:self.orderItem.oid];
     }
 }
 
@@ -276,7 +276,7 @@
 
 
 - (void) setProdcutCollectionController {
-    _orderBasketViewController = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withProducts:self.products];
+    _orderBasketViewController = [[OrderBasketViewController alloc]initwithOrderItem:self.orderItem withGroupOrderProducts:self.products];
     _orderBasketViewController.view.tag = ORDERDETAILTAG +1;
     [self addChildViewController:_orderBasketViewController];
     [self.orderDetailMainScrollView addSubview:_orderBasketViewController.view];

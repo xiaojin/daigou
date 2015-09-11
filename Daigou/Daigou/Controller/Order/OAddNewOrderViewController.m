@@ -32,6 +32,7 @@
 @property(nonatomic, strong)NSArray *products;
 @property(nonatomic, strong)UIPickerViewCell *pickViewCell;
 @property(nonatomic, strong)NSArray *statusStringArray;
+@property(nonatomic, strong)NSDictionary *productGroup;
 @end
 
 
@@ -103,11 +104,26 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     }
 }
 
+//- (NSMutableDictionary *)groupByProductName:(NSArray *)filteredChecklists {
+//    NSMutableDictionary *checklistGroups = [[NSMutableDictionary alloc] init];
+//    for(Checklist *checklist in filteredChecklists){
+//        if([checklistGroups valueForKey:checklist.code] == nil){
+//            NSMutableArray *group = [NSMutableArray new];
+//            [group addObject:checklist];
+//            
+//            [checklistGroups setValue:group forKey:checklist.code];
+//        } else {
+//            [[checklistGroups valueForKey:checklist.code] addObject:checklist];
+//        }
+//    }
+//    return checklistGroups;
+//}
+
 - (NSString *)setProdcutDesc {
     if ([self.products count] == 0) {
         return nil;
     } else {
-        NSString *epxression = [NSString stringWithFormat:@"一共有%d个商品",[self.products count]];
+        NSString *epxression = [NSString stringWithFormat:@"一共有%lu个商品",(unsigned long)[self.products count]];
         return epxression;
     }
 }
@@ -242,8 +258,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         edgeInsets.bottom = kbHeight;
         [[self editTableView] setScrollIndicatorInsets:edgeInsets];
         [self.editTableView scrollRectToVisible:frame animated:YES];
-//        [self.editTableView scrollToRowAtIndexPath:cellIndex
-//                              atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }];
 }
 

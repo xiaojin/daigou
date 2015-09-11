@@ -178,20 +178,7 @@
     FMResultSet *rs = [_db executeQuery:@"select * from item where orderid = (?) ",@(orderid)];
     NSMutableArray *orderProductsArray = [NSMutableArray array];
     while (rs.next) {
-        OProductItem *orderProd = [[OProductItem alloc]init];
-        orderProd.iid = (NSInteger)[rs intForColumn:@"iid"];
-        orderProd.productid = (NSInteger)[rs intForColumn:@"productid"];
-        orderProd.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
-        orderProd.price = (float) [rs doubleForColumn:@"price"];
-        orderProd.sellprice = (float) [rs doubleForColumn:@"sellprice"];
-        orderProd.amount = (float)[rs doubleForColumn:@"amount"];
-        orderProd.orderid = [rs intForColumn:@"orderid"];
-        orderProd.orderdate = (float)[rs intForColumn:@"orderdate"];
-        orderProd.statu = [rs intForColumn:@"statu"];
-        orderProd.note = [rs stringForColumn:@"note"];
-        orderProd.proxy = [rs intForColumn:@"proxy"];
-        orderProd.syncDate = [rs doubleForColumn:@"syncDate"];
-        [orderProductsArray addObject:orderProd];
+        [orderProductsArray addObject:[self setValueForOrderItem:rs]];
     }
     [_db close];
     return orderProductsArray;
@@ -229,20 +216,7 @@
 
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
-        OProductItem *productItem = [[OProductItem alloc]init];
-        productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
-        productItem.productid = (NSInteger)[rs intForColumn:@"productid"];
-        productItem.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
-        productItem.price = (float) [rs doubleForColumn:@"price"];
-        productItem.sellprice = (float) [rs doubleForColumn:@"sellprice"];
-        productItem.amount = (float)[rs doubleForColumn:@"amount"];
-        productItem.orderid = [rs intForColumn:@"orderid"];
-        productItem.orderdate = (float)[rs intForColumn:@"orderdate"];
-        productItem.statu = [rs intForColumn:@"statu"];
-        productItem.note = [rs stringForColumn:@"note"];
-        productItem.proxy = [rs intForColumn:@"proxy"];
-        productItem.syncDate = [rs doubleForColumn:@"syncDate"];
-        [orderItemsArray addObject:productItem];
+        [orderItemsArray addObject:[self setValueForOrderItem:rs]];
     }
     [_db close];
     return orderItemsArray;
@@ -258,23 +232,94 @@
     
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
-        OProductItem *productItem = [[OProductItem alloc]init];
-        productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
-        productItem.productid = (NSInteger)[rs intForColumn:@"productid"];
-        productItem.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
-        productItem.price = (float) [rs doubleForColumn:@"price"];
-        productItem.sellprice = (float) [rs doubleForColumn:@"sellprice"];
-        productItem.amount = (float)[rs doubleForColumn:@"amount"];
-        productItem.orderid = [rs intForColumn:@"orderid"];
-        productItem.orderdate = (float)[rs intForColumn:@"orderdate"];
-        productItem.statu = [rs intForColumn:@"statu"];
-        productItem.note = [rs stringForColumn:@"note"];
-        productItem.proxy = [rs intForColumn:@"proxy"];
-        productItem.syncDate = [rs doubleForColumn:@"syncDate"];
-        [orderItemsArray addObject:productItem];
+        [orderItemsArray addObject:[self setValueForOrderItem:rs]];
     }
     [_db close];
     return orderItemsArray;
 }
+
+- (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select *,count(*) as count from item where orderid = (?) group by productid",@(orderid)];
+    NSMutableArray *groupOrderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        OProductItem *productItem = [self setValueForOrderItem:rs];
+        NSInteger productCount = (NSInteger) [rs intForColumn:@"count"];
+        NSDictionary *orderGroupDict = @{@"oproductitem":productItem,
+                                         @"count":@(productCount)};
+        [groupOrderItemsArray addObject:orderGroupDict];
+    }
+    [_db close];
+    return groupOrderItemsArray;
+}
+
+- (OProductItem *)setValueForOrderItem:(FMResultSet *)rs {
+    OProductItem *productItem = [[OProductItem alloc]init];
+    productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
+    productItem.productid = (NSInteger)[rs intForColumn:@"productid"];
+    productItem.refprice = (OrderStatus) [rs doubleForColumn:@"refprice"];
+    productItem.price = (float) [rs doubleForColumn:@"price"];
+    productItem.sellprice = (float) [rs doubleForColumn:@"sellprice"];
+    productItem.amount = (float)[rs doubleForColumn:@"amount"];
+    productItem.orderid = [rs intForColumn:@"orderid"];
+    productItem.orderdate = (float)[rs intForColumn:@"orderdate"];
+    productItem.statu = [rs intForColumn:@"statu"];
+    productItem.note = [rs stringForColumn:@"note"];
+    productItem.proxy = [rs intForColumn:@"proxy"];
+    productItem.syncDate = [rs doubleForColumn:@"syncDate"];
+    return productItem;
+}
+
+- (NSArray *)getOrderProductItems:(OProductItem *)product {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from item where orderid = (?) and productid = (?)",@(product.orderid),@(product.productid)];
     
+    NSMutableArray *orderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        [orderItemsArray addObject:[self setValueForOrderItem:rs]];
+    }
+    [_db close];
+    return orderItemsArray;
+}
+
+- (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    BOOL result;
+    result = [_db executeUpdate:@"update item set sellprice = (?),orderdate=(?) where orderid = (?) and productid = (?)",@(product.sellprice),@(product.orderdate),@(product.orderid),@(product.productid)];
+    [_db close];
+    return result;
+}
+
+- (void)insertOrderProductItems:(NSArray *)products {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return ;
+    }
+    for (int i=0; i<[products count]; i++) {
+        OProductItem *orderProductItem = [products objectAtIndex:i];
+        [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderProductItem orderProductToArray]];
+    }
+    [_db commit];
+    [_db close];
+}
+
+- (void)removeOrderProductItems:(NSArray *)products {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return ;
+    }
+    for (int i=0; i<[products count]; i++) {
+        OProductItem *orderProductItem = [products objectAtIndex:i];
+        [_db executeUpdate:@"delete from item where iid = (?)",@(orderProductItem.iid)];
+    }
+}
 @end
