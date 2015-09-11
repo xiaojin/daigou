@@ -11,6 +11,8 @@
 #import "MCustInfoViewController.h"
 #import "MDeliveryManagementViewController.h"
 #import "SettingItem.h"
+#import "MSettingViewController.h"
+#import "MAboutViewController.h"
 
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 #define kICONSIZE 20.0f
@@ -33,21 +35,21 @@ NSString *const kTableCellID = @"SETTINGCELLID";
 
 - (void)settingArray {
     NSMutableArray *firstSection = [
-            @[[SettingItem itemWithIcon:ion_android_person title:@"客户列表" controller:[[MCustInfoViewController alloc] initWithStyle:UITableViewStylePlain]],
-                    [SettingItem itemWithIcon:ion_android_plane title:@"快递管理" controller:[[MDeliveryManagementViewController alloc] init]],
-                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"卖家管理" controller:[[MDeliveryManagementViewController alloc] init]]]
+            @[[SettingItem itemWithIcon:ion_android_person title:@"客户列表" controller: [MCustInfoViewController class]],
+                    [SettingItem itemWithIcon:ion_android_plane title:@"快递管理" controller:[MDeliveryManagementViewController class]],
+                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"卖家管理" controller:[MDeliveryManagementViewController class]]]
             mutableCopy];
 
     NSMutableArray *secondSection = [
-            @[[SettingItem itemWithIcon:ion_android_person title:@"快递助手" controller:[[MCustInfoViewController alloc] initWithStyle:UITableViewStylePlain]],
-                    [SettingItem itemWithIcon:ion_android_plane title:@"经营统计" controller:[[MDeliveryManagementViewController alloc] init]],
-                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"数据导出" controller:[[MDeliveryManagementViewController alloc] init]]]
+            @[[SettingItem itemWithIcon:ion_android_person title:@"快递助手" controller:[MCustInfoViewController class]],
+                    [SettingItem itemWithIcon:ion_android_plane title:@"经营统计" controller:[MDeliveryManagementViewController class]],
+                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"数据导出" controller:[MDeliveryManagementViewController class]]]
             mutableCopy];
 
     NSMutableArray *thirdSection = [
-            @[[SettingItem itemWithIcon:ion_ios_gear_outline title:@"设置" controller:[[MCustInfoViewController alloc] init]],
-                    [SettingItem itemWithIcon:ion_android_share_alt title:@"分享" controller:[[MDeliveryManagementViewController alloc] init]],
-                    [SettingItem itemWithIcon:ion_ios_information_outline title:@"关于" controller:[[MDeliveryManagementViewController alloc] init]]]
+            @[[SettingItem itemWithIcon:ion_ios_gear_outline title:@"设置" controller:[MSettingViewController class]],
+                    [SettingItem itemWithIcon:ion_android_share_alt title:@"分享" controller:[MDeliveryManagementViewController class]],
+                    [SettingItem itemWithIcon:ion_ios_information_outline title:@"关于" controller:[MAboutViewController class]]]
             mutableCopy];
 
     self.settings = [@[firstSection, secondSection, thirdSection] mutableCopy];
@@ -88,7 +90,7 @@ NSString *const kTableCellID = @"SETTINGCELLID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController *pushViewController = nil;
-    pushViewController = [self getItem:indexPath].controller;
+    pushViewController = (UIViewController *) [[[self getItem:indexPath].controllerClass alloc] init];
     pushViewController.title = [self getItem:indexPath].title;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [self.navigationController pushViewController:pushViewController animated:YES];

@@ -11,10 +11,13 @@
 @interface SettingItem : NSObject
     @property(nonatomic, strong) IonIcons *icon;
     @property(nonatomic, strong) NSString *title;
-    @property(nonatomic, strong) UIViewController *controller;
+    @property(nonatomic, strong) Class controllerClass;
 
-- (instancetype)initWithIcon:(IonIcons *)icon title:(NSString *)title controller:(UIViewController *)controller;
+- (instancetype)initWithIcon:(IonIcons *)icon title:(NSString *)title controller:(Class)controller;
 
-+ (instancetype)itemWithIcon:(IonIcons *)icon title:(NSString *)title controller:(UIViewController *)controller;
+
++ (instancetype)itemWithIcon:(IonIcons *)icon title:(NSString *)title controller:(Class)controllerClass;
+
+
 
 @end

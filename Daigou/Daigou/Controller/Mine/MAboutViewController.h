@@ -8,6 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MAboutViewController : UIViewController
-
+@interface MAboutViewController : UITableViewController<UITableViewDataSource>
 @end

@@ -9,29 +9,44 @@
 #import "MAboutViewController.h"
 
 @interface MAboutViewController ()
-
+@property(nonatomic, strong) NSMutableArray *about;
 @end
 
 @implementation MAboutViewController
 
+NSString *const aboutTableCellID = @"ABOUTCELLID";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.about = [@[@"版本",@"QQ用户群",@"联系我们",@"意见反馈",@"检查新版本",@"更新日志",@"网站"] mutableCopy];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.about.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:aboutTableCellID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:aboutTableCellID];
+    }
+    cell.textLabel.text = self.about[indexPath.row];
+    switch (indexPath.row) {
+        case 0:
+            [cell.detailTextLabel setText: @"1.0"];
+            break;
+        case 1:
+            [cell.detailTextLabel setText:@"111111"];
+            break;
+        default:break;
+    }
+    return cell;
+}
+
 
 @end
