@@ -7,11 +7,11 @@
 //  订单item 向右划 可以显示两个控件，一个删除，一个复制
 
 #import "OrderViewController.h"
-#import "OAddNewOrderViewController.h"
+#import "OrderMainInfoViewController.h"
 #import "OrderListCell.h"
 #import "OrderItem.h"
 #import "OrderItemManagement.h"
-#import "OAddNewOrderViewController.h"
+#import "OrderMainInfoViewController.h"
 #import "CustomInfoManagement.h"
 #import "CustomInfo.h"
 #import <Masonry/Masonry.h>

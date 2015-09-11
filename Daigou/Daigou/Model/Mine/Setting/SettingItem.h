@@ -9,14 +9,14 @@
 
 
 @interface SettingItem : NSObject
-    @property(nonatomic, strong) IonIcons *icon;
+    @property(nonatomic, strong) NSString *icon;
     @property(nonatomic, strong) NSString *title;
     @property(nonatomic, strong) Class controllerClass;
 
-- (instancetype)initWithIcon:(IonIcons *)icon title:(NSString *)title controller:(Class)controller;
+- (instancetype)initWithIcon:(NSString *)icon title:(NSString *)title controller:(Class)controller;
 
 
-+ (instancetype)itemWithIcon:(IonIcons *)icon title:(NSString *)title controller:(Class)controllerClass;
++ (instancetype)itemWithIcon:(NSString *)icon title:(NSString *)title controller:(Class)controllerClass;
 
 
 

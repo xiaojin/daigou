@@ -11,7 +11,7 @@
 
 }
 
-- (instancetype)initWithIcon:(IonIcons *)icon title:(NSString *)title controller:(Class)controllerClass {
+- (instancetype)initWithIcon:(NSString *)icon title:(NSString *)title controller:(Class)controllerClass {
     self = [super init];
     if (self) {
         self.icon = icon;
@@ -22,7 +22,7 @@
     return self;
 }
 
-+ (instancetype)itemWithIcon:(IonIcons *)icon title:(NSString *)title controller:(Class)controllerClass {
++ (instancetype)itemWithIcon:(NSString *)icon title:(NSString *)title controller:(Class)controllerClass {
     return [[self alloc] initWithIcon:icon title:title controller:controllerClass];
 }
 
