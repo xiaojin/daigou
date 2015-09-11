@@ -406,12 +406,12 @@
 				3CA1A2931B551FCD00C0A74C /* OrderMainInfoViewController.m */,
 				3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */,
 				3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */,
+				3C77943A1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.h */,
+				3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */,
 				3CA1A2981B56942400C0A74C /* OrderProductsViewController.h */,
 				3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */,
 				3C442A361B760ACE008BF244 /* OrderStausListTableView.h */,
 				3C442A371B760ACE008BF244 /* OrderStausListTableView.m */,
-				3C77943A1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.h */,
-				3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";

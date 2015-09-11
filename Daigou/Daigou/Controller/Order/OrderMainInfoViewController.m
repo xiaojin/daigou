@@ -23,7 +23,7 @@
 #define ORDERTAGBASE 6000
 #define kStatusPickerCellHeight 164
 
-@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate> {
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)UITableView *editTableView;
