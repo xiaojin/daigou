@@ -26,6 +26,7 @@ dispatch_once(&oncetoken, BLOCK); \
 #define ORIANGECOLOR RGB(255, 85, 3)
 #define TITLECOLOR RGB(89, 89, 89)
 #define GRAYCOLOR RGB(45,45,45)
+#define LIGHTGRAYCOLOR RGB(200,200,200)
 #define SYSTEMBLUE RGB(0,118,255)
 #define PRODUCTTITLEFONT [UIFont systemFontOfSize:14.0f]
 
@@ -36,3 +37,4 @@ dispatch_once(&oncetoken, BLOCK); \
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 #define PRODUCTFINFOTAGBEGIN 900000
+#define EXCHANGERATE 5.0

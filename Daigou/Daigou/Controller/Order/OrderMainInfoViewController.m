@@ -31,6 +31,7 @@
 @property(nonatomic, strong)NSArray *detailArray;
 @property(nonatomic, strong)NSArray *products;
 @property(nonatomic, strong)NSDictionary *productGroup;
+@property(nonatomic, strong)NSDictionary *benefitDict;
 @end
 
 
@@ -47,7 +48,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     if (self.customInfo == nil) {
         self.customInfo = [[CustomInfo alloc]init];
     }
@@ -57,6 +57,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     }
     
     [self fetchOrderProducts];
+    [self initValueForCell];
     UIBarButtonItem *saveBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrderInfo)];
     self.navigationItem.rightBarButtonItem = saveBarItem;
     self.title = @"填写订单";
@@ -67,6 +68,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self fetchOrderProducts];
     [self initValueForCell];
     [self.editTableView reloadData];
 }
@@ -112,7 +114,20 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 // TODO 小记，总计，youhui
 - (void) initValueForCell{
-    
+    __block float totalValue = 0.0;
+    float discountValue = 0.0;
+    float finalValue = 0.0;
+    __block float purchaseValue= 0.0f;
+    float otherValue=0.0f;
+    float benefitValue= 0.0f;
+    [self.products enumerateObjectsUsingBlock:^(OProductItem *obj, NSUInteger idx, BOOL *stop) {
+        totalValue = totalValue + obj.sellprice;
+        purchaseValue = purchaseValue + obj.price;
+    }];
+    finalValue = totalValue;
+    benefitValue = totalValue - purchaseValue * EXCHANGERATE;
+    NSDictionary *benefitDict = @{@"totalvalue":@(totalValue),@"discountvalue":@(discountValue),@"finalvalue":@(finalValue),@"purchasevalue":@(purchaseValue),@"othervalue":@(otherValue),@"benefitvalue":@(benefitValue)};
+    _benefitDict = benefitDict;
 }
 
 #pragma mark - UINotification
@@ -158,6 +173,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     orderCell.customInfo = self.customInfo;
     orderCell.orderItem = self.orderItem;
     orderCell.productDesc = [self setProdcutDesc];
+    orderCell.benefitData = _benefitDict;
     orderCell.EditPriceActionBlock = ^(NSInteger number, CGRect frame) {
         if (number == 11) {
             [self handCustomCellTap];
@@ -170,9 +186,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
     return  orderCell;
 }
-
-
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 460.0f;
@@ -231,7 +244,8 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-
 }
+
+
 
 @end

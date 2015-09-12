@@ -15,4 +15,6 @@
 @property (nonatomic, strong) CustomInfo *customInfo;
 @property (nonatomic, strong) OrderItem *orderItem;
 @property (nonatomic, strong) NSString *productDesc;
+
+@property (nonatomic ,strong) NSDictionary *benefitData;
 @end
