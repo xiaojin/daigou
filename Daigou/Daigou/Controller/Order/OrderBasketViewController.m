@@ -18,7 +18,7 @@
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
 
-@interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate> {
+@interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate,OrderPickProductsMainViewControllerDelegate> {
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)UITableView *tableView;
@@ -51,7 +51,8 @@
 }
 
 - (void)addProduct {
-    OrderPickProductsMainViewController *orderPickMainViewController =  [[OrderPickProductsMainViewController alloc]init];
+    OrderPickProductsMainViewController *orderPickMainViewController =  [[OrderPickProductsMainViewController alloc]initWithOrderItem:self.orderItem];
+    orderPickMainViewController.delegate = self;
     [self presentViewController:orderPickMainViewController animated:YES completion:nil];
 }
 
@@ -98,6 +99,12 @@
          [prodocstdict setValue:[item objectForKey:@"count"] forKey:@"count"];
          [self.orderItemFrames addObject:prodocstdict];
      }
+}
+
+#pragma mark - OrderPickProductsMainDelegate
+- (void)finishPickProducts {
+    [self reloadOrderProductsFromDB];
+    [_tableView reloadData];
 }
 
 #pragma mark - UINotification
@@ -161,10 +168,14 @@
 }
 
 - (void)cellDeletedWithIndexPath {
+    [self reloadOrderProductsFromDB];
+    [_tableView reloadData];
+}
+
+- (void)reloadOrderProductsFromDB {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     self.products = [itemManagement getOrderItemsGroupbyProductidByOrderId:self.orderItem.oid];
     [self initOrderBasketItemsFrameWithOrderItems:self.products];
-    [_tableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate
@@ -182,12 +193,6 @@
         return 142.0f;
     }
 }
-
-#pragma mark - RefreshBasket 
-- (void)refreshBasketContent {
-
-}
-
 
 #pragma mark - BasketCellDelegate 
 

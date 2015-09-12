@@ -22,6 +22,6 @@
 - (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;
 - (void)insertOrderProductItems:(NSArray *)products;
-- (void)removeOrderProductItems:(NSArray *)products;
-- (NSArray *)getOrderProductItems:(OProductItem *)product;
+- (void)removeOrderProductItems:(NSArray *)orderProducts;
+- (NSArray *)getOrderProductItems:(OProductItem *)orderProduct;
 @end

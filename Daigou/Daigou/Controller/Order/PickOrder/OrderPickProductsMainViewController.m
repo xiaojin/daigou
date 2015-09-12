@@ -7,6 +7,9 @@
 //
 
 #import "OrderPickProductsMainViewController.h"
+#import <Masonry/Masonry.h>
+#import <ionicons/ionicons-codes.h>
+#import <ionicons/IonIcons.h>
 #import "OrderProductsRightTableView.h"
 #import "CommonDefines.h"
 #import "OrderProductsRightTableView.h"
@@ -14,26 +17,30 @@
 #import "ProductCategoryManagement.h"
 #import "Product.h"
 #import "ProductCategory.h"
-#import <Masonry/Masonry.h>
-#import <ionicons/ionicons-codes.h>
-#import <ionicons/IonIcons.h>
 #import "OrderBasketPickerViewController.h"
 #import "ProductWithCount.h"
 #import "OrderSiderBarViewController.h"
+#import "OrderItemManagement.h"
+#import "OProductItem.h"
 
 @interface OrderPickProductsMainViewController () <RightTableViewDelegate,OrderSiderBarDelegate>
 @property (nonatomic, strong)NSMutableArray *docksArray;
 @property (nonatomic, strong)OrderProductsRightTableView *rightProductsTableView;
-@property (nonatomic, weak) UILabel *totalSingular;
-@property (nonatomic, weak) UIImageView *cartImage;
+@property (nonatomic, strong) UILabel *totalSingular;
+@property (nonatomic, strong) UIImageView *cartImage;
 @property (nonatomic, strong) NSMutableArray *offsArray;
 @property (nonatomic, strong) NSMutableDictionary *cartDict;
 @property (nonatomic, strong) UILabel *countlbl;
 @property (nonatomic, strong) OrderSiderBarViewController *sidebarVC;
+@property (nonatomic, strong) OrderItem *order;
 @end
 
 @implementation OrderPickProductsMainViewController
 
+- (instancetype)initWithOrderItem:(OrderItem*)ordeItem {
+    _order = ordeItem;
+    return [self init];
+}
 - (instancetype)init {
     if (self = [super init]) {
         [self removeCartProductFromCache];
@@ -199,11 +206,10 @@
 
 
 - (void)refreshCartCount {
-    //得到词典中所有KEY值
-    NSEnumerator *enumeratorKey = [_cartDict keyEnumerator];
-    //遍历所有KEY的值
-    NSInteger totalSingularInt = [[enumeratorKey allObjects] count];
-    
+    __block NSInteger totalSingularInt = 0;
+    [_cartDict enumerateKeysAndObjectsUsingBlock:^(NSString *prodId, ProductWithCount *productWithCount, BOOL *stop) {
+        totalSingularInt = totalSingularInt + productWithCount.productNum;
+    }];
     _countlbl.text = [NSString stringWithFormat:@"%ld",(long)totalSingularInt];
 }
 
@@ -214,13 +220,7 @@
 
 - (void)finishSelect {
     [self updateOrderDataBase];
-    NSArray *controllers = self.navigationController.childViewControllers;
-    NSInteger length = [controllers count];
-    if ([[controllers objectAtIndex:length-2] isKindOfClass:[OrderBasketPickerViewController class]]) {
-//        OrderBasketViewController *showBaskView =  (OrderBasketViewController *)[controllers lastObject];
-        //showDetailView.customInfo = _customInfo;
-        //[showBaskView refreshBasketContent];
-    }
+    [_delegate finishPickProducts];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -276,6 +276,24 @@
 }
 
 - (void)updateOrderDataBase {
-
+    OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
+    NSArray *orderProducts = [orderManagement getOrderProductsByOrderId:_order.oid];
+    [_cartDict enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, ProductWithCount *productWithCount, BOOL *stop) {
+        NSArray *filterProducts =[orderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
+        NSMutableArray *orderProducts = [NSMutableArray array];
+        if ([filterProducts count] != 0) {
+            for (int x = 0; x < productWithCount.productNum; x++) {
+                [orderProducts addObject:[filterProducts lastObject]];
+            }
+        } else {
+            Product *product = productWithCount.product;
+            for (int x = 0; x < productWithCount.productNum; x++) {
+                OProductItem *productItem = [[OProductItem alloc]initOProductItemWithProduct:product];
+                productItem.orderid = _order.oid;
+                [orderProducts addObject:productItem];
+            }
+        }
+        [orderManagement insertOrderProductItems:orderProducts];
+    }];
 }
 @end

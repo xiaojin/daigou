@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Product;
 typedef enum {
     PRODUCT_PURCHASE = 0,
     PRODUCT_INSTOCK = 10,
@@ -25,7 +26,6 @@ typedef enum {
 @property(nonatomic, assign)float refprice;
 @property(nonatomic, assign)float price;
 @property(nonatomic, assign)float sellprice;
-
 @property(nonatomic, assign)float amount;
 @property(nonatomic,assign)NSInteger orderid;
 @property(nonatomic,assign)NSInteger orderdate;
@@ -36,4 +36,5 @@ typedef enum {
 @property(nonatomic, assign)ProductOrderStatus procurementStatus;
 
 - (NSArray *)orderProductToArray;
+- (instancetype)initOProductItemWithProduct:(Product *)product;
 @end

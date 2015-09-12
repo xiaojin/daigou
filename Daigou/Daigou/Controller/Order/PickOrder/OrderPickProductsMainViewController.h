@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class OrderItem;
+@protocol OrderPickProductsMainViewControllerDelegate <NSObject>
+- (void)finishPickProducts;
+@end
 
 @interface OrderPickProductsMainViewController : UIViewController
-
+- (instancetype)initWithOrderItem:(OrderItem*)ordeItem;
+@property(nonatomic, strong)id<OrderPickProductsMainViewControllerDelegate> delegate;
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "OProductItem.h"
-
+#import "Product.h"
 @implementation OProductItem
 
 - (NSArray *)orderProductToArray {
@@ -24,7 +24,17 @@
                         @(self.syncDate)?@(self.syncDate) :[NSNull null]];
     return result;
 }
-
+- (instancetype)initOProductItemWithProduct:(Product *)product {
+    if(self = [super init]){
+        self.productid =product.pid;
+        self.refprice = product.rrp;
+        self.price = product.purchaseprice;
+        self.amount = 1;
+        self.orderdate = [[NSDate date]timeIntervalSince1970];
+        self.statu = PRODUCT_PURCHASE;
+    }
+    return self;
+}
 
 - (ProductOrderStatus) procurementStatus {
     if (self.orderid == 0) {

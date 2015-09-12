@@ -273,12 +273,12 @@
     return productItem;
 }
 
-- (NSArray *)getOrderProductItems:(OProductItem *)product {
+- (NSArray *)getOrderProductItems:(OProductItem *)orderProduct {
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return nil ;
     }
-    FMResultSet *rs = [_db executeQuery:@"select * from item where orderid = (?) and productid = (?)",@(product.orderid),@(product.productid)];
+    FMResultSet *rs = [_db executeQuery:@"select * from item where orderid = (?) and productid = (?)",@(orderProduct.orderid),@(orderProduct.productid)];
     
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
@@ -308,17 +308,16 @@
         OProductItem *orderProductItem = [products objectAtIndex:i];
         [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderProductItem orderProductToArray]];
     }
-    [_db commit];
     [_db close];
 }
 
-- (void)removeOrderProductItems:(NSArray *)products {
+- (void)removeOrderProductItems:(NSArray *)orderProducts {
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return ;
     }
-    for (int i=0; i<[products count]; i++) {
-        OProductItem *orderProductItem = [products objectAtIndex:i];
+    for (int i=0; i<[orderProducts count]; i++) {
+        OProductItem *orderProductItem = [orderProducts objectAtIndex:i];
         [_db executeUpdate:@"delete from item where iid = (?)",@(orderProductItem.iid)];
     }
 }
