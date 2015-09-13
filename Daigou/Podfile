@@ -11,6 +11,9 @@ pod "JVFloatLabeledTextField"
 pod "SDWebImage"
 pod 'InAppSettingsKit'
 pod 'FXForms'
+pod 'UIAlertView-Blocks', '~> 1.0'
+pod 'FSImageViewer', '~> 2.6.3'
+
 end
 
 target 'DaigouTests' do

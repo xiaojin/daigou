@@ -24,4 +24,5 @@
 - (void)insertOrderProductItems:(NSArray *)products;
 - (void)removeOrderProductItems:(NSArray *)orderProducts;
 - (NSArray *)getOrderProductItems:(OProductItem *)orderProduct;
+- (BOOL)updateOrderItemPhotos:(NSString *)photsURL withOrderItem:(OrderItem *)orderItem;
 @end

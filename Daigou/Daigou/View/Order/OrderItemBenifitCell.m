@@ -13,13 +13,18 @@
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
 #import "JVFloatLabeledTextField.h"
+#import "Photo.h"
+#import "OrderPhotoViewCell.h"
+#import "FSBasicImage.h"
+#import "FSBasicImageSource.h"
+#import "OrderItemManagement.h"
 
 #define DiscountFONT  [UIFont systemFontOfSize:14.0f]
 #define FLOADTINGFONTSIZE 14.0f
 #define LEFTSIDEPADDING 10
 #define kTabICONSIZE 26.0f
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
-@interface OrderItemBenifitCell ()<UITextFieldDelegate>
+@interface OrderItemBenifitCell ()<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PhotoViewCellDelegate>
 @property(nonatomic, strong)UIView *subView;
 @property(nonatomic, strong)UITextField *productInfoField;
 @property(nonatomic, strong)UITextField *customInfoField;
@@ -38,15 +43,38 @@
 @property(nonatomic, strong)UITextField *notePriceFiled;
 //采购成本
 @property(nonatomic, strong)UITextField *purchasePriceFiled;
+@property(nonatomic, strong)UIImagePickerController *imagePicker;
+@property(nonatomic, strong)UICollectionView *imageCollection;
+@property(nonatomic, strong)NSMutableArray *selectPhotos;
 @end
 
 @implementation OrderItemBenifitCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self initSubViews];
     }
     return self;
+}
+
+- (void)initSubViews {
     
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(70, 70)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    _imageCollection = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    [_imageCollection registerClass:[OrderPhotoViewCell class] forCellWithReuseIdentifier:@"photos"];
+    _imageCollection.backgroundColor = [UIColor clearColor];
+    _imageCollection.dataSource = self;
+    _imageCollection.delegate = self;
+    _selectPhotos = [[NSMutableArray alloc] init];
+}
+
+- (void)setOrderItem:(OrderItem *)orderItem {
+    _orderItem = orderItem;
+    [self updatePaymentStatus];
+    [self getRelatedPhotosFromDB];
 }
 
 
@@ -102,7 +130,6 @@
     
     _payStatus = [[UIButton alloc] init];
     [_payStatus setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self updatePaymentStatus];
     [self.subView addSubview:_payStatus];
     [_payStatus addTarget:self action:@selector(updatePaymentStatus) forControlEvents:UIControlEventTouchUpInside];
     [_payStatus mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -542,17 +569,86 @@
         make.right.equalTo(_notePriceFiled.mas_right);
     }];
     
+//***************************
+    [self.subView addSubview:_imageCollection];
+    [_imageCollection mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cameraButton.mas_left);
+        make.right.equalTo(picutreButton.mas_right);
+        make.height.equalTo(@100);
+        make.top.equalTo(cameraButton.mas_bottom).with.offset(10);
+    }];
+
+//    Photo *defaultPhoto = [[Photo alloc]initWithImage:[UIImage imageNamed:@"default"]];
+//    [_selectPhotos addObject:defaultPhoto];
+//*********
+    
     [self setValueForField];
 }
 
 - (void)takPhotoFromCamera {
-
+    [self presentImagePicker:YES];
 }
 
 - (void)takPhotoFromAlbum {
-
+    [self presentImagePicker:NO];
 }
 
+-(void)presentImagePicker:(BOOL)forCamera{
+    if (_selectPhotos.count <=5) {
+        _imagePicker = [[UIImagePickerController alloc]init];
+        _imagePicker.delegate = self;
+        _imagePicker.allowsEditing = NO;
+        _imagePicker.sourceType = forCamera ? UIImagePickerControllerSourceTypeCamera :
+        UIImagePickerControllerSourceTypePhotoLibrary;
+        
+        if (IOS8_OR_ABOVE) {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [self showViewController:_imagePicker];
+            }];
+        } else {
+            [self showViewController:_imagePicker];
+        }
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"照片提示"
+                                                            message:@"照片数量不能超过6张"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"好的"
+                                                  otherButtonTitles:nil, nil];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+    }
+}
+
+-(void)showViewController:(UIViewController*)viewController
+{
+    [self.fullScreenDisplayDelegate showControllerFullScreen:viewController];
+}
+#pragma mark -- UIImagePickerControllerDelegate;
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImageWriteToSavedPhotosAlbum(chosenImage, nil, nil, nil);
+    }
+    Photo *photo = [[Photo alloc] initWithImage:chosenImage];
+    [_selectPhotos addObject:photo];
+   // dispatch_async(dispatch_get_main_queue(), ^{
+        [_imageCollection reloadData];
+    //});
+    
+    [self imagePickerControllerDidCancel:picker];
+    [self savePhotoToDB];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [_imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+#pragma mark -- UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == _productInfoField) {
         NSLog(@"goto CustomInfo");
@@ -625,6 +721,65 @@
 //    self.detailInfo.text = @"";
 //    self.title =titleName;
 //    self.value = detailInfo;
+}
+#pragma mark -UICollectionViewDataSource
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return _selectPhotos.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    OrderPhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"photos" forIndexPath:indexPath];
+    [cell setPhoto:_selectPhotos[indexPath.row]];
+    cell.readOnly = NO;
+    cell.delegate = self;
+    return cell;
+}
+#pragma mark PhotoCellViewDelegate
+- (void)deletePhoto:(Photo*) selectedPhoto {
+    [_selectPhotos removeObject:selectedPhoto];
+    [_imageCollection reloadData];
+    [self savePhotoToDB];
+}
+
+-(void)showPhoto:(Photo*) photo {
+    FSBasicImage *image = [[FSBasicImage alloc] initWithImage:photo.image];
+    FSBasicImageSource *imageSource = [[FSBasicImageSource alloc] initWithImages:@[image]];
+    FSImageViewerViewController *vc = [[FSImageViewerViewController alloc] initWithImageSource:imageSource];
+    vc.sharingDisabled = YES;
+    UINavigationController *uiNavigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+    uiNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self.fullScreenDisplayDelegate showControllerFullScreen:uiNavigationController];
+}
+
+#pragma mark -- Save Photo
+- (void)savePhotoToDB {
+    __block NSString *photosURL = @"";
+    [_selectPhotos enumerateObjectsUsingBlock:^(Photo *photo, NSUInteger idx, BOOL *stop) {
+        if (idx < ([_selectPhotos count]-1)) {
+            photosURL = [photosURL stringByAppendingFormat:@"%@,",[photo imageUrl]];
+        } else {
+            photosURL = [photosURL stringByAppendingFormat:@"%@",[photo imageUrl]];
+        }
+    }];
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+    [itemManagement updateOrderItemPhotos:photosURL withOrderItem:self.orderItem];
+}
+
+- (void)getRelatedPhotosFromDB {
+    if (![_orderItem.noteImage isEqualToString:@""] && _orderItem.noteImage !=nil) {
+        NSArray *photos = [_orderItem.noteImage componentsSeparatedByString:@","];
+        if ([photos count]!= 0) {
+            [photos enumerateObjectsUsingBlock:^(NSString *imageURL, NSUInteger idx, BOOL *stop) {
+                Photo *photo = [[Photo alloc] initWithPath:imageURL];
+                [_selectPhotos addObject:photo];
+            }];
+        }
+    }
+
 }
 
 @end

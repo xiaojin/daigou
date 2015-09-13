@@ -23,7 +23,7 @@
 #define ORDERTAGBASE 6000
 #define kStatusPickerCellHeight 164
 
-@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate> {
+@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate,FullScreenDisplayDelegate> {
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)UITableView *editTableView;
@@ -174,6 +174,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     orderCell.orderItem = self.orderItem;
     orderCell.productDesc = [self setProdcutDesc];
     orderCell.benefitData = _benefitDict;
+    orderCell.fullScreenDisplayDelegate = self;
     orderCell.EditPriceActionBlock = ^(NSInteger number, CGRect frame) {
         if (number == 11) {
             [self handCustomCellTap];
@@ -188,7 +189,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 460.0f;
+    return 560.0f;
 }
 
 #pragma mark - UITableViewDelegate
@@ -246,6 +247,11 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 
+#pragma mark - FullScreenDelegate
+
+- (void)showControllerFullScreen:(UIViewController *)viewController{
+    [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
 
 
 @end

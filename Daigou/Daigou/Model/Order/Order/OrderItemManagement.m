@@ -321,4 +321,14 @@
         [_db executeUpdate:@"delete from item where iid = (?)",@(orderProductItem.iid)];
     }
 }
+- (BOOL)updateOrderItemPhotos:(NSString *)photsURL withOrderItem:(OrderItem *)orderItem{
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    BOOL result;
+    result = [_db executeUpdate:@"update orderitem set noteImage = (?) where oid = (?)",photsURL,@(orderItem.oid)];
+    [_db close];
+    return result;
+}
 @end

@@ -15,7 +15,6 @@ typedef enum {
     DONE = 40
 } OrderStatus;
 
-
 @interface OrderItem : NSObject
 @property(nonatomic,assign)NSInteger oid;
 @property(nonatomic,assign)NSInteger clientid;

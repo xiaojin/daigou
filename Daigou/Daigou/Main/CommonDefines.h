@@ -12,7 +12,7 @@
 static dispatch_once_t oncetoken = 0; \
 dispatch_once(&oncetoken, BLOCK); \
 })
-
+#define IOS8_OR_ABOVE [[[UIDevice currentDevice] systemVersion] integerValue] >= 8.0
 #define DATABASE_PATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"daigou.db"];
 #define RGB(r,g,b) [UIColor colorWithRed:(CGFloat)r/255.0 green:(CGFloat)g/255.0 blue:(CGFloat)b/255.0f alpha:1.0]
 #define RGBA(r,g,b,a) [UIColor colorWithRed:(CGFloat)r/255.0 green:(CGFloat)g/255.0 blue:(CGFloat)b/255.0f alpha:a]
