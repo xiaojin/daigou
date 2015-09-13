@@ -100,6 +100,7 @@ NSString *const kTableCellID = @"SETTINGCELLID";
     pushViewController = (UIViewController *) [[[self getItem:indexPath].controllerClass alloc] init];
     pushViewController.title = [self getItem:indexPath].title;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    pushViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:pushViewController animated:YES];
 }
 

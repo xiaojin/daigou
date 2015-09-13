@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MDeliveryManagementViewController : UIViewController
-
+@property(nonatomic, assign)BOOL isCancelButton;
 @end
