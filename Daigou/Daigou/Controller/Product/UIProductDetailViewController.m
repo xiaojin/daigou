@@ -24,16 +24,6 @@
 #import "MBrandTableView.h"
 #import "UISelectContainerViewController.h"
 
-const static CGFloat kJVFieldFontSize = 14.0f;
-
-const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
-const static CGFloat kJVFieldMarginTop = 10.0f;
-
-#define FONTCOLOR  [UIColor darkGrayColor]
-#define LINECOLOR  [UIColor darkGrayColor]
-#define MONEYSYMFONT [UIFont systemFontOfSize:14.0f]
-const static CGFloat kLINEHEIGHT = 1.0f;
-
 @interface UIProductDetailViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,UIProductInfoEditViewControllerDelegate,MCategoryTableViewDelegate, MBrandTableViewDelegate,UIAlertViewDelegate>{
     CGSize keyboardSize;
 }

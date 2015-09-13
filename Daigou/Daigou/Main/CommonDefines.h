@@ -37,4 +37,12 @@ dispatch_once(&oncetoken, BLOCK); \
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 #define PRODUCTFINFOTAGBEGIN 900000
+
 #define EXCHANGERATE 5.0
+#define kJVFieldFontSize  14.0f
+#define kJVFieldFloatingLabelFontSize  11.0f
+#define kJVFieldMarginTop 10.0f
+#define MONEYSYMFONT [UIFont systemFontOfSize:14.0f]
+#define FONTCOLOR  [UIColor darkGrayColor]
+#define LINECOLOR  [UIColor darkGrayColor]
+#define kLINEHEIGHT 1.0f

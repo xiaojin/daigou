@@ -23,7 +23,7 @@
 #define ORDERTAGBASE 6000
 #define kStatusPickerCellHeight 164
 
-@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate,FullScreenDisplayDelegate> {
+@interface OrderMainInfoViewController()<UITableViewDataSource, UITableViewDelegate,OrderCellDelegate,FullScreenDisplayDelegate,MCustInfoViewControllerDelegate> {
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)UITableView *editTableView;
@@ -216,11 +216,16 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)handCustomCellTap {
     MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
+    customInfo.customDelegate = self;
     [self.navigationController pushViewController:customInfo animated:YES];
 }
 
 - (void)handleProductCellTap {
     [(OrderDetailViewController *)self.parentViewController scrollToStaus:1];
+}
+#pragma mark - MCustomInfoViewControllerDelegate
+- (void)didSelectCustomInfo:(CustomInfo *)customInfo {
+    _customInfo = customInfo;
 }
 
 #pragma mark - OrderPriceDelegate

@@ -131,6 +131,7 @@
     _payStatus = [[UIButton alloc] init];
     [_payStatus setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.subView addSubview:_payStatus];
+    [self updatePaymentStatus];
     [_payStatus addTarget:self action:@selector(updatePaymentStatus) forControlEvents:UIControlEventTouchUpInside];
     [_payStatus mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(customInfoFieldUnderLine.mas_top).with.offset(-5);

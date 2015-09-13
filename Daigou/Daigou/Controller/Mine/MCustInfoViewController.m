@@ -17,6 +17,7 @@
 #import "CommonDefines.h"
 #import "DGAddressBook.h"
 #import "AddressBookTableViewController.h"
+#import "MineViewController.h"
 
 @interface MCustInfoViewController ()<UIActionSheetDelegate, ABPeoplePickerNavigationControllerDelegate,UIAlertViewDelegate>
 @property(nonatomic, strong) NSArray *contacts;
@@ -41,7 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (![self checkIsFromOrder]) {
+    if ([self checkIsInMineViewController]) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewCustom)];
     }
 }
@@ -295,29 +296,20 @@
   return index;
 }
 
-- (BOOL) checkIsFromOrder {
+- (BOOL) checkIsInMineViewController {
     NSArray *viewController = self.navigationController.viewControllers;
     __block BOOL result = NO;
     [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[OrderDetailViewController class]]) {
+        if ([obj isKindOfClass:[MineViewController class]]) {
             result = YES;
         }
     }];
     return result;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self checkIsFromOrder]) {
-        NSArray *viewController = self.navigationController.viewControllers;
-        [viewController enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if ([obj isKindOfClass:[OrderDetailViewController class]]) {
-                UIViewController *viewcontroler = [(OrderDetailViewController *)obj childViewControllers][0];
-                if ([viewcontroler isKindOfClass:[OrderMainInfoViewController class]]) {
-                        OrderMainInfoViewController *editNewOrderViewController = (OrderMainInfoViewController *)viewcontroler;
-                        editNewOrderViewController.customInfo =[_contacts objectAtIndex:indexPath.section][indexPath.row];
-                        [self.navigationController popViewControllerAnimated:YES];
-                }
-            }
-        }];
+    if (![self checkIsInMineViewController]) {
+        [_customDelegate didSelectCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
         MShowCustomDetailViewController *showDetailViewController = [[MShowCustomDetailViewController alloc]initWithCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
         
