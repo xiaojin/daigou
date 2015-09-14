@@ -53,34 +53,7 @@
     FMResultSet *rs = [_db executeQuery:@"select * from orderitem"];
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
-        OrderItem *orderItem = [[OrderItem alloc]init];
-        orderItem.oid = (NSInteger)[rs intForColumn:@"oid"];
-        orderItem.clientid = (NSInteger)[rs intForColumn:@"clientid"];
-        orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
-        orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
-        orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
-        orderItem.freeShip = (NSInteger) [rs intForColumn:@"free_ship"];
-        orderItem.address = [rs stringForColumn:@"address"];
-        orderItem.reviever = [rs stringForColumn:@"reviever"];
-        orderItem.phonenumber = [rs stringForColumn:@"phonenumber"];
-        orderItem.postcode = [rs stringForColumn:@"postcode"];
-        orderItem.totoal = (float)[rs doubleForColumn:@"total"];
-        orderItem.discount = [rs doubleForColumn:@"discount"];
-        orderItem.delivery = [rs doubleForColumn:@"delivery"];
-        orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
-        orderItem.profit = [rs doubleForColumn:@"profit"];
-        orderItem.othercost = [rs doubleForColumn:@"othercost"];
-        orderItem.creatDate = [rs doubleForColumn:@"createDate"];
-        orderItem.shipDate = [rs doubleForColumn:@"shipDate"];
-        orderItem.deliverDate = [rs doubleForColumn:@"deliverDate"];
-        orderItem.payDate = [rs doubleForColumn:@"payDate"];
-        orderItem.note = [rs stringForColumn:@"note"];
-        orderItem.barcode = [rs stringForColumn:@"barcode"];
-        orderItem.idnum = [rs stringForColumn:@"idnum"];
-        orderItem.proxy = [rs intForColumn:@"proxy"];
-        orderItem.noteImage = [rs stringForColumn:@"noteImage"];
-        orderItem.syncDate = [rs doubleForColumn:@"syncDate"];
-        [orderItemsArray addObject:orderItem];
+        [orderItemsArray addObject:[self setValueForItem:rs]];
     }
     [_db close];
     return orderItemsArray;
@@ -94,38 +67,58 @@
     FMResultSet *rs = [_db executeQuery:@"select * from orderitem where statu = (?)",@(status)];
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
-        OrderItem *orderItem = [[OrderItem alloc]init];
-        orderItem.oid = (NSInteger)[rs intForColumn:@"oid"];
-        orderItem.clientid = (NSInteger)[rs intForColumn:@"clientid"];
-        orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
-        orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
-        orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
-        orderItem.freeShip = (NSInteger) [rs intForColumn:@"free_ship"];
-        orderItem.address = [rs stringForColumn:@"address"];
-        orderItem.reviever = [rs stringForColumn:@"reviever"];
-        orderItem.phonenumber = [rs stringForColumn:@"phonenumber"];
-        orderItem.postcode = [rs stringForColumn:@"postcode"];
-        orderItem.totoal = (float)[rs doubleForColumn:@"total"];
-        orderItem.discount = [rs doubleForColumn:@"discount"];
-        orderItem.delivery = [rs doubleForColumn:@"delivery"];
-        orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
-        orderItem.profit = [rs doubleForColumn:@"profit"];
-        orderItem.othercost = [rs doubleForColumn:@"othercost"];
-        orderItem.creatDate = [rs doubleForColumn:@"createDate"];
-        orderItem.shipDate = [rs doubleForColumn:@"shipDate"];
-        orderItem.deliverDate = [rs doubleForColumn:@"deliverDate"];
-        orderItem.payDate = [rs doubleForColumn:@"payDate"];
-        orderItem.note = [rs stringForColumn:@"note"];
-        orderItem.barcode = [rs stringForColumn:@"barcode"];
-        orderItem.idnum = [rs stringForColumn:@"idnum"];
-        orderItem.proxy = [rs intForColumn:@"proxy"];
-        orderItem.noteImage = [rs stringForColumn:@"noteImage"];
-        orderItem.syncDate = [rs doubleForColumn:@"syncDate"];
-        [orderItemsArray addObject:orderItem];
+        [orderItemsArray addObject:[self setValueForItem:rs]];
     }
     [_db close];
     return orderItemsArray;
 
+}
+
+- (NSArray *)getOrderItemsByExpress:(Express *)express {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = nil;
+    rs = [_db executeQuery:@"select * from orderitem where expressid = (?)",@(express.eid)];
+    
+    NSMutableArray *itemsArray = [NSMutableArray array];
+    while (rs.next) {
+        [itemsArray addObject:[self setValueForItem:rs]];
+    }
+    [_db close];
+    return itemsArray;
+}
+
+- (OrderItem *)setValueForItem:(FMResultSet *)rs {
+    OrderItem *orderItem = [[OrderItem alloc]init];
+    orderItem.oid = (NSInteger)[rs intForColumn:@"oid"];
+    orderItem.clientid = (NSInteger)[rs intForColumn:@"clientid"];
+    orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
+    orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
+    orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
+    orderItem.freeShip = (NSInteger) [rs intForColumn:@"free_ship"];
+    orderItem.address = [rs stringForColumn:@"address"];
+    orderItem.reviever = [rs stringForColumn:@"reviever"];
+    orderItem.phonenumber = [rs stringForColumn:@"phonenumber"];
+    orderItem.postcode = [rs stringForColumn:@"postcode"];
+    orderItem.totoal = (float)[rs doubleForColumn:@"total"];
+    orderItem.discount = [rs doubleForColumn:@"discount"];
+    orderItem.delivery = [rs doubleForColumn:@"delivery"];
+    orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
+    orderItem.profit = [rs doubleForColumn:@"profit"];
+    orderItem.othercost = [rs doubleForColumn:@"othercost"];
+    orderItem.creatDate = [rs doubleForColumn:@"createDate"];
+    orderItem.shipDate = [rs doubleForColumn:@"shipDate"];
+    orderItem.deliverDate = [rs doubleForColumn:@"deliverDate"];
+    orderItem.payDate = [rs doubleForColumn:@"payDate"];
+    orderItem.note = [rs stringForColumn:@"note"];
+    orderItem.barcode = [rs stringForColumn:@"barcode"];
+    orderItem.idnum = [rs stringForColumn:@"idnum"];
+    orderItem.proxy = [rs intForColumn:@"proxy"];
+    orderItem.noteImage = [rs stringForColumn:@"noteImage"];
+    orderItem.syncDate = [rs doubleForColumn:@"syncDate"];
+    return orderItem;
 }
 
 - (BOOL)checkIfOrderItmExists:(OrderItem *)ordeItem {
@@ -222,6 +215,7 @@
     return orderItemsArray;
 
 }
+
 
 - (NSArray *)getstockProductItems {
     if (![_db open]) {

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OrderItem.h"
 #import "OProductItem.h"
+#import "Express.h"
 
 @interface OrderItemManagement : NSObject
 + (instancetype)shareInstance;
@@ -17,6 +18,7 @@
 - (NSArray *)getOrderProductsByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid;
 - (NSArray *)getOrderItemsByOrderStatus:(OrderStatus)status;
+- (NSArray *)getOrderItemsByExpress:(Express *)express;
 - (NSArray *)getprocurementProductItemsByStatus:(ProductOrderStatus)procurementStatus;
 - (NSArray *)getstockProductItems;
 - (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;

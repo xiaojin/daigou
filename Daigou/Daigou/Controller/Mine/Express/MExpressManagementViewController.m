@@ -1,37 +1,67 @@
 //
-//  MExpressTableView.m
+//  MExpressManagementViewController.m
 //  Daigou
 //
-//  Created by jin on 13/09/2015.
+//  Created by jin on 14/09/2015.
 //  Copyright (c) 2015 dg. All rights reserved.
 //
 
-#import "MExpressTableView.h"
+#import "MExpressManagementViewController.h"
 #import <Masonry/Masonry.h>
+#import <ionicons/IonIcons.h>
+#import <ionicons/ionicons-codes.h>
 #import "CommonDefines.h"
+#import "MEditExpressViewController.h"
 #import "Express.h"
 #import "ExpressManagement.h"
 
-@interface MExpressTableView()<UITableViewDataSource, UITableViewDelegate>
+@interface MExpressManagementViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property(nonatomic, strong) UITableView *expressTableView;
 @property(nonatomic, strong) NSArray *indexList;
 @property(nonatomic, strong) NSArray *expressList;
 @end
-@implementation MExpressTableView
 
-- (void)layoutSubviews {
+@implementation MExpressManagementViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self initNavigationBar];
     _expressTableView = [[UITableView alloc]initWithFrame:CGRectZero];
     _expressTableView.dataSource = self;
     _expressTableView.delegate = self;
-    _expressTableView.rowHeight = 65.0f;
-    [self addSubview:_expressTableView];
+    _expressTableView.rowHeight = 45.0f;
+    [self.view addSubview:_expressTableView];
     [_expressTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top);
-        make.left.equalTo(self.mas_left);
-        make.right.equalTo(self.mas_right);
-        make.bottom.equalTo(self.mas_bottom);
+        make.top.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
     }];
     self.expressList = [self getExpress];
+    // Do any additional setup after loading the view.
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+}
+
+- (void)initNavigationBar {
+    UIImage *menuIcon= [IonIcons imageWithIcon:ion_plus iconColor:SYSTEMBLUE iconSize:24.0f imageSize:CGSizeMake(24.0f, 24.0f)];
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc]initWithImage:menuIcon style:UIBarButtonItemStylePlain target:self action:@selector(addExpressCompany)];
+    self.navigationItem.rightBarButtonItem = leftBarButton;
+}
+
+- (void)addExpressCompany {
+    MEditExpressViewController *editExpressViewController = [[MEditExpressViewController alloc]init];
+    [self.navigationController pushViewController:editExpressViewController animated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 
 - (NSArray *)getExpress{
@@ -120,8 +150,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Express *expressInfo = [_expressList objectAtIndex:indexPath.section][indexPath.row];
-    [_delegate expressDidSelected:expressInfo];
+    [_expressDelegate expressDidSelected:expressInfo];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

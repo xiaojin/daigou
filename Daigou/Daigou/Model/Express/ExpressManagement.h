@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class Express;
 @interface ExpressManagement : NSObject
 + (instancetype)shareInstance;
 - (NSArray *)getExpress;
+- (BOOL)saveExpress:(Express *)express;
 @end

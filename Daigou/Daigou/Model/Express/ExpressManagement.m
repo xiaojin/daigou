@@ -67,5 +67,19 @@
     return expressArray;
 }
 
+- (BOOL)saveExpress:(Express *)express {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    [_db beginTransaction];
+    BOOL result = [_db executeUpdate:@"insert into express (name,note,website,proxy,image,price,syncDate) values (?,?,?,?,?,?,?)" withArgumentsInArray:[express expressToArray]];
+    if (result) {
+        [_db commit];
+        [_db close];
+    }
+    return result;
+}
+
 
 @end

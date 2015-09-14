@@ -46,3 +46,16 @@ dispatch_once(&oncetoken, BLOCK); \
 #define FONTCOLOR  [UIColor darkGrayColor]
 #define LINECOLOR  [UIColor darkGrayColor]
 #define kLINEHEIGHT 1.0f
+
+
+//PURCHASED = 0,
+//UNDISPATCH = 10,
+//SHIPPED = 20,
+//DELIVERD = 30,
+//DONE = 40
+
+#define PURCHASEDTITLE @"采购中"
+#define UNDISPATCHTITLE @"待发货"
+#define SHIPPEDTITLE @"已发货"
+#define DELIVERDTITLE @"已收获"
+#define DONETITLE @"已完成"

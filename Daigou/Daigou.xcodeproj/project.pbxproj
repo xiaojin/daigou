@@ -100,13 +100,13 @@
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
 		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
 		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
+		3CB5EFE31BA6E43E00B55968 /* MExpressManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5EFE21BA6E43E00B55968 /* MExpressManagementViewController.m */; };
 		3CBF22ED1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */; };
 		3CC462BA1B9312ED002B92C8 /* ProcurementStatusListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC462B91B9312ED002B92C8 /* ProcurementStatusListTableView.m */; };
 		3CD933E21BA45AFB00E2370D /* DirectoryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933E11BA45AFB00E2370D /* DirectoryUtil.m */; };
 		3CD933E51BA45BC800E2370D /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933E41BA45BC800E2370D /* Photo.m */; };
 		3CD933E81BA45F0F00E2370D /* PhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933E71BA45F0F00E2370D /* PhotoCollection.m */; };
 		3CD933EB1BA4634000E2370D /* OrderPhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933EA1BA4634000E2370D /* OrderPhotoViewCell.m */; };
-		3CD933EF1BA5AC2F00E2370D /* MExpressTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933EE1BA5AC2F00E2370D /* MExpressTableView.m */; };
 		3CD933F31BA5B4D800E2370D /* MEditExpressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933F21BA5B4D800E2370D /* MEditExpressViewController.m */; };
 		3CFC01E11B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */; };
 /* End PBXBuildFile section */
@@ -294,6 +294,8 @@
 		3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductsViewController.m; sourceTree = "<group>"; };
 		3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketViewController.h; sourceTree = "<group>"; };
 		3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketViewController.m; sourceTree = "<group>"; };
+		3CB5EFE11BA6E43E00B55968 /* MExpressManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MExpressManagementViewController.h; path = Express/MExpressManagementViewController.h; sourceTree = "<group>"; };
+		3CB5EFE21BA6E43E00B55968 /* MExpressManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MExpressManagementViewController.m; path = Express/MExpressManagementViewController.m; sourceTree = "<group>"; };
 		3CBF22EB1B7B6A4D00F3EB72 /* UILabelStrikeThrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILabelStrikeThrough.h; path = Extension/UILabelStrikeThrough.h; sourceTree = "<group>"; };
 		3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UILabelStrikeThrough.m; path = Extension/UILabelStrikeThrough.m; sourceTree = "<group>"; };
 		3CC462B81B9312ED002B92C8 /* ProcurementStatusListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcurementStatusListTableView.h; sourceTree = "<group>"; };
@@ -306,8 +308,6 @@
 		3CD933E71BA45F0F00E2370D /* PhotoCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollection.m; path = Order/PhotoCollection.m; sourceTree = "<group>"; };
 		3CD933E91BA4634000E2370D /* OrderPhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPhotoViewCell.h; sourceTree = "<group>"; };
 		3CD933EA1BA4634000E2370D /* OrderPhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPhotoViewCell.m; sourceTree = "<group>"; };
-		3CD933ED1BA5AC2F00E2370D /* MExpressTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MExpressTableView.h; path = Express/MExpressTableView.h; sourceTree = "<group>"; };
-		3CD933EE1BA5AC2F00E2370D /* MExpressTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MExpressTableView.m; path = Express/MExpressTableView.m; sourceTree = "<group>"; };
 		3CD933F11BA5B4D800E2370D /* MEditExpressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEditExpressViewController.h; path = Express/MEditExpressViewController.h; sourceTree = "<group>"; };
 		3CD933F21BA5B4D800E2370D /* MEditExpressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEditExpressViewController.m; path = Express/MEditExpressViewController.m; sourceTree = "<group>"; };
 		3CFC01DF1B913BD400995CAB /* UISearchBar+UISearchBarAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UISearchBar+UISearchBarAccessory.h"; path = "Extension/UISearchBar+UISearchBarAccessory.h"; sourceTree = "<group>"; };
@@ -340,7 +340,6 @@
 		19B0F100AB9F65AA637957B8 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				3CD933EC1BA5ABF600E2370D /* Express */,
 				3CC133C21B5249D2009976AF /* Help */,
 				3C6D85651B4DDF950076F4AE /* ProductCategory */,
 				3C6D85641B4DDF880076F4AE /* CustomInfo */,
@@ -523,6 +522,8 @@
 				3C6249871B3C11CB008F34C7 /* MSharingViewController.m */,
 				3C6249891B3C11D6008F34C7 /* MAboutViewController.h */,
 				3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */,
+				3CB5EFE11BA6E43E00B55968 /* MExpressManagementViewController.h */,
+				3CB5EFE21BA6E43E00B55968 /* MExpressManagementViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -904,15 +905,6 @@
 			name = Help;
 			sourceTree = "<group>";
 		};
-		3CD933EC1BA5ABF600E2370D /* Express */ = {
-			isa = PBXGroup;
-			children = (
-				3CD933ED1BA5AC2F00E2370D /* MExpressTableView.h */,
-				3CD933EE1BA5AC2F00E2370D /* MExpressTableView.m */,
-			);
-			name = Express;
-			sourceTree = "<group>";
-		};
 		3CD933F01BA5B49F00E2370D /* Express */ = {
 			isa = PBXGroup;
 			children = (
@@ -1122,6 +1114,7 @@
 				3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */,
 				3CC462BA1B9312ED002B92C8 /* ProcurementStatusListTableView.m in Sources */,
 				3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */,
+				3CB5EFE31BA6E43E00B55968 /* MExpressManagementViewController.m in Sources */,
 				3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
 				3C5D0B541B8C9904006FFC87 /* LLBlurSidebar.m in Sources */,
@@ -1149,7 +1142,6 @@
 				3C56617C1B67AC6A0082F49E /* OrderProductsRightCell.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
-				3CD933EF1BA5AC2F00E2370D /* MExpressTableView.m in Sources */,
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
 				3C0BBDA91B9484E100BA0E1E /* StockStatusListTableView.m in Sources */,
 				3C2C7DC11B9C5C0E00D1DCC0 /* UISearchViewController.m in Sources */,
