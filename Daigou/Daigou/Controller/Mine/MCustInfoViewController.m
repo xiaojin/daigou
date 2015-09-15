@@ -8,7 +8,6 @@
 
 #import "MCustInfoViewController.h"
 #import "CustomInfo.h"
-#import "MShowCustomDetailViewController.h"
 #import "MEditCustomInfoViewController.h"
 #import "CustomInfoManagement.h"
 #import "OrderMainInfoViewController.h"
@@ -311,9 +310,9 @@
         [_customDelegate didSelectCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        MShowCustomDetailViewController *showDetailViewController = [[MShowCustomDetailViewController alloc]initWithCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
+        MEditCustomInfoViewController *editDetailViewController = [[MEditCustomInfoViewController alloc]initWithCustom:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
         
-        [self.navigationController pushViewController:showDetailViewController animated:YES];
+        [self.navigationController pushViewController:editDetailViewController animated:YES];
     }
 
 }

@@ -291,6 +291,8 @@
 
 - (void) setProductMailingInfoController {
     _deliveryStatusViewController = [[OrderDeliveryStatusViewController alloc]init];
+    _deliveryStatusViewController.receiverInfo = _customInfo;
+    _deliveryStatusViewController.orderItem = _orderItem;
     _deliveryStatusViewController.view.tag = ORDERDETAILTAG +2;
     [self addChildViewController:_deliveryStatusViewController];
     [self.orderDetailMainScrollView addSubview:_deliveryStatusViewController.view];

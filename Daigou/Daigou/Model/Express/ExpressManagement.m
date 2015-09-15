@@ -51,20 +51,37 @@
     FMResultSet *rs = [_db executeQuery:@"select * from express"];
     NSMutableArray *expressArray = [NSMutableArray array];
     while (rs.next) {
-        Express *express = [[Express alloc]init];
-        express.eid = (NSInteger)[rs intForColumn:@"eid"];
-        express.name = [rs stringForColumn:@"name"];
-        express.note = [rs stringForColumn:@"image"];
-        express.website = [rs stringForColumn:@"website"];
-        express.proxy = [rs stringForColumn:@"proxy"];
-        express.image = [rs stringForColumn:@"image"];
-        express.price = [rs doubleForColumn:@"price"];
-        express.syncDate = [rs doubleForColumn:@"syncDate"];
-
-        [expressArray addObject:express];
+        [expressArray addObject:[self handleDBResult:rs]];
     }
     [_db close];
     return expressArray;
+}
+
+- (Express *)getExpressById:(NSInteger)expressId; {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from express where eid = (?)",@(expressId)];
+    Express *express = [[Express alloc]init];
+    if(rs.next) {
+        express = [self handleDBResult:rs];
+    }
+    [_db close];
+    return express;
+}
+
+- (Express *)handleDBResult:(FMResultSet *)rs {
+    Express *express = [[Express alloc]init];
+    express.eid = (NSInteger)[rs intForColumn:@"eid"];
+    express.name = [rs stringForColumn:@"name"];
+    express.note = [rs stringForColumn:@"image"];
+    express.website = [rs stringForColumn:@"website"];
+    express.proxy = [rs stringForColumn:@"proxy"];
+    express.image = [rs stringForColumn:@"image"];
+    express.price = [rs doubleForColumn:@"price"];
+    express.syncDate = [rs doubleForColumn:@"syncDate"];
+    return express;
 }
 
 - (BOOL)saveExpress:(Express *)express {

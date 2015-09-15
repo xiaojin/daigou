@@ -12,4 +12,5 @@
 + (instancetype)shareInstance;
 - (NSArray *)getExpress;
 - (BOOL)saveExpress:(Express *)express;
+- (Express *)getExpressById:(NSInteger)expressId;
 @end

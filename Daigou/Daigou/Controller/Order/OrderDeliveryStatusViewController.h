@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class CustomInfo,OrderItem;
 @interface OrderDeliveryStatusViewController : UIViewController
-
+@property(nonatomic, strong)CustomInfo *receiverInfo;
+@property(nonatomic, strong)OrderItem *orderItem;
 @end

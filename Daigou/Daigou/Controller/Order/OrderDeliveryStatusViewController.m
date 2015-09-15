@@ -16,6 +16,10 @@
 #import "UIScanViewController.h"
 #import "MCustInfoViewController.h"
 #import "CustomInfo.h"
+#import "CustomInfoManagement.h"
+#import "ExpressManagement.h"
+#import "Express.h"
+#import "OrderItem.h"
 
 #define ORDERTAGBASE 80000;
 
@@ -35,12 +39,13 @@
 @property(nonatomic, strong)UIButton *contactBtn;
 @property(nonatomic, strong)UIButton *addressBtn;
 @property(nonatomic, strong)UIButton *deliveryScanBtn;
-@property(nonatomic, strong)CustomInfo *customInfo;
+@property(nonatomic, strong)Express *express;
 @end
 
 @implementation OrderDeliveryStatusViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getExpress];
     [self addContentView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -64,22 +69,23 @@
     
     UIColor *floatingLabelColor = [UIColor lightGrayColor];
     UIColor *fontColor = FONTCOLOR;
+    
     _receiverField = [[JVFloatLabeledTextField alloc]initHasAccessory];
     _receiverField.delegate = self;
     _receiverField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
-    _receiverField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"商品名称"
+    _receiverField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"收件人姓名"
                                                                               attributes:@{NSForegroundColorAttributeName: fontColor}];
     _receiverField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _receiverField.floatingLabelTextColor = floatingLabelColor;
-    //[_receiverField setText:_product.name];
+    [_receiverField setText:_receiverInfo.name];
     [_contentView addSubview:_receiverField];
     [_receiverField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_contentView.mas_top).with.offset(kJVFieldMarginTop);
-        make.left.equalTo(self.view).with.offset(5);
-        make.width.equalTo(self.view).with.offset(-80);
+        make.top.equalTo(_contentView).with.offset(kJVFieldMarginTop);
+        make.left.equalTo(_contentView).with.offset(5);
+        make.width.equalTo(_contentView).with.offset(-80);
         make.height.equalTo(@44);
     }];
-    _receiverField.keepBaseline = YES;
+    _receiverField.keepBaseline = YES;    
     
     UIView *div1 = [UIView new];
     div1.backgroundColor = LINECOLOR;
@@ -98,7 +104,7 @@
     [_contactBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_receiverField.mas_right);
         make.bottom.equalTo(div1.mas_bottom).with.offset(2);
-        make.right.equalTo(self.view.mas_right);
+        make.right.equalTo(_contentView);
         make.height.equalTo(@40);
     }];
     
@@ -109,12 +115,12 @@
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _addressField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _addressField.floatingLabelTextColor = floatingLabelColor;
-    //[_receiverField setText:_product.name];
+    [_addressField setText:_orderItem.address];
     [_contentView addSubview:_addressField];
     [_addressField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_receiverField.mas_bottom).with.offset(10);
         make.left.equalTo(_receiverField.mas_left);
-        make.width.equalTo(self.view).with.offset(-80);
+        make.width.equalTo(_contentView).with.offset(-80);
         make.height.equalTo(@44);
     }];
     _addressField.keepBaseline = YES;
@@ -136,7 +142,7 @@
     [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_addressField.mas_right);
         make.bottom.equalTo(div2.mas_bottom).with.offset(2);
-        make.right.equalTo(self.view.mas_right);
+        make.right.equalTo(_contentView);
         make.height.equalTo(@40);
     }];
     
@@ -147,16 +153,17 @@
                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
     _contactField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _contactField.floatingLabelTextColor = floatingLabelColor;
+    [_contactField setText:_orderItem.phonenumber];
     _contactField.keyboardType = UIKeyboardTypePhonePad;
-    //[_receiverField setText:_product.name];
     [_contentView addSubview:_contactField];
     [_contactField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_addressField.mas_bottom).with.offset(10);
         make.left.equalTo(_receiverField.mas_left);
-        make.width.equalTo(self.view).with.offset(-20);
+        make.width.equalTo(_contentView).with.offset(-20);
         make.height.equalTo(@44);
     }];
     _contactField.keepBaseline = YES;
+
     
     UIView *div3 = [UIView new];
     div3.backgroundColor = LINECOLOR;
@@ -176,15 +183,16 @@
     _idNumberField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _idNumberField.floatingLabelTextColor = floatingLabelColor;
     _idNumberField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    //[_receiverField setText:_product.name];
+    [_idNumberField setText:_orderItem.idnum];
     [_contentView addSubview:_idNumberField];
     [_idNumberField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_contactField.mas_bottom).with.offset(10);
         make.left.equalTo(_receiverField.mas_left);
-        make.width.equalTo(self.view).with.offset(-20);
+        make.width.equalTo(_contentView).with.offset(-20);
         make.height.equalTo(@44);
     }];
     _idNumberField.keepBaseline = YES;
+
     
     UIView *div4 = [UIView new];
     div4.backgroundColor = LINECOLOR;
@@ -204,17 +212,18 @@
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
     _postCodeField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _postCodeField.floatingLabelTextColor = floatingLabelColor;
-   // [_postCodeField setText:[NSString stringWithFormat:@"%.1f", _product.agentprice]];
+    
+    [_postCodeField setText:_orderItem.postcode];
     [_postCodeField setKeyboardType:UIKeyboardTypePhonePad];
     [_contentView addSubview:_postCodeField];
     [_postCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_idNumberField.mas_bottom).with.offset(10);;
         make.left.equalTo(_receiverField.mas_left);
-        make.right.equalTo(self.view.mas_centerX);
+        make.right.equalTo(_contentView.mas_centerX);
         make.height.equalTo(@44);
     }];
     _postCodeField.keepBaseline = YES;
-    
+
 
     UIView *div5 = [UIView new];
     div5.backgroundColor = LINECOLOR;
@@ -233,13 +242,13 @@
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _deliveryPriceField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _deliveryPriceField.floatingLabelTextColor = floatingLabelColor;
-    // [_postCodeField setText:[NSString stringWithFormat:@"%.1f", _product.agentprice]];
     [_deliveryPriceField setKeyboardType:UIKeyboardTypeDecimalPad];
+    [_deliveryPriceField setText:[NSString stringWithFormat:@"%.1f", _orderItem.delivery]];
     [_contentView addSubview:_deliveryPriceField];
     [_deliveryPriceField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_postCodeField.mas_top);
-        make.left.equalTo(self.view.mas_centerX).with.offset(5);
-        make.right.equalTo(self.view).with.offset(-85);;
+        make.left.equalTo(_contentView.mas_centerX).with.offset(5);
+        make.right.equalTo(_contentView).with.offset(-85);;
         make.height.equalTo(@44);
     }];
     _deliveryPriceField.keepBaseline = YES;
@@ -274,7 +283,7 @@
     [deliveryBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(dollarLable.mas_right);
         make.bottom.equalTo(div6.mas_bottom).with.offset(2);
-        make.right.equalTo(self.view.mas_right);
+        make.right.equalTo(_contentView.mas_right);
         make.height.equalTo(@40);
     }];
     
@@ -286,12 +295,12 @@
     _deliveryTrackCodeField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _deliveryTrackCodeField.floatingLabelTextColor = floatingLabelColor;
     _deliveryTrackCodeField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    //[_receiverField setText:_product.name];
+    [_deliveryTrackCodeField setText:_orderItem.barcode];
     [_contentView addSubview:_deliveryTrackCodeField];
     [_deliveryTrackCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_postCodeField.mas_bottom).with.offset(10);
         make.left.equalTo(_receiverField.mas_left);
-        make.width.equalTo(self.view).with.offset(-80);
+        make.width.equalTo(_contentView).with.offset(-80);
         make.height.equalTo(@44);
     }];
     _deliveryTrackCodeField.keepBaseline = YES;
@@ -313,7 +322,7 @@
     [_deliveryScanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_deliveryTrackCodeField.mas_right);
         make.bottom.equalTo(div7.mas_bottom).with.offset(2);
-        make.right.equalTo(self.view.mas_right);
+        make.right.equalTo(_contentView);
         make.height.equalTo(@40);
     }];
     
@@ -326,12 +335,12 @@
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _deliveryCompanyField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _deliveryCompanyField.floatingLabelTextColor = floatingLabelColor;
-    //[_receiverField setText:_product.name];
+    [_deliveryCompanyField setText:_express.name];
     [_contentView addSubview:_deliveryCompanyField];
     [_deliveryCompanyField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_deliveryTrackCodeField.mas_bottom).with.offset(10);
         make.left.equalTo(_receiverField.mas_left);
-        make.width.equalTo(self.view).with.offset(-20);
+        make.width.equalTo(_contentView).with.offset(-20);
         make.height.equalTo(@44);
     }];
     _deliveryCompanyField.keepBaseline = YES;
@@ -354,9 +363,14 @@
 
 
 - (void)selectContactInfo {
-    MCustInfoViewController *customInfo = [[MCustInfoViewController alloc]init];
-    customInfo.customDelegate = self;
-    [self.navigationController pushViewController:customInfo animated:YES];
+    MCustInfoViewController *customInfoViewController = [[MCustInfoViewController alloc]init];
+    customInfoViewController.customDelegate = self;
+    [self.navigationController pushViewController:customInfoViewController animated:YES];
+}
+
+- (void)getExpress {
+    ExpressManagement *expressManagement = [ExpressManagement shareInstance];
+    _express = [expressManagement getExpressById:_orderItem.expressid];
 }
 
 - (void)selectContactAddress {
@@ -373,7 +387,7 @@
 
 #pragma mark - MCustomInfoViewControllerDelegate
 - (void)didSelectCustomInfo:(CustomInfo *)customInfo {
-    _customInfo = customInfo;
+    _receiverInfo = customInfo;
     _receiverField.text = customInfo.name;
 }
 
