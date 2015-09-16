@@ -20,6 +20,7 @@
 
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     _categoryableView = [[UITableView alloc]initWithFrame:CGRectZero];
     _categoryableView.dataSource = self;
     _categoryableView.delegate = self;

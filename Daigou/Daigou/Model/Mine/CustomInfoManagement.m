@@ -144,7 +144,6 @@
         result= [_db executeUpdate:@"update client set name=?,email=?,phonenum=?,wechat=?,idnum=?,postcode=?,agent=?,address=?,address1=?,address2=?,address3=?,photofront=?,photoback=?,expressAvaible=?,note=?,ename=?,syncDate=? where cid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
-            [_db close];
         }
     } else {
         result = [self addCustomInfo:custom];

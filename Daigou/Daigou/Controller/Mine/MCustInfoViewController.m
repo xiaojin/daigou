@@ -305,6 +305,7 @@
     }];
     return result;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (![self checkIsInMineViewController]) {
         [_customDelegate didSelectCustomInfo:[_contacts objectAtIndex:indexPath.section][indexPath.row]];

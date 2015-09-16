@@ -21,6 +21,9 @@
 #import "FSBasicImage.h"
 #import "FSBasicImageSource.h"
 #import "DirectoryUtil.h"
+#import <UIAlertView-Blocks/RIButtonItem.h>
+#import <UIAlertView-Blocks/UIActionSheet+Blocks.h>
+#import "ErrorHelper.h"
 
 #define TEXTFIELDFONTSIZE 16.0f
 #define kTabICONSIZE 26.0f
@@ -36,12 +39,17 @@
 @property(nonatomic, strong)JVFloatLabeledTextField *idNumberField;
 @property(nonatomic, strong)JVFloatLabeledTextField *emailField;
 @property(nonatomic, strong)JVFloatLabeledTextField *postCodeField;
+@property(nonatomic, strong)JVFloatLabeledTextField *address1Field;
+@property(nonatomic, strong)JVFloatLabeledTextField *address2Field;
+@property(nonatomic, strong)JVFloatLabeledTextField *address3Field;
+
 @property(nonatomic, strong)UIButton *agencyButton;
 @property(nonatomic, assign)BOOL isAgency;
 @property(nonatomic, strong)CustomInfo *customInfo;
 @property(nonatomic, strong)UIImagePickerController *imagePicker;
 @property(nonatomic, strong)UICollectionView *imageCollection;
 @property(nonatomic, strong)NSMutableArray *selectPhotos;
+@property(nonatomic ,assign)BOOL isFrontPhoto;
 @end
 
 @implementation MEditCustomInfoViewController
@@ -51,6 +59,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 - (instancetype)initWithCustom:(CustomInfo*)custom {
     if (self = [super init]) {
        _customInfo = custom;
+       _isAgency = _customInfo.agent;
         [self initSubViews];
    }
     return self;
@@ -69,11 +78,19 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     
     _imageCollection = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
     [_imageCollection registerClass:[OrderPhotoViewCell class] forCellWithReuseIdentifier:@"photos"];
-    _imageCollection.backgroundColor = [UIColor lightGrayColor];
+    _imageCollection.backgroundColor = [UIColor clearColor];
     _imageCollection.dataSource = self;
     _imageCollection.delegate = self;
     _imageCollection.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
     _selectPhotos = [[NSMutableArray alloc] init];
+    if (_customInfo.photoback != nil && ![_customInfo.photoback isEqualToString:@""]) {
+        Photo *backPhoto = [[Photo alloc]initWithPath:_customInfo.photoback];
+        [_selectPhotos addObject:backPhoto];
+    }
+    if (_customInfo.photofront != nil && ![_customInfo.photofront isEqualToString:@""]) {
+        Photo *frontPhoto = [[Photo alloc]initWithPath:_customInfo.photofront];
+        [_selectPhotos addObject:frontPhoto];
+    }
     
 }
 
@@ -102,6 +119,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
                                                                        attributes:@{NSForegroundColorAttributeName: fontColor}];
     _nameField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _nameField.floatingLabelTextColor = floatingLabelColor;
+    _nameField.text = _customInfo.name;
     [_contentView addSubview:_nameField];
     [_nameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_contentView.mas_top).with.offset(kJVFieldMarginTop);
@@ -143,8 +161,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
     _addressField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _addressField.floatingLabelTextColor = floatingLabelColor;
-    _addressField.keyboardType = UIKeyboardTypeDecimalPad;
-    //[_receiverField setText:_product.name];
+    [_addressField setText:_customInfo.address];
     [_contentView addSubview:_addressField];
     [_addressField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_nameField.mas_bottom).with.offset(10);
@@ -172,7 +189,8 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
     _phoneField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _phoneField.floatingLabelTextColor = floatingLabelColor;
-    _phoneField.keyboardType = UIKeyboardTypeURL;
+    _phoneField.keyboardType = UIKeyboardTypeDecimalPad;
+    [_phoneField setText:_customInfo.phonenum];
     [_contentView addSubview:_phoneField];
     [_phoneField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_addressField.mas_bottom).with.offset(kJVFieldMarginTop);
@@ -199,6 +217,8 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
                                                                        attributes:@{NSForegroundColorAttributeName: fontColor}];
     _idNumberField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _idNumberField.floatingLabelTextColor = floatingLabelColor;
+    _idNumberField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    [_idNumberField setText:_customInfo.idnum];
     [_contentView addSubview:_idNumberField];
     [_idNumberField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_phoneField.mas_bottom).with.offset(kJVFieldMarginTop);
@@ -225,6 +245,8 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _emailField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _emailField.floatingLabelTextColor = floatingLabelColor;
+    _emailField.keyboardType = UIKeyboardTypeURL;
+    [_emailField setText:_customInfo.email];
     [_contentView addSubview:_emailField];
     [_emailField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_idNumberField.mas_bottom).with.offset(kJVFieldMarginTop);
@@ -251,6 +273,8 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
                                                                         attributes:@{NSForegroundColorAttributeName: fontColor}];
     _postCodeField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _postCodeField.floatingLabelTextColor = floatingLabelColor;
+    _postCodeField.keyboardType = UIKeyboardTypeNumberPad;
+    [_postCodeField setText:_customInfo.postcode];
     [_contentView addSubview:_postCodeField];
     [_postCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_emailField.mas_bottom).with.offset(kJVFieldMarginTop);
@@ -274,7 +298,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     UILabel *idPhotoField = [[UILabel alloc]init];
     idPhotoField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
     idPhotoField.textColor = fontColor;
-    idPhotoField.text = @"身份证图片";
+    idPhotoField.text = @"身份证信息";
     [_contentView addSubview:idPhotoField];
     [idPhotoField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_postCodeField.mas_bottom).with.offset(10);
@@ -284,16 +308,16 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     }];
     
     
-    UIImage *cameraImage = [IonIcons imageWithIcon:ion_camera size:kTabICONSIZE color:[UIColor whiteColor]];
+    UIImage *cameraImage = [IonIcons imageWithIcon:ion_image size:kTabICONSIZE color:[UIColor whiteColor]];
     UIButton *cameraButton = [[UIButton alloc]init];
     [cameraButton setBackgroundColor:THEMECOLOR];
-    [cameraButton setTitle:@"拍照" forState:UIControlStateNormal];
+    [cameraButton setTitle:@"身份证正面" forState:UIControlStateNormal];
     [cameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cameraButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 40.0f)];
-    [cameraButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0.0f)];
+    [cameraButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+    [cameraButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0.0f)];
     [cameraButton setImage:cameraImage forState:UIControlStateNormal];
     [_contentView addSubview:cameraButton];
-    [cameraButton addTarget:self action:@selector(takPhotoFromCamera) forControlEvents:UIControlEventTouchUpInside];
+    [cameraButton addTarget:self action:@selector(takFrontPhotoForID) forControlEvents:UIControlEventTouchUpInside];
     [cameraButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(idPhotoField.mas_bottom).with.offset(10);
         make.left.equalTo(self.view.mas_left).with.offset(MARGINLEFT);
@@ -315,12 +339,12 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     UIButton *picutreButton = [[UIButton alloc]init];
     [picutreButton setBackgroundColor:THEMECOLOR];
     
-    [picutreButton setTitle:@"相册" forState:UIControlStateNormal];
+    [picutreButton setTitle:@"身份证反面" forState:UIControlStateNormal];
     [picutreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [picutreButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 40.0f)];
-    [picutreButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0.0f)];
+    [picutreButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+    [picutreButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0.0f)];
     [picutreButton setImage:pictureImage forState:UIControlStateNormal];
-    [picutreButton addTarget:self action:@selector(takPhotoFromAlbum)forControlEvents:UIControlEventTouchUpInside];
+    [picutreButton addTarget:self action:@selector(takBackPhotoFromID)forControlEvents:UIControlEventTouchUpInside];
     
     [_contentView addSubview:picutreButton];
     [picutreButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -338,8 +362,89 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
         make.top.equalTo(cameraButton.mas_bottom).with.offset(10);
     }];
     
+    _address1Field = [[JVFloatLabeledTextField alloc]initHasAccessory];
+    _address1Field.delegate = self;
+    _address1Field.font = [UIFont systemFontOfSize:kJVFieldFontSize];
+    _address1Field.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"备用地址1"
+                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
+    _address1Field.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
+    _address1Field.floatingLabelTextColor = floatingLabelColor;
+    [_address1Field setText:_customInfo.address1];
+    [_contentView addSubview:_address1Field];
+    [_address1Field mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_imageCollection.mas_bottom).with.offset(kJVFieldMarginTop);
+        make.left.equalTo(self.view).with.offset(MARGINLEFT);
+        make.width.equalTo(self.view).with.offset(-20);
+        make.height.equalTo(@44);
+    }];
+    _address1Field.keepBaseline = YES;
+    
+    UIView *div7 = [UIView new];
+    div7.backgroundColor = LINECOLOR;
+    [_contentView addSubview:div7];
+    [div7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_address1Field.mas_bottom);
+        make.left.equalTo(_address1Field.mas_left);
+        make.right.equalTo(_address1Field.mas_right);
+        make.height.equalTo(@(kLINEHEIGHT));
+    }];
+    
+    _address2Field = [[JVFloatLabeledTextField alloc]initHasAccessory];
+    _address2Field.delegate = self;
+    _address2Field.font = [UIFont systemFontOfSize:kJVFieldFontSize];
+    _address2Field.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"备用地址2"
+                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
+    _address2Field.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
+    _address2Field.floatingLabelTextColor = floatingLabelColor;
+    [_address2Field setText:_customInfo.address2];
+    [_contentView addSubview:_address2Field];
+    [_address2Field mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_address1Field.mas_bottom).with.offset(kJVFieldMarginTop);
+        make.left.equalTo(self.view).with.offset(MARGINLEFT);
+        make.width.equalTo(self.view).with.offset(-20);
+        make.height.equalTo(@44);
+    }];
+    _address2Field.keepBaseline = YES;
+    
+    UIView *div8 = [UIView new];
+    div8.backgroundColor = LINECOLOR;
+    [_contentView addSubview:div8];
+    [div8 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_address2Field.mas_bottom);
+        make.left.equalTo(_address2Field.mas_left);
+        make.right.equalTo(_address2Field.mas_right);
+        make.height.equalTo(@(kLINEHEIGHT));
+    }];
+    
+    _address3Field = [[JVFloatLabeledTextField alloc]initHasAccessory];
+    _address3Field.delegate = self;
+    _address3Field.font = [UIFont systemFontOfSize:kJVFieldFontSize];
+    _address3Field.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"备用地址2"
+                                                                           attributes:@{NSForegroundColorAttributeName: fontColor}];
+    _address3Field.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
+    _address3Field.floatingLabelTextColor = floatingLabelColor;
+    [_address3Field setText:_customInfo.address3];
+    [_contentView addSubview:_address3Field];
+    [_address3Field mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_address2Field.mas_bottom).with.offset(kJVFieldMarginTop);
+        make.left.equalTo(self.view).with.offset(MARGINLEFT);
+        make.width.equalTo(self.view).with.offset(-20);
+        make.height.equalTo(@44);
+    }];
+    _address3Field.keepBaseline = YES;
+    
+    UIView *div9 = [UIView new];
+    div9.backgroundColor = LINECOLOR;
+    [_contentView addSubview:div9];
+    [div9 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_address3Field.mas_bottom);
+        make.left.equalTo(_address3Field.mas_left);
+        make.right.equalTo(_address3Field.mas_right);
+        make.height.equalTo(@(kLINEHEIGHT));
+    }];
+    
     [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_imageCollection.mas_bottom).with.offset(15);
+        make.bottom.equalTo(div9.mas_bottom).with.offset(10);
     }];
 
 }
@@ -362,16 +467,19 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     }
 }
 
-- (void)takPhotoFromCamera {
-    [self presentImagePicker:YES];
+- (void)takFrontPhotoForID {
+    _isFrontPhoto = YES;
+    [self showActionSheet];
+    
 }
 
-- (void)takPhotoFromAlbum {
-    [self presentImagePicker:NO];
+- (void)takBackPhotoFromID {
+    _isFrontPhoto = NO;
+    [self showActionSheet];
 }
 
 -(void)presentImagePicker:(BOOL)forCamera{
-    if (_selectPhotos.count <=2) {
+    if (_selectPhotos.count < 2) {
         _imagePicker = [[UIImagePickerController alloc]init];
         _imagePicker.delegate = self;
         _imagePicker.allowsEditing = NO;
@@ -385,16 +493,6 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
         } else {
             [self showViewController:_imagePicker];
         }
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"照片提示"
-                                                            message:@"照片数量不能超过2张"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"好的"
-                                                  otherButtonTitles:nil, nil];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alertView show];
-        });
     }
 }
 -(void)showViewController:(UIViewController*)viewController
@@ -410,10 +508,14 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     }
     Photo *photo = [[Photo alloc] initWithImage:chosenImage];
     [_selectPhotos addObject:photo];
-    // dispatch_async(dispatch_get_main_queue(), ^{
+     dispatch_async(dispatch_get_main_queue(), ^{
     [_imageCollection reloadData];
-    //});
-    
+    });
+    if (_isFrontPhoto) {
+        _customInfo.photofront = photo.imageUrl;
+    } else {
+        _customInfo.photoback = photo.imageUrl;
+    }
     [self imagePickerControllerDidCancel:picker];
 }
 
@@ -438,6 +540,60 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     return cell;
 }
 
+#pragma mark CameraPhotoSelect
+- (void)showActionSheet {
+    
+    if (IOS8_OR_ABOVE) {
+        [self menuCameraPhotoiOS8AndAbove];
+    } else {
+        [self menuCameraPhotoBelowiOS8];
+    }
+}
+
+- (void)menuCameraPhotoiOS8AndAbove {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* destructiveBtn = [UIAlertAction actionWithTitle:@"相机获取" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                                                               [self presentImagePicker:YES];
+                                                           }];
+    UIAlertAction* viewPhotoBtn = [UIAlertAction actionWithTitle:@"相册获取" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             [self presentImagePicker:NO];
+                                                         }];
+    UIAlertAction* cancelBtn = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive
+                                                         handler:^(UIAlertAction * action) {
+                                                            
+                                                         }];
+    __weak id weakSelf = self;
+    [alert addAction:viewPhotoBtn];
+    [alert addAction:destructiveBtn];
+    [alert addAction:cancelBtn];
+    alert.popoverPresentationController.sourceRect = self.view.frame;
+    alert.popoverPresentationController.sourceView = weakSelf;
+    
+    [[[[[[[UIApplication sharedApplication] keyWindow] rootViewController] childViewControllers] lastObject] visibleViewController] presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)menuCameraPhotoBelowiOS8 {
+    RIButtonItem *destructiveBtn = [RIButtonItem itemWithLabel:@"相机获取" action:^{
+        [self presentImagePicker:YES];
+    }];
+    RIButtonItem *viewImageBtn = [RIButtonItem itemWithLabel:@"相册获取" action:^{
+        [self presentImagePicker:NO];
+    }];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                     cancelButtonItem:[RIButtonItem itemWithLabel:@"取消"]
+                                                destructiveButtonItem: nil
+                                                     otherButtonItems:viewImageBtn, destructiveBtn,nil];
+    
+    [actionSheet showFromRect:self.view.frame inView:self.view animated:YES];
+}
+
+
+
 #pragma mark PhotoCellViewDelegate
 - (void)deletePhoto:(Photo*) selectedPhoto {
     [_selectPhotos removeObject:selectedPhoto];
@@ -455,32 +611,16 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 }
 
 
-
-#pragma mark - UITextViewDelegate
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    NSLog(@"%@",textView.text);
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if (textView.tag == 51002) {
-        _customInfo.address = textView.text;
-    } else if(textView.tag == 51005){
-        _customInfo.note = textView.text;
-    }
-}
-
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField.tag == 51000) {
-        _customInfo.name = textField.text;
-    } else if(textField.tag == 51001){
-        _customInfo.email = textField.text;
-    } else if(textField.tag == 51003){
-        _customInfo.idnum = textField.text;
-    }
+
 }
 
 #pragma mark - SaveCustomInfo
@@ -488,9 +628,19 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     //dismiss keyboard.
     [self.view endEditing:YES];
     if ([_customInfo.name isEqualToString:@""] || _customInfo.name == nil) {
+        [ErrorHelper showErrorAlertWithTitle:@"客户信息" message:@"客户姓名不能为空"];
         return;
     }
     CustomInfoManagement *customManager = [CustomInfoManagement shareInstance];
+    _customInfo.name = _nameField.text;
+    _customInfo.email = _emailField.text;
+    _customInfo.phonenum = _phoneField.text;
+    _customInfo.idnum = _idNumberField.text;
+    _customInfo.postcode = _postCodeField.text;
+    _customInfo.address1 = _address1Field.text;
+    _customInfo.address2 = _address2Field.text;
+    _customInfo.address3 = _address3Field.text;
+    _customInfo.agent = !_isAgency;
     BOOL result = [customManager updateCustomInfo:_customInfo];
     if (result) {
         NSArray *controllers = self.navigationController.childViewControllers;
@@ -502,31 +652,5 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
-#pragma mark -- Save Photo
-- (NSString *)savePhotoToDB {
-    __block NSString *photosURL = @"";
-    [_selectPhotos enumerateObjectsUsingBlock:^(Photo *photo, NSUInteger idx, BOOL *stop) {
-        if (idx < ([_selectPhotos count]-1)) {
-            photosURL = [photosURL stringByAppendingFormat:@"%@,",[photo imageUrl]];
-        } else {
-            photosURL = [photosURL stringByAppendingFormat:@"%@",[photo imageUrl]];
-        }
-    }];
-    return photosURL;
-}
-
-//- (void)getRelatedPhotosFromDB {
-//    if (![_orderItem.noteImage isEqualToString:@""] && _orderItem.noteImage !=nil) {
-//        NSArray *photos = [_orderItem.noteImage componentsSeparatedByString:@","];
-//        if ([photos count]!= 0) {
-//            [photos enumerateObjectsUsingBlock:^(NSString *imageURL, NSUInteger idx, BOOL *stop) {
-//                Photo *photo = [[Photo alloc] initWithPath:imageURL];
-//                [_selectPhotos addObject:photo];
-//            }];
-//        }
-//    }
-//    
-//}
 
 @end

@@ -23,13 +23,8 @@
     _brandTableView.dataSource = self;
     _brandTableView.delegate = self;
     _brandTableView.rowHeight = 65.0f;
+    _brandTableView.frame= self.frame;
     [self addSubview:_brandTableView];
-    [_brandTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top);
-        make.left.equalTo(self.mas_left);
-        make.right.equalTo(self.mas_right);
-        make.bottom.equalTo(self.mas_bottom);
-    }];
      self.brandList = [self getBrands];
 }
 
