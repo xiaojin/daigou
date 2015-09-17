@@ -717,6 +717,16 @@
     self.benefitPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"benefitvalue"]];
 }
 
+- (void)saveMainInfo {
+    _orderItem.subtotal = [_subTotalField.text floatValue];
+    _orderItem.discount = [_discountField.text floatValue];
+    _orderItem.totoal = [_totalPriceField.text floatValue];
+    _orderItem.othercost =[_otherPriceFiled.text floatValue];
+    _orderItem.profit = [_benefitPriceFiled.text floatValue];
+    _orderItem.note = _notePriceFiled.text;
+    [_benefitData setValue:_purchasePriceFiled.text forKey:@"purchasevalue"];
+}
+
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{
 //    self.titleName.text = @"";
 //    self.detailInfo.text = @"";

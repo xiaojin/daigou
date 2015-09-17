@@ -20,10 +20,13 @@
 #import "ExpressManagement.h"
 #import "Express.h"
 #import "OrderItem.h"
+#import "MAddressCollectionViewController.h"
+#import "MExpressManagementViewController.h"
+
 
 #define ORDERTAGBASE 80000;
 
-@interface OrderDeliveryStatusViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,MCustInfoViewControllerDelegate>{
+@interface OrderDeliveryStatusViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,MCustInfoViewControllerDelegate,MAddressCollectionViewControllerDelegate, MExpressManagementViewControllerDelegate>{
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)UIScrollView *scrollView;
@@ -39,7 +42,6 @@
 @property(nonatomic, strong)UIButton *contactBtn;
 @property(nonatomic, strong)UIButton *addressBtn;
 @property(nonatomic, strong)UIButton *deliveryScanBtn;
-@property(nonatomic, strong)Express *express;
 @end
 
 @implementation OrderDeliveryStatusViewController
@@ -49,6 +51,11 @@
     [self addContentView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
 }
 
 - (void)addContentView {
@@ -374,7 +381,9 @@
 }
 
 - (void)selectContactAddress {
-    NSLog(@"Button pressed");
+    MAddressCollectionViewController *addressCollectionViewController = [[MAddressCollectionViewController alloc]initWithCustomInfo:_receiverInfo];
+    addressCollectionViewController.delegate = self;
+    [self.navigationController pushViewController:addressCollectionViewController animated:YES];
 }
 
 - (void)updateDeliveryPrice {
@@ -382,7 +391,21 @@
 }
 
 - (void)navigateTDeliveryCompanyManagerment {
-    NSLog(@"Navigation to Delivery Management");
+    MExpressManagementViewController *expressManagement = [[MExpressManagementViewController alloc]init];
+    expressManagement.expressDelegate = self;
+    [self.navigationController pushViewController:expressManagement animated:YES];
+}
+
+#pragma mark - MExpressManagementViewCOntrollerDelegate
+- (void)expressDidSelected:(Express *)express {
+    _express = express;
+    [_deliveryCompanyField setText:express.name];
+}
+
+#pragma mark - MAddressCollectionViewControllerDelegate
+
+- (void)addressDidSelect:(NSString *)address {
+    _addressField.text =address;
 }
 
 #pragma mark - MCustomInfoViewControllerDelegate
@@ -426,6 +449,16 @@
         }];
         return YES;
     }
+}
+
+- (void)saveDeliveryStatus {
+    _receiverInfo.name = _receiverField.text;
+    _receiverInfo.address = _addressField.text;
+    _receiverInfo.phonenum = _contactField.text;
+    _receiverInfo.idnum = _idNumberField.text;
+    _receiverInfo.postcode = _postCodeField.text;
+    _deliveryPrice = [_deliveryPriceField.text floatValue];
+    _deliverybarCode = _deliveryTrackCodeField.text;
 }
 
 #pragma mark - UINotification

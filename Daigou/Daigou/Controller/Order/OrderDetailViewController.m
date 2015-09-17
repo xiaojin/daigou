@@ -9,6 +9,8 @@
 #import "OrderDetailViewController.h"
 #import "CommonDefines.h"
 #import <Masonry/Masonry.h>
+#import <ionicons/IonIcons.h>
+#import <ionicons/ionicons-codes.h>
 #import "OrderMainInfoViewController.h"
 #import "OrderBasketViewController.h"
 #import "OrderDeliveryStatusViewController.h"
@@ -46,6 +48,24 @@
     [self initOrderData];
     [self setPageIndicator];
     [self initScrollView];
+}
+
+- (void)initNavigateBar {
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrder)];
+    self.navigationItem.rightBarButtonItem = doneItem;
+    
+    UIImage *backImage = [IonIcons imageWithIcon:ion_ios_arrow_left size:26 color:SYSTEMBLUE];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 33)];
+    [backButton addTarget:self action:@selector(backFromDetail) forControlEvents:UIControlEventTouchUpInside];
+    [backButton setImage:backImage forState:UIControlStateNormal];
+    [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -22, 0, 0)];
+    [backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -12, 0, 0)];
+    [backButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
+    [backButton setTitle:@"订单" forState:UIControlStateNormal];
+    [backButton setTitleColor:SYSTEMBLUE forState:UIControlStateNormal];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
 }
 
 - (void)addBottomView {
@@ -304,7 +324,36 @@
     }];
 
 }
+#pragma mark SaveOrder
+- (void)saveOrder {
+    
+//SAVE MAIN INFO
+    [_addNewOrderViewController saveMainInfo];
+    _orderItem.clientid = _addNewOrderViewController.customInfo.cid;
+    _orderItem.subtotal = _addNewOrderViewController.orderItem.subtotal;
+    _orderItem.discount = _addNewOrderViewController.orderItem.discount;
+    _orderItem.totoal = _addNewOrderViewController.orderItem.totoal;
+    _orderItem.othercost =_addNewOrderViewController.orderItem.othercost;
+    _orderItem.profit = _addNewOrderViewController.orderItem.profit;
+    _orderItem.note = _addNewOrderViewController.orderItem.note;
+    
+//SAVE DELIVERY STATUS
+    [_deliveryStatusViewController saveDeliveryStatus];
+    CustomInfo *receiverInfo = _deliveryStatusViewController.receiverInfo;
+    _orderItem.expressid = _deliveryStatusViewController.express.eid;
+    _orderItem.barcode = _deliveryStatusViewController.deliverybarCode;
+    _orderItem.delivery = _deliveryStatusViewController.deliveryPrice;
+    _orderItem.reviever = receiverInfo.name;
+    _orderItem.address = receiverInfo.address;
+    _orderItem.phonenumber = receiverInfo.phonenum;
+    _orderItem.postcode = receiverInfo.postcode;
+    
+    
+}
 
+- (void)backFromDetail {
+
+}
 
 #pragma mark - UIScrollViewDelegate
 

@@ -32,6 +32,7 @@
 @property(nonatomic, strong)NSArray *products;
 @property(nonatomic, strong)NSDictionary *productGroup;
 @property(nonatomic, strong)NSDictionary *benefitDict;
+@property(nonatomic, strong)OrderItemBenifitCell *orderCell;
 @end
 
 
@@ -160,32 +161,33 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 
 - (OrderItemBenifitCell *) setOrderTextInputView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OrderItemBenifitCell *orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
-    for (UIView *view in orderCell.contentView.subviews) {
+    _orderCell = [tableView dequeueReusableCellWithIdentifier:oAddNewOrderCellIdentify];
+    for (UIView *view in _orderCell.contentView.subviews) {
         if ([view isKindOfClass:[UIView class]]) {
             [view removeFromSuperview];
         }
     }
-    if (orderCell == nil) {
-        orderCell = [[OrderItemBenifitCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
-        orderCell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
+    if (_orderCell == nil) {
+        _orderCell = [[OrderItemBenifitCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oAddNewOrderCellIdentify];
+        _orderCell.tag = ORDERTAGBASE + indexPath.section *4 + indexPath.row;
     }
-    orderCell.customInfo = self.customInfo;
-    orderCell.orderItem = self.orderItem;
-    orderCell.productDesc = [self setProdcutDesc];
-    orderCell.benefitData = _benefitDict;
-    orderCell.fullScreenDisplayDelegate = self;
-    orderCell.EditPriceActionBlock = ^(NSInteger number, CGRect frame) {
+    _orderCell.customInfo = self.customInfo;
+    _orderCell.orderItem = self.orderItem;
+    _orderCell.productDesc = [self setProdcutDesc];
+    _orderCell.benefitData = _benefitDict;
+    _orderCell.fullScreenDisplayDelegate = self;
+    __weak typeof(self) weakSelf = self;
+    _orderCell.EditPriceActionBlock = ^(NSInteger number, CGRect frame) {
         if (number == 11) {
-            [self handCustomCellTap];
+            [weakSelf handCustomCellTap];
         } else if (number == 12) {
-            [self handleProductCellTap];
+            [weakSelf handleProductCellTap];
         } else {
-            [self beginEditNumber:indexPath withFrame:frame];
+            [weakSelf beginEditNumber:indexPath withFrame:frame];
         }
     };
 
-    return  orderCell;
+    return  _orderCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -258,5 +260,16 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
 }
 
+#pragma mark -SaveMainInfo
+
+- (void)saveMainInfo {
+    [_orderCell  saveMainInfo];
+    _orderItem.subtotal = _orderCell.orderItem.subtotal;
+    _orderItem.discount = _orderCell.orderItem.discount;
+    _orderItem.totoal = _orderCell.orderItem.totoal;
+    _orderItem.othercost =_orderCell.orderItem.othercost;
+    _orderItem.profit = _orderCell.orderItem.profit;
+    _orderItem.note = _orderCell.orderItem.note;
+}
 
 @end

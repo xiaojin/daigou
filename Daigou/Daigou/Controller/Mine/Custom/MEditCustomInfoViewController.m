@@ -69,6 +69,8 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     [super viewDidLoad];
     [self setNavigationView];
     [self addContentView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 - (void)initSubViews {
     
@@ -614,7 +616,19 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-
+    CGFloat kbHeight = keyboardSize.height;
+    if (keyboardSize.height == 0) {
+        kbHeight = 402.f;
+    }
+    [UIView animateWithDuration:0.1 animations:^{
+        UIEdgeInsets edgeInsets = [_scrollView contentInset];
+        edgeInsets.bottom = kbHeight;
+        [_scrollView setContentInset:edgeInsets];
+        edgeInsets = [[self scrollView] scrollIndicatorInsets];
+        edgeInsets.bottom = kbHeight;
+        [_scrollView setScrollIndicatorInsets:edgeInsets];
+        [_scrollView scrollRectToVisible:textField.frame animated:YES];
+    }];
     return YES;
 }
 
@@ -643,14 +657,36 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     _customInfo.agent = !_isAgency;
     BOOL result = [customManager updateCustomInfo:_customInfo];
     if (result) {
-        NSArray *controllers = self.navigationController.childViewControllers;
-        NSInteger length = [controllers count];
-        if ([[controllers objectAtIndex:length-2] isKindOfClass:[MCustInfoViewController class]]) {
-            MCustInfoViewController *showDetailView =  (MCustInfoViewController *)[controllers lastObject];
-            //showDetailView.customInfo = _customInfo;
-        }
+//        NSArray *controllers = self.navigationController.childViewControllers;
+//        NSInteger length = [controllers count];
+//        if ([[controllers objectAtIndex:length-2] isKindOfClass:[MCustInfoViewController class]]) {
+//            MCustInfoViewController *showDetailView =  (MCustInfoViewController *)[controllers lastObject];
+//            //showDetailView.customInfo = _customInfo;
+//        }
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - UINotification
+- (void)keyboardWillHide:(NSNotification *)sender {
+    UIEdgeInsets edgeInsets = [_scrollView contentInset];
+    edgeInsets.bottom = 140.0f;
+    [_scrollView setContentInset:edgeInsets];
+    edgeInsets = [_scrollView scrollIndicatorInsets];
+    edgeInsets.bottom = 0;
+    [_scrollView setScrollIndicatorInsets:edgeInsets];
+    [_scrollView setContentInset:edgeInsets];
+}
+
+- (void)keyboardDidShow:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    keyboardSize = [info[UIKeyboardFrameEndUserInfoKey ] CGRectValue].size;
+    keyboardSize = CGSizeMake(keyboardSize.width, keyboardSize.height + 100.0f);
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 
 @end

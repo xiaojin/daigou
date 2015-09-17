@@ -12,4 +12,6 @@
 @property(nonatomic, strong)OrderItem *orderItem;
 @property(nonatomic, strong)CustomInfo *customInfo;
 - (instancetype)initWithOrderItem:(OrderItem *)orderItem withClientDetail:(CustomInfo *)client;
+
+- (void)saveMainInfo;
 @end

@@ -23,4 +23,5 @@
 @property (nonatomic ,strong) NSDictionary *benefitData;
 @property(nonatomic, weak) id <FullScreenDisplayDelegate> fullScreenDisplayDelegate;
 
+- (void)saveMainInfo;
 @end
