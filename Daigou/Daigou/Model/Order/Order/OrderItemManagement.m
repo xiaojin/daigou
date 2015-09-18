@@ -153,7 +153,6 @@
         result= [_db executeUpdate:@"update orderitem set clientid=?,statu=?,expressid=?,parentoid=?,free_ship=?,address=?,reviever=?,phonenumber=?,postcode=?,total=?,discount=?,delivery=?,subtotal=?,profit=?,othercost=?,createDate=?,shipDate=?,deliverDate=?,payDate=? ,note=?,barcode = ?,idnum =?,proxy=?,noteImage=?,syncDate=?  where oid = ?" withArgumentsInArray:updateData];
         if (result) {
             [_db commit];
-            [_db close];
         }
     } else {
         result = [self addOrder:orderItem];

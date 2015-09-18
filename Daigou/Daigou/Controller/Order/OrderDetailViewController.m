@@ -17,6 +17,7 @@
 #import "OrderItemManagement.h"
 #import "OProductItem.h"
 #import "CustomInfo.h"
+#import "OrderItem.h"
 
 @interface OrderDetailViewController  () <UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *orderDetailMainScrollView;
@@ -41,9 +42,10 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad {ke yi
     
     [super viewDidLoad];
+    [self initNavigateBar];
     [self addBottomView];
     [self initOrderData];
     [self setPageIndicator];
@@ -51,9 +53,6 @@
 }
 
 - (void)initNavigateBar {
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrder)];
-    self.navigationItem.rightBarButtonItem = doneItem;
-    
     UIImage *backImage = [IonIcons imageWithIcon:ion_ios_arrow_left size:26 color:SYSTEMBLUE];
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 33)];
     [backButton addTarget:self action:@selector(backFromDetail) forControlEvents:UIControlEventTouchUpInside];
@@ -84,7 +83,7 @@
     [saveOrder.titleLabel setFont:Font(14)];
     [saveOrder setBackgroundColor:THEMECOLOR];
     [saveOrder.titleLabel setTextColor:[UIColor whiteColor]];
-    
+    [saveOrder addTarget:self action:@selector(saveOrder) forControlEvents:UIControlEventTouchUpInside];
     [_bottomView addSubview:saveOrder];
     [saveOrder mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_bottomView.mas_top);
@@ -326,7 +325,6 @@
 }
 #pragma mark SaveOrder
 - (void)saveOrder {
-    
 //SAVE MAIN INFO
     [_addNewOrderViewController saveMainInfo];
     _orderItem.clientid = _addNewOrderViewController.customInfo.cid;
@@ -347,13 +345,13 @@
     _orderItem.address = receiverInfo.address;
     _orderItem.phonenumber = receiverInfo.phonenum;
     _orderItem.postcode = receiverInfo.postcode;
-    
-    
+    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+    [orderItemManagement updateOrderItem:_orderItem];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)backFromDetail {
-    
-
+    [self saveOrder];
 }
 
 #pragma mark - UIScrollViewDelegate

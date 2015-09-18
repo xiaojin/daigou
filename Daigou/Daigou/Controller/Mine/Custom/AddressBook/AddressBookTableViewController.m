@@ -84,7 +84,7 @@
         cell.imageView.image = checkedImage;
     }
     else {
-        UIImage *uncheckedImage = [IonIcons imageWithIcon:ion_ios_checkmark_outline iconColor:THEMECOLOR iconSize:35.0f imageSize:CGSizeMake(35.0f, 35.0f)];
+        UIImage *uncheckedImage = [IonIcons imageWithIcon:ion_ios_circle_outline iconColor:THEMECOLOR iconSize:35.0f imageSize:CGSizeMake(35.0f, 35.0f)];
         cell.imageView.image = uncheckedImage;
     }
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleChecking:)];

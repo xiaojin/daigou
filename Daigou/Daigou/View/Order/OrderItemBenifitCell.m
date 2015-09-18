@@ -691,15 +691,15 @@
     return newBenefitPrice;
 }
 
-- (void)updatePaymentStatus {
+- (void)updatePaymentStatus { 
     if (_orderItem.payDate != 0) {
         [_payStatus setTitle:@"已付款" forState:UIControlStateNormal];
         [_payStatus setBackgroundColor:THEMECOLOR];
-        _orderItem.payDate = 0;
+        _orderItem.payDate = [NSDate timeIntervalSinceReferenceDate];
     } else {
         [_payStatus setTitle:@"未付款" forState:UIControlStateNormal];
         [_payStatus setBackgroundColor:[UIColor lightGrayColor]];
-        _orderItem.payDate = [NSDate timeIntervalSinceReferenceDate];
+        _orderItem.payDate = 0;
     }
 }
 
@@ -715,6 +715,7 @@
     self.purchasePriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"purchasevalue"]];
     self.otherPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"othervalue"]];
     self.benefitPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"benefitvalue"]];
+    self.notePriceFiled.text = [NSString stringWithFormat:@"%@",_orderItem.note];
 }
 
 - (void)saveMainInfo {
@@ -724,7 +725,6 @@
     _orderItem.othercost =[_otherPriceFiled.text floatValue];
     _orderItem.profit = [_benefitPriceFiled.text floatValue];
     _orderItem.note = _notePriceFiled.text;
-    [_benefitData setValue:_purchasePriceFiled.text forKey:@"purchasevalue"];
 }
 
 - (void)updateCellWithTitle:(NSString*)titleName detailInformation:(NSString*)detailInfo{

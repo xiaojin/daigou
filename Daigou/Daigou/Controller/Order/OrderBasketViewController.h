@@ -9,5 +9,4 @@
 @class OrderItem;
 @interface OrderBasketViewController : UIViewController
 - (instancetype)initwithOrderItem :(OrderItem *)orderitem withGroupOrderProducts:(NSArray *)products;
-- (void)refreshBasketContent;
 @end

@@ -116,17 +116,17 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 // TODO 小记，总计，youhui
 - (void) initValueForCell{
     __block float totalValue = 0.0;
-    float discountValue = 0.0;
+    float discountValue = _orderItem.discount;
     float finalValue = 0.0;
     __block float purchaseValue= 0.0f;
-    float otherValue=0.0f;
+    float otherValue=_orderItem.othercost;
     float benefitValue= 0.0f;
     [self.products enumerateObjectsUsingBlock:^(OProductItem *obj, NSUInteger idx, BOOL *stop) {
         totalValue = totalValue + obj.sellprice;
         purchaseValue = purchaseValue + obj.price;
     }];
-    finalValue = totalValue;
-    benefitValue = totalValue - purchaseValue * EXCHANGERATE;
+    finalValue = totalValue - discountValue;
+    benefitValue = finalValue - purchaseValue * EXCHANGERATE - otherValue*EXCHANGERATE;
     NSDictionary *benefitDict = @{@"totalvalue":@(totalValue),@"discountvalue":@(discountValue),@"finalvalue":@(finalValue),@"purchasevalue":@(purchaseValue),@"othervalue":@(otherValue),@"benefitvalue":@(benefitValue)};
     _benefitDict = benefitDict;
 }
