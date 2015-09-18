@@ -84,7 +84,7 @@
                                                                               attributes:@{NSForegroundColorAttributeName: fontColor}];
     _receiverField.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _receiverField.floatingLabelTextColor = floatingLabelColor;
-    [_receiverField setText:_receiverInfo.name];
+    [self setTextForReceiver];
     [_contentView addSubview:_receiverField];
     [_receiverField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_contentView).with.offset(kJVFieldMarginTop);
@@ -449,6 +449,15 @@
         }];
         return YES;
     }
+}
+
+- (void)setTextForReceiver {
+    if (_orderItem.reviever != nil && ![_orderItem.reviever isEqualToString:@""]) {
+        _receiverField.text = _orderItem.reviever;
+    } else {
+        _receiverField.text = _receiverInfo.name;
+    }
+
 }
 
 - (void)saveDeliveryStatus {

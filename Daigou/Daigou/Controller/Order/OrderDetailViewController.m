@@ -42,7 +42,7 @@
     return self;
 }
 
-- (void)viewDidLoad {ke yi
+- (void)viewDidLoad {
     
     [super viewDidLoad];
     [self initNavigateBar];
@@ -325,29 +325,31 @@
 }
 #pragma mark SaveOrder
 - (void)saveOrder {
-//SAVE MAIN INFO
-    [_addNewOrderViewController saveMainInfo];
-    _orderItem.clientid = _addNewOrderViewController.customInfo.cid;
-    _orderItem.subtotal = _addNewOrderViewController.orderItem.subtotal;
-    _orderItem.discount = _addNewOrderViewController.orderItem.discount;
-    _orderItem.totoal = _addNewOrderViewController.orderItem.totoal;
-    _orderItem.othercost =_addNewOrderViewController.orderItem.othercost;
-    _orderItem.profit = _addNewOrderViewController.orderItem.profit;
-    _orderItem.note = _addNewOrderViewController.orderItem.note;
-    
-//SAVE DELIVERY STATUS
-    [_deliveryStatusViewController saveDeliveryStatus];
-    CustomInfo *receiverInfo = _deliveryStatusViewController.receiverInfo;
-    _orderItem.expressid = _deliveryStatusViewController.express.eid;
-    _orderItem.barcode = _deliveryStatusViewController.deliverybarCode;
-    _orderItem.delivery = _deliveryStatusViewController.deliveryPrice;
-    _orderItem.reviever = receiverInfo.name;
-    _orderItem.address = receiverInfo.address;
-    _orderItem.phonenumber = receiverInfo.phonenum;
-    _orderItem.postcode = receiverInfo.postcode;
-    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
-    [orderItemManagement updateOrderItem:_orderItem];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_addNewOrderViewController.customInfo.cid != 0 ) {
+        //SAVE MAIN INFO
+        [_addNewOrderViewController saveMainInfo];
+        _orderItem.clientid = _addNewOrderViewController.customInfo.cid;
+        _orderItem.subtotal = _addNewOrderViewController.orderItem.subtotal;
+        _orderItem.discount = _addNewOrderViewController.orderItem.discount;
+        _orderItem.totoal = _addNewOrderViewController.orderItem.totoal;
+        _orderItem.othercost =_addNewOrderViewController.orderItem.othercost;
+        _orderItem.profit = _addNewOrderViewController.orderItem.profit;
+        _orderItem.note = _addNewOrderViewController.orderItem.note;
+        
+        //SAVE DELIVERY STATUS
+        [_deliveryStatusViewController saveDeliveryStatus];
+        CustomInfo *receiverInfo = _deliveryStatusViewController.receiverInfo;
+        _orderItem.expressid = _deliveryStatusViewController.express.eid;
+        _orderItem.barcode = _deliveryStatusViewController.deliverybarCode;
+        _orderItem.delivery = _deliveryStatusViewController.deliveryPrice;
+        _orderItem.reviever = receiverInfo.name;
+        _orderItem.address = receiverInfo.address;
+        _orderItem.phonenumber = receiverInfo.phonenum;
+        _orderItem.postcode = receiverInfo.postcode;
+        OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+        [orderItemManagement updateOrderItem:_orderItem];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)backFromDetail {

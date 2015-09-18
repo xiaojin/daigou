@@ -132,7 +132,7 @@
     [_payStatus setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.subView addSubview:_payStatus];
     [self updatePaymentStatus];
-    [_payStatus addTarget:self action:@selector(updatePaymentStatus) forControlEvents:UIControlEventTouchUpInside];
+    [_payStatus addTarget:self action:@selector(paymentChanges) forControlEvents:UIControlEventTouchUpInside];
     [_payStatus mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(customInfoFieldUnderLine.mas_top).with.offset(-5);
         make.left.equalTo(_customInfoField.mas_right).with.offset(5);
@@ -691,15 +691,25 @@
     return newBenefitPrice;
 }
 
-- (void)updatePaymentStatus { 
+- (void)updatePaymentStatus {
     if (_orderItem.payDate != 0) {
         [_payStatus setTitle:@"已付款" forState:UIControlStateNormal];
         [_payStatus setBackgroundColor:THEMECOLOR];
-        _orderItem.payDate = [NSDate timeIntervalSinceReferenceDate];
     } else {
         [_payStatus setTitle:@"未付款" forState:UIControlStateNormal];
         [_payStatus setBackgroundColor:[UIColor lightGrayColor]];
+    }
+}
+
+- (void)paymentChanges {
+    if (_orderItem.payDate != 0) {
+        [_payStatus setTitle:@"未付款" forState:UIControlStateNormal];
+        [_payStatus setBackgroundColor:[UIColor lightGrayColor]];
         _orderItem.payDate = 0;
+    } else {
+        [_payStatus setTitle:@"已付款" forState:UIControlStateNormal];
+        [_payStatus setBackgroundColor:THEMECOLOR];
+        _orderItem.payDate = [NSDate timeIntervalSinceReferenceDate];
     }
 }
 
@@ -715,7 +725,7 @@
     self.purchasePriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"purchasevalue"]];
     self.otherPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"othervalue"]];
     self.benefitPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"benefitvalue"]];
-    self.notePriceFiled.text = [NSString stringWithFormat:@"%@",_orderItem.note];
+    self.notePriceFiled.text = [NSString stringWithFormat:@"%@",_orderItem.note?_orderItem.note : @""];
 }
 
 - (void)saveMainInfo {
