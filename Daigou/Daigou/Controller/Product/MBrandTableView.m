@@ -23,7 +23,7 @@
     _brandTableView.dataSource = self;
     _brandTableView.delegate = self;
     _brandTableView.rowHeight = 65.0f;
-    _brandTableView.frame= self.frame;
+    _brandTableView.frame= self.bounds;
     [self addSubview:_brandTableView];
      self.brandList = [self getBrands];
 }
