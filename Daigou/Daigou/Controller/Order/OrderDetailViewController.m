@@ -348,8 +348,8 @@
         _orderItem.postcode = receiverInfo.postcode;
         OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
         [orderItemManagement updateOrderItem:_orderItem];
-        [self.navigationController popViewControllerAnimated:YES];
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)backFromDetail {

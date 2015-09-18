@@ -213,6 +213,7 @@
         CustomInfo *customInfo = [[CustomInfo alloc]init];
         MEditCustomInfoViewController *editCustomInfoViewController = [[MEditCustomInfoViewController alloc]initWithCustom:customInfo];
         editCustomInfoViewController.hidesBottomBarWhenPushed = YES;
+        editCustomInfoViewController.view.backgroundColor = [UIColor whiteColor];
         [self.navigationController pushViewController:editCustomInfoViewController animated:YES];
 
     } else if (buttonIndex == 2){
@@ -312,7 +313,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         MEditCustomInfoViewController *editDetailViewController = [[MEditCustomInfoViewController alloc]initWithCustom:[_contacts objectAtIndex:indexPath.section][indexPath.row]];
-        
+        editDetailViewController.view.backgroundColor = [UIColor whiteColor];
         [self.navigationController pushViewController:editDetailViewController animated:YES];
     }
 

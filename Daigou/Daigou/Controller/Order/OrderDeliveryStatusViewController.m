@@ -381,9 +381,11 @@
 }
 
 - (void)selectContactAddress {
-    MAddressCollectionViewController *addressCollectionViewController = [[MAddressCollectionViewController alloc]initWithCustomInfo:_receiverInfo];
-    addressCollectionViewController.delegate = self;
-    [self.navigationController pushViewController:addressCollectionViewController animated:YES];
+    if (_orderItem.oid == 0 && _receiverInfo.cid !=0) {
+        MAddressCollectionViewController *addressCollectionViewController = [[MAddressCollectionViewController alloc]initWithCustomInfo:_receiverInfo];
+        addressCollectionViewController.delegate = self;
+        [self.navigationController pushViewController:addressCollectionViewController animated:YES];
+    }
 }
 
 - (void)updateDeliveryPrice {

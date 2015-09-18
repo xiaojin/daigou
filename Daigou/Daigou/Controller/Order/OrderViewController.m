@@ -335,6 +335,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 - (void)addNewOrder {
     OrderDetailViewController *addNewOrderViewController = [[OrderDetailViewController alloc]
                                                              init];
+    addNewOrderViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:addNewOrderViewController animated:YES];
 }
 
