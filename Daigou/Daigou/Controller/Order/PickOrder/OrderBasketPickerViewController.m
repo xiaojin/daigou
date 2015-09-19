@@ -131,7 +131,7 @@
 - (void)storeCartProductIntoCache{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [_products enumerateObjectsUsingBlock:^(ProductWithCount *obj, NSUInteger idx, BOOL *stop) {
-        NSString *cartKey = [NSString stringWithFormat:@"%ld",obj.product.pid];
+        NSString *cartKey = [NSString stringWithFormat:@"%ld",(long)obj.product.pid];
         NSData *productEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:obj];
         [_cartDict setObject:productEncodedObject forKey:cartKey];
     }];

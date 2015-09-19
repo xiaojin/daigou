@@ -130,7 +130,7 @@
         make.height.equalTo(@30);
     }];
     //label
-    _prodQuantity.text= [NSString stringWithFormat:@"%ld" , _productCount.productNum];
+    _prodQuantity.text= [NSString stringWithFormat:@"%ld" , (long)_productCount.productNum];
     _prodQuantity.textAlignment=NSTextAlignmentCenter;
     _prodQuantity.font=Font(16);
     [_prodQuantity mas_makeConstraints:^(MASConstraintMaker *make) {

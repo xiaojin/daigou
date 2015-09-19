@@ -107,6 +107,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     if (self.orderItem.oid == 0) {
         self.products = [NSArray array];
+        self.products = [itemManagement getOrderProductsByOrderId:self.orderItem.oid];
     } else {
         self.products = [itemManagement getOrderProductsByOrderId:self.orderItem.oid];
     }

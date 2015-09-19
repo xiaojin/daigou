@@ -100,12 +100,10 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-   // self.tableView.rowHeight = 142.0f;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:RGB(238, 238, 238)];
     [self.view addSubview:self.tableView];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 142.0f, 0);
-
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 160.f, 0);
 }
 
 - (void)initOrderBasketItemsFrameWithOrderItems:(NSArray *)orderItems {
@@ -124,6 +122,7 @@
     if (!self.emptyView.hidden) {
         [self checkBasketItems];
         [self.emptyView removeFromSuperview];
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     }
     [_tableView reloadData];
 }

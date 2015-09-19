@@ -299,7 +299,7 @@
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product {
     if (![_db open]) {
         NSLog(@"Could not open db.");
-        return nil ;
+        return NO ;
     }
     BOOL result;
     result = [_db executeUpdate:@"update item set sellprice = (?),orderdate=(?) where orderid = (?) and productid = (?)",@(product.sellprice),@(product.orderdate),@(product.orderid),@(product.productid)];
@@ -346,8 +346,7 @@
         return NO ;
     }
     BOOL result;
-    NSInteger lastRowId = [_db lastInsertRowId];
-    result = [_db executeUpdate:@"update item set orderid = (?) where orderid = 0",@(lastRowId)];
+    result = [_db executeUpdate:@"update item set orderid = (?) where orderid = 0",@(oid)];
     [_db close];
     return result;
 }
