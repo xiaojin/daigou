@@ -57,8 +57,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         self.orderItem.creatDate = [[NSDate date] timeIntervalSince1970];
     }
     
-    [self fetchOrderProducts];
-    [self initValueForCell];
+   // [self fetchOrderProducts];
     UIBarButtonItem *saveBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrderInfo)];
     self.navigationItem.rightBarButtonItem = saveBarItem;
     self.title = @"填写订单";
@@ -69,11 +68,20 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self refreshMainInfo];
+}
+
+- (void)refreshMainInfo {
     [self fetchOrderProducts];
     [self initValueForCell];
     [self.editTableView reloadData];
 }
 
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+}
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
 }
@@ -121,6 +129,11 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     __block float purchaseValue= 0.0f;
     float otherValue=_orderItem.othercost;
     float benefitValue= 0.0f;
+    if (_orderCell!=nil) {
+        discountValue = [_orderCell discountValue];
+        otherValue = [_orderCell otherValue];
+    }
+    
     [self.products enumerateObjectsUsingBlock:^(OProductItem *obj, NSUInteger idx, BOOL *stop) {
         totalValue = totalValue + obj.sellprice;
         purchaseValue = purchaseValue + obj.price;

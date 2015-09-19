@@ -671,8 +671,10 @@
     if (textField == _totalPriceField) {
         _discountField.text = [NSString stringWithFormat:@"%0.2f", [self calculateDicountValue]];
         _benefitPriceFiled.text = [NSString stringWithFormat:@"%0.2f",[self calculateBenefitValue]];
+        _discountValue = [_discountField.text floatValue];
     } else if (textField == _otherPriceFiled) {
         _benefitPriceFiled.text = [NSString stringWithFormat:@"%0.2f",[self calculateBenefitValue]];
+        _otherValue = [_otherPriceFiled.text floatValue];
     }
 }
 
@@ -726,6 +728,8 @@
     self.otherPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"othervalue"]];
     self.benefitPriceFiled.text = [NSString stringWithFormat:@"%@",[_benefitData objectForKey:@"benefitvalue"]];
     self.notePriceFiled.text = [NSString stringWithFormat:@"%@",_orderItem.note?_orderItem.note : @""];
+    _discountValue = [[_benefitData objectForKey:@"discountvalue"] floatValue];
+    _otherValue = [[_benefitData objectForKey:@"othervalue"] floatValue];
 }
 
 - (void)saveMainInfo {

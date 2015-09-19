@@ -217,6 +217,9 @@
 }
 
 - (void)scrollToStaus:(NSInteger)index {
+    if (index == 0) {
+        [_addNewOrderViewController refreshMainInfo];
+    }
     UILabel *statusLabel = _statusLbls[index];
     [self updateLblstatus:statusLabel];
     [self moveToPage:index];
@@ -271,13 +274,13 @@
 #pragma mark -initControllers
 
 - (void) setProductDetailController {
-    if (self.orderItem.parentoid == 0) {
-        _addNewOrderViewController = [[OrderMainInfoViewController alloc]
-                                      init];
-    } else {
+//    if (self.orderItem.parentoid == 0) {
+//        _addNewOrderViewController = [[OrderMainInfoViewController alloc]
+//                                      init];
+//    } else {
         _addNewOrderViewController = [[OrderMainInfoViewController alloc]
                                       initWithOrderItem:self.orderItem withClientDetail:self.customInfo];
-    }
+//    }
     
     
     _addNewOrderViewController.view.tag = ORDERDETAILTAG +0;
@@ -348,6 +351,15 @@
         _orderItem.postcode = receiverInfo.postcode;
         OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
         [orderItemManagement updateOrderItem:_orderItem];
+        
+        if (_orderItem.oid ==0) {
+            NSInteger rowid = [orderItemManagement getLastInsertOrderId];
+            [_orderBasketViewController saveBasketInfoWithOrderId:rowid];
+        }
+        
+    } else {
+        OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+        [orderItemManagement deleteTemperOrderItems];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

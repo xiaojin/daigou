@@ -14,6 +14,7 @@
 @interface OrderItemManagement : NSObject
 + (instancetype)shareInstance;
 - (NSArray *)getOrderItems;
+- (NSInteger)getLastInsertOrderId;
 - (BOOL)updateOrderItem:(OrderItem *)orderItem;
 - (NSArray *)getOrderProductsByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid;
@@ -27,4 +28,6 @@
 - (void)removeOrderProductItems:(NSArray *)orderProducts;
 - (NSArray *)getOrderProductItems:(OProductItem *)orderProduct;
 - (BOOL)updateOrderItemPhotos:(NSString *)photsURL withOrderItem:(OrderItem *)orderItem;
+- (BOOL)updateTemperOrderItemsWithOrderId:(NSInteger)oid;
+- (BOOL)deleteTemperOrderItems;
 @end

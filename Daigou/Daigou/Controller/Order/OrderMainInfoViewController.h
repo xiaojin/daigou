@@ -14,4 +14,5 @@
 - (instancetype)initWithOrderItem:(OrderItem *)orderItem withClientDetail:(CustomInfo *)client;
 
 - (void)saveMainInfo;
+- (void)refreshMainInfo;
 @end

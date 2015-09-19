@@ -1,4 +1,4 @@
-//
+    //
 //  OrderItemManagement.m
 //  Daigou
 //
@@ -57,6 +57,21 @@
     }
     [_db close];
     return orderItemsArray;
+}
+
+- (NSInteger)getLastInsertOrderId {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return 0 ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select oid from orderitem where oid = (select max(oid) from orderitem)"];
+    NSInteger lastoid ;
+    if (rs.next)  {
+        lastoid = [rs intForColumn:@"oid"];
+    }
+    [_db close];
+    return lastoid;
+
 }
 
 - (NSArray*)getOrderItemsByOrderStatus:(OrderStatus)status {
@@ -321,6 +336,29 @@
     }
     BOOL result;
     result = [_db executeUpdate:@"update orderitem set noteImage = (?) where oid = (?)",photsURL,@(orderItem.oid)];
+    [_db close];
+    return result;
+}
+
+- (BOOL)updateTemperOrderItemsWithOrderId:(NSInteger)oid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    BOOL result;
+    NSInteger lastRowId = [_db lastInsertRowId];
+    result = [_db executeUpdate:@"update item set orderid = (?) where orderid = 0",@(lastRowId)];
+    [_db close];
+    return result;
+}
+
+- (BOOL)deleteTemperOrderItems {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    BOOL result;
+    result = [_db executeUpdate:@"delete from item where orderid = 0"];
     [_db close];
     return result;
 }

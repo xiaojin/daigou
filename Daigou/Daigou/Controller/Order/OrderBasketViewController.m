@@ -17,6 +17,7 @@
 #import <Masonry/Masonry.h>
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
+#import "ProductWithCount.h"
 
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate,OrderPickProductsMainViewControllerDelegate> {
     CGSize keyboardSize;
@@ -69,6 +70,8 @@
 - (void)showEmptyView {
     self.emptyView = [[UIView alloc]initWithFrame:self.view.bounds];
     [self.emptyView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.emptyView];
+
     CGFloat labelHeight = 44.0f;
     CGFloat labelWidth = CGRectGetWidth(self.view.frame);
     CGFloat offY = (CGRectGetHeight(self.view.frame) - labelHeight)/2;
@@ -76,7 +79,21 @@
     [label setText:@"您还订单货物是空的哦"];
     [label setTextAlignment:NSTextAlignmentCenter];
     [self.emptyView addSubview:label];
-    [self.view addSubview:self.emptyView];
+    
+    UIImage *basketImage = [IonIcons imageWithIcon:ion_bag iconColor:GRAYCOLOR iconSize:70.0f imageSize:CGSizeMake(70.0f, 70.0f)];
+    UIImageView *basketImageView = [[UIImageView alloc]initWithImage:basketImage];
+    basketImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *imageTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addProduct)];
+    [imageTapGesture setNumberOfTapsRequired:1];
+    [basketImageView addGestureRecognizer:imageTapGesture];
+    [self.emptyView addSubview:basketImageView];
+    [basketImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(label.mas_top).with.offset(-5);
+        make.height.equalTo(@75.0f);
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.width.equalTo(@75.0f);
+    }];
+    
 }
 
 - (void)showOrderItemsTableView {
@@ -104,6 +121,10 @@
 #pragma mark - OrderPickProductsMainDelegate
 - (void)finishPickProducts {
     [self reloadOrderProductsFromDB];
+    if (!self.emptyView.hidden) {
+        [self checkBasketItems];
+        [self.emptyView removeFromSuperview];
+    }
     [_tableView reloadData];
 }
 
@@ -214,8 +235,10 @@
 }
 
 #pragma mark -- SaveBasket
-- (void)saveBasketItems {
-    
+- (void)saveBasketInfoWithOrderId:(NSInteger)oid {
+    OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
+    [orderManagement updateTemperOrderItemsWithOrderId:oid];
 
 }
+
 @end

@@ -21,6 +21,8 @@
 @property (nonatomic, strong) OrderItem *orderItem;
 @property (nonatomic, strong) NSString *productDesc;
 @property (nonatomic ,strong) NSDictionary *benefitData;
+@property (nonatomic, assign) float discountValue;
+@property (nonatomic, assign) float otherValue;
 @property(nonatomic, weak) id <FullScreenDisplayDelegate> fullScreenDisplayDelegate;
 
 - (void)saveMainInfo;

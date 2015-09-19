@@ -282,6 +282,7 @@
                                                                                attributes:@{NSForegroundColorAttributeName: [UIColor darkGrayColor]}];
         _sellPriceField.floatingLabelFont = [UIFont boldSystemFontOfSize:11.0f];
         _sellPriceField.floatingLabelTextColor = [UIColor lightGrayColor];
+        _sellPriceField.keyboardType = UIKeyboardTypeDecimalPad;
         _sellPriceField.delegate = self;
         [showEditView addSubview:_sellPriceField];
         [_sellPriceField mas_makeConstraints:^(MASConstraintMaker *make) {

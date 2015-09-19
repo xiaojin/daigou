@@ -91,6 +91,7 @@
 {
     NSString *address = _addressArray[indexPath.row];
     [_delegate addressDidSelect:address];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

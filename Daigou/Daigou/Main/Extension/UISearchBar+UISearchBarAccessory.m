@@ -11,7 +11,7 @@
 @implementation UISearchBar (UISearchBarAccessory)
 
 - (instancetype)initWithAccessory {
-    if (self = [super init]) {
+    if (self = [self init]) {
         [self addAccessoryView];
     }
     return self;
