@@ -289,7 +289,7 @@
             make.left.equalTo(showEditView);
             make.top.equalTo(otherView.mas_bottom).with.offset(5);
             make.height.equalTo(@40);
-            make.width.equalTo(@100);
+            make.right.equalTo(lineView.mas_right);
         }];
         _sellPriceField.keepBaseline = YES;
     
@@ -354,6 +354,7 @@
 
 - (IBAction)editProductInfo:(id)sender {
     [self.countField resignFirstResponder];
+    [self.sellPriceField resignFirstResponder];
     if (!editStatus) {
         editStatus = YES;
         [self.editButton setTitle:@"完成" forState:UIControlStateNormal];

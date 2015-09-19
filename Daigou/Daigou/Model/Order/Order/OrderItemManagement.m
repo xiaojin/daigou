@@ -340,6 +340,20 @@
     return result;
 }
 
+- (NSString *)getOrderItemPhotosWithOrderItem:(OrderItem *)orderItem{
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    NSString *photosUrls = @"";
+    FMResultSet *rs = [_db executeQuery:@"select noteImage from orderitem where oid = (?)",@(orderItem.oid)];
+    if (rs.next) {
+        photosUrls = [rs stringForColumn:@"noteImage"];
+    }
+    [_db close];
+    return photosUrls;
+}
+
 - (BOOL)updateTemperOrderItemsWithOrderId:(NSInteger)oid {
     if (![_db open]) {
         NSLog(@"Could not open db.");

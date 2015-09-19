@@ -28,6 +28,7 @@
 - (void)removeOrderProductItems:(NSArray *)orderProducts;
 - (NSArray *)getOrderProductItems:(OProductItem *)orderProduct;
 - (BOOL)updateOrderItemPhotos:(NSString *)photsURL withOrderItem:(OrderItem *)orderItem;
+- (NSString *)getOrderItemPhotosWithOrderItem:(OrderItem *)orderItem;
 - (BOOL)updateTemperOrderItemsWithOrderId:(NSInteger)oid;
 - (BOOL)deleteTemperOrderItems;
 @end

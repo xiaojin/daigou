@@ -69,6 +69,7 @@
     _imageCollection.dataSource = self;
     _imageCollection.delegate = self;
     _selectPhotos = [[NSMutableArray alloc] init];
+    
 }
 
 - (void)setOrderItem:(OrderItem *)orderItem {
@@ -636,7 +637,6 @@
     Photo *photo = [[Photo alloc] initWithImage:chosenImage];
     [_selectPhotos addObject:photo];
    // dispatch_async(dispatch_get_main_queue(), ^{
-        [_imageCollection reloadData];
     //});
     
     [self imagePickerControllerDidCancel:picker];
@@ -783,27 +783,33 @@
 #pragma mark -- Save Photo
 - (void)savePhotoToDB {
     __block NSString *photosURL = @"";
-    [_selectPhotos enumerateObjectsUsingBlock:^(Photo *photo, NSUInteger idx, BOOL *stop) {
-        if (idx < ([_selectPhotos count]-1)) {
+    for (int flag =0; flag < [_selectPhotos count]; flag++) {
+        Photo *photo = [_selectPhotos objectAtIndex:flag];
+        if (flag < ([_selectPhotos count]-1)) {
             photosURL = [photosURL stringByAppendingFormat:@"%@,",[photo imageUrl]];
         } else {
             photosURL = [photosURL stringByAppendingFormat:@"%@",[photo imageUrl]];
         }
-    }];
+    }
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     [itemManagement updateOrderItemPhotos:photosURL withOrderItem:self.orderItem];
 }
 
 - (void)getRelatedPhotosFromDB {
+    _selectPhotos = [[NSMutableArray alloc] init];
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+    _orderItem.noteImage =[itemManagement getOrderItemPhotosWithOrderItem:_orderItem];
     if (![_orderItem.noteImage isEqualToString:@""] && _orderItem.noteImage !=nil) {
         NSArray *photos = [_orderItem.noteImage componentsSeparatedByString:@","];
         if ([photos count]!= 0) {
-            [photos enumerateObjectsUsingBlock:^(NSString *imageURL, NSUInteger idx, BOOL *stop) {
+            for (int flag =0; flag < [photos count]; flag++) {
+                NSString *imageURL = [photos objectAtIndex:flag];
                 Photo *photo = [[Photo alloc] initWithPath:imageURL];
                 [_selectPhotos addObject:photo];
-            }];
+            }
         }
     }
+    [_imageCollection reloadData];
 
 }
 
