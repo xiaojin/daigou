@@ -92,7 +92,6 @@
 		3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A1F4A1B9705580030647B /* StockListCell.m */; };
 		3CA1A2941B551FCD00C0A74C /* OrderMainInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OrderMainInfoViewController.m */; };
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
-		3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */; };
 		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
 		3CB5EFE31BA6E43E00B55968 /* MExpressManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5EFE21BA6E43E00B55968 /* MExpressManagementViewController.m */; };
 		3CBC0F641BA9A42400FC5562 /* MAddressCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC0F631BA9A42400FC5562 /* MAddressCollectionViewController.m */; };
@@ -195,8 +194,8 @@
 		3C56783A1B5B2A08001B6B40 /* OrderItemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemTest.m; sourceTree = "<group>"; };
 		3C56783C1B5B6AC2001B6B40 /* OrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListCell.h; sourceTree = "<group>"; };
 		3C56783D1B5B6AC2001B6B40 /* OrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListCell.m; sourceTree = "<group>"; };
-		3C5D0B4F1B8C9730006FFC87 /* OrderSiderBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderSiderBarViewController.h; path = PickOrder/OrderSiderBarViewController.h; sourceTree = "<group>"; };
-		3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderSiderBarViewController.m; path = PickOrder/OrderSiderBarViewController.m; sourceTree = "<group>"; };
+		3C5D0B4F1B8C9730006FFC87 /* OrderSiderBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderSiderBarViewController.h; path = Order/PickOrder/OrderSiderBarViewController.h; sourceTree = "<group>"; };
+		3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderSiderBarViewController.m; path = Order/PickOrder/OrderSiderBarViewController.m; sourceTree = "<group>"; };
 		3C5D0B521B8C9904006FFC87 /* LLBlurSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBlurSidebar.h; sourceTree = "<group>"; };
 		3C5D0B531B8C9904006FFC87 /* LLBlurSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBlurSidebar.m; sourceTree = "<group>"; };
 		3C62497D1B3C1173008F34C7 /* MDeliveryManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDeliveryManagementViewController.h; sourceTree = "<group>"; };
@@ -273,8 +272,6 @@
 		3CA1A2931B551FCD00C0A74C /* OrderMainInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderMainInfoViewController.m; sourceTree = "<group>"; };
 		3CA1A2951B56884200C0A74C /* OrderItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemView.h; path = Daigou/View/Order/OrderItemView.h; sourceTree = SOURCE_ROOT; };
 		3CA1A2961B56884200C0A74C /* OrderItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItemView.m; path = Daigou/View/Order/OrderItemView.m; sourceTree = SOURCE_ROOT; };
-		3CA1A2981B56942400C0A74C /* OrderProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProductsViewController.h; sourceTree = "<group>"; };
-		3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductsViewController.m; sourceTree = "<group>"; };
 		3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketViewController.h; sourceTree = "<group>"; };
 		3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketViewController.m; sourceTree = "<group>"; };
 		3CB5EFE11BA6E43E00B55968 /* MExpressManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MExpressManagementViewController.h; path = Express/MExpressManagementViewController.h; sourceTree = "<group>"; };
@@ -326,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				3CC133C21B5249D2009976AF /* Help */,
-				3C6D85651B4DDF950076F4AE /* Product */,
 				3C6D85641B4DDF880076F4AE /* CustomInfo */,
 				3C6D85601B4BFB650076F4AE /* DropDownMenu */,
 			);
@@ -366,25 +362,6 @@
 			path = Stock;
 			sourceTree = "<group>";
 		};
-		19B0F483D4149C7D43F96FCF /* Product */ = {
-			isa = PBXGroup;
-			children = (
-				3C6448611BA00AAB00873739 /* MProductsViewController.h */,
-				3C6448621BA00AAB00873739 /* MProductsViewController.m */,
-				3C2C7DBF1B9C5C0E00D1DCC0 /* UISearchViewController.h */,
-				3C2C7DC01B9C5C0E00D1DCC0 /* UISearchViewController.m */,
-				3C2C7DC41B9C71B500D1DCC0 /* UIProductDetailViewController.h */,
-				3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */,
-				3C6E1DF01B9DD50A0062FBF0 /* UIProductInfoEditViewController.h */,
-				3C6E1DF11B9DD50A0062FBF0 /* UIProductInfoEditViewController.m */,
-				3C70BF0A1B9F0B9500C17481 /* UIScanViewController.h */,
-				3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */,
-				3C64486B1BA0457400873739 /* UISelectContainerViewController.h */,
-				3C64486C1BA0457400873739 /* UISelectContainerViewController.m */,
-			);
-			path = Product;
-			sourceTree = "<group>";
-		};
 		19B0F549668E525B1D07A561 /* Stock */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +376,7 @@
 		19B0F5CE6A77B4016CEF46B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3C6D85651B4DDF950076F4AE /* Product */,
 				3C442A391B770AC2008BF244 /* Help */,
 				19B0FC8D05008E59E2B085CA /* Add */,
 				19B0F100AB9F65AA637957B8 /* Mine */,
@@ -424,8 +402,6 @@
 				3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */,
 				3C77943A1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.h */,
 				3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */,
-				3CA1A2981B56942400C0A74C /* OrderProductsViewController.h */,
-				3CA1A2991B56942400C0A74C /* OrderProductsViewController.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -433,6 +409,7 @@
 		19B0F8345A9DD2655658FEB2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3CA010481BB03B89009E4B26 /* Product */,
 				19B0F465C711BD9D8D141010 /* Stock */,
 				19B0FA400B7BD39D78297CEC /* Procurement */,
 				19B0F7516A5C6AFDBD135755 /* Order */,
@@ -485,7 +462,6 @@
 			children = (
 				3CD933F01BA5B49F00E2370D /* Express */,
 				3CE58DB91B3E753E0056621A /* Custom */,
-				19B0F483D4149C7D43F96FCF /* Product */,
 				19B0F283014B25096F1FFF78 /* Mine.storyboard */,
 				19B0FCB5EDA47D1FB5F6A0FB /* MineViewController.h */,
 				19B0F5DA4991C3F2C82AEAE3 /* MineViewController.m */,
@@ -628,8 +604,6 @@
 				3C56616F1B679B2E0082F49E /* OrderPickProductsMainViewController.m */,
 				3C344AA61B6CD46500818F19 /* OrderBasketPickerViewController.h */,
 				3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */,
-				3C5D0B4F1B8C9730006FFC87 /* OrderSiderBarViewController.h */,
-				3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */,
 			);
 			name = PickOrder;
 			sourceTree = "<group>";
@@ -703,6 +677,7 @@
 				3C3021581B4F98DF001A741D /* ProductItemFrame.m */,
 			);
 			name = Product;
+			path = Mine;
 			sourceTree = "<group>";
 		};
 		3C6D85661B4DDFAA0076F4AE /* Product */ = {
@@ -854,6 +829,27 @@
 				3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */,
 			);
 			name = PickerOrder;
+			sourceTree = "<group>";
+		};
+		3CA010481BB03B89009E4B26 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				3C5D0B4F1B8C9730006FFC87 /* OrderSiderBarViewController.h */,
+				3C5D0B501B8C9730006FFC87 /* OrderSiderBarViewController.m */,
+				3C6448611BA00AAB00873739 /* MProductsViewController.h */,
+				3C6448621BA00AAB00873739 /* MProductsViewController.m */,
+				3C2C7DBF1B9C5C0E00D1DCC0 /* UISearchViewController.h */,
+				3C2C7DC01B9C5C0E00D1DCC0 /* UISearchViewController.m */,
+				3C2C7DC41B9C71B500D1DCC0 /* UIProductDetailViewController.h */,
+				3C2C7DC51B9C71B500D1DCC0 /* UIProductDetailViewController.m */,
+				3C6E1DF01B9DD50A0062FBF0 /* UIProductInfoEditViewController.h */,
+				3C6E1DF11B9DD50A0062FBF0 /* UIProductInfoEditViewController.m */,
+				3C70BF0A1B9F0B9500C17481 /* UIScanViewController.h */,
+				3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */,
+				3C64486B1BA0457400873739 /* UISelectContainerViewController.h */,
+				3C64486C1BA0457400873739 /* UISelectContainerViewController.m */,
+			);
+			name = Product;
 			sourceTree = "<group>";
 		};
 		3CC133C21B5249D2009976AF /* Help */ = {
@@ -1094,7 +1090,6 @@
 				3C5D0B511B8C9730006FFC87 /* OrderSiderBarViewController.m in Sources */,
 				3CFC01E11B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m in Sources */,
 				3C5678381B5B25E1001B6B40 /* OProductItem.m in Sources */,
-				3CA1A29A1B56942400C0A74C /* OrderProductsViewController.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
 				3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */,
 				3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */,
