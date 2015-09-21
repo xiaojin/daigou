@@ -164,8 +164,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     keyboardSize = CGSizeMake(keyboardSize.width, keyboardSize.height + 100.0f);
 }
 
-
-
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

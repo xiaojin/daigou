@@ -575,7 +575,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     alert.popoverPresentationController.sourceRect = self.view.frame;
     alert.popoverPresentationController.sourceView = weakSelf;
     
-    [[[[[[[UIApplication sharedApplication] keyWindow] rootViewController] childViewControllers] lastObject] visibleViewController] presentViewController:alert animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)menuCameraPhotoBelowiOS8 {

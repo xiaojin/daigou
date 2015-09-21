@@ -50,12 +50,12 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self initScrollView];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
     self.navigationItem.rightBarButtonItem =editButton;
-    [self.orderListTableView reloadData];
-    [self.unpestachedTableView reloadData];
-    [self.transportTableView reloadData];
-    [self.receivedTableView reloadData];
-    [self.finishedTableView reloadData];
   // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshOrderStatus];
 }
 
 - (void)initScrollView {
@@ -382,8 +382,6 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    
     OrderListCell * cell = [tableView dequeueReusableCellWithIdentifier:orderlistcellIdentity];
     
     for (UIView *view in cell.contentView.subviews) {
@@ -464,11 +462,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
                 break;
         }
         [[OrderItemManagement shareInstance] updateOrderItem:self.orderItem];
-        [self.orderListTableView reloadData];
-        [self.unpestachedTableView reloadData];
-        [self.transportTableView reloadData];
-        [self.receivedTableView reloadData];
-        [self.finishedTableView reloadData];
+        [self refreshOrderStatus];
     }
 }
 
@@ -480,5 +474,12 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self scrollToStaus:page];
 }
 
+- (void)refreshOrderStatus {
+    [self.orderListTableView reloadData];
+    [self.unpestachedTableView reloadData];
+    [self.transportTableView reloadData];
+    [self.receivedTableView reloadData];
+    [self.finishedTableView reloadData];
+}
 
 @end

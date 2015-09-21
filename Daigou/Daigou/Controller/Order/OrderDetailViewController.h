@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class OrderItem, CustomInfo;
-
+#import "OrderItem.h"
+@class CustomInfo;
 @interface OrderDetailViewController : UIViewController
 @property(nonatomic, strong)OrderItem *orderItem;
 @property(nonatomic, strong)CustomInfo *customInfo;

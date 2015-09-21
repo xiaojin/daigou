@@ -277,7 +277,8 @@
     alert.popoverPresentationController.sourceRect = self.view.frame;
     alert.popoverPresentationController.sourceView = weakSelf;
     
-    [[[[[[[UIApplication sharedApplication] keyWindow] rootViewController] childViewControllers] lastObject] visibleViewController] presentViewController:alert animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
+//    [[[[[[[UIApplication sharedApplication] keyWindow] rootViewController] childViewControllers] lastObject] visibleViewController] presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)menuCameraPhotoBelowiOS8 {
@@ -472,18 +473,26 @@
 }
 
 - (void)changeStatusToUNDISPATCHED {
+    _orderItem.statu = UNDISPATCH;
+    [self saveOrder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeStatusToSHIPPED {
+    _orderItem.statu = SHIPPED;
+    [self saveOrder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeStatusToDELIVERD {
+    _orderItem.statu = DELIVERD;
+    [self saveOrder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeStatusToDONE {
+    _orderItem.statu = DONE;
+    [self saveOrder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
