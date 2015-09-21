@@ -59,3 +59,5 @@ dispatch_once(&oncetoken, BLOCK); \
 #define SHIPPEDTITLE @"已发货"
 #define DELIVERDTITLE @"已收获"
 #define DONETITLE @"已完成"
+
+#define PHOTOURLS @"photourls"

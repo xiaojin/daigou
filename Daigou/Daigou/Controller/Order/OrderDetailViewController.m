@@ -11,6 +11,8 @@
 #import <Masonry/Masonry.h>
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
+#import <UIAlertView-Blocks/RIButtonItem.h>
+#import <UIAlertView-Blocks/UIActionSheet+Blocks.h>
 #import "OrderMainInfoViewController.h"
 #import "OrderBasketViewController.h"
 #import "OrderDeliveryStatusViewController.h"
@@ -18,7 +20,6 @@
 #import "OProductItem.h"
 #import "CustomInfo.h"
 #import "OrderItem.h"
-
 @interface OrderDetailViewController  () <UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *orderDetailMainScrollView;
 @property (nonatomic, strong) UIView *subTabView;
@@ -29,6 +30,9 @@
 @property (nonatomic, strong) OrderBasketViewController *orderBasketViewController;
 @property (nonatomic, strong) OrderDeliveryStatusViewController *deliveryStatusViewController;
 @property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) UIButton *saveOrderButton;
+@property (nonatomic, strong) UIButton *shareButton;
+@property (nonatomic, strong) UIButton *moreButton;
 @end
 
 @implementation OrderDetailViewController
@@ -78,46 +82,79 @@
         make.bottom.equalTo(self.view);
         make.height.equalTo(@(topOff));
     }];
-    UIButton *saveOrder = [[UIButton alloc]initWithFrame:CGRectZero];
-    [saveOrder setTitle:@"保存订单" forState:UIControlStateNormal];
-    [saveOrder.titleLabel setFont:Font(14)];
-    [saveOrder setBackgroundColor:THEMECOLOR];
-    [saveOrder.titleLabel setTextColor:[UIColor whiteColor]];
-    [saveOrder addTarget:self action:@selector(saveOrder) forControlEvents:UIControlEventTouchUpInside];
-    [_bottomView addSubview:saveOrder];
-    [saveOrder mas_makeConstraints:^(MASConstraintMaker *make) {
+    _saveOrderButton = [[UIButton alloc]initWithFrame:CGRectZero];
+    [_saveOrderButton.titleLabel setFont:Font(14)];
+    [_saveOrderButton setBackgroundColor:THEMECOLOR];
+    [_saveOrderButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self initStatusButton];
+    [_bottomView addSubview:_saveOrderButton];
+    [_saveOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_bottomView.mas_top);
         make.left.equalTo(_bottomView.mas_left);
         make.bottom.equalTo(_bottomView.mas_bottom);
         make.width.equalTo(@(kWindowWidth/3));
     }];
     
-    UIButton *shareButton = [[UIButton alloc]initWithFrame:CGRectZero];
-    [shareButton setTitle:@"分享订单" forState:UIControlStateNormal];
-    [shareButton.titleLabel setFont:Font(14)];
-    [shareButton setBackgroundColor:[UIColor redColor]];
-    [shareButton.titleLabel setTextColor:[UIColor blackColor]];
+    _shareButton = [[UIButton alloc]initWithFrame:CGRectZero];
+    [_shareButton setTitle:@"分享订单" forState:UIControlStateNormal];
+    [_shareButton.titleLabel setFont:Font(14)];
+    [_shareButton setBackgroundColor:[UIColor redColor]];
+    [_shareButton.titleLabel setTextColor:[UIColor blackColor]];
     
-    [_bottomView addSubview:shareButton];
-    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_bottomView addSubview:_shareButton];
+    [_shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_bottomView.mas_top);
-        make.left.equalTo(saveOrder.mas_right);
+        make.left.equalTo(_saveOrderButton.mas_right);
         make.bottom.equalTo(_bottomView.mas_bottom);
         make.width.equalTo(@(kWindowWidth/3));
     }];
     
-    UIButton *moreButton = [[UIButton alloc]initWithFrame:CGRectZero];
-    [moreButton setTitle:@"更多" forState:UIControlStateNormal];
-    [moreButton.titleLabel setFont:Font(14)];
-    [moreButton setBackgroundColor:[UIColor orangeColor]];
-    [_bottomView addSubview:moreButton];
-    [moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    _moreButton = [[UIButton alloc]initWithFrame:CGRectZero];
+    [_moreButton setTitle:@"更多" forState:UIControlStateNormal];
+    [_moreButton.titleLabel setFont:Font(14)];
+    [_moreButton setBackgroundColor:[UIColor orangeColor]];
+    [_moreButton addTarget:self action:@selector(showPopupView) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomView addSubview:_moreButton];
+    [_moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_bottomView.mas_top);
-        make.left.equalTo(shareButton.mas_right);
+        make.left.equalTo(_shareButton.mas_right);
         make.bottom.equalTo(_bottomView.mas_bottom);
         make.width.equalTo(@(kWindowWidth/3));
     }];
     
+}
+
+- (void)initStatusButton {
+    NSString *saveOrderButtonTitle = @"";
+    SEL saveOrderButtonSelection = nil;
+    if (_orderItem.statu == PURCHASED) {
+        if (_orderItem.oid == 0) {
+            saveOrderButtonTitle = @"保存订单";
+            saveOrderButtonSelection = @selector(saveOrder);
+        } else {
+            saveOrderButtonTitle = @"采购完成,待发货";
+            saveOrderButtonSelection = @selector(changeStatusToUNDISPATCHED);
+        }
+
+    } else if (_orderItem.statu == UNDISPATCH) {
+        saveOrderButtonTitle = @"清点发货";
+        saveOrderButtonSelection = @selector(changeStatusToSHIPPED);
+
+    } else if (_orderItem.statu == SHIPPED ) {
+        saveOrderButtonTitle = @"确认收货";
+        saveOrderButtonSelection = @selector(changeStatusToDELIVERD);
+    
+    } else if (_orderItem.statu == DELIVERD) {
+        saveOrderButtonTitle = @"已完成";
+        saveOrderButtonSelection = @selector(changeStatusToDONE);
+        
+    } else if (_orderItem.statu == DONE) {
+        
+    }
+    [_saveOrderButton setTitle:saveOrderButtonTitle forState:UIControlStateNormal];
+    [_saveOrderButton addTarget:self action:saveOrderButtonSelection forControlEvents:UIControlEventTouchUpInside];
+
+
 }
 
 - (void)initScrollView {
@@ -201,6 +238,66 @@
     _statusLbls = @[orderInfoLbl,prodListLbl,deliveryInfoLbl];
     
 
+}
+
+- (void)showPopupView {
+    if (IOS8_OR_ABOVE) {
+        [self menuCameraPhotoiOS8AndAbove];
+    } else {
+        [self menuCameraPhotoBelowiOS8];
+    }
+}
+
+
+- (void)menuCameraPhotoiOS8AndAbove {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* cancelOrderBtn = [UIAlertAction actionWithTitle:@"取消订单" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                                                     
+                                                           }];
+    UIAlertAction* viewDeliveryStatusBtn = [UIAlertAction actionWithTitle:@"查看物流" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                           
+                                                         }];
+    UIAlertAction* checkOrderProductsBtn = [UIAlertAction actionWithTitle:@"清点订单商品" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             
+                                                         }];
+    UIAlertAction* cancelBtn = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive
+                                                      handler:^(UIAlertAction * action) {
+                                                          
+                                                      }];
+    __weak id weakSelf = self;
+    [alert addAction:cancelOrderBtn];
+    [alert addAction:viewDeliveryStatusBtn];
+    [alert addAction:checkOrderProductsBtn];
+    [alert addAction:cancelBtn];
+    alert.popoverPresentationController.sourceRect = self.view.frame;
+    alert.popoverPresentationController.sourceView = weakSelf;
+    
+    [[[[[[[UIApplication sharedApplication] keyWindow] rootViewController] childViewControllers] lastObject] visibleViewController] presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)menuCameraPhotoBelowiOS8 {
+    RIButtonItem *cancelOrderBtn = [RIButtonItem itemWithLabel:@"取消订单" action:^{
+        
+    }];
+    RIButtonItem *viewDeliveryStatusBtn = [RIButtonItem itemWithLabel:@"查看物流" action:^{
+        
+    }];
+    RIButtonItem *checkOrderProductsBtn = [RIButtonItem itemWithLabel:@"清点订单商品" action:^{
+        
+    }];
+    
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                     cancelButtonItem:[RIButtonItem itemWithLabel:@"取消"]
+                                                destructiveButtonItem: nil
+                                                     otherButtonItems:cancelOrderBtn, viewDeliveryStatusBtn,checkOrderProductsBtn,nil];
+    
+    [actionSheet showFromRect:self.view.frame inView:self.view animated:YES];
 }
 
 #pragma mark --handleStatusClick 
@@ -338,7 +435,11 @@
         _orderItem.othercost =_addNewOrderViewController.orderItem.othercost;
         _orderItem.profit = _addNewOrderViewController.orderItem.profit;
         _orderItem.note = _addNewOrderViewController.orderItem.note;
-        
+        if (_orderItem.oid ==0) {
+            _orderItem.noteImage = [[NSUserDefaults standardUserDefaults] objectForKey:PHOTOURLS];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:PHOTOURLS];
+            _orderItem.statu = PURCHASED;
+        }
         //SAVE DELIVERY STATUS
         [_deliveryStatusViewController saveDeliveryStatus];
         CustomInfo *receiverInfo = _deliveryStatusViewController.receiverInfo;
@@ -358,8 +459,10 @@
         }
         
     } else {
+        // clear temp saved data when user create a new orderitem
         OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
         [orderItemManagement deleteTemperOrderItems];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:PHOTOURLS];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -367,6 +470,24 @@
 - (void)backFromDetail {
     [self saveOrder];
 }
+
+- (void)changeStatusToUNDISPATCHED {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)changeStatusToSHIPPED {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)changeStatusToDELIVERD {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)changeStatusToDONE {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 
 #pragma mark - UIScrollViewDelegate
 

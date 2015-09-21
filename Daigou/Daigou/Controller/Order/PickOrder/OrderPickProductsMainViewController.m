@@ -12,7 +12,6 @@
 #import <ionicons/IonIcons.h>
 #import "OrderProductsRightTableView.h"
 #import "CommonDefines.h"
-#import "OrderProductsRightTableView.h"
 #import "ProductManagement.h"
 #import "ProductCategoryManagement.h"
 #import "Product.h"

@@ -791,14 +791,25 @@
             photosURL = [photosURL stringByAppendingFormat:@"%@",[photo imageUrl]];
         }
     }
-    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
-    [itemManagement updateOrderItemPhotos:photosURL withOrderItem:self.orderItem];
+    if (_orderItem.oid == 0) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:photosURL forKey:PHOTOURLS];
+        [userDefaults synchronize];
+    } else {
+        OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+        [itemManagement updateOrderItemPhotos:photosURL withOrderItem:self.orderItem];
+    }
+
 }
 
 - (void)getRelatedPhotosFromDB {
     _selectPhotos = [[NSMutableArray alloc] init];
-    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
-    _orderItem.noteImage =[itemManagement getOrderItemPhotosWithOrderItem:_orderItem];
+    if (_orderItem.oid == 0) {
+        _orderItem.noteImage =  [[NSUserDefaults standardUserDefaults] objectForKey:PHOTOURLS];
+    } else {
+        OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+        _orderItem.noteImage =[itemManagement getOrderItemPhotosWithOrderItem:_orderItem];
+    }
     if (![_orderItem.noteImage isEqualToString:@""] && _orderItem.noteImage !=nil) {
         NSArray *photos = [_orderItem.noteImage componentsSeparatedByString:@","];
         if ([photos count]!= 0) {
