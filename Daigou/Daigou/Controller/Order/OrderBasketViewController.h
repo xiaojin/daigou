@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 @class OrderItem;
 @interface OrderBasketViewController : UIViewController
+@property(nonatomic, strong)UITableView *tableView;
 - (instancetype)initwithOrderItem :(OrderItem *)orderitem withGroupOrderProducts:(NSArray *)products;
 
 - (void)saveBasketInfoWithOrderId:(NSInteger)oid;

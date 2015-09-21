@@ -353,8 +353,6 @@
 }
 
 - (IBAction)editProductInfo:(id)sender {
-    [self.countField resignFirstResponder];
-    [self.sellPriceField resignFirstResponder];
     if (!editStatus) {
         editStatus = YES;
         [self.editButton setTitle:@"完成" forState:UIControlStateNormal];
@@ -370,6 +368,14 @@
         _productItem.sellprice = [_sellPriceField.text floatValue];
         _productItem.orderdate = [[NSDate date] timeIntervalSince1970];
         [self updateOrderProductInfo];
+    }
+    [self.countField resignFirstResponder];
+    [self.sellPriceField resignFirstResponder];
+}
+
+- (void) updateDoneButton {
+    if (editStatus) {
+        [self editProductInfo:nil];
     }
 }
 

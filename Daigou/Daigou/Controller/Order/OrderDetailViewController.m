@@ -458,14 +458,35 @@
             NSInteger rowid = [orderItemManagement getLastInsertOrderId];
             [_orderBasketViewController saveBasketInfoWithOrderId:rowid];
         }
-        
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
-        // clear temp saved data when user create a new orderitem
-        OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
-        [orderItemManagement deleteTemperOrderItems];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:PHOTOURLS];
+        [self missingCustomInfoAlertView];
     }
+}
+
+- (void)missingCustomInfoAlertView {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"订单信息" message:@"缺少客户信息"
+                                                       delegate:self
+                                              cancelButtonTitle:@"继续编辑"
+                                              otherButtonTitles:@"放弃", nil];
+    alertView.tag = PRODUCTDETAILIVIEW +10;
+    [alertView show];
+}
+
+- (void)missingCustomInfoHandler {
+    // clear temp saved data when user create a new orderitem
+    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+    [orderItemManagement deleteTemperOrderItems];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PHOTOURLS];
     [self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark -- UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ((alertView.tag - PRODUCTDETAILIVIEW)  == 10) {
+        if (buttonIndex == 1) {
+           [self missingCustomInfoHandler];
+        }
+    }
 }
 
 - (void)backFromDetail {
@@ -499,7 +520,6 @@
 
 
 #pragma mark - UIScrollViewDelegate
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat width = scrollView.frame.size.width;
     NSInteger page = (scrollView.contentOffset.x + (0.5f * width)) / width;

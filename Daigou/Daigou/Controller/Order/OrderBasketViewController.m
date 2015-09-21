@@ -9,7 +9,6 @@
 #import "OrderBasketViewController.h"
 #import "OrderItem.h"
 #import "OrderItemManagement.h"
-#import "OrderProductsViewController.h"
 #import "OrderBasketCell.h"
 #import "OProductItem.h"
 #import "OrderPickProductsMainViewController.h"
@@ -22,11 +21,11 @@
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate,OrderPickProductsMainViewControllerDelegate> {
     CGSize keyboardSize;
 }
-@property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong) OrderItem *orderItem;
 @property(nonatomic, strong) UIView *emptyView;
 @property(nonatomic, strong) NSArray *products;
 @property(nonatomic, strong) NSMutableArray *orderItemFrames;
+@property(nonatomic, strong) NSIndexPath *currentCellIndex;
 @end
 @implementation OrderBasketViewController
 
@@ -50,6 +49,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addProduct)];
     [self checkBasketItems];
 }
+
 
 - (void)addProduct {
     OrderPickProductsMainViewController *orderPickMainViewController =  [[OrderPickProductsMainViewController alloc]initWithOrderItem:self.orderItem];
@@ -129,6 +129,8 @@
 
 #pragma mark - UINotification
 - (void)keyboardWillHide:(NSNotification *)sender {
+    OrderBasketCell *currentCell = (OrderBasketCell *)[self.tableView cellForRowAtIndexPath:_currentCellIndex];
+    [currentCell updateDoneButton];
     NSTimeInterval duration = [[sender userInfo][UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:duration animations:^{
         UIEdgeInsets edgeInsets = [[self tableView] contentInset];
@@ -231,6 +233,7 @@
         [self.tableView scrollToRowAtIndexPath:cellIndex
                               atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }];
+    _currentCellIndex = cellIndex;
 }
 
 #pragma mark -- SaveBasket

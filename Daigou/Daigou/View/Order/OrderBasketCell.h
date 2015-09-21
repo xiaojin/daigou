@@ -15,4 +15,5 @@
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, strong) NSDictionary *productDict;
 + (instancetype) OrderWithCell:(UITableView *)tableview;
+- (void) updateDoneButton ;
 @end

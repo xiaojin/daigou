@@ -37,6 +37,7 @@ dispatch_once(&oncetoken, BLOCK); \
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 #define PRODUCTFINFOTAGBEGIN 900000
+#define PRODUCTDETAILIVIEW 800000
 
 #define EXCHANGERATE 5.0
 #define kJVFieldFontSize  14.0f

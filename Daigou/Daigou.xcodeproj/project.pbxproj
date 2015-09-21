@@ -375,7 +375,6 @@
 			children = (
 				3C6D85651B4DDF950076F4AE /* Product */,
 				3C442A391B770AC2008BF244 /* Help */,
-				19B0FC8D05008E59E2B085CA /* Add */,
 				19B0F100AB9F65AA637957B8 /* Mine */,
 				19B0F8DDCA4A348E3D3D3F95 /* Order */,
 				19B0F88A6E4050FBC9DA84F6 /* Procurement */,
@@ -472,13 +471,6 @@
 				3C62498A1B3C11D6008F34C7 /* MAboutViewController.m */,
 			);
 			path = Mine;
-			sourceTree = "<group>";
-		};
-		19B0FC8D05008E59E2B085CA /* Add */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Add;
 			sourceTree = "<group>";
 		};
 		19B0FD27AB863D7DF63C1A7B /* Stock */ = {
