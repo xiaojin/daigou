@@ -70,7 +70,6 @@
 		3C64486D1BA0457400873739 /* UISelectContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C64486C1BA0457400873739 /* UISelectContainerViewController.m */; };
 		3C6483301B494BE800EFAE4E /* CustomInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C64832F1B494BE800EFAE4E /* CustomInfoTests.m */; };
 		3C64833A1B49642700EFAE4E /* daigou.db in Resources */ = {isa = PBXBuildFile; fileRef = 3C6483391B49642700EFAE4E /* daigou.db */; };
-		3C6D85631B4BFBB10076F4AE /* DropDownListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6D85621B4BFBB10076F4AE /* DropDownListView.m */; };
 		3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6D85691B4DDFD20076F4AE /* Product.m */; };
 		3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6D856C1B4DDFE70076F4AE /* ProductManagement.m */; };
 		3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DDF1B1B43F86C000B8152 /* MShowDetailCell.m */; };
@@ -228,8 +227,6 @@
 		3C64486C1BA0457400873739 /* UISelectContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UISelectContainerViewController.m; path = Daigou/Controller/Product/UISelectContainerViewController.m; sourceTree = SOURCE_ROOT; };
 		3C64832F1B494BE800EFAE4E /* CustomInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomInfoTests.m; path = Model/Mine/CustomInfoTests.m; sourceTree = "<group>"; };
 		3C6483391B49642700EFAE4E /* daigou.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = daigou.db; sourceTree = "<group>"; };
-		3C6D85611B4BFBB10076F4AE /* DropDownListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropDownListView.h; path = DropDownMenu/DropDownListView.h; sourceTree = "<group>"; };
-		3C6D85621B4BFBB10076F4AE /* DropDownListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropDownListView.m; path = DropDownMenu/DropDownListView.m; sourceTree = "<group>"; };
 		3C6D85681B4DDFD20076F4AE /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Product.h; path = ProductCategory/Product.h; sourceTree = "<group>"; };
 		3C6D85691B4DDFD20076F4AE /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Product.m; path = ProductCategory/Product.m; sourceTree = "<group>"; };
 		3C6D856B1B4DDFE70076F4AE /* ProductManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductManagement.h; path = ProductCategory/ProductManagement.h; sourceTree = "<group>"; };
@@ -324,7 +321,6 @@
 			children = (
 				3CC133C21B5249D2009976AF /* Help */,
 				3C6D85641B4DDF880076F4AE /* CustomInfo */,
-				3C6D85601B4BFB650076F4AE /* DropDownMenu */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -644,15 +640,6 @@
 				3C64832F1B494BE800EFAE4E /* CustomInfoTests.m */,
 			);
 			name = Mine;
-			sourceTree = "<group>";
-		};
-		3C6D85601B4BFB650076F4AE /* DropDownMenu */ = {
-			isa = PBXGroup;
-			children = (
-				3C6D85611B4BFBB10076F4AE /* DropDownListView.h */,
-				3C6D85621B4BFBB10076F4AE /* DropDownListView.m */,
-			);
-			name = DropDownMenu;
 			sourceTree = "<group>";
 		};
 		3C6D85641B4DDF880076F4AE /* CustomInfo */ = {
@@ -1096,7 +1083,6 @@
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */,
 				3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */,
-				3C6D85631B4BFBB10076F4AE /* DropDownListView.m in Sources */,
 				3C56617C1B67AC6A0082F49E /* OrderProductsRightCell.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
