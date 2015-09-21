@@ -340,6 +340,7 @@
 		19B0F2702E82E20C5D43D510 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C6D85661B4DDFAA0076F4AE /* Product */,
 				3C2C7DB51B9BE05E00D1DCC0 /* Express */,
 				19B0FDC79F375A6C71079B5E /* Mine */,
 				19B0F24FE9CC9165CDBF8588 /* Order */,
@@ -493,7 +494,6 @@
 				3C30215F1B4FDEF1001A741D /* Brand */,
 				3C30215E1B4FDEE8001A741D /* Category */,
 				3C6D85671B4DDFAE0076F4AE /* CustomInfo */,
-				3C6D85661B4DDFAA0076F4AE /* Product */,
 				19DD3B8F12BAAA01ED7A26CB /* Setting */,
 			);
 			path = Mine;
@@ -678,6 +678,7 @@
 				3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */,
 			);
 			name = Product;
+			path = Mine;
 			sourceTree = "<group>";
 		};
 		3C6D85671B4DDFAE0076F4AE /* CustomInfo */ = {
