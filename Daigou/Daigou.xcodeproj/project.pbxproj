@@ -18,6 +18,7 @@
 		19DD3727EA65F8A45D74F491 /* SettingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3DEBDDCB3ECD3F07F1F4 /* SettingItem.m */; };
 		2538C6490BD7E648D4DE5030 /* libPods-Daigou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */; };
 		2AFE70851BA2EE56008EC0A5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2AFE70841BA2EE56008EC0A5 /* Settings.bundle */; };
+		3C0179C01BB1849600AAB879 /* ProcurementEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0179BF1BB1849600AAB879 /* ProcurementEditView.m */; };
 		3C036AF71B5913A200DBF0B9 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF61B5913A200DBF0B9 /* OrderItem.m */; };
 		3C036AFA1B59325500DBF0B9 /* OrderItemManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */; };
 		3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AFC1B59FBD100DBF0B9 /* OrderBasketCell.m */; };
@@ -130,6 +131,8 @@
 		19DD3DEBDDCB3ECD3F07F1F4 /* SettingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingItem.m; sourceTree = "<group>"; };
 		19DD3EACA5BAB917345AD66E /* SettingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingItem.h; sourceTree = "<group>"; };
 		2AFE70841BA2EE56008EC0A5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		3C0179BE1BB1849600AAB879 /* ProcurementEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcurementEditView.h; sourceTree = "<group>"; };
+		3C0179BF1BB1849600AAB879 /* ProcurementEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcurementEditView.m; sourceTree = "<group>"; };
 		3C036AF51B5913A200DBF0B9 /* OrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItem.h; path = Daigou/Model/Order/Order/OrderItem.h; sourceTree = SOURCE_ROOT; };
 		3C036AF61B5913A200DBF0B9 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItem.m; path = Daigou/Model/Order/Order/OrderItem.m; sourceTree = SOURCE_ROOT; };
 		3C036AF81B59325500DBF0B9 /* OrderItemManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemManagement.h; path = Daigou/Model/Order/Order/OrderItemManagement.h; sourceTree = SOURCE_ROOT; };
@@ -421,6 +424,8 @@
 				3CC462B91B9312ED002B92C8 /* ProcurementStatusListTableView.m */,
 				3C0BBDA41B94601700BA0E1E /* ProcurementListCell.h */,
 				3C0BBDA51B94601700BA0E1E /* ProcurementListCell.m */,
+				3C0179BE1BB1849600AAB879 /* ProcurementEditView.h */,
+				3C0179BF1BB1849600AAB879 /* ProcurementEditView.m */,
 			);
 			path = Procurement;
 			sourceTree = "<group>";
@@ -1033,6 +1038,7 @@
 				3CD933E81BA45F0F00E2370D /* PhotoCollection.m in Sources */,
 				3C6EECC01B2C3D7B00C7478F /* main.m in Sources */,
 				3CD933F31BA5B4D800E2370D /* MEditExpressViewController.m in Sources */,
+				3C0179C01BB1849600AAB879 /* ProcurementEditView.m in Sources */,
 				3C2C7DC61B9C71B500D1DCC0 /* UIProductDetailViewController.m in Sources */,
 				3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */,
 				3CD933E51BA45BC800E2370D /* Photo.m in Sources */,

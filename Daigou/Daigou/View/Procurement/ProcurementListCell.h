@@ -10,6 +10,6 @@
 #import "OProductItem.h"
 
 @interface ProcurementListCell : UITableViewCell
-@property(nonatomic, strong)OProductItem *procurementItem;
+@property(nonatomic, strong)NSDictionary *procurementItem;
 - (instancetype) initWithOrderStatus:(ProductOrderStatus)status withIndex:(NSInteger)index;
 @end

@@ -8,21 +8,25 @@
 
 #import "ProcurementListCell.h"
 #import <Masonry/Masonry.h>
+#import <ionicons/IonIcons.h>
+#import <ionicons/ionicons-codes.h>
 #import "CommonDefines.h"
 #import "ProductManagement.h"
 #import "Product.h"
 
-#define IMAGEVIEWSIZE 35.0f
+#define IMAGEVIEWSIZE 55.0f
 #define CONTENTPADDINGLEFT 10.0f
 #define FONTSIZE 12.0f
 #define CONTENTPADDINGTOP 10.0f
 
 @interface ProcurementListCell ()
 @property (nonatomic, assign)NSInteger cellIndex;
-@property(nonatomic, strong) UILabel *noteInfo;
-@property (nonatomic, assign)ProductOrderStatus procurementStatus;
+@property(nonatomic, strong)  UILabel *noteInfo;
+@property (nonatomic, assign) ProductOrderStatus procurementStatus;
 @property (nonatomic, strong) UILabel *titleNameLbl;
 @property (nonatomic, strong) Product *product;
+@property (nonatomic, strong) OProductItem *productItem;
+@property (nonatomic, assign) NSInteger count;
 @end
 
 @implementation ProcurementListCell
@@ -34,8 +38,15 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+
     }
     return self;
+}
+
+- (void)setProcurementItem:(NSDictionary *)procurementItem {
+    _procurementItem = procurementItem;
+    _count = [[procurementItem objectForKey:@"count"] intValue];
+    _productItem = (OProductItem *)[procurementItem objectForKey:@"oproductitem"];
 }
 
 - (void)layoutSubviews
@@ -71,7 +82,7 @@
     }];
     
     
-    NSString *priceString = [NSString stringWithFormat:@"参考价格: $%.2f 数量 %d", [self getRefPrice],[self getProductCount]];
+    NSString *priceString = [NSString stringWithFormat:@"参考价格: $%.2f 数量 %ld", [self getRefPrice],(long)[self getProductCount]];
     UILabel *totalPriceLbl = [[UILabel alloc]init];
     totalPriceLbl = [[UILabel alloc]init];
     totalPriceLbl.font = [UIFont systemFontOfSize:FONTSIZE];
@@ -85,6 +96,7 @@
         make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
         make.height.equalTo(@(15));
     }];
+    
     
     self.noteInfo = [[UILabel alloc]init];
     self.noteInfo.text = @"";
@@ -101,6 +113,7 @@
         make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
         make.bottom.equalTo(self.contentView).with.offset(-5);
     }];
+  
     
 }
 
@@ -111,20 +124,20 @@
 
 
 - (NSString *)getTitleName {
-    [self getProductInfoById:self.procurementItem.productid];
+    [self getProductInfoById:_productItem.productid];
     return self.product.name;
 }
 
 - (float)getRefPrice {
-    return self.procurementItem.refprice;
+    return _productItem.refprice;
 }
 
-- (int)getProductCount {
-    return self.procurementItem.amount;
+- (NSInteger)getProductCount {
+    return _count;
 }
 
 - (NSString *)getNote {
-    return self.procurementItem.note;
+    return _productItem.note;
 }
 
 @end

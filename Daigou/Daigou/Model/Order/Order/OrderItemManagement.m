@@ -216,14 +216,18 @@
     }
     FMResultSet *rs = nil;
     if (procurementStatus == OrderProduct) {
-        rs = [_db executeQuery:@"select * from item where orderid is not NULL and statu = 0"];
+        rs = [_db executeQuery:@"select *,count(*) as count from item where statu =0 and orderid is not null group by productid"];
     } else {
-        rs = [_db executeQuery:@"select * from item where orderid is NULL and statu = 0"];
+        rs = [_db executeQuery:@"select *,count(*) as count from item where statu =0 and orderid is null group by productid"];
     }
-
+    
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
-        [orderItemsArray addObject:[self setValueForOrderItem:rs]];
+        OProductItem *productItem = [self setValueForOrderItem:rs];
+        NSInteger productCount = (NSInteger) [rs intForColumn:@"count"];
+        NSDictionary *orderGroupDict = @{@"oproductitem":productItem,
+                                         @"count":@(productCount)};
+        [orderItemsArray addObject:orderGroupDict];
     }
     [_db close];
     return orderItemsArray;

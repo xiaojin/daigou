@@ -13,6 +13,7 @@ pod 'FXForms'
 pod 'UIAlertView-Blocks', '~> 1.0'
 pod 'FSImageViewer', '~> 2.6.3'
 pod 'InAppSettingsKit', :git => 'git@github.com:futuretap/InAppSettingsKit.git'
+pod 'MMPopupView', :head
 end
 
 target 'DaigouTests' do

@@ -12,8 +12,10 @@
 #import "ProcurementStatusListTableView.h"
 #import "ProcurementListCell.h"
 #import "OProductItem.h"
+#import "ProcurementEditView.h"
+
 #define LBL_DISTANCE ((kWindowWidth-10)/2)
-#define CELL_HEIGHT 65
+#define CELL_HEIGHT 85
 
 @interface ProcurementViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UIScrollView *pStatusView;
@@ -123,7 +125,6 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
 
 - (void)initOrderListTableView {
     self.orderListTableView = [[ProcurementStatusListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    self.orderListTableView.allowsSelection = NO;
     self.orderListTableView.status = OrderProduct;
     self.orderListTableView.rowHeight = CELL_HEIGHT;
     [self.pMainScrollView addSubview:self.orderListTableView];
@@ -191,9 +192,22 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
         procurementListTableView = self.stockListTableView;
     }
     
-    OProductItem *item = (OProductItem *)[[procurementListTableView procurementProductList] objectAtIndex:indexPath.row];
+    NSDictionary *item = (NSDictionary *)[[procurementListTableView procurementProductList] objectAtIndex:indexPath.row];
     cell.procurementItem = item;
     return cell;
+}
+
+#pragma mark - TableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProcurementEditView *editView = [[ProcurementEditView alloc]init];
+     NSDictionary *item = (NSDictionary *)[[(ProcurementStatusListTableView *)tableView procurementProductList] objectAtIndex:indexPath.row];
+    editView.productItemDict = item;
+    MMPopupBlock completeBlock = ^(MMPopupView *popupView){
+        NSLog(@"animation complete");
+    };
+    [editView showWithBlock:completeBlock];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark -updateContentView
