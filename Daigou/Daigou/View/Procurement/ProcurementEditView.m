@@ -231,6 +231,10 @@
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     NSInteger myCount = [_qualityField.text intValue];
+    if (myCount > _count) {
+        _qualityField.text = [NSString stringWithFormat:@"%ld",_count];
+        myCount = _count;
+    }
     float myPrice = [_priceField.text floatValue];
     _totalPriceField.text = [NSString stringWithFormat:@"%.2f",(myPrice * myCount)];
 }
