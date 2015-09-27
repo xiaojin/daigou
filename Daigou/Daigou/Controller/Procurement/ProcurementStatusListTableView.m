@@ -11,9 +11,4 @@
 
 @implementation ProcurementStatusListTableView
 
-- (NSArray *)procurementProductList {
-    NSArray *procurementList = [NSArray array];
-    procurementList = [[OrderItemManagement shareInstance] getprocurementProductItemsGroupByStatus:self.status];
-    return procurementList;
-}
 @end

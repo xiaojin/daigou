@@ -20,13 +20,15 @@
 - (NSArray *)getOrderProductsByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid;
 - (NSArray *)getOrderItemsByOrderStatus:(OrderStatus)status;
-- (NSArray *)getOrderProductsItemsNeedtoPurchase:(NSInteger)productid;
+- (NSArray *)getAllProductsItemsNeedtoPurchase:(NSInteger)productid;
 - (BOOL)updateProductItemToStock:(OProductItem *)product;
 - (NSArray *)getOrderItemsByExpress:(Express *)express;
 - (NSArray *)getprocurementProductItemsGroupByStatus:(ProductOrderStatus)procurementStatus;
 - (NSArray *)getAllprocurementProductItemsWithOutGroup;
 - (NSArray *)getstockProductItems;
 - (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
+- (NSArray *)getUnOrderProducItemByStatus:(ItemStatus)itemStatus;
+- (BOOL)updateProductItemWithProductItem:(OProductItem *)item;
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;
 - (void)insertOrderProductItems:(NSArray *)products;
 - (void)removeOrderProductItems:(NSArray *)orderProducts;

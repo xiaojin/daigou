@@ -27,6 +27,7 @@
 @property (nonatomic, strong) Product *product;
 @property (nonatomic, strong) OProductItem *productItem;
 @property (nonatomic, assign) NSInteger count;
+@property (nonatomic, strong) NSArray *UnorderProducts;
 @end
 
 @implementation ProcurementEditView
@@ -234,6 +235,7 @@
 
 
 - (void)finishPurchase {
+    [self selectExistingNeedtoBuyStockProducts];
     [self updateOrderProduct];
     [_delegate purchaseDidFinish];
     [self hideWithBlock:nil];
@@ -246,7 +248,7 @@
 
 - (void)updateOrderProduct {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
-    NSArray *orderItems = [itemManagement getOrderProductsItemsNeedtoPurchase:_productItem.productid];
+    NSArray *orderItems = [itemManagement getAllProductsItemsNeedtoPurchase:_productItem.productid];
     NSInteger updateCount =[_qualityField.text intValue];
     float productPrice = [_priceField.text floatValue];
     NSInteger needUpdateCount = updateCount > _count ? _count : updateCount;
@@ -258,22 +260,68 @@
         productItem.statu = PRODUCT_INSTOCK;
         [itemManagement updateProductItemToStock:productItem];
     }
+    //same productid ,orderid is null, statu = 0
+    
+    if (insertStockProductCount > 0) {
+        [self updateUnOrderProducts:insertStockProductCount withProduct:orderItems[0]];
+    }
+
+
+}
+
+- (void)updateUnOrderProducts:(NSInteger)insertCount withProduct:(OProductItem*)item {
+    for (NSDictionary *dict in _UnorderProducts) {
+        OProductItem *productItem = [dict objectForKey:@"oproductitem"];
+        if (productItem.productid == item.productid) {
+            NSInteger count = [[dict objectForKey:@"count"] integerValue];
+            NSInteger countUpdate = count > insertCount? insertCount : count;
+            NSInteger needToCreate = count > insertCount? 0 : (insertCount-count);
+            [self updateList:countUpdate withProduct:productItem];
+            if (needToCreate >0) {
+                [self insertList:needToCreate withProduct:item];
+            }
+        } else {
+            [self insertList:insertCount withProduct:item];
+        }
+    }
+}
+
+- (void)updateList:(NSInteger)updateCount withProduct:(OProductItem*)item{
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+    float productPrice = [_priceField.text floatValue];
+    NSArray *itemList = [itemManagement getUnOrderProducItemByStatus:PRODUCT_PURCHASE];
+    if ([itemList count] >= updateCount) {
+        for (int i = 0; i< updateCount; i++) {
+            OProductItem *productItem = itemList[i];
+            productItem.statu = PRODUCT_INSTOCK;
+            productItem.price = productPrice;
+            [itemManagement updateProductItemWithProductItem:productItem];
+        }
+    }
+
+}
+
+- (void)insertList:(NSInteger)insertCount withProduct:(OProductItem*)item{
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     NSMutableArray *insertStockProductArray = [NSMutableArray array];
-    for (int i = 0; i< insertStockProductCount; i++) {
+    float productPrice = [_priceField.text floatValue];
+    for (int i = 0; i< insertCount; i++) {
         OProductItem *productItem =[OProductItem new];
-        productItem.productid = [(OProductItem*)orderItems[0] productid];
-        productItem.refprice = [(OProductItem*)orderItems[0] refprice];
+        productItem.productid = [(OProductItem*)item productid];
+        productItem.refprice = [(OProductItem*)item refprice];
         productItem.price = productPrice;
-        productItem.sellprice = [(OProductItem*)orderItems[0] sellprice];
+        productItem.sellprice = [(OProductItem*)item sellprice];
         productItem.amount = 1.0f;
         productItem.statu = PRODUCT_INSTOCK;
         [insertStockProductArray addObject:productItem];
     }
-    if ([insertStockProductArray count] > 0) {
         [itemManagement insertOrderProductItems:insertStockProductArray];
-    }
 }
 
+
+- (void)selectExistingNeedtoBuyStockProducts{
+   _UnorderProducts = [[OrderItemManagement shareInstance] getprocurementProductItemsGroupByStatus:UnOrderProduct];
+}
 
 
 #pragma mark - UITextFieldDelegate

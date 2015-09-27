@@ -10,6 +10,4 @@
 #import "OProductItem.h"
 
 @interface ProcurementStatusListTableView : UITableView
-@property(nonatomic, assign)ProductOrderStatus status;
-@property(nonatomic, strong)NSArray *procurementProductList;
 @end

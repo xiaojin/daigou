@@ -334,6 +334,37 @@
     return groupOrderItemsArray;
 }
 
+- (NSArray *)getUnOrderProducItemByStatus:(ItemStatus)itemStatus {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from item where orderid is null and statu = ?",@(itemStatus)];
+    NSMutableArray *itemsArray = [NSMutableArray array];
+    while (rs.next) {
+        OProductItem *productItem = [self setValueForOrderItem:rs];
+        [itemsArray addObject:productItem];
+    }
+    [_db close];
+    return itemsArray;
+}
+
+- (BOOL)updateProductItemWithProductItem:(OProductItem *)item {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    id orderid;
+    if (item.orderid == 0) {
+        orderid = [NSNull null];
+    } else {
+        orderid = @(item.orderid);
+    }
+    BOOL result = [_db executeUpdate:@"update item set productid = (?),refprice = (?),price = (?), sellprice = (?),amount = (?),orderid = (?),orderdate = (?),statu = (?),note = (?),proxy = (?),syncdate = (?) where iid = (?)",@(item.productid),@(item.refprice),@(item.price),@(item.sellprice),@(item.amount),orderid,@(item.orderdate),@(item.statu),item.note,@(item.proxy),@(item.syncDate),@(item.iid)];
+    [_db close];
+    return result;
+}
+
 - (OProductItem *)setValueForOrderItem:(FMResultSet *)rs {
     OProductItem *productItem = [[OProductItem alloc]init];
     productItem.iid = (NSInteger)[rs intForColumn:@"iid"];
@@ -377,7 +408,7 @@
     return result;
 }
 
-- (NSArray *)getOrderProductsItemsNeedtoPurchase:(NSInteger)productid {
+- (NSArray *)getAllProductsItemsNeedtoPurchase:(NSInteger)productid {
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return nil ;
@@ -391,6 +422,7 @@
     [_db close];
     return orderItemsArray;
 }
+
 
 - (BOOL)updateProductItemToStock:(OProductItem *)product {
     if (![_db open]) {
