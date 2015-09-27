@@ -20,7 +20,7 @@
 #import "OProductItem.h"
 #import "CustomInfo.h"
 #import "OrderItem.h"
-@interface OrderDetailViewController  () <UIScrollViewDelegate>
+@interface OrderDetailViewController  () <UIScrollViewDelegate,UIAlertViewDelegate>
 @property (nonatomic, strong) UIScrollView *orderDetailMainScrollView;
 @property (nonatomic, strong) UIView *subTabView;
 @property (nonatomic, strong) NSArray *subTabString;
@@ -47,13 +47,34 @@
 }
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
+    [self checkDidFinishPurchasing];
     [self initNavigateBar];
     [self addBottomView];
     [self initOrderData];
     [self setPageIndicator];
     [self initScrollView];
+}
+
+- (void)checkDidFinishPurchasing {
+    if (_orderItem != nil && _orderItem.statu == PURCHASED) {
+        OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+        NSArray *productsArray = [orderItemManagement getOrderProductsByOrderId:_orderItem.oid];
+        if ([productsArray count] !=0) {
+              NSArray *filterProducts =[productsArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
+            if ([filterProducts count] == 0) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"订单状态"
+                                                                    message:@"所有物品已采购完毕"
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:@"好的", nil];
+                alertView.tag = PRODUCTDETAILIVIEW + 20;
+                [alertView show];
+                // 更改状态到采购
+            }
+            
+        }
+    }
 }
 
 - (void)initNavigateBar {
@@ -135,21 +156,21 @@
             saveOrderButtonTitle = @"采购完成,待发货";
             saveOrderButtonSelection = @selector(changeStatusToUNDISPATCHED);
         }
-
+        self.title = @"采购中";
     } else if (_orderItem.statu == UNDISPATCH) {
         saveOrderButtonTitle = @"清点发货";
         saveOrderButtonSelection = @selector(changeStatusToSHIPPED);
-
+        self.title = @"待发货";
     } else if (_orderItem.statu == SHIPPED ) {
         saveOrderButtonTitle = @"确认收货";
         saveOrderButtonSelection = @selector(changeStatusToDELIVERD);
-    
+        self.title = @"运输中";
     } else if (_orderItem.statu == DELIVERD) {
         saveOrderButtonTitle = @"已完成";
         saveOrderButtonSelection = @selector(changeStatusToDONE);
-        
+        self.title = @"已收获";
     } else if (_orderItem.statu == DONE) {
-        
+        self.title = @"已完成";
     }
     [_saveOrderButton setTitle:saveOrderButtonTitle forState:UIControlStateNormal];
     [_saveOrderButton addTarget:self action:saveOrderButtonSelection forControlEvents:UIControlEventTouchUpInside];
@@ -486,6 +507,8 @@
         if (buttonIndex == 1) {
            [self missingCustomInfoHandler];
         }
+    } else if ((alertView.tag - PRODUCTDETAILIVIEW)  == 20) {
+        [self changeStatusToUNDISPATCHED];
     }
 }
 
@@ -516,8 +539,6 @@
     [self saveOrder];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
