@@ -51,6 +51,28 @@
   FMResultSet *rs = [_db executeQuery:@"select * from client"];
   NSMutableArray *customArray = [NSMutableArray array];
   while (rs.next) {
+      CustomInfo *customInfo = [self setValueForCustomInfo:rs];
+      [customArray addObject:customInfo];
+  }
+    [_db close];
+  return customArray;
+}
+
+- (CustomInfo *)getCustomInfoById:(NSInteger)cid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from client where cid = (?) ", [NSNumber numberWithInteger:cid]];
+    CustomInfo *customInfo = nil;
+    if (rs.next) {
+        customInfo = [self setValueForCustomInfo:rs];
+    }
+    [_db close];
+    return customInfo;
+}
+
+- (CustomInfo *)setValueForCustomInfo:(FMResultSet *)rs{
     CustomInfo *customInfo = [[CustomInfo alloc]init];
     customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
     customInfo.name = [rs stringForColumn:@"name"];
@@ -70,41 +92,6 @@
     customInfo.note = [rs stringForColumn:@"note"];
     customInfo.ename = [rs stringForColumn:@"ename"];
     customInfo.syncDate = [rs doubleForColumn:@"syncDate"];
-    [customArray addObject:customInfo];
-  }
-    [_db close];
-  return customArray;
-}
-
-- (CustomInfo *)getCustomInfoById:(NSInteger)cid {
-    if (![_db open]) {
-        NSLog(@"Could not open db.");
-        return nil ;
-    }
-    FMResultSet *rs = [_db executeQuery:@"select * from client where cid = (?) ", [NSNumber numberWithInteger:cid]];
-    CustomInfo *customInfo = nil;
-    if (rs.next) {
-        customInfo = [[CustomInfo alloc]init];
-        customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
-        customInfo.name = [rs stringForColumn:@"name"];
-        customInfo.email = [rs stringForColumn:@"email"];
-        customInfo.phonenum = [rs  stringForColumn:@"phonenum"];
-        customInfo.wechat = [rs stringForColumn:@"wechat"];
-        customInfo.idnum = [rs stringForColumn:@"idnum"];
-        customInfo.postcode = [rs stringForColumn:@"postcode"];
-        customInfo.agent = (NSInteger)[rs intForColumn:@"agent"];
-        customInfo.address = [rs stringForColumn:@"address"];
-        customInfo.address1 = [rs stringForColumn:@"address1"];
-        customInfo.address2 = [rs stringForColumn:@"address2"];
-        customInfo.address3 = [rs stringForColumn:@"address3"];
-        customInfo.photofront = [rs stringForColumn:@"photofront"];
-        customInfo.photoback = [rs stringForColumn:@"photoback"];
-        customInfo.expressAvaible = [rs stringForColumn:@"expressAvaible"];
-        customInfo.note = [rs stringForColumn:@"note"];
-        customInfo.ename = [rs stringForColumn:@"ename"];
-        customInfo.syncDate = [rs doubleForColumn:@"syncDate"];
-    }
-    [_db close];
     return customInfo;
 }
 

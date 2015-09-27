@@ -8,6 +8,11 @@
 
 #import "MMPopupView.h"
 #import "OProductItem.h"
+@protocol ProcurementEditViewDelegate
+- (void)purchaseDidFinish;
+@end
+
 @interface ProcurementEditView : MMPopupView
 @property (nonatomic, strong)NSDictionary *productItemDict;
+@property (nonatomic, weak)id<ProcurementEditViewDelegate> delegate;
 @end

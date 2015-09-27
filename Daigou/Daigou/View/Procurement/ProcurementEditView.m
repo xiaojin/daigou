@@ -14,6 +14,8 @@
 #import "JVFloatLabeledTextField.h"
 #import "ProductManagement.h"
 #import "Product.h"
+#import "OrderItemManagement.h"
+#import "OProductItem.h"
 
 @interface ProcurementEditView ()<UITextFieldDelegate>
 @property (nonatomic, strong) UIButton *btnCancel;
@@ -53,13 +55,13 @@
         [_productTitle setTextColor:TITLECOLOR];
         _productTitle.font = [UIFont systemFontOfSize:13.0f];
         [_productTitle setTextAlignment:NSTextAlignmentLeft];
-        [_productTitle setText:@"我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友我们试好朋友"];
+        [_productTitle setText:@"我们试试"];
         [_productTitle setNumberOfLines:2];
         [view addSubview:_productTitle];
         [_productTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(view).with.offset(10);
-            make.left.equalTo(view).with.offset(10);
-            make.right.equalTo(view).with.offset(-10);
+            make.left.equalTo(view).with.offset(20);
+            make.right.equalTo(view).with.offset(-20);
             make.height.mas_equalTo(@45);
         }];
         
@@ -175,10 +177,19 @@
             make.height.equalTo(@(kLINEHEIGHT));
         }];
         
+        self.btnCancel = [UIButton mm_buttonWithTarget:self action:@selector(actionHide)];
+        [self addSubview:self.btnCancel];
+        [self.btnCancel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(80, 50));
+            make.left.bottom.equalTo(self);
+        }];
+        [self.btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+        [self.btnCancel setTitleColor:MMHexColor(0xE76153FF) forState:UIControlStateNormal];
         
         
-    
-        self.btnConfirm = [UIButton mm_buttonWithTarget:self action:@selector(actionHide)];
+        
+        
+        self.btnConfirm = [UIButton mm_buttonWithTarget:self action:@selector(finishPurchase)];
         [self addSubview:self.btnConfirm];
         [self.btnConfirm mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(80, 50));
@@ -222,19 +233,52 @@
 }
 
 
-- (void)actionHide
-{
+- (void)finishPurchase {
+    [self updateOrderProduct];
+    [_delegate purchaseDidFinish];
+    [self hideWithBlock:nil];
+}
+
+- (void)actionHide {
     [self resignFirstResponder];
     [self hide];
 }
 
+- (void)updateOrderProduct {
+    OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
+    NSArray *orderItems = [itemManagement getOrderProductsItemsNeedtoPurchase:_productItem.productid];
+    NSInteger updateCount =[_qualityField.text intValue];
+    float productPrice = [_priceField.text floatValue];
+    NSInteger needUpdateCount = updateCount > _count ? _count : updateCount;
+    NSInteger insertStockProductCount = updateCount > _count ? (updateCount -_count) : 0;
+    for (int i = 0; i < needUpdateCount; i++) {
+        OProductItem *productItem =[OProductItem new];
+        productItem = orderItems[i];
+        productItem.price = productPrice;
+        productItem.statu = PRODUCT_INSTOCK;
+        [itemManagement updateProductItemToStock:productItem];
+    }
+    NSMutableArray *insertStockProductArray = [NSMutableArray array];
+    for (int i = 0; i< insertStockProductCount; i++) {
+        OProductItem *productItem =[OProductItem new];
+        productItem.productid = [(OProductItem*)orderItems[0] productid];
+        productItem.refprice = [(OProductItem*)orderItems[0] refprice];
+        productItem.price = productPrice;
+        productItem.sellprice = [(OProductItem*)orderItems[0] sellprice];
+        productItem.amount = 1.0f;
+        productItem.statu = PRODUCT_INSTOCK;
+        [insertStockProductArray addObject:productItem];
+    }
+    if ([insertStockProductArray count] > 0) {
+        [itemManagement insertOrderProductItems:insertStockProductArray];
+    }
+}
+
+
+
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     NSInteger myCount = [_qualityField.text intValue];
-    if (myCount > _count) {
-        _qualityField.text = [NSString stringWithFormat:@"%ld",_count];
-        myCount = _count;
-    }
     float myPrice = [_priceField.text floatValue];
     _totalPriceField.text = [NSString stringWithFormat:@"%.2f",(myPrice * myCount)];
 }

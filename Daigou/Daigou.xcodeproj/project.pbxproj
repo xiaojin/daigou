@@ -44,6 +44,7 @@
 		3C344AA81B6CD46500818F19 /* OrderBasketPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AA71B6CD46500818F19 /* OrderBasketPickerViewController.m */; };
 		3C344AAE1B6CED2D00818F19 /* ProductWithCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */; };
 		3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */; };
+		3C41F3D51BB42FB0006E6C35 /* OrderItemClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41F3D41BB42FB0006E6C35 /* OrderItemClient.m */; };
 		3C442A351B74D8E8008BF244 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C442A341B74D8E8008BF244 /* DateUtil.m */; };
 		3C442A381B760ACE008BF244 /* OrderStausListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C442A371B760ACE008BF244 /* OrderStausListTableView.m */; };
 		3C442A3C1B770B14008BF244 /* UIPickerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C442A3B1B770B14008BF244 /* UIPickerViewCell.m */; };
@@ -179,6 +180,8 @@
 		3C344AAD1B6CED2D00818F19 /* ProductWithCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductWithCount.m; path = ProductCategory/ProductWithCount.m; sourceTree = "<group>"; };
 		3C344AAF1B6CF6B600818F19 /* OrderBasketPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderBasketPickerCell.h; path = ../../Controller/Order/PickOrder/OrderBasketPickerCell.h; sourceTree = "<group>"; };
 		3C344AB01B6CF6B600818F19 /* OrderBasketPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderBasketPickerCell.m; path = ../../Controller/Order/PickOrder/OrderBasketPickerCell.m; sourceTree = "<group>"; };
+		3C41F3D31BB42FB0006E6C35 /* OrderItemClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemClient.h; path = Daigou/Model/Order/Order/OrderItemClient.h; sourceTree = SOURCE_ROOT; };
+		3C41F3D41BB42FB0006E6C35 /* OrderItemClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItemClient.m; path = Daigou/Model/Order/Order/OrderItemClient.m; sourceTree = SOURCE_ROOT; };
 		3C442A331B74D8E8008BF244 /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
 		3C442A341B74D8E8008BF244 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
 		3C442A361B760ACE008BF244 /* OrderStausListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderStausListTableView.h; path = ../../Controller/Order/OrderStausListTableView.h; sourceTree = "<group>"; };
@@ -514,6 +517,8 @@
 				3C036AF91B59325500DBF0B9 /* OrderItemManagement.m */,
 				3C5678361B5B25E1001B6B40 /* OProductItem.h */,
 				3C5678371B5B25E1001B6B40 /* OProductItem.m */,
+				3C41F3D31BB42FB0006E6C35 /* OrderItemClient.h */,
+				3C41F3D41BB42FB0006E6C35 /* OrderItemClient.m */,
 			);
 			name = Order;
 			path = ../Procurement;
@@ -1041,6 +1046,7 @@
 				3C0179C01BB1849600AAB879 /* ProcurementEditView.m in Sources */,
 				3C2C7DC61B9C71B500D1DCC0 /* UIProductDetailViewController.m in Sources */,
 				3C30215A1B4F98DF001A741D /* ProductItemFrame.m in Sources */,
+				3C41F3D51BB42FB0006E6C35 /* OrderItemClient.m in Sources */,
 				3CD933E51BA45BC800E2370D /* Photo.m in Sources */,
 				3C6448671BA00CD800873739 /* MBrandTableView.m in Sources */,
 				3C6448641BA00AAB00873739 /* MProductsViewController.m in Sources */,

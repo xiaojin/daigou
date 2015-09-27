@@ -14,6 +14,7 @@
 
 @implementation OrderItemManagement{
     FMDatabase *_db;
+    BOOL isCombined;
 }
 
 - (instancetype)init {
@@ -57,6 +58,20 @@
     }
     [_db close];
     return orderItemsArray;
+}
+
+- (OrderItem *)getOrderItemByOrderId:(NSInteger)orderId {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from orderitem where oid = ?",orderId];
+    OrderItem *orderItem = nil;
+    if (rs.next) {
+        orderItem = [self setValueForItem:rs];
+    }
+    [_db close];
+    return orderItem;
 }
 
 - (NSInteger)getLastInsertOrderId {
@@ -105,11 +120,11 @@
     return itemsArray;
 }
 
-- (OrderItem *)setValueForItem:(FMResultSet *)rs {
+- (OrderItem *)setValueForItem:(FMResultSet *)rs{
     OrderItem *orderItem = [[OrderItem alloc]init];
     orderItem.oid = (NSInteger)[rs intForColumn:@"oid"];
     orderItem.clientid = (NSInteger)[rs intForColumn:@"clientid"];
-    orderItem.statu = (OrderStatus) [rs intForColumn:@"statu"];
+    orderItem.statu = isCombined ?(OrderStatus) [rs intForColumn:@"orderstatu"] : (OrderStatus) [rs intForColumn:@"statu"];
     orderItem.expressid = (NSInteger) [rs intForColumn:@"expressid"];
     orderItem.parentoid = (NSInteger)[rs intForColumn:@"parentoid"];
     orderItem.freeShip = (NSInteger) [rs intForColumn:@"free_ship"];
@@ -123,17 +138,41 @@
     orderItem.subtotal = [rs doubleForColumn:@"subtotal"];
     orderItem.profit = [rs doubleForColumn:@"profit"];
     orderItem.othercost = [rs doubleForColumn:@"othercost"];
-    orderItem.creatDate = [rs doubleForColumn:@"createDate"];
-    orderItem.shipDate = [rs doubleForColumn:@"shipDate"];
-    orderItem.deliverDate = [rs doubleForColumn:@"deliverDate"];
-    orderItem.payDate = [rs doubleForColumn:@"payDate"];
-    orderItem.note = [rs stringForColumn:@"note"];
+    orderItem.creatDate = [rs doubleForColumn:@"createdate"];
+    orderItem.shipDate = [rs doubleForColumn:@"shipdate"];
+    orderItem.deliverDate = [rs doubleForColumn:@"deliverdate"];
+    orderItem.payDate = [rs doubleForColumn:@"paydate"];
+    orderItem.note = isCombined ? [rs stringForColumn:@"ordernote"] : [rs stringForColumn:@"note"] ;
     orderItem.barcode = [rs stringForColumn:@"barcode"];
     orderItem.idnum = [rs stringForColumn:@"idnum"];
-    orderItem.proxy = [rs intForColumn:@"proxy"];
-    orderItem.noteImage = [rs stringForColumn:@"noteImage"];
-    orderItem.syncDate = [rs doubleForColumn:@"syncDate"];
+    orderItem.proxy = isCombined ? [rs intForColumn:@"orderproxy"] : [rs intForColumn:@"proxy"];
+    orderItem.noteImage = [rs stringForColumn:@"noteimage"];
+    orderItem.syncDate = isCombined ? [rs doubleForColumn:@"ordersyncdate"]:[rs doubleForColumn:@"syncdate"];
     return orderItem;
+}
+
+
+- (CustomInfo *)setValueForCustomInfo:(FMResultSet *)rs{
+    CustomInfo *customInfo = [[CustomInfo alloc]init];
+    customInfo.cid = (NSInteger)[rs intForColumn:@"cid"];
+    customInfo.name = [rs stringForColumn:@"name"];
+    customInfo.email = [rs stringForColumn:@"email"];
+    customInfo.phonenum = [rs  stringForColumn:@"phonenum"];
+    customInfo.wechat = [rs stringForColumn:@"wechat"];
+    customInfo.idnum = isCombined ? [rs stringForColumn:@"clientidnum"]:[rs stringForColumn:@"idnum"];
+    customInfo.postcode = isCombined ? [rs stringForColumn:@"clientpostcode"]:[rs stringForColumn:@"postcode"];
+    customInfo.agent = (NSInteger)[rs intForColumn:@"agent"];
+    customInfo.address = isCombined ? [rs stringForColumn:@"clientaddress"]:[rs stringForColumn:@"address"];
+    customInfo.address1 = [rs stringForColumn:@"address1"];
+    customInfo.address2 = [rs stringForColumn:@"address2"];
+    customInfo.address3 = [rs stringForColumn:@"address3"];
+    customInfo.photofront = [rs stringForColumn:@"photofront"];
+    customInfo.photoback = [rs stringForColumn:@"photoback"];
+    customInfo.expressAvaible = [rs stringForColumn:@"expressavaible"];
+    customInfo.note = isCombined ? [rs stringForColumn:@"clientnote"]:[rs stringForColumn:@"note"];
+    customInfo.ename = [rs stringForColumn:@"ename"];
+    customInfo.syncDate = isCombined ? [rs doubleForColumn:@"clientsyncdate"]:[rs doubleForColumn:@"syncdate"];
+    return customInfo;
 }
 
 - (BOOL)checkIfOrderItmExists:(OrderItem *)ordeItem {
@@ -209,7 +248,7 @@
     
 }
 
-- (NSArray *)getprocurementProductItemsByStatus:(ProductOrderStatus)procurementStatus {
+- (NSArray *)getprocurementProductItemsGroupByStatus:(ProductOrderStatus)procurementStatus {
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return nil ;
@@ -231,7 +270,30 @@
     }
     [_db close];
     return orderItemsArray;
+}
 
+- (NSArray *)getAllprocurementProductItemsWithOutGroup {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select iid,productid,refprice,price,sellprice,amount,orderid,orderdate,item.statu as statu,item.note as note,item.proxy as proxy,item.syncDate as syncDate,oid,clientid,orderitem.statu as orderStatu,expressid,parentoid,free_ship,orderitem.address as address,reviever,phonenumber,orderitem.postcode as postcode,total,discount,delivery,subtotal,profit,othercost,createDate,shipDate,deliverDate,payDate,orderitem.note as orderNote,barcode,orderitem.idnum as idnum,orderitem.proxy as orderProxy, noteImage, orderitem.syncDate as orderSyncDate, cid,name,ename,email,phonenum,wechat, client.idnum as clientIdnum, client.postcode as clientPostCode, agent,client.address as clientAddress,address1, address2,address3,photofront,photoback,expressAvaible, client.syncDate as clientSyncDate, client.note as clientNote from item ,orderitem, client where item.orderid = orderitem.oid and orderitem.clientid = client.cid and item.statu = 0 and item.orderid is not null"];
+
+    NSMutableArray *orderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        isCombined = true;
+        OProductItem *productItem = [self setValueForOrderItem:rs];
+        OrderItem *orderItem = [self setValueForItem:rs];
+        CustomInfo *customInfo = [self setValueForCustomInfo:rs];
+        OrderItemClient *orderItemClient = [OrderItemClient new];
+        orderItemClient.productItem = productItem;
+        orderItemClient.orderItem = orderItem;
+        orderItemClient.customInfo = customInfo;
+        [orderItemsArray addObject:orderItemClient];
+    }
+    [_db close];
+    isCombined = false;
+    return orderItemsArray;
 }
 
 
@@ -240,11 +302,15 @@
         NSLog(@"Could not open db.");
         return nil ;
     }
-    FMResultSet *rs = [_db executeQuery:@"select * from item where statu = (?)",@(PRODUCT_INSTOCK)];
+    FMResultSet *rs = [_db executeQuery:@"select *,count(*) as count from item where statu = (?) and orderid is null group by productid",@(PRODUCT_INSTOCK)];
     
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {
-        [orderItemsArray addObject:[self setValueForOrderItem:rs]];
+        OProductItem *productItem = [self setValueForOrderItem:rs];
+        NSInteger productCount = (NSInteger) [rs intForColumn:@"count"];
+        NSDictionary *orderGroupDict = @{@"oproductitem":productItem,
+                                         @"count":@(productCount)};
+        [orderItemsArray addObject:orderGroupDict];
     }
     [_db close];
     return orderItemsArray;
@@ -281,7 +347,7 @@
     productItem.statu = [rs intForColumn:@"statu"];
     productItem.note = [rs stringForColumn:@"note"];
     productItem.proxy = [rs intForColumn:@"proxy"];
-    productItem.syncDate = [rs doubleForColumn:@"syncDate"];
+    productItem.syncDate = [rs doubleForColumn:@"syncdate"];
     return productItem;
 }
 
@@ -310,6 +376,33 @@
     [_db close];
     return result;
 }
+
+- (NSArray *)getOrderProductsItemsNeedtoPurchase:(NSInteger)productid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from item where statu = 0 and orderid is not null and productid = (?)",@(productid)];
+    
+    NSMutableArray *orderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        [orderItemsArray addObject:[self setValueForOrderItem:rs]];
+    }
+    [_db close];
+    return orderItemsArray;
+}
+
+- (BOOL)updateProductItemToStock:(OProductItem *)product {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    BOOL result;
+    result = [_db executeUpdate:@"update item set price = (?),statu = (?) where iid = (?)",@(product.price),@(product.statu),@(product.iid)];
+    [_db close];
+    return result;
+}
+
 
 - (void)insertOrderProductItems:(NSArray *)products {
     if (![_db open]) {

@@ -17,7 +17,7 @@
 #define IMAGEVIEWSIZE 55.0f
 #define CONTENTPADDINGLEFT 10.0f
 #define FONTSIZE 12.0f
-#define CONTENTPADDINGTOP 10.0f
+#define CONTENTPADDINGTOP 15.0f
 
 @interface ProcurementListCell ()
 @property (nonatomic, assign)NSInteger cellIndex;
@@ -91,7 +91,7 @@
     [totalPriceLbl setText:priceString];
     [self.contentView addSubview:totalPriceLbl];
     [totalPriceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleNameLbl.mas_bottom).with.offset(2);
+        make.top.equalTo(self.titleNameLbl.mas_bottom).with.offset(10);
         make.left.equalTo(productImage.mas_right).with.offset(CONTENTPADDINGLEFT);
         make.right.equalTo(self.contentView).with.offset(-CONTENTPADDINGLEFT);
         make.height.equalTo(@(15));

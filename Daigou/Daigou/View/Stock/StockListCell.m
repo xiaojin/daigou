@@ -23,6 +23,8 @@
 @property (nonatomic, assign)ProductOrderStatus procurementStatus;
 @property (nonatomic, strong) UILabel *titleNameLbl;
 @property (nonatomic, strong) Product *product;
+@property (nonatomic, strong) OProductItem *productItem;
+@property (nonatomic, assign) NSInteger count;
 @end
 
 @implementation StockListCell
@@ -34,6 +36,12 @@
     if (self= [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
     }
     return self;
+}
+
+- (void)setProcurementItem:(NSDictionary *)procurementItem {
+    _procurementItem = procurementItem;
+    _count = [[procurementItem objectForKey:@"count"] intValue];
+    _productItem = (OProductItem *)[procurementItem objectForKey:@"oproductitem"];
 }
 
 - (void)layoutSubviews
@@ -68,7 +76,7 @@
     }];
     
     
-    NSString *priceString = [NSString stringWithFormat:@"参考价格: $%.2f 数量 %d", [self getRefPrice],[self getProductCount]];
+    NSString *priceString = [NSString stringWithFormat:@"参考价格: $%.2f 数量 %ld", [self getRefPrice],[self getProductCount]];
     UILabel *totalPriceLbl = [[UILabel alloc]init];
     totalPriceLbl = [[UILabel alloc]init];
     totalPriceLbl.font = [UIFont systemFontOfSize:FONTSIZE];
@@ -108,19 +116,19 @@
 
 
 - (NSString *)getTitleName {
-    [self getProductInfoById:self.procurementItem.productid];
+    [self getProductInfoById:_productItem.productid];
     return self.product.name;
 }
 
 - (float)getRefPrice {
-    return self.procurementItem.refprice;
+    return _productItem.refprice;
 }
 
-- (int)getProductCount {
-    return self.procurementItem.amount;
+- (NSInteger)getProductCount {
+    return _count;
 }
 
 - (NSString *)getNote {
-    return self.procurementItem.note;
+    return _productItem.note;
 }
 @end

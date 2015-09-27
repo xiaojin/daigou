@@ -117,7 +117,7 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
         cell = [[StockListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stockListcellIdentity];
     }
 
-    OProductItem *item = (OProductItem *)[[self.stockListTableView stockProductList] objectAtIndex:indexPath.row];
+    NSDictionary *item = (NSDictionary *)[[self.stockListTableView stockProductList] objectAtIndex:indexPath.row];
     cell.procurementItem = item;
     return cell;
 }

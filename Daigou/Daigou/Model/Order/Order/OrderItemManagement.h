@@ -10,6 +10,7 @@
 #import "OrderItem.h"
 #import "OProductItem.h"
 #import "Express.h"
+#import "OrderItemClient.h"
 
 @interface OrderItemManagement : NSObject
 + (instancetype)shareInstance;
@@ -19,8 +20,11 @@
 - (NSArray *)getOrderProductsByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid;
 - (NSArray *)getOrderItemsByOrderStatus:(OrderStatus)status;
+- (NSArray *)getOrderProductsItemsNeedtoPurchase:(NSInteger)productid;
+- (BOOL)updateProductItemToStock:(OProductItem *)product;
 - (NSArray *)getOrderItemsByExpress:(Express *)express;
-- (NSArray *)getprocurementProductItemsByStatus:(ProductOrderStatus)procurementStatus;
+- (NSArray *)getprocurementProductItemsGroupByStatus:(ProductOrderStatus)procurementStatus;
+- (NSArray *)getAllprocurementProductItemsWithOutGroup;
 - (NSArray *)getstockProductItems;
 - (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;
@@ -31,4 +35,5 @@
 - (NSString *)getOrderItemPhotosWithOrderItem:(OrderItem *)orderItem;
 - (BOOL)updateTemperOrderItemsWithOrderId:(NSInteger)oid;
 - (BOOL)deleteTemperOrderItems;
+- (OrderItem *)getOrderItemByOrderId:(NSInteger)orderId;
 @end

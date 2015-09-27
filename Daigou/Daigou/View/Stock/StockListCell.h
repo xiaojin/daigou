@@ -10,7 +10,7 @@
 #import "OProductItem.h"
 
 @interface StockListCell : UITableViewCell
-@property(nonatomic, strong)OProductItem *procurementItem;
+@property(nonatomic, strong)NSDictionary *procurementItem;
 - (instancetype) initWithIndex:(NSInteger)index;
 
 @end
