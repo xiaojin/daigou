@@ -295,7 +295,7 @@
             OProductItem *productItem = itemList[i];
             productItem.statu = PRODUCT_INSTOCK;
             productItem.price = productPrice;
-            [itemManagement updateProductItemWithProductItem:productItem];
+            [itemManagement updateProductItemWithProductItem:@[productItem]];
         }
     }
 

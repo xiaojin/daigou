@@ -240,7 +240,6 @@
 - (void)saveBasketInfoWithOrderId:(NSInteger)oid {
     OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
     [orderManagement updateTemperOrderItemsWithOrderId:oid];
-
 }
 
 @end

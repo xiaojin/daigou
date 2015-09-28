@@ -218,6 +218,13 @@
 }
 
 - (void)finishSelect {
+    if (_order.oid !=0 && _order.statu == UNDISPATCH) {
+        //TODO:如果添加订单物品，需要将订单状态改为0号状态
+        //TODO:如果减少订单物品，则需要减少订单物品的数量，优先修改采购数量，或者需要修改到库存中去
+        OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
+        _order.statu = PURCHASED;
+        [orderManagement updateOrderItem:_order];
+    }
     [self updateOrderDataBase];
     [_delegate finishPickProducts];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -277,16 +284,39 @@
 - (void)updateOrderDataBase {
     OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
     NSArray *orderProducts = [orderManagement getOrderProductsByOrderId:_order.oid];
+    NSArray *unOrderProducts = [orderManagement getUnOrderProducItemByStatus:PRODUCT_INSTOCK];
     [_cartDict enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, ProductWithCount *productWithCount, BOOL *stop) {
+        //TODO:现存数据库中找到库存货
+        //TODO:如果有库存，就优先更新库存货
+        //TODO:
         NSArray *filterProducts =[orderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
+        NSArray *filterUnOrderProducts = [unOrderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
+        NSInteger countNeedCreate = -1;
+        if ([filterUnOrderProducts count] !=0) {
+            //修改库存的数量
+            NSMutableArray *orders = [NSMutableArray array];
+            NSInteger usedCount = productWithCount.productNum > [filterUnOrderProducts count] ? [filterUnOrderProducts count] : productWithCount.productNum ;
+            for (int i = 0; i < usedCount ; i++) {
+                OProductItem *item = filterUnOrderProducts[i];
+                item.orderid = _order.oid;
+                [orders addObject:item];
+            }
+            
+            countNeedCreate = labs(((NSInteger)[filterUnOrderProducts count] - productWithCount.productNum));
+            [orderManagement updateProductItemWithProductItem:orders];
+        }
+        
         NSMutableArray *orderProducts = [NSMutableArray array];
+        if (countNeedCreate < 0) {
+            countNeedCreate = productWithCount.productNum;
+        }
         if ([filterProducts count] != 0) {
-            for (int x = 0; x < productWithCount.productNum; x++) {
+            for (int x = 0; x < countNeedCreate; x++) {
                 [orderProducts addObject:[filterProducts lastObject]];
             }
         } else {
             Product *product = productWithCount.product;
-            for (int x = 0; x < productWithCount.productNum; x++) {
+            for (int x = 0; x < countNeedCreate; x++) {
                 OProductItem *productItem = [[OProductItem alloc]initOProductItemWithProduct:product];
                 productItem.orderid = _order.oid;
                 [orderProducts addObject:productItem];

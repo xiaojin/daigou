@@ -28,7 +28,7 @@
 - (NSArray *)getstockProductItems;
 - (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
 - (NSArray *)getUnOrderProducItemByStatus:(ItemStatus)itemStatus;
-- (BOOL)updateProductItemWithProductItem:(OProductItem *)item;
+- (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems;
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;
 - (void)insertOrderProductItems:(NSArray *)products;
 - (void)removeOrderProductItems:(NSArray *)orderProducts;

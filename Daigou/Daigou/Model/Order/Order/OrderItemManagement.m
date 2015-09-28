@@ -349,18 +349,23 @@
     return itemsArray;
 }
 
-- (BOOL)updateProductItemWithProductItem:(OProductItem *)item {
+
+- (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems {
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return NO ;
     }
-    id orderid;
-    if (item.orderid == 0) {
-        orderid = [NSNull null];
-    } else {
-        orderid = @(item.orderid);
+    BOOL result = false;
+    for (int i =0; i < [orderitems count]; i ++) {
+        OProductItem* item = orderitems[i];
+        id orderid;
+        if (item.orderid == 0) {
+            orderid = [NSNull null];
+        } else {
+            orderid = @(item.orderid);
+        }
+        result = [_db executeUpdate:@"update item set productid = (?),refprice = (?),price = (?), sellprice = (?),amount = (?),orderid = (?),orderdate = (?),statu = (?),note = (?),proxy = (?),syncdate = (?) where iid = (?)",@(item.productid),@(item.refprice),@(item.price),@(item.sellprice),@(item.amount),orderid,@(item.orderdate),@(item.statu),item.note,@(item.proxy),@(item.syncDate),@(item.iid)];
     }
-    BOOL result = [_db executeUpdate:@"update item set productid = (?),refprice = (?),price = (?), sellprice = (?),amount = (?),orderid = (?),orderdate = (?),statu = (?),note = (?),proxy = (?),syncdate = (?) where iid = (?)",@(item.productid),@(item.refprice),@(item.price),@(item.sellprice),@(item.amount),orderid,@(item.orderdate),@(item.statu),item.note,@(item.proxy),@(item.syncDate),@(item.iid)];
     [_db close];
     return result;
 }
@@ -500,6 +505,7 @@
         return NO ;
     }
     BOOL result;
+    [_db executeUpdate:@"update item set orderid = null where orderid = 0 and statu = ?", @(PRODUCT_INSTOCK)];
     result = [_db executeUpdate:@"delete from item where orderid = 0"];
     [_db close];
     return result;
