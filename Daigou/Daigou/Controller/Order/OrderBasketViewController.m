@@ -196,7 +196,40 @@
 
 - (void)reloadOrderProductsFromDB {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
-    self.products = [itemManagement getOrderItemsGroupbyProductidByOrderId:self.orderItem.oid];
+    NSArray *products = [itemManagement getOrderProductsByOrderId:self.orderItem.oid];
+    NSMutableDictionary *productsDict = [NSMutableDictionary dictionary];
+    NSInteger stockCount = 0;
+    NSInteger pruchaseCount = 0;
+    for (int i =0; i < [products count]; i++) {
+        OProductItem *oProductItem = products[i];
+        if (oProductItem.statu == PRODUCT_PURCHASE) {
+            pruchaseCount ++;
+        } else if (oProductItem.statu == PRODUCT_INSTOCK){
+            stockCount ++;
+        }
+        NSArray *keys = [productsDict allKeys];
+        if ([keys containsObject:[NSNumber numberWithInteger:oProductItem.iid]]) {
+            NSMutableArray *products = [productsDict objectForKey:[NSNumber numberWithInteger:oProductItem.iid]];
+            [products addObject:oProductItem];
+            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.iid]];
+        } else {
+            NSMutableArray *products = [NSMutableArray array];
+            [products addObject:oProductItem];
+            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.iid]];
+        }
+    }
+    NSMutableArray *productsCountDictList = [NSMutableArray array];
+    for (NSNumber *key in [productsDict allKeys]) {
+        NSArray *products = [productsDict objectForKey:key];
+        [productsCountDictList addObject:@{@"oproductitem":[products lastObject],
+                                           @"count":@([products count])}];
+    }
+    self.products = productsCountDictList;
+    if (self.orderItem.statu == UNDISPATCH && stockCount !=0) {
+        OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
+        self.orderItem.statu = PURCHASED;
+        [orderManagement updateOrderItem:self.orderItem];
+    }
     [self initOrderBasketItemsFrameWithOrderItems:self.products];
 }
 

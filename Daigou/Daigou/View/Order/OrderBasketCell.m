@@ -384,16 +384,44 @@
     [orderItemManagement updateOrderProductItemWithProductItem:_productItem];
     NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
     NSInteger changeNumber = ([_countField.text integerValue]- [productItems count]);
+    
+    NSArray *stockFilterProducts = [[orderItemManagement getUnOrderProducItemByStatus:PRODUCT_INSTOCK] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",_productItem.productid]];
+    
+    NSArray *orderFilterStockProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_INSTOCK]];
+    NSArray *orderFilterPurchaseProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
+    
     if (changeNumber > 0) {
+        NSInteger fromStockCount =[stockFilterProducts count] > changeNumber ? changeNumber :[stockFilterProducts count];
+        
+        NSInteger insertCount = [stockFilterProducts count] > changeNumber ? 0 : (changeNumber - [stockFilterProducts count]);
+        NSMutableArray *updateArray = [NSMutableArray array];
+        for ( int y = 0; y< fromStockCount; y++) {
+            OProductItem *productItem = [stockFilterProducts objectAtIndex:y];
+            productItem.orderid = _productItem.orderid;
+            [updateArray addObject:productItem];
+        }
+        [orderItemManagement updateProductItemWithProductItem:updateArray withNull:NO];
+        
         NSMutableArray *array = [NSMutableArray array];
-        for (int x = 0; x < changeNumber; x++) {
+        for (int x = 0; x < insertCount; x++) {
             [array addObject:_productItem];
         }
-        [orderItemManagement insertOrderProductItems:array];
+        [orderItemManagement insertOrderProductItems:array withNull:YES];
     } else if (changeNumber < 0) {
+        NSInteger fromStockCount = [orderFilterStockProducts count] > (labs(changeNumber)) ?labs(changeNumber) : [orderFilterStockProducts count];
+        NSInteger fromPurchseCount = [orderFilterStockProducts count] > (labs(changeNumber)) ? 0 : (labs(changeNumber) - [orderFilterStockProducts count]);
+        
+        NSMutableArray *updateArray = [NSMutableArray array];
+        for ( int y = 0; y< fromStockCount; y++) {
+            OProductItem *productItem = [orderFilterStockProducts objectAtIndex:y];
+            productItem.orderid = 0;
+            [updateArray addObject:productItem];
+        }
+        [orderItemManagement updateProductItemWithProductItem:updateArray withNull:YES];
+        
         NSMutableArray *array = [NSMutableArray array];
-        for (int x = 0; x < -changeNumber; x++) {
-            [array addObject:productItems[x]];
+        for (int x = 0; x < fromPurchseCount; x++) {
+            [array addObject:orderFilterPurchaseProducts[x]];
         }
         [orderItemManagement removeOrderProductItems:array];
     }

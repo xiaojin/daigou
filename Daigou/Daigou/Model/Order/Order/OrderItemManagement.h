@@ -28,9 +28,9 @@
 - (NSArray *)getstockProductItems;
 - (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
 - (NSArray *)getUnOrderProducItemByStatus:(ItemStatus)itemStatus;
-- (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems;
+- (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems withNull:(BOOL) setNull;
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;
-- (void)insertOrderProductItems:(NSArray *)products;
+- (void)insertOrderProductItems:(NSArray *)products withNull:(BOOL) setNull;;
 - (void)removeOrderProductItems:(NSArray *)orderProducts;
 - (NSArray *)getOrderProductItems:(OProductItem *)orderProduct;
 - (BOOL)updateOrderItemPhotos:(NSString *)photsURL withOrderItem:(OrderItem *)orderItem;
@@ -38,4 +38,5 @@
 - (BOOL)updateTemperOrderItemsWithOrderId:(NSInteger)oid;
 - (BOOL)deleteTemperOrderItems;
 - (OrderItem *)getOrderItemByOrderId:(NSInteger)orderId;
+- (NSArray*)getAllOrderProducts;
 @end

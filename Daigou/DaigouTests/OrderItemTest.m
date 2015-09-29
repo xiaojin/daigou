@@ -84,11 +84,12 @@
     XCTAssertTrue([gourpOrderItems[0] isKindOfClass:[NSDictionary class]],@"should be a dictionary");
 }
 
-//- (void)testAllGroupOrderProductItem {
-//    NSArray *gourpOrderItems = [self.orderItemManagement getAllprocurementProductItemsWithOutGroup];
-//    
-//    XCTAssertTrue([gourpOrderItems[0] isKindOfClass:[NSDictionary class]],@"should be a dictionary");
-//}
+- (void)testAllGroupOrderProductItem {
+    NSArray *gourpOrderItems = [self.orderItemManagement getAllOrderProducts];
+    
+    NSArray *fitlerOrderItems = [gourpOrderItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu = 0"]];
+    XCTAssertTrue([gourpOrderItems[0] isKindOfClass:[NSDictionary class]],@"should be a dictionary");
+}
 
 //- (void)testGetOrderProductByprocumentStatus {
 //    NSArray *oriderProducts = [self.orderItemManagement getprocurementProductItemsByStatus:OrderProduct];

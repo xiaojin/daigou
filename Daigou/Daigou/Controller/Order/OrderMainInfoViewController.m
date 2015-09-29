@@ -56,11 +56,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         self.orderItem = [[OrderItem alloc]init];
         self.orderItem.creatDate = [[NSDate date] timeIntervalSince1970];
     }
-    
-   // [self fetchOrderProducts];
-    UIBarButtonItem *saveBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveOrderInfo)];
-    self.navigationItem.rightBarButtonItem = saveBarItem;
-    self.title = @"填写订单";
     [self addTableVIew];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -87,6 +82,7 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
 }
 
 
+
 - (void)addTableVIew {
     self.editTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.editTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 0.01f)];
@@ -98,10 +94,6 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
     self.editTableView.contentInset = UIEdgeInsetsMake(0, 0, 140.0f, 0);
 }
 
-- (void)saveOrderInfo {
-
-
-}
 
 - (void)fetchOrderProducts {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];

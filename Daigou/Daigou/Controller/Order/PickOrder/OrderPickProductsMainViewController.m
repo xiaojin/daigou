@@ -286,9 +286,8 @@
     NSArray *orderProducts = [orderManagement getOrderProductsByOrderId:_order.oid];
     NSArray *unOrderProducts = [orderManagement getUnOrderProducItemByStatus:PRODUCT_INSTOCK];
     [_cartDict enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, ProductWithCount *productWithCount, BOOL *stop) {
-        //TODO:现存数据库中找到库存货
-        //TODO:如果有库存，就优先更新库存货
-        //TODO:
+        //现存数据库中找到库存货
+        //如果有库存，就优先更新库存货
         NSArray *filterProducts =[orderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
         NSArray *filterUnOrderProducts = [unOrderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
         NSInteger countNeedCreate = -1;
@@ -303,7 +302,7 @@
             }
             
             countNeedCreate = labs(((NSInteger)[filterUnOrderProducts count] - productWithCount.productNum));
-            [orderManagement updateProductItemWithProductItem:orders];
+            [orderManagement updateProductItemWithProductItem:orders withNull:YES];
         }
         
         NSMutableArray *orderProducts = [NSMutableArray array];
@@ -322,7 +321,7 @@
                 [orderProducts addObject:productItem];
             }
         }
-        [orderManagement insertOrderProductItems:orderProducts];
+        [orderManagement insertOrderProductItems:orderProducts withNull:YES];
     }];
 }
 @end

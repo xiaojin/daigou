@@ -230,6 +230,21 @@
     return orderProductsArray;
 }
 
+- (NSArray*)getAllOrderProducts {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select * from item"];
+    NSMutableArray *orderProductsArray = [NSMutableArray array];
+    while (rs.next) {
+        [orderProductsArray addObject:[self setValueForOrderItem:rs]];
+    }
+    [_db close];
+    return orderProductsArray;
+}
+
+
 - (BOOL)updateOrderProduct:(NSArray *)products withOrderid:(NSInteger)orderid  {
     
     BOOL result;
@@ -257,6 +272,7 @@
     if (procurementStatus == OrderProduct) {
         rs = [_db executeQuery:@"select *,count(*) as count from item where statu =0 and orderid is not null group by productid"];
     } else {
+        //囤货清单列表
         rs = [_db executeQuery:@"select *,count(*) as count from item where statu =0 and orderid is null group by productid"];
     }
     
@@ -350,7 +366,7 @@
 }
 
 
-- (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems {
+- (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems withNull:(BOOL) setNull{
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return NO ;
@@ -359,7 +375,7 @@
     for (int i =0; i < [orderitems count]; i ++) {
         OProductItem* item = orderitems[i];
         id orderid;
-        if (item.orderid == 0) {
+        if (item.orderid == 0 && setNull) {
             orderid = [NSNull null];
         } else {
             orderid = @(item.orderid);
@@ -441,14 +457,19 @@
 }
 
 
-- (void)insertOrderProductItems:(NSArray *)products {
+- (void)insertOrderProductItems:(NSArray *)products withNull:(BOOL) setNull; {
     if (![_db open]) {
         NSLog(@"Could not open db.");
         return ;
     }
     for (int i=0; i<[products count]; i++) {
         OProductItem *orderProductItem = [products objectAtIndex:i];
+        if (setNull) {
+        [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)",@(orderProductItem.productid),@(orderProductItem.refprice),@(orderProductItem.price),@(orderProductItem.sellprice),@(orderProductItem.amount),[NSNull null],@(orderProductItem.orderdate),@(orderProductItem.statu),orderProductItem.note,@(orderProductItem.proxy),@(orderProductItem.syncDate)];
+        } else {
         [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderProductItem orderProductToArray]];
+        }
+
     }
     [_db close];
 }

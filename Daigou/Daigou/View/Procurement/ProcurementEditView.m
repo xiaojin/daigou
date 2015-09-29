@@ -270,19 +270,27 @@
 }
 
 - (void)updateUnOrderProducts:(NSInteger)insertCount withProduct:(OProductItem*)item {
+    BOOL hasWantPurchaseList = false;
+    NSDictionary *stockProduct = nil;
     for (NSDictionary *dict in _UnorderProducts) {
         OProductItem *productItem = [dict objectForKey:@"oproductitem"];
         if (productItem.productid == item.productid) {
-            NSInteger count = [[dict objectForKey:@"count"] integerValue];
-            NSInteger countUpdate = count > insertCount? insertCount : count;
-            NSInteger needToCreate = count > insertCount? 0 : (insertCount-count);
-            [self updateList:countUpdate withProduct:productItem];
-            if (needToCreate >0) {
-                [self insertList:needToCreate withProduct:item];
-            }
-        } else {
-            [self insertList:insertCount withProduct:item];
+            hasWantPurchaseList = true;
+            stockProduct = dict;
+            break;
         }
+    }
+    if (hasWantPurchaseList) {
+        OProductItem *productItem = [stockProduct objectForKey:@"oproductitem"];
+        NSInteger count = [[stockProduct objectForKey:@"count"] integerValue];
+        NSInteger countUpdate = count > insertCount? insertCount : count;
+        NSInteger needToCreate = count > insertCount? 0 : (insertCount-count);
+        [self updateList:countUpdate withProduct:productItem];
+        if (needToCreate >0) {
+            [self insertList:needToCreate withProduct:item];
+        }
+    } else {
+        [self insertList:insertCount withProduct:item];
     }
 }
 
@@ -295,7 +303,7 @@
             OProductItem *productItem = itemList[i];
             productItem.statu = PRODUCT_INSTOCK;
             productItem.price = productPrice;
-            [itemManagement updateProductItemWithProductItem:@[productItem]];
+            [itemManagement updateProductItemWithProductItem:@[productItem] withNull:YES];
         }
     }
 
@@ -315,10 +323,10 @@
         productItem.statu = PRODUCT_INSTOCK;
         [insertStockProductArray addObject:productItem];
     }
-        [itemManagement insertOrderProductItems:insertStockProductArray];
+        [itemManagement insertOrderProductItems:insertStockProductArray withNull:YES];
 }
 
-
+//获取囤货清单列表
 - (void)selectExistingNeedtoBuyStockProducts{
    _UnorderProducts = [[OrderItemManagement shareInstance] getprocurementProductItemsGroupByStatus:UnOrderProduct];
 }
