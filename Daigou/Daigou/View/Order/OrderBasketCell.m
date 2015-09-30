@@ -406,7 +406,7 @@
         for (int x = 0; x < insertCount; x++) {
             [array addObject:_productItem];
         }
-        [orderItemManagement insertOrderProductItems:array withNull:YES];
+        [orderItemManagement insertOrderProductItems:array withNull:NO];
     } else if (changeNumber < 0) {
         NSInteger fromStockCount = [orderFilterStockProducts count] > (labs(changeNumber)) ?labs(changeNumber) : [orderFilterStockProducts count];
         NSInteger fromPurchseCount = [orderFilterStockProducts count] > (labs(changeNumber)) ? 0 : (labs(changeNumber) - [orderFilterStockProducts count]);

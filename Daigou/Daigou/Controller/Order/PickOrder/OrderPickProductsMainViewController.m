@@ -290,7 +290,7 @@
         //如果有库存，就优先更新库存货
         NSArray *filterProducts =[orderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
         NSArray *filterUnOrderProducts = [unOrderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
-        NSInteger countNeedCreate = 0;
+        NSInteger countNeedCreate = productWithCount.productNum;
         if ([filterUnOrderProducts count] !=0) {
             //修改库存的数量
             NSMutableArray *orders = [NSMutableArray array];

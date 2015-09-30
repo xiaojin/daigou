@@ -464,7 +464,7 @@
     }
     for (int i=0; i<[products count]; i++) {
         OProductItem *orderProductItem = [products objectAtIndex:i];
-        if (setNull) {
+        if (setNull && orderProductItem.orderid == 0) {
         [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)",@(orderProductItem.productid),@(orderProductItem.refprice),@(orderProductItem.price),@(orderProductItem.sellprice),@(orderProductItem.amount),[NSNull null],@(orderProductItem.orderdate),@(orderProductItem.statu),orderProductItem.note,@(orderProductItem.proxy),@(orderProductItem.syncDate)];
         } else {
         [_db executeUpdate:@"insert into item (productid,refprice,price,sellprice,amount,orderid,orderdate,statu,note,proxy,syncDate) values (?,?,?,?,?,?,?,?,?,?,?)" withArgumentsInArray:[orderProductItem orderProductToArray]];
