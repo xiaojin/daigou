@@ -120,6 +120,7 @@
 - (void)finishPickProducts {
     [self reloadOrderProductsFromDB];
     if (!self.emptyView.hidden) {
+        [self showOrderItemsTableView];
         [self checkBasketItems];
         [self.emptyView removeFromSuperview];
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -208,14 +209,14 @@
             stockCount ++;
         }
         NSArray *keys = [productsDict allKeys];
-        if ([keys containsObject:[NSNumber numberWithInteger:oProductItem.iid]]) {
-            NSMutableArray *products = [productsDict objectForKey:[NSNumber numberWithInteger:oProductItem.iid]];
+        if ([keys containsObject:[NSNumber numberWithInteger:oProductItem.productid]]) {
+            NSMutableArray *products = [productsDict objectForKey:[NSNumber numberWithInteger:oProductItem.productid]];
             [products addObject:oProductItem];
-            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.iid]];
+            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.productid]];
         } else {
             NSMutableArray *products = [NSMutableArray array];
             [products addObject:oProductItem];
-            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.iid]];
+            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.productid]];
         }
     }
     NSMutableArray *productsCountDictList = [NSMutableArray array];

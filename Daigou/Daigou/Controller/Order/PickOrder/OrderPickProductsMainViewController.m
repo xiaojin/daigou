@@ -290,7 +290,7 @@
         //如果有库存，就优先更新库存货
         NSArray *filterProducts =[orderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
         NSArray *filterUnOrderProducts = [unOrderProducts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",[key intValue]]];
-        NSInteger countNeedCreate = -1;
+        NSInteger countNeedCreate = 0;
         if ([filterUnOrderProducts count] !=0) {
             //修改库存的数量
             NSMutableArray *orders = [NSMutableArray array];
@@ -301,27 +301,33 @@
                 [orders addObject:item];
             }
             
-            countNeedCreate = labs(((NSInteger)[filterUnOrderProducts count] - productWithCount.productNum));
-            [orderManagement updateProductItemWithProductItem:orders withNull:YES];
+            countNeedCreate = productWithCount.productNum - (NSInteger)[filterUnOrderProducts count];
+            [orderManagement updateProductItemWithProductItem:orders withNull:NO];
         }
         
+        // if <=0 no need to insert
+        // if > 0 need to insert
+        // if < 0 no need to insert
+        
         NSMutableArray *orderProducts = [NSMutableArray array];
-        if (countNeedCreate < 0) {
-            countNeedCreate = productWithCount.productNum;
-        }
-        if ([filterProducts count] != 0) {
-            for (int x = 0; x < countNeedCreate; x++) {
-                [orderProducts addObject:[filterProducts lastObject]];
-            }
+        if (countNeedCreate <= 0) {
+            return;
         } else {
-            Product *product = productWithCount.product;
-            for (int x = 0; x < countNeedCreate; x++) {
-                OProductItem *productItem = [[OProductItem alloc]initOProductItemWithProduct:product];
-                productItem.orderid = _order.oid;
-                [orderProducts addObject:productItem];
+            if ([filterProducts count] != 0) {
+                for (int x = 0; x < countNeedCreate; x++) {
+                    [orderProducts addObject:[filterProducts lastObject]];
+                }
+            } else {
+                Product *product = productWithCount.product;
+                for (int x = 0; x < countNeedCreate; x++) {
+                    OProductItem *productItem = [[OProductItem alloc]initOProductItemWithProduct:product];
+                    productItem.orderid = _order.oid;
+                    [orderProducts addObject:productItem];
+                }
             }
+            [orderManagement insertOrderProductItems:orderProducts withNull:NO];
         }
-        [orderManagement insertOrderProductItems:orderProducts withNull:YES];
+
     }];
 }
 @end
