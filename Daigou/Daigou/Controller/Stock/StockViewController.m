@@ -11,6 +11,7 @@
 #import "UISearchBar+UISearchBarAccessory.h"
 #import <Masonry/Masonry.h>
 #import "StockListCell.h"
+#import "OrderItemManagement.h"
 
 #define CELL_HEIGHT 65
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) NSArray *statusLabels;
 @property (nonatomic, strong) StockStatusListTableView *stockListTableView;
 @property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) NSArray *stockProductList;
 @end
 
 @implementation StockViewController
@@ -30,6 +32,12 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewStock)];
     self.navigationItem.rightBarButtonItem =editButton;
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _stockProductList = [[OrderItemManagement shareInstance] getstockProductItems];
+    [_stockListTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,7 +106,7 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger orderCount = [[self.stockListTableView stockProductList] count];
+    NSInteger orderCount = [_stockProductList count];
     return orderCount;
     
 }
@@ -117,7 +125,7 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
         cell = [[StockListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stockListcellIdentity];
     }
 
-    NSDictionary *item = (NSDictionary *)[[self.stockListTableView stockProductList] objectAtIndex:indexPath.row];
+    NSDictionary *item = (NSDictionary *)[_stockProductList objectAtIndex:indexPath.row];
     cell.procurementItem = item;
     return cell;
 }

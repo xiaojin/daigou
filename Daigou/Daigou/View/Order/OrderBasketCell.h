@@ -13,7 +13,7 @@
 @property (nonatomic, strong) void (^EditQuantiyActionBlock)(NSInteger number);
 @property (nonatomic, strong) void (^OrderProductItemsAllDeleted)();
 @property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic, strong) NSDictionary *productDict;
+@property (nonatomic, strong) NSArray *productList;
 + (instancetype) OrderWithCell:(UITableView *)tableview;
 - (void) updateDoneButton ;
 @end

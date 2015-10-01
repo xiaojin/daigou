@@ -230,6 +230,25 @@
     return orderProductsArray;
 }
 
+- (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    FMResultSet *rs = [_db executeQuery:@"select *,count(*) as count from item where orderid = (?) group by productid",@(orderid)];
+    NSMutableArray *groupOrderItemsArray = [NSMutableArray array];
+    while (rs.next) {
+        OProductItem *productItem = [self setValueForOrderItem:rs];
+        NSInteger productCount = (NSInteger) [rs intForColumn:@"count"];
+        NSDictionary *orderGroupDict = @{@"oproductitem":productItem,
+                                         @"count":@(productCount)};
+        [groupOrderItemsArray addObject:orderGroupDict];
+    }
+    [_db close];
+    return groupOrderItemsArray;
+}
+
+
 - (NSArray*)getAllOrderProducts {
     if (![_db open]) {
         NSLog(@"Could not open db.");
@@ -262,6 +281,8 @@
     return result;
     
 }
+
+
 
 - (NSArray *)getprocurementProductItemsGroupByStatus:(ProductOrderStatus)procurementStatus {
     if (![_db open]) {
@@ -332,23 +353,7 @@
     return orderItemsArray;
 }
 
-- (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid {
-    if (![_db open]) {
-        NSLog(@"Could not open db.");
-        return nil ;
-    }
-    FMResultSet *rs = [_db executeQuery:@"select *,count(*) as count from item where orderid = (?) group by productid",@(orderid)];
-    NSMutableArray *groupOrderItemsArray = [NSMutableArray array];
-    while (rs.next) {
-        OProductItem *productItem = [self setValueForOrderItem:rs];
-        NSInteger productCount = (NSInteger) [rs intForColumn:@"count"];
-        NSDictionary *orderGroupDict = @{@"oproductitem":productItem,
-                                         @"count":@(productCount)};
-        [groupOrderItemsArray addObject:orderGroupDict];
-    }
-    [_db close];
-    return groupOrderItemsArray;
-}
+
 
 - (NSArray *)getUnOrderProducItemByStatus:(ItemStatus)itemStatus {
     if (![_db open]) {

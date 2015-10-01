@@ -32,6 +32,11 @@
 @property(nonatomic, strong) UILabel *salePriceValue;
 @property(nonatomic, strong) UILabel *prodCountValue;
 @property(nonatomic, strong) OProductItem *productItem;
+@property(nonatomic, strong) UILabel *alreadyPurchasedCount;
+@property(nonatomic, strong) UILabel *totalCountValue;
+@property(nonatomic, assign) NSInteger stockNumber;
+@property(nonatomic, assign) NSInteger pruchaseNumber;
+
 @end
 
 @implementation OrderBasketCell
@@ -129,8 +134,8 @@
         [showDetailView addSubview:salePrice];
         [salePrice mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(showDetailView).with.offset(5);
-            make.top.equalTo(showDetailView).with.offset(5);
-            make.height.equalTo(@36);
+            make.top.equalTo(showDetailView).with.offset(0);
+            make.height.equalTo(@28);
             make.width.equalTo(@75);
         }];
         
@@ -143,7 +148,7 @@
         [_salePriceValue mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(salePrice.mas_right);
             make.top.equalTo(salePrice.mas_top);
-            make.height.equalTo(@36);
+            make.height.equalTo(@28);
             make.right.equalTo(showDetailView.mas_right).with.offset(-10);
         }];
         
@@ -153,13 +158,13 @@
         [prodCount setTextColor:TITLECOLOR];
         [prodCount setFont:[UIFont systemFontOfSize:13.0f]];
         [prodCount setTextAlignment:NSTextAlignmentLeft];
-        [prodCount setText:@"采购数量:"];
+        [prodCount setText:@"还需采购数量:"];
         [showDetailView addSubview:prodCount];
         [prodCount mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(showDetailView).with.offset(5);
-            make.top.equalTo(salePrice.mas_bottom).with.offset(5);
-            make.height.equalTo(@36);
-            make.width.equalTo(@75);
+            make.top.equalTo(salePrice.mas_bottom).with.offset(2);
+            make.height.equalTo(@28);
+            make.width.equalTo(@85);
         }];
         
         _prodCountValue = [[UILabel alloc]init];
@@ -170,9 +175,61 @@
         [_prodCountValue mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(prodCount.mas_right);
             make.top.equalTo(prodCount.mas_top);
-            make.height.equalTo(@36);
-            make.right.equalTo(showDetailView.mas_right).with.offset(-10);
+            make.height.equalTo(@28);
+            make.right.equalTo(showDetailView.mas_centerX).with.offset(-5);
         }];
+        
+        UILabel  *alreadyPurchasedLbl = [[UILabel alloc]init];
+        [alreadyPurchasedLbl setTextColor:TITLECOLOR];
+        [alreadyPurchasedLbl setFont:[UIFont systemFontOfSize:13.0f]];
+        [alreadyPurchasedLbl setTextAlignment:NSTextAlignmentLeft];
+        [alreadyPurchasedLbl setText:@"已采购数量:"];
+        [showDetailView addSubview:alreadyPurchasedLbl];
+        [alreadyPurchasedLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(showDetailView.mas_centerX).with.offset(5);
+            make.top.equalTo(salePrice.mas_bottom).with.offset(2);
+            make.height.equalTo(@28);
+            make.width.equalTo(@75);
+        }];
+        
+        _alreadyPurchasedCount = [[UILabel alloc]init];
+        [_alreadyPurchasedCount setTextColor:TITLECOLOR];
+        _alreadyPurchasedCount.font = [UIFont systemFontOfSize:13.0f];
+        [_alreadyPurchasedCount setTextAlignment:NSTextAlignmentLeft];
+        [showDetailView addSubview:_alreadyPurchasedCount];
+        [_alreadyPurchasedCount mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(alreadyPurchasedLbl.mas_right);
+            make.top.equalTo(prodCount.mas_top);
+            make.height.equalTo(@28);
+            make.right.equalTo(showDetailView.mas_right).with.offset(-5);
+        }];
+        
+        UILabel *totalCount = [[UILabel alloc]init];
+        [totalCount setTextColor:TITLECOLOR];
+        [totalCount setFont:[UIFont systemFontOfSize:13.0f]];
+        [totalCount setTextAlignment:NSTextAlignmentLeft];
+        [totalCount setText:@"总数:"];
+        [showDetailView addSubview:totalCount];
+        [totalCount mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(showDetailView).with.offset(5);
+            make.top.equalTo(prodCount.mas_bottom).with.offset(2);
+            make.height.equalTo(@28);
+            make.width.equalTo(@85);
+        }];
+        
+        _totalCountValue = [[UILabel alloc]init];
+        [_totalCountValue setTextColor:TITLECOLOR];
+        _totalCountValue.font = [UIFont systemFontOfSize:13.0f];
+        [_totalCountValue setTextAlignment:NSTextAlignmentLeft];
+        [showDetailView addSubview:_totalCountValue];
+        [_totalCountValue mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(totalCount.mas_right);
+            make.top.equalTo(totalCount.mas_top);
+            make.height.equalTo(@28);
+            make.right.equalTo(showDetailView.mas_centerX).with.offset(-5);
+        }];
+
+        
         self.showDetailView = showDetailView;
 
         
@@ -298,28 +355,46 @@
     return  self;
 }
 
-- (void)setProductDict:(NSDictionary *)productDict {
-    _productDict = productDict;
+- (void)setProductList:(NSArray *)productList {
+    _productList = productList;
     [self updateFrame];
     [self updateData];
 }
-
 
 - (void)updateFrame
 {
 
 }
 
+- (void)iteratorProductList:(NSArray *)productList {
+    NSInteger stockCount = 0;
+    NSInteger pruchaseCount = 0;
+    for (int i =0; i < [productList count]; i++) {
+        OProductItem *oProductItem = productList[i];
+        if (oProductItem.statu == PRODUCT_PURCHASE) {
+            pruchaseCount ++;
+        } else if (oProductItem.statu == PRODUCT_INSTOCK){
+            stockCount ++;
+        }
+    }
+    _pruchaseNumber = pruchaseCount;
+    _stockNumber = stockCount;
+}
+
 - (void)updateData{
-    _productItem =  [_productDict objectForKey:@"product"];
-    NSNumber *productCount = [_productDict objectForKey:@"count"];
+    [self iteratorProductList:_productList];
+    _productItem =  [_productList lastObject];
+    NSInteger productCount = [_productList count];
     Product *product = [self getProductForOrderItem:_productItem.productid];
     _imagePic.image = [UIImage imageNamed:@"default.jpg"];
     [_lblTitle setText:[product name]];
-    [_countField setText:[NSString stringWithFormat:@"%@", @([productCount intValue])]];
+    [_countField setText:[NSString stringWithFormat:@"%@", @(productCount)]];
     [_sellPriceField setText:[NSString stringWithFormat:@"%@",@([_productItem sellprice])]];
-    [_prodCountValue setText:[NSString stringWithFormat:@"%@",@([productCount intValue])]];
     [_salePriceValue setText:[NSString stringWithFormat:@"%@",@([_productItem sellprice])]];
+    
+    [_totalCountValue setText:[NSString stringWithFormat:@"%@",@(productCount)]];
+    [_prodCountValue setText:[NSString stringWithFormat:@"%@",@(_pruchaseNumber)]];
+    [_alreadyPurchasedCount setText:[NSString stringWithFormat:@"%@",@(_stockNumber)]];
     //TODO setProductImage
 }
 - (Product *)getProductForOrderItem:(NSInteger)pid {
@@ -363,7 +438,7 @@
         [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
         self.showDetailView.hidden = NO;
         self.showEditView.hidden = YES;
-        [_prodCountValue setText:_countField.text];
+        [_totalCountValue setText:_countField.text];
         [_salePriceValue setText:_sellPriceField.text];
         _productItem.sellprice = [_sellPriceField.text floatValue];
         _productItem.orderdate = [[NSDate date] timeIntervalSince1970];
@@ -382,13 +457,15 @@
 - (void)updateOrderProductInfo {
     OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
     [orderItemManagement updateOrderProductItemWithProductItem:_productItem];
-    NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
-    NSInteger changeNumber = ([_countField.text integerValue]- [productItems count]);
+    //NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
+    NSInteger changeNumber = ([_countField.text integerValue]- [_productList count]);
     
     NSArray *stockFilterProducts = [[orderItemManagement getUnOrderProducItemByStatus:PRODUCT_INSTOCK] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",_productItem.productid]];
     
-    NSArray *orderFilterStockProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_INSTOCK]];
-    NSArray *orderFilterPurchaseProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
+    NSArray *orderFilterStockProducts =[_productList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_INSTOCK]];
+    NSArray *orderFilterPurchaseProducts =[_productList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
+    _pruchaseNumber = [orderFilterPurchaseProducts count];
+    _stockNumber = [orderFilterStockProducts count];
     
     if (changeNumber > 0) {
         NSInteger fromStockCount =[stockFilterProducts count] > changeNumber ? changeNumber :[stockFilterProducts count];
@@ -399,12 +476,15 @@
             OProductItem *productItem = [stockFilterProducts objectAtIndex:y];
             productItem.orderid = _productItem.orderid;
             [updateArray addObject:productItem];
+            _stockNumber ++;
         }
         [orderItemManagement updateProductItemWithProductItem:updateArray withNull:NO];
         
         NSMutableArray *array = [NSMutableArray array];
         for (int x = 0; x < insertCount; x++) {
+            _productItem.statu = PRODUCT_PURCHASE;
             [array addObject:_productItem];
+            _pruchaseNumber ++;
         }
         [orderItemManagement insertOrderProductItems:array withNull:NO];
     } else if (changeNumber < 0) {
@@ -416,15 +496,19 @@
             OProductItem *productItem = [orderFilterStockProducts objectAtIndex:y];
             productItem.orderid = 0;
             [updateArray addObject:productItem];
+            _stockNumber --;
         }
         [orderItemManagement updateProductItemWithProductItem:updateArray withNull:YES];
         
         NSMutableArray *array = [NSMutableArray array];
         for (int x = 0; x < fromPurchseCount; x++) {
             [array addObject:orderFilterPurchaseProducts[x]];
+            _pruchaseNumber --;
         }
         [orderItemManagement removeOrderProductItems:array];
     }
+    [_prodCountValue setText:[NSString stringWithFormat:@"%@",@(_pruchaseNumber)]];
+    [_alreadyPurchasedCount setText:[NSString stringWithFormat:@"%@",@(_stockNumber)]];
 }
 
 - (void)deleteOrderProductItems {

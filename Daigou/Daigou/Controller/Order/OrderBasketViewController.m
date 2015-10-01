@@ -23,15 +23,15 @@
 }
 @property(nonatomic, strong) OrderItem *orderItem;
 @property(nonatomic, strong) UIView *emptyView;
-@property(nonatomic, strong) NSArray *products;
+@property(nonatomic, strong) NSDictionary *products;
 @property(nonatomic, strong) NSMutableArray *orderItemFrames;
 @property(nonatomic, strong) NSIndexPath *currentCellIndex;
 @end
 @implementation OrderBasketViewController
 
-- (instancetype)initwithOrderItem :(OrderItem *)orderitem  withGroupOrderProducts:(NSArray *)products{
+- (instancetype)initwithOrderItem :(OrderItem *)orderitem  withGroupOrderProducts:(NSDictionary *)products{
     self.orderItem = orderitem;
-    self.products = [NSArray array];
+    self.products = [NSDictionary dictionary];
     self.products = products;
     return [self init];
 }
@@ -58,7 +58,7 @@
 }
 
 - (void)checkBasketItems {
-    if (self.products.count == 0) {
+    if ([[self.products allValues] count]== 0) {
         [self showEmptyView];
     } else {
         [self initOrderBasketItemsFrameWithOrderItems:self.products];
@@ -106,14 +106,12 @@
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 160.f, 0);
 }
 
-- (void)initOrderBasketItemsFrameWithOrderItems:(NSArray *)orderItems {
+- (void)initOrderBasketItemsFrameWithOrderItems:(NSDictionary *)orderItems {
     self.orderItemFrames = [NSMutableArray array];
-     for (NSDictionary *item in orderItems) {
-         NSMutableDictionary *prodocstdict = [NSMutableDictionary dictionary];
-         [prodocstdict setValue:[item objectForKey:@"oproductitem"] forKey:@"product"];
-         [prodocstdict setValue:[item objectForKey:@"count"] forKey:@"count"];
-         [self.orderItemFrames addObject:prodocstdict];
-     }
+    for (NSNumber *productId in [orderItems allKeys]) {
+        NSArray *orderProducts = [orderItems objectForKey:productId];
+        [self.orderItemFrames addObject:orderProducts];
+    }
 }
 
 #pragma mark - OrderPickProductsMainDelegate
@@ -154,11 +152,12 @@
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row != [self.products count]) {
+    if (indexPath.row != [_orderItemFrames count]) {
         OrderBasketCell *cell = [OrderBasketCell OrderWithCell:tableView];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        NSDictionary * productDict = _orderItemFrames[indexPath.row];
-        cell.productDict = productDict;
+        NSArray *productList= _orderItemFrames[indexPath.row];
+        cell.productList = productList;
+        
         cell.OrderProductItemsAllDeleted = ^(){
             [self cellDeletedWithIndexPath];
         };
@@ -219,13 +218,7 @@
             [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.productid]];
         }
     }
-    NSMutableArray *productsCountDictList = [NSMutableArray array];
-    for (NSNumber *key in [productsDict allKeys]) {
-        NSArray *products = [productsDict objectForKey:key];
-        [productsCountDictList addObject:@{@"oproductitem":[products lastObject],
-                                           @"count":@([products count])}];
-    }
-    self.products = productsCountDictList;
+    self.products = productsDict;
     if (self.orderItem.statu == UNDISPATCH && stockCount !=0) {
         OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
         self.orderItem.statu = PURCHASED;
@@ -243,7 +236,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == [self.products count]) {
+    if (indexPath.row == [self.orderItemFrames count])  {
         return 60.0f;
     } else {
         return 142.0f;

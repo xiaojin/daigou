@@ -78,11 +78,11 @@
     XCTAssertTrue(result,@"should insert the product successfully");
 }
 
-- (void)testGroupOrderProductItem {
-    NSArray *gourpOrderItems = [self.orderItemManagement getOrderItemsGroupbyProductidByOrderId:1];
-    
-    XCTAssertTrue([gourpOrderItems[0] isKindOfClass:[NSDictionary class]],@"should be a dictionary");
-}
+//- (void)testGroupOrderProductItem {
+//    NSArray *gourpOrderItems = [self.orderItemManagement getOrderItemsGroupbyProductidByOrderId:1];
+//    
+//    XCTAssertTrue([gourpOrderItems[0] isKindOfClass:[NSDictionary class]],@"should be a dictionary");
+//}
 
 - (void)testAllGroupOrderProductItem {
     NSArray *gourpOrderItems = [self.orderItemManagement getAllOrderProducts];

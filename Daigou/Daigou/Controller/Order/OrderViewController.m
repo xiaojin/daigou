@@ -291,6 +291,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self updateLblstatus:statusLabel];
     switch (index) {
         case 0:
+            [_orderStatusView scrollRectToVisible:_purchaseStatusLbl.frame animated:YES];
             break;
         case 1:
             [_orderStatusView scrollRectToVisible:_purchaseStatusLbl.frame animated:YES];
@@ -302,6 +303,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
             [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
             break;
         case 4:
+            [_orderStatusView scrollRectToVisible:_finishStatusLbl.frame animated:YES];
             break;
         default:
             index = 0;

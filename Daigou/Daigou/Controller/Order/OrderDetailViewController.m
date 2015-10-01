@@ -25,7 +25,7 @@
 @property (nonatomic, strong) UIView *subTabView;
 @property (nonatomic, strong) NSArray *subTabString;
 @property (nonatomic, strong) NSArray *statusLbls;
-@property (nonatomic, strong) NSArray *products;
+@property (nonatomic, strong) NSDictionary *products;
 @property (nonatomic, strong) OrderMainInfoViewController *addNewOrderViewController;
 @property (nonatomic, strong) OrderBasketViewController *orderBasketViewController;
 @property (nonatomic, strong) OrderDeliveryStatusViewController *deliveryStatusViewController;
@@ -384,10 +384,28 @@
 - (void)fetchOrderProducts {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     if (self.orderItem.oid == 0) {
-        self.products = [NSArray array];
+        self.products = [NSDictionary dictionary];
     } else {
-        self.products = [itemManagement getOrderItemsGroupbyProductidByOrderId:self.orderItem.oid];
+        self.products = [self filterProductByProductId:[itemManagement getOrderProductsByOrderId:self.orderItem.oid]];
     }
+}
+
+- (NSDictionary *)filterProductByProductId:(NSArray *)productList {
+    NSMutableDictionary *productsDict = [NSMutableDictionary dictionary];
+    for (int i =0; i < [productList count]; i++) {
+        OProductItem *oProductItem = productList[i];
+        NSArray *keys = [productsDict allKeys];
+        if ([keys containsObject:[NSNumber numberWithInteger:oProductItem.productid]]) {
+            NSMutableArray *products = [productsDict objectForKey:[NSNumber numberWithInteger:oProductItem.productid]];
+            [products addObject:oProductItem];
+            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.productid]];
+        } else {
+            NSMutableArray *products = [NSMutableArray array];
+            [products addObject:oProductItem];
+            [productsDict setObject:products forKey:[NSNumber numberWithInteger:oProductItem.productid]];
+        }
+    }
+    return productsDict;
 }
 
 #pragma mark -initControllers

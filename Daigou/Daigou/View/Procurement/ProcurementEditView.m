@@ -251,14 +251,14 @@
     NSArray *orderItems = [itemManagement getAllProductsItemsNeedtoPurchase:_productItem.productid];
     NSInteger updateCount =[_qualityField.text intValue];
     float productPrice = [_priceField.text floatValue];
-    NSInteger needUpdateCount = updateCount > _count ? _count : updateCount;
-    NSInteger insertStockProductCount = updateCount > _count ? (updateCount -_count) : 0;
+    NSInteger needUpdateCount = updateCount > [orderItems count] ? [orderItems count] : updateCount;
+    NSInteger insertStockProductCount = updateCount > [orderItems count] ? (updateCount -[orderItems count]) : 0;
     for (int i = 0; i < needUpdateCount; i++) {
         OProductItem *productItem =[OProductItem new];
         productItem = orderItems[i];
         productItem.price = productPrice;
         productItem.statu = PRODUCT_INSTOCK;
-        [itemManagement updateProductItemToStock:productItem];
+        [itemManagement updateProductItemWithProductItem:@[productItem] withNull:YES]; //其中只有订单的需求量
     }
     //same productid ,orderid is null, statu = 0
     
@@ -270,6 +270,7 @@
 }
 
 - (void)updateUnOrderProducts:(NSInteger)insertCount withProduct:(OProductItem*)item {
+    //然后满足囤货需求的数量
     BOOL hasWantPurchaseList = false;
     NSDictionary *stockProduct = nil;
     for (NSDictionary *dict in _UnorderProducts) {

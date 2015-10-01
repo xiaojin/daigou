@@ -9,5 +9,4 @@
 #import <UIKit/UIKit.h>
 #import "OProductItem.h"
 @interface StockStatusListTableView : UITableView
-@property(nonatomic, strong)NSArray *stockProductList;
 @end

@@ -13,11 +13,4 @@
 @end
 @implementation StockStatusListTableView
 
-
-- (NSArray *)stockProductList {
-    NSArray *procurementList = [NSArray array];
-    procurementList = [[OrderItemManagement shareInstance] getstockProductItems];
-    return procurementList;
-}
-
 @end

@@ -9,7 +9,7 @@
 @class OrderItem;
 @interface OrderBasketViewController : UIViewController
 @property(nonatomic, strong)UITableView *tableView;
-- (instancetype)initwithOrderItem :(OrderItem *)orderitem withGroupOrderProducts:(NSArray *)products;
+- (instancetype)initwithOrderItem :(OrderItem *)orderitem withGroupOrderProducts:(NSDictionary *)products;
 
 - (void)saveBasketInfoWithOrderId:(NSInteger)oid;
 @end
