@@ -17,6 +17,7 @@
 #import <ionicons/IonIcons.h>
 #import <ionicons/ionicons-codes.h>
 #import "ProductWithCount.h"
+#import "OrderDetailViewController.h"
 
 @interface OrderBasketViewController()<UITableViewDataSource, UITableViewDelegate,OrderPickProductsMainViewControllerDelegate> {
     CGSize keyboardSize;
@@ -157,12 +158,15 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         NSArray *productList= _orderItemFrames[indexPath.row];
         cell.productList = productList;
-        
+        cell.orderItem = self.orderItem;
         cell.OrderProductItemsAllDeleted = ^(){
             [self cellDeletedWithIndexPath];
         };
         cell.EditQuantiyActionBlock = ^(NSInteger number){
-        [self beginEditNumber:indexPath];
+            [self beginEditNumber:indexPath];
+        };
+        cell.DoneButtonClicked = ^(){
+            [(OrderDetailViewController*)self.parentViewController updateButtonToStatus:PURCHASED];
         };
         return cell;
     } else {

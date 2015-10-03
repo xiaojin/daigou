@@ -36,7 +36,6 @@
 @property(nonatomic, strong) UILabel *totalCountValue;
 @property(nonatomic, assign) NSInteger stockNumber;
 @property(nonatomic, assign) NSInteger pruchaseNumber;
-
 @end
 
 @implementation OrderBasketCell
@@ -479,6 +478,7 @@
             _stockNumber ++;
         }
         [orderItemManagement updateProductItemWithProductItem:updateArray withNull:NO];
+      
         
         NSMutableArray *array = [NSMutableArray array];
         for (int x = 0; x < insertCount; x++) {
@@ -487,6 +487,13 @@
             _pruchaseNumber ++;
         }
         [orderItemManagement insertOrderProductItems:array withNull:NO];
+        if (insertCount > 0 && _orderItem.statu == UNDISPATCH) {
+            //TODO update framework
+            OrderItemManagement *orderManagement = [OrderItemManagement shareInstance];
+            _orderItem.statu = PURCHASED;
+            [orderManagement updateOrderItem:_orderItem];
+            _DoneButtonClicked();
+        }
     } else if (changeNumber < 0) {
         NSInteger fromStockCount = [orderFilterStockProducts count] > (labs(changeNumber)) ?labs(changeNumber) : [orderFilterStockProducts count];
         NSInteger fromPurchseCount = [orderFilterStockProducts count] > (labs(changeNumber)) ? 0 : (labs(changeNumber) - [orderFilterStockProducts count]);

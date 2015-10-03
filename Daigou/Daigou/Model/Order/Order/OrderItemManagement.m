@@ -198,9 +198,13 @@
 }
 
 - (BOOL)updateOrderItem:(OrderItem *)orderItem {
-    BOOL exists = [self checkIfOrderItmExists:orderItem];
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+  //  BOOL exists = [self checkIfOrderItmExists:orderItem];
     BOOL result;
-    if (exists) {
+    if (orderItem.oid != 0) {
         [_db beginTransaction];
         NSMutableArray *updateData = [NSMutableArray arrayWithArray:[orderItem orderToArray]];
         [updateData addObject:@(orderItem.oid)];
@@ -230,23 +234,6 @@
     return orderProductsArray;
 }
 
-- (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid {
-    if (![_db open]) {
-        NSLog(@"Could not open db.");
-        return nil ;
-    }
-    FMResultSet *rs = [_db executeQuery:@"select *,count(*) as count from item where orderid = (?) group by productid",@(orderid)];
-    NSMutableArray *groupOrderItemsArray = [NSMutableArray array];
-    while (rs.next) {
-        OProductItem *productItem = [self setValueForOrderItem:rs];
-        NSInteger productCount = (NSInteger) [rs intForColumn:@"count"];
-        NSDictionary *orderGroupDict = @{@"oproductitem":productItem,
-                                         @"count":@(productCount)};
-        [groupOrderItemsArray addObject:orderGroupDict];
-    }
-    [_db close];
-    return groupOrderItemsArray;
-}
 
 
 - (NSArray*)getAllOrderProducts {

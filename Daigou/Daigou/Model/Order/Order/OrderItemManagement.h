@@ -26,7 +26,6 @@
 - (NSArray *)getprocurementProductItemsGroupByStatus:(ProductOrderStatus)procurementStatus;
 - (NSArray *)getAllprocurementProductItemsWithOutGroup;
 - (NSArray *)getstockProductItems;
-- (NSArray *)getOrderItemsGroupbyProductidByOrderId:(NSInteger)orderid;
 - (NSArray *)getUnOrderProducItemByStatus:(ItemStatus)itemStatus;
 - (BOOL)updateProductItemWithProductItem:(NSArray *)orderitems withNull:(BOOL) setNull;
 - (BOOL)updateOrderProductItemWithProductItem:(OProductItem *)product;

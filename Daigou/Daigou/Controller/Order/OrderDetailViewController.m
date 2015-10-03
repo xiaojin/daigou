@@ -31,8 +31,14 @@
 @property (nonatomic, strong) OrderDeliveryStatusViewController *deliveryStatusViewController;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UIButton *saveOrderButton;
+@property (nonatomic, strong) UIButton *toDispatchButton;
+@property (nonatomic, strong) UIButton *toShippedButton;
+@property (nonatomic, strong) UIButton *toDeliveredButton;
+@property (nonatomic, strong) UIButton *toDoneButton;
+@property (nonatomic, strong) UIButton *DoneButton;
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *moreButton;
+@property (nonatomic, strong) NSArray *productsInPurchseList;
 @end
 
 @implementation OrderDetailViewController
@@ -116,6 +122,14 @@
         make.width.equalTo(@(kWindowWidth/3));
     }];
     
+    _saveOrderButton = [self makeStatusUpdateButton:@"保存订单" withButtonAction:@selector(saveOrder)];
+    _toDispatchButton = [self makeStatusUpdateButton:@"采购完成,待发货" withButtonAction:@selector(changeStatusToUNDISPATCHED)];
+    _toShippedButton = [self makeStatusUpdateButton:@"清点发货" withButtonAction:@selector(changeStatusToSHIPPED)];
+    _toDeliveredButton = [self makeStatusUpdateButton:@"确认收货" withButtonAction:@selector(changeStatusToDELIVERD)];
+    _toDoneButton = [self makeStatusUpdateButton:@"已完成" withButtonAction:@selector(changeStatusToDONE)];
+    _DoneButton = [self makeStatusUpdateButton:@"" withButtonAction:nil];
+    [self initStatusButton];
+    
     _shareButton = [[UIButton alloc]initWithFrame:CGRectZero];
     [_shareButton setTitle:@"分享订单" forState:UIControlStateNormal];
     [_shareButton.titleLabel setFont:Font(14)];
@@ -145,37 +159,83 @@
     
 }
 
+- (UIButton *)makeStatusUpdateButton:(NSString *)title withButtonAction:(SEL)buttonAction {
+     UIButton *updateButton = [[UIButton alloc]initWithFrame:CGRectZero];
+    [updateButton.titleLabel setFont:Font(14)];
+    [updateButton setBackgroundColor:THEMECOLOR];
+    [updateButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [updateButton setTitle:title forState:UIControlStateNormal];
+    [updateButton addTarget:self action:buttonAction forControlEvents:UIControlEventTouchUpInside];
+    updateButton.hidden = YES;
+    [_bottomView addSubview:updateButton];
+    [updateButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bottomView.mas_top);
+        make.left.equalTo(_bottomView.mas_left);
+        make.bottom.equalTo(_bottomView.mas_bottom);
+        make.width.equalTo(@(kWindowWidth/3));
+    }];
+    return updateButton;
+}
+
 - (void)initStatusButton {
-    NSString *saveOrderButtonTitle = @"";
-    SEL saveOrderButtonSelection = nil;
     if (_orderItem.statu == PURCHASED) {
         if (_orderItem.oid == 0) {
-            saveOrderButtonTitle = @"保存订单";
-            saveOrderButtonSelection = @selector(saveOrder);
+            _saveOrderButton.hidden = NO;
         } else {
-            saveOrderButtonTitle = @"采购完成,待发货";
-            saveOrderButtonSelection = @selector(changeStatusToUNDISPATCHED);
+            _toDispatchButton.hidden = NO;
         }
         self.title = @"采购中";
     } else if (_orderItem.statu == UNDISPATCH) {
-        saveOrderButtonTitle = @"清点发货";
-        saveOrderButtonSelection = @selector(changeStatusToSHIPPED);
+        _toShippedButton.hidden = NO;
         self.title = @"待发货";
     } else if (_orderItem.statu == SHIPPED ) {
-        saveOrderButtonTitle = @"确认收货";
-        saveOrderButtonSelection = @selector(changeStatusToDELIVERD);
+        _toDeliveredButton.hidden = NO;
         self.title = @"运输中";
     } else if (_orderItem.statu == DELIVERD) {
-        saveOrderButtonTitle = @"已完成";
-        saveOrderButtonSelection = @selector(changeStatusToDONE);
-        self.title = @"已收获";
+        _toDoneButton.hidden = NO;
+        self.title = @"已收货";
     } else if (_orderItem.statu == DONE) {
+        _DoneButton.hidden = NO;
         self.title = @"已完成";
     }
-    [_saveOrderButton setTitle:saveOrderButtonTitle forState:UIControlStateNormal];
-    [_saveOrderButton addTarget:self action:saveOrderButtonSelection forControlEvents:UIControlEventTouchUpInside];
+}
 
+- (void)updateButtonToStatus:(OrderStatus)status {
+    if (status == PURCHASED) {
+        if (_orderItem.oid == 0) {
+            [self hideAllButton];
+            _saveOrderButton.hidden = NO;
+        } else {
+            [self hideAllButton];
+            _toDispatchButton.hidden = NO;
+        }
+        self.title = @"采购中";
+    } else if (status == UNDISPATCH) {
+        [self hideAllButton];
+        _toShippedButton.hidden = NO;
+        self.title = @"待发货";
+    } else if (status == SHIPPED ) {
+        [self hideAllButton];
+        _toDeliveredButton.hidden = NO;
+        self.title = @"运输中";
+    } else if (status== DELIVERD) {
+        [self hideAllButton];
+        _toDoneButton.hidden = NO;
+        self.title = @"已收货";
+    } else if (status == DONE) {
+        [self hideAllButton];
+        _DoneButton.hidden = NO;
+        self.title = @"已完成";
+    }
+}
 
+- (void)hideAllButton {
+    _saveOrderButton.hidden = YES;
+    _toDispatchButton.hidden = YES;
+    _toShippedButton.hidden = YES;
+    _toDeliveredButton.hidden = YES;
+    _toDoneButton.hidden = YES;
+    _DoneButton.hidden = YES;
 }
 
 - (void)initScrollView {
@@ -299,7 +359,6 @@
     alert.popoverPresentationController.sourceView = weakSelf;
     
     [self presentViewController:alert animated:YES completion:nil];
-//    [[[[[[[UIApplication sharedApplication] keyWindow] rootViewController] childViewControllers] lastObject] visibleViewController] presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)menuCameraPhotoBelowiOS8 {
@@ -349,7 +408,6 @@
 }
 
 - (void)updateLblstatus:(UILabel *)selectedLbl {
- 
     [_statusLbls enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.2];
@@ -526,7 +584,9 @@
            [self missingCustomInfoHandler];
         }
     } else if ((alertView.tag - PRODUCTDETAILIVIEW)  == 20) {
-        [self changeStatusToUNDISPATCHED];
+        [self saveToUNDISPATCHED];
+    } else if ((alertView.tag - PRODUCTDETAILIVIEW)  == 30) {
+        if (buttonIndex == 1) [self saveToUNDISPATCHED];
     }
 }
 
@@ -535,27 +595,56 @@
 }
 
 - (void)changeStatusToUNDISPATCHED {
+    //if do not have stock in side
+    //then update all product to in_stock
+    //otherwise give up to save it as purchase
+    [self checkPRUCHSEProductStatus];
+    if ([_productsInPurchseList count]!=0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"订单状态"
+                                                            message:@"确认已采购完成所有商品"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"关闭"
+                                                  otherButtonTitles: @"确认",nil];
+        alertView.tag = PRODUCTDETAILIVIEW + 30;
+        [alertView show];
+    } else {
+        _orderItem.statu = UNDISPATCH;
+        [self saveOrder];
+        //update all product to in_stock
+    }
+}
+
+- (void)saveToUNDISPATCHED {
+    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+    for (OProductItem *prodItem in _productsInPurchseList) {
+        prodItem.statu = PRODUCT_INSTOCK;
+    }
+    [orderItemManagement updateProductItemWithProductItem:_productsInPurchseList withNull:NO];
     _orderItem.statu = UNDISPATCH;
     [self saveOrder];
-    [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 
 - (void)changeStatusToSHIPPED {
     _orderItem.statu = SHIPPED;
     [self saveOrder];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeStatusToDELIVERD {
     _orderItem.statu = DELIVERD;
     [self saveOrder];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeStatusToDONE {
     _orderItem.statu = DONE;
     [self saveOrder];
-    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)checkPRUCHSEProductStatus {
+    OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
+    NSArray *products = [orderItemManagement getOrderProductsByOrderId:_orderItem.oid];
+    _productsInPurchseList = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
 }
 
 #pragma mark - UIScrollViewDelegate

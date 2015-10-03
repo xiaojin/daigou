@@ -10,6 +10,5 @@
 @interface OrderBasketViewController : UIViewController
 @property(nonatomic, strong)UITableView *tableView;
 - (instancetype)initwithOrderItem :(OrderItem *)orderitem withGroupOrderProducts:(NSDictionary *)products;
-
 - (void)saveBasketInfoWithOrderId:(NSInteger)oid;
 @end
