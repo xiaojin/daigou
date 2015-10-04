@@ -16,6 +16,7 @@
 #import "ProductManagement.h"
 #import "JVFloatLabeledTextField.h"
 #import "OrderItemManagement.h"
+#import "ErrorHelper.h"
 
 @interface OrderBasketCell() <UITextFieldDelegate>{
     BOOL editStatus;
@@ -455,14 +456,14 @@
 
 - (void)updateOrderProductInfo {
     OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
-    [orderItemManagement updateOrderProductItemWithProductItem:_productItem];
-    //NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
-    NSInteger changeNumber = ([_countField.text integerValue]- [_productList count]);
+    //[orderItemManagement updateOrderProductItemWithProductItem:_productItem];
+    NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
+    NSInteger changeNumber = ([_countField.text integerValue]- [productItems count]);
     
     NSArray *stockFilterProducts = [[orderItemManagement getUnOrderProducItemByStatus:PRODUCT_INSTOCK] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",_productItem.productid]];
     
-    NSArray *orderFilterStockProducts =[_productList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_INSTOCK]];
-    NSArray *orderFilterPurchaseProducts =[_productList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
+    NSArray *orderFilterStockProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_INSTOCK]];
+    NSArray *orderFilterPurchaseProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
     _pruchaseNumber = [orderFilterPurchaseProducts count];
     _stockNumber = [orderFilterStockProducts count];
     
@@ -493,6 +494,7 @@
             _orderItem.statu = PURCHASED;
             [orderManagement updateOrderItem:_orderItem];
             _DoneButtonClicked();
+            [ErrorHelper showErrorAlertWithTitle:@"采购" message:@"库存不足"];
         }
     } else if (changeNumber < 0) {
         NSInteger fromStockCount = [orderFilterStockProducts count] > (labs(changeNumber)) ?labs(changeNumber) : [orderFilterStockProducts count];
@@ -517,6 +519,8 @@
     [_prodCountValue setText:[NSString stringWithFormat:@"%@",@(_pruchaseNumber)]];
     [_alreadyPurchasedCount setText:[NSString stringWithFormat:@"%@",@(_stockNumber)]];
 }
+
+
 
 - (void)deleteOrderProductItems {
     OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
