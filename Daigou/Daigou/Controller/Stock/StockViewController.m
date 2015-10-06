@@ -12,6 +12,7 @@
 #import <Masonry/Masonry.h>
 #import "StockListCell.h"
 #import "OrderItemManagement.h"
+#import "ProductManagement.h"
 
 #define CELL_HEIGHT 65
 
@@ -19,7 +20,10 @@
 @property (nonatomic, strong) NSArray *statusLabels;
 @property (nonatomic, strong) StockStatusListTableView *stockListTableView;
 @property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) NSArray *stockProductList;
+@property (nonatomic, strong) NSMutableArray *stockProductList;
+@property (nonatomic, strong) NSMutableArray *oldProductList;
+@property (nonatomic, strong) NSMutableArray *itemArray;
+@property (nonatomic, strong) NSMutableArray *prodArray;
 @end
 
 @implementation StockViewController
@@ -29,14 +33,14 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
     [super viewDidLoad];
     [self addSearchView];
     [self initScrollView];
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewStock)];
-    self.navigationItem.rightBarButtonItem =editButton;
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _stockProductList = [[OrderItemManagement shareInstance] getstockProductItems];
+    _stockProductList = [NSMutableArray arrayWithArray:[[OrderItemManagement shareInstance] getstockProductItems]];
+    _oldProductList = [_stockProductList mutableCopy];
+    [self productDetailForOrderItem];
     [_stockListTableView reloadData];
 }
 
@@ -54,7 +58,7 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
     _searchBar = [[UISearchBar alloc]initWithAccessory];
     _searchBar.searchBarStyle = UISearchBarStyleMinimal;
     _searchBar.delegate = self;
-    _searchBar.frame = CGRectMake(0, 0, 200, 44);
+    _searchBar.frame = CGRectMake(0, 0, 160, 44);
     _searchBar.layer.cornerRadius = 12;
     self.navigationItem.titleView = _searchBar;
     UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -79,19 +83,36 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
     
 }
 
-- (void)addNewStock {
-
+- (void)productDetailForOrderItem {
+    ProductManagement *prodManagement = [ProductManagement shareInstance];
+    _itemArray = [NSMutableArray array];
+    _prodArray = [NSMutableArray array];
+    for (NSDictionary *dict in _oldProductList) {
+        OProductItem *item = (OProductItem *)[dict objectForKey:@"oproductitem"];
+        [_itemArray addObject:item];
+        Product *product = [prodManagement getProductById:item.productid];
+        [_prodArray addObject:product];
+    }
 }
 
 
-#pragma marl - Sort & Search
 #pragma mark - Sort & Search
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length > 0) {
-        //[self.viewModel filterByString:searchText.uppercaseString];
+        [_stockProductList removeAllObjects];
+        NSString *normalisedQuery = [NSString stringWithFormat:@"*%@*", [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE[cd] %@ or ename LIKE[cd] %@", normalisedQuery,normalisedQuery];
+        NSArray *searchProdResult = [_prodArray filteredArrayUsingPredicate:predicate];
+        NSMutableArray *searchResult = [NSMutableArray array];
+        for (Product *prod in searchProdResult) {
+            NSUInteger index = [_prodArray indexOfObject:prod];
+            [searchResult addObject:[_oldProductList objectAtIndex:index]];
+        }
+        _stockProductList = [NSMutableArray arrayWithArray:searchResult];
     } else {
-        // [self.viewModel cancelFilter];
+        _stockProductList = [self.oldProductList mutableCopy];
     }
+    [_stockListTableView reloadData];
 }
 
 
