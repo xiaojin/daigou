@@ -16,6 +16,8 @@
 #import "Product.h"
 #import "OrderItemManagement.h"
 #import "OProductItem.h"
+#import "ErrorHelper.h"
+
 
 @interface ProcurementEditView ()<UITextFieldDelegate>
 @property (nonatomic, strong) UIButton *btnCancel;
@@ -27,7 +29,7 @@
 @property (nonatomic, strong) Product *product;
 @property (nonatomic, strong) OProductItem *productItem;
 @property (nonatomic, assign) NSInteger count;
-@property (nonatomic, strong) NSArray *UnorderProducts;
+@property (nonatomic, strong) NSArray *unorderProducts;
 @end
 
 @implementation ProcurementEditView
@@ -235,7 +237,6 @@
 
 
 - (void)finishPurchase {
-    [self selectExistingNeedtoBuyStockProducts];
     [self updateOrderProduct];
     [_delegate purchaseDidFinish];
     [self hideWithBlock:nil];
@@ -246,13 +247,17 @@
     [self hide];
 }
 
+
 - (void)updateOrderProduct {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     NSArray *orderItems = [itemManagement getAllProductsItemsNeedtoPurchase:_productItem.productid];
+    NSArray *orderProductItems = [orderItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"orderid != %d",0]];
+    _unorderProducts = [orderItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"orderid == %d",0]];
+    
     NSInteger updateCount =[_qualityField.text intValue];
     float productPrice = [_priceField.text floatValue];
-    NSInteger needUpdateCount = updateCount > [orderItems count] ? [orderItems count] : updateCount;
-    NSInteger insertStockProductCount = updateCount > [orderItems count] ? (updateCount -[orderItems count]) : 0;
+    NSInteger needUpdateCount = updateCount > [orderProductItems count] ? [orderProductItems count] : updateCount;
+    NSInteger insertStockProductCount = updateCount > [orderProductItems count] ? (updateCount -[orderProductItems count]) : 0;
     for (int i = 0; i < needUpdateCount; i++) {
         OProductItem *productItem =[OProductItem new];
         productItem = orderItems[i];
@@ -260,33 +265,23 @@
         productItem.statu = PRODUCT_INSTOCK;
         [itemManagement updateProductItemWithProductItem:@[productItem] withNull:YES]; //其中只有订单的需求量
     }
+    if (_clickTag == 10003 && needUpdateCount > 0) {
+        [ErrorHelper showErrorAlertWithTitle:@"订单更新" message:@"优先更新订单的需求量"];
+    }
     //same productid ,orderid is null, statu = 0
-    
+    insertStockProductCount = insertStockProductCount;
     if (insertStockProductCount > 0) {
         [self updateUnOrderProducts:insertStockProductCount withProduct:orderItems[0]];
     }
-
-
 }
 
 - (void)updateUnOrderProducts:(NSInteger)insertCount withProduct:(OProductItem*)item {
     //然后满足囤货需求的数量
-    BOOL hasWantPurchaseList = false;
-    NSDictionary *stockProduct = nil;
-    for (NSDictionary *dict in _UnorderProducts) {
-        OProductItem *productItem = [dict objectForKey:@"oproductitem"];
-        if (productItem.productid == item.productid) {
-            hasWantPurchaseList = true;
-            stockProduct = dict;
-            break;
-        }
-    }
-    if (hasWantPurchaseList) {
-        OProductItem *productItem = [stockProduct objectForKey:@"oproductitem"];
-        NSInteger count = [[stockProduct objectForKey:@"count"] integerValue];
+    if ([_unorderProducts count] > 0 ) {
+        NSInteger count = [_unorderProducts count];
         NSInteger countUpdate = count > insertCount? insertCount : count;
         NSInteger needToCreate = count > insertCount? 0 : (insertCount-count);
-        [self updateList:countUpdate withProduct:productItem];
+        [self updateUnOrderList:countUpdate];
         if (needToCreate >0) {
             [self insertList:needToCreate withProduct:item];
         }
@@ -295,18 +290,17 @@
     }
 }
 
-- (void)updateList:(NSInteger)updateCount withProduct:(OProductItem*)item{
+- (void)updateUnOrderList:(NSInteger)updateCount{
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     float productPrice = [_priceField.text floatValue];
-    NSArray *itemList = [itemManagement getUnOrderProducItemByStatus:PRODUCT_PURCHASE];
-    if ([itemList count] >= updateCount) {
-        for (int i = 0; i< updateCount; i++) {
-            OProductItem *productItem = itemList[i];
-            productItem.statu = PRODUCT_INSTOCK;
-            productItem.price = productPrice;
-            [itemManagement updateProductItemWithProductItem:@[productItem] withNull:YES];
-        }
+    NSMutableArray *updateProducts = [NSMutableArray array];
+    for (int i = 0; i< updateCount; i++) {
+        OProductItem *productItem = _unorderProducts[i];
+        productItem.statu = PRODUCT_INSTOCK;
+        productItem.price = productPrice;
+        [updateProducts addObject:productItem];
     }
+    [itemManagement updateProductItemWithProductItem:updateProducts withNull:YES];
 
 }
 
@@ -326,12 +320,6 @@
     }
         [itemManagement insertOrderProductItems:insertStockProductArray withNull:YES];
 }
-
-//获取囤货清单列表
-- (void)selectExistingNeedtoBuyStockProducts{
-   _UnorderProducts = [[OrderItemManagement shareInstance] getprocurementProductItemsGroupByStatus:UnOrderProduct];
-}
-
 
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField {

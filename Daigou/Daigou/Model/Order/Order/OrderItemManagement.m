@@ -426,7 +426,7 @@
         NSLog(@"Could not open db.");
         return nil ;
     }
-    FMResultSet *rs = [_db executeQuery:@"select * from item where statu = 0 and orderid is not null and productid = (?)",@(productid)];
+    FMResultSet *rs = [_db executeQuery:@"select * from item where statu = 0 and productid = (?)",@(productid)];
     
     NSMutableArray *orderItemsArray = [NSMutableArray array];
     while (rs.next) {

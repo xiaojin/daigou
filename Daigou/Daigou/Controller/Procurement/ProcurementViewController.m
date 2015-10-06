@@ -20,11 +20,12 @@
 #import "OrderItemManagement.h"
 #import "CustomInfo.h"
 #import "CustomInfoManagement.h"
+#import "AddNewProcurementViewController.h"
 
 #define LBL_DISTANCE ((kWindowWidth-10)/2)
 #define CELL_HEIGHT 85
 
-@interface ProcurementViewController ()<UITableViewDataSource,UITableViewDelegate,ProcurementEditViewDelegate>
+@interface ProcurementViewController ()<UITableViewDataSource,UITableViewDelegate,ProcurementEditViewDelegate, AddNewProcurementViewControllerDelegate>
 @property (nonatomic, strong) ProcurementStatusListTableView *orderListTableView;
 @property (nonatomic, strong) UIButton *searchTitleBtn;
 @property (nonatomic, strong) NSMutableArray *orderList;
@@ -215,6 +216,11 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
 
 
 - (void)addNewProcure {
+    AddNewProcurementViewController *addNewProcurementViewController = [[AddNewProcurementViewController alloc] init];
+    addNewProcurementViewController.view.backgroundColor = [UIColor whiteColor];
+    addNewProcurementViewController.delegate = self;
+    addNewProcurementViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:addNewProcurementViewController animated:YES];
 }
 
 - (void)initOrderListTableView {
@@ -227,6 +233,12 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
     self.orderListTableView.dataSource = self;
     self.orderListTableView.delegate = self;
     self.orderListTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.orderListTableView.bounds.size.width, 0.01f)];
+}
+
+#pragma mark - AddNewProcurementViewControllerDelegate
+
+- (void)didFinishAddNewProcurement {
+    [self searchAllStockProducts];
 }
 
 #pragma mark - tableview data source
@@ -269,6 +281,7 @@ NSString *const procurementListcellIdentity = @"procurementListcellIdentity";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ProcurementEditView *editView = [[ProcurementEditView alloc]init];
+    editView.clickTag = _clickTag;
     editView.delegate = self;
     NSDictionary *item = _productsList[indexPath.section][indexPath.row];
     editView.productItemDict = item;

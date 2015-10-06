@@ -170,6 +170,7 @@
         };
         return cell;
     } else {
+    
         UITableViewCell *addCell = [tableView dequeueReusableCellWithIdentifier:@"orderAddCell"];
         [addCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         if (addCell == nil) {
@@ -234,9 +235,11 @@
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return ([self.orderItemFrames count] +1);
-
+    if (self.orderItem.statu == PURCHASED || self.orderItem.statu == UNDISPATCH) {
+        return ([self.orderItemFrames count] +1);
+    } else {
+        return [self.orderItemFrames count];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

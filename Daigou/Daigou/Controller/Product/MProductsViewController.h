@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Product.h"
+@protocol MProductsViewControllerDelegate
+@optional
+- (void)didSelectProduct:(Product *)product;
+@end
 @interface MProductsViewController : UIViewController
-
+@property(nonatomic, weak)id<MProductsViewControllerDelegate> delegate;
 @end

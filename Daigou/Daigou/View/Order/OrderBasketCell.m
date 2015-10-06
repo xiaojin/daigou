@@ -81,13 +81,14 @@
         }];
         
         
-        
+      
         UIButton *editProduct = [[UIButton alloc]init];
         [editProduct setTitle:@"编辑" forState:UIControlStateNormal];
         [editProduct.titleLabel setFont:[UIFont systemFontOfSize:13.0f]];
         [editProduct addTarget:self action:@selector(editProductInfo:) forControlEvents:UIControlEventTouchUpInside];
         [editProduct setTitleColor:TITLECOLOR forState:UIControlStateNormal];
         [bgView addSubview:editProduct];
+        self.editButton.hidden = YES;
         self.editButton = editProduct;
         [self.editButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(bgView);
@@ -95,6 +96,9 @@
             make.left.equalTo(self.lblTitle.mas_right);
             make.bottom.equalTo(bgView);
         }];
+        if (self.orderItem.statu == PURCHASED || self.orderItem.statu == UNDISPATCH) {
+            self.editButton.hidden = NO;
+        }
         
         UIView *contentView = [[UIView alloc]init];
         [contentView setBackgroundColor:RGB(248, 248, 248)];

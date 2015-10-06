@@ -102,6 +102,21 @@
     
 }
 
+- (Product *)getProductByBarCode:(NSString *)barcode {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return nil ;
+    }
+    Product *prodcut = [Product new];
+    FMResultSet *rs = [_db executeQuery:@"select * from product where barcode = ?" , barcode];
+    if (rs.next) {
+        prodcut = [self setValueForProduct:rs];
+    }
+    [_db close];
+    return prodcut;
+
+}
+
 - (Product *)setValueForProduct:(FMResultSet *)rs {
     Product *product = [[Product alloc]init];
     product.pid = (NSInteger)[rs intForColumn:@"pid"];

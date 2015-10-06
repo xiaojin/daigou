@@ -16,6 +16,7 @@
 - (Product *)getProductById:(NSInteger)prodcutId;
 - (NSArray *)getProductByBrand:(Brand *)brand;
 - (NSArray *)getProductByCategory:(ProductCategory *)productCategory;
+- (Product *)getProductByBarCode:(NSString *)barcode;
 - (BOOL)deleteProduct:(Product *)product;
 - (BOOL)updateProduct:(Product *)product;
 @end

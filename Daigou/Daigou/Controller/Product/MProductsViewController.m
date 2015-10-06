@@ -89,8 +89,14 @@
         make.bottom.equalTo(_productsCollectionView.mas_bottom);
     }];
     // 左侧边栏结束
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
+    //if MProductsViewController is shown by other controller
+    NSInteger countNumber = [self.navigationController.childViewControllers count];
+    UIBarButtonItem *rightButton = nil;
+    if (countNumber > 1) {
+        rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finishSelect)];
+    } else {
+        rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProduct)];
+    }
     self.navigationItem.rightBarButtonItem =rightButton;
 }
 
@@ -111,7 +117,9 @@
 }
 
 - (void)sidebarDidHidden {
-    self.tabBarController.tabBar.hidden = NO;
+    //if MProductsViewController is shown by other controller
+    if ([self.navigationController.childViewControllers count] > 1) return;
+        self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)itemDidSelect:(Brand *)brand {
@@ -176,10 +184,16 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Product *product = [_productsList objectAtIndex:indexPath.row];
-    UIProductDetailViewController *productDetailViewController = [[UIProductDetailViewController alloc]init];
-    productDetailViewController.product = product;
-    productDetailViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:productDetailViewController animated:NO];
+    if ([self.navigationController.childViewControllers count] > 1) {
+        [_delegate didSelectProduct:product];
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        UIProductDetailViewController *productDetailViewController = [[UIProductDetailViewController alloc]init];
+        productDetailViewController.product = product;
+        productDetailViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:productDetailViewController animated:NO];
+    }
+
 }
 
 #pragma mark -- ProductHandler 
@@ -188,6 +202,10 @@
     productDetailViewController.product = [Product new];
     productDetailViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:productDetailViewController animated:NO];
+}
+
+- (void) finishSelect {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -94,6 +94,7 @@
 		3CA1A2941B551FCD00C0A74C /* OrderMainInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OrderMainInfoViewController.m */; };
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
 		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
+		3CB3E0061BC2518C004347F2 /* AddNewProcurementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3E0051BC2518C004347F2 /* AddNewProcurementViewController.m */; };
 		3CB5EFE31BA6E43E00B55968 /* MExpressManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5EFE21BA6E43E00B55968 /* MExpressManagementViewController.m */; };
 		3CBC0F641BA9A42400FC5562 /* MAddressCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC0F631BA9A42400FC5562 /* MAddressCollectionViewController.m */; };
 		3CBF22ED1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF22EC1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m */; };
@@ -277,6 +278,8 @@
 		3CA1A2961B56884200C0A74C /* OrderItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderItemView.m; path = Daigou/View/Order/OrderItemView.m; sourceTree = SOURCE_ROOT; };
 		3CA1A29B1B5694A100C0A74C /* OrderBasketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderBasketViewController.h; sourceTree = "<group>"; };
 		3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderBasketViewController.m; sourceTree = "<group>"; };
+		3CB3E0041BC2518C004347F2 /* AddNewProcurementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewProcurementViewController.h; sourceTree = "<group>"; };
+		3CB3E0051BC2518C004347F2 /* AddNewProcurementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewProcurementViewController.m; sourceTree = "<group>"; };
 		3CB5EFE11BA6E43E00B55968 /* MExpressManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MExpressManagementViewController.h; path = Express/MExpressManagementViewController.h; sourceTree = "<group>"; };
 		3CB5EFE21BA6E43E00B55968 /* MExpressManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MExpressManagementViewController.m; path = Express/MExpressManagementViewController.m; sourceTree = "<group>"; };
 		3CBC0F621BA9A42400FC5562 /* MAddressCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAddressCollectionViewController.h; path = Custom/MAddressCollectionViewController.h; sourceTree = "<group>"; };
@@ -457,6 +460,8 @@
 				19B0F6F26C67FEFD48FD7CBA /* Procurement.storyboard */,
 				19B0F2D2E926566BD7FA217A /* ProcurementViewController.h */,
 				19B0F4ED6DD81F5AFD814721 /* ProcurementViewController.m */,
+				3CB3E0041BC2518C004347F2 /* AddNewProcurementViewController.h */,
+				3CB3E0051BC2518C004347F2 /* AddNewProcurementViewController.m */,
 			);
 			path = Procurement;
 			sourceTree = "<group>";
@@ -1106,6 +1111,7 @@
 				3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */,
 				3C344AA81B6CD46500818F19 /* OrderBasketPickerViewController.m in Sources */,
 				3CBC0F641BA9A42400FC5562 /* MAddressCollectionViewController.m in Sources */,
+				3CB3E0061BC2518C004347F2 /* AddNewProcurementViewController.m in Sources */,
 				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,
 				3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */,
 				3C6DDF261B441156000B8152 /* MEditCustomInfoViewController.m in Sources */,

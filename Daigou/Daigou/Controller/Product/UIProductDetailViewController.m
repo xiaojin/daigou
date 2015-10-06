@@ -615,7 +615,7 @@
         make.right.equalTo(self.view).with.offset(-5);
         make.height.equalTo(@44);
     }];
-    _cautionField.keepBaseline = YES;
+    _noteField.keepBaseline = YES;
     
     UIView *div15 = [UIView new];
     div15.backgroundColor = LINECOLOR;

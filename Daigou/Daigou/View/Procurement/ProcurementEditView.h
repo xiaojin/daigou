@@ -15,4 +15,6 @@
 @interface ProcurementEditView : MMPopupView
 @property (nonatomic, strong)NSDictionary *productItemDict;
 @property (nonatomic, weak)id<ProcurementEditViewDelegate> delegate;
+@property (nonatomic, assign) BOOL purchaseStockFirst;
+@property (nonatomic, assign) NSInteger clickTag;
 @end

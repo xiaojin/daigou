@@ -38,7 +38,7 @@ dispatch_once(&oncetoken, BLOCK); \
 
 #define PRODUCTFINFOTAGBEGIN 900000
 #define PRODUCTDETAILIVIEW 800000
-
+#define NEWPROCUREMENTTAG 700000
 #define EXCHANGERATE 5.0
 #define kJVFieldFontSize  14.0f
 #define kJVFieldFloatingLabelFontSize  11.0f
