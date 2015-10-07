@@ -150,13 +150,6 @@
     return NO;
 }
 
-- (void)search:(NSString *)query {
-    NSString *normalisedQuery = [NSString stringWithFormat:@"*%@*", [query stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE[cd] %@ or function LIKE[cd] %@", normalisedQuery,normalisedQuery];
-    
-    _productsList = [_productsList filteredArrayUsingPredicate:predicate];
-}
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];

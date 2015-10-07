@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--订单-->
+        <!--Order View Controller-->
         <scene sceneID="7WK-wW-O1I">
             <objects>
                 <viewController id="1l1-Sd-Ckc" customClass="OrderViewController" sceneMemberID="viewController">
@@ -19,7 +19,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="订单" id="02v-HG-49P"/>
+                    <navigationItem key="navigationItem" id="02v-HG-49P"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6tI-yo-fRO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

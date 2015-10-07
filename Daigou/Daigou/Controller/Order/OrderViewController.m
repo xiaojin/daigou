@@ -18,10 +18,12 @@
 #import "CommonDefines.h"
 #import "OrderStausListTableView.h"
 #import "OrderDetailViewController.h"
+#import "UISearchBar+UISearchBarAccessory.h"
+#import "OrderSearchViewController.h"
 
 #define LBL_DISTANCE 90
 #define CELL_HEIGHT 65
-@interface OrderViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface OrderViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UISearchBarDelegate, OrderSearchViewControllerDelegate>
 @property (nonatomic, strong) OrderStausListTableView *orderListTableView;
 @property (nonatomic, strong) OrderStausListTableView *unpestachedTableView;
 @property (nonatomic, strong) OrderStausListTableView *transportTableView;
@@ -37,6 +39,8 @@
 @property (nonatomic, strong) UILabel *finishStatusLbl;
 @property (nonatomic, strong) OrderItem *orderItem;
 @property (nonatomic, strong) NSArray *statusLabels;
+@property (nonatomic, strong) UISearchBar *searchBar;
+
 @end
 
 @implementation OrderViewController
@@ -48,9 +52,28 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self fetchAllClients];
     [self addOrderStatusView];
     [self initScrollView];
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
-    self.navigationItem.rightBarButtonItem =editButton;
+    [self initNavBar];
   // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)initNavBar {
+    _searchBar = [[UISearchBar alloc]initWithAccessory];
+    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    _searchBar.delegate = self;
+    _searchBar.frame = CGRectMake(0, 0, 100, 44);
+    _searchBar.layer.cornerRadius = 12;
+    self.navigationItem.titleView = _searchBar;
+    
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [lable setFont:[UIFont boldSystemFontOfSize:16.0f]];
+    lable.text = @"订单";
+    [lable setTextColor:[UIColor blackColor]];
+    
+    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithCustomView:lable];
+    
+    self.navigationItem.leftBarButtonItems = @[titleButton];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewOrder)];
+    self.navigationItem.rightBarButtonItem = editButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -483,5 +506,25 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
     [self.receivedTableView reloadData];
     [self.finishedTableView reloadData];
 }
+
+#pragma mark - Sort & Search
+- (void)searchBarTap {
+    OrderSearchViewController *searchController =[[OrderSearchViewController alloc]init];
+    searchController.delegate = self;
+    UINavigationController *searchNav = [[UINavigationController alloc]initWithRootViewController:searchController];
+    [self presentViewController:searchNav animated:NO completion:nil];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self searchBarTap];
+    return NO;
+}
+
+- (void)didSelectOrderItem:(OrderItem *)orderItem withCustom:(CustomInfo *)custom {
+    OrderDetailViewController *editOrderViewContorller = [[OrderDetailViewController alloc]initWithOrderItem:orderItem withClientDetail:custom];
+    editOrderViewContorller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:editOrderViewContorller animated:YES];
+}
+
 
 @end
