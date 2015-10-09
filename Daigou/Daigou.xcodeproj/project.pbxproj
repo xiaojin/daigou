@@ -65,6 +65,9 @@
 		3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249901B3C1E81008F34C7 /* CustomInfo.m */; };
 		3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */; };
 		3C62499A1B3C268A008F34C7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6249991B3C268A008F34C7 /* libsqlite3.dylib */; };
+		3C6418711BC7D9CA00B0ECEC /* SellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6418701BC7D9CA00B0ECEC /* SellInfo.m */; };
+		3C6418741BC7DB8F00B0ECEC /* SellInfoManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6418731BC7DB8F00B0ECEC /* SellInfoManagement.m */; };
+		3C6418771BC7E30C00B0ECEC /* MSellInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6418761BC7E30C00B0ECEC /* MSellInfoViewController.m */; };
 		3C6448631BA00AAB00873739 /* MProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6448601BA00AAB00873739 /* MProductItemCell.m */; };
 		3C6448641BA00AAB00873739 /* MProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6448621BA00AAB00873739 /* MProductsViewController.m */; };
 		3C6448671BA00CD800873739 /* MBrandTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6448661BA00CD800873739 /* MBrandTableView.m */; };
@@ -223,6 +226,12 @@
 		3C6249931B3C1FDC008F34C7 /* CustomInfoManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfoManagement.m; sourceTree = "<group>"; };
 		3C6249951B3C2254008F34C7 /* CommonDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDefines.h; sourceTree = "<group>"; };
 		3C6249991B3C268A008F34C7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		3C64186F1BC7D9CA00B0ECEC /* SellInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SellInfo.h; path = Seller/SellInfo.h; sourceTree = "<group>"; };
+		3C6418701BC7D9CA00B0ECEC /* SellInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SellInfo.m; path = Seller/SellInfo.m; sourceTree = "<group>"; };
+		3C6418721BC7DB8F00B0ECEC /* SellInfoManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SellInfoManagement.h; path = Seller/SellInfoManagement.h; sourceTree = "<group>"; };
+		3C6418731BC7DB8F00B0ECEC /* SellInfoManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SellInfoManagement.m; path = Seller/SellInfoManagement.m; sourceTree = "<group>"; };
+		3C6418751BC7E30C00B0ECEC /* MSellInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSellInfoViewController.h; sourceTree = "<group>"; };
+		3C6418761BC7E30C00B0ECEC /* MSellInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSellInfoViewController.m; sourceTree = "<group>"; };
 		3C64485F1BA00AAB00873739 /* MProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MProductItemCell.h; path = Daigou/Controller/Product/MProductItemCell.h; sourceTree = SOURCE_ROOT; };
 		3C6448601BA00AAB00873739 /* MProductItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MProductItemCell.m; path = Daigou/Controller/Product/MProductItemCell.m; sourceTree = SOURCE_ROOT; };
 		3C6448611BA00AAB00873739 /* MProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MProductsViewController.h; path = Daigou/Controller/Product/MProductsViewController.h; sourceTree = SOURCE_ROOT; };
@@ -501,6 +510,7 @@
 		19B0FDC79F375A6C71079B5E /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				3C64186E1BC7D9A600B0ECEC /* Seller */,
 				3C30215F1B4FDEF1001A741D /* Brand */,
 				3C30215E1B4FDEE8001A741D /* Category */,
 				3C6D85671B4DDFAE0076F4AE /* CustomInfo */,
@@ -631,6 +641,17 @@
 				3C5D0B531B8C9904006FFC87 /* LLBlurSidebar.m */,
 			);
 			name = LLBlurSiderBar;
+			sourceTree = "<group>";
+		};
+		3C64186E1BC7D9A600B0ECEC /* Seller */ = {
+			isa = PBXGroup;
+			children = (
+				3C64186F1BC7D9CA00B0ECEC /* SellInfo.h */,
+				3C6418701BC7D9CA00B0ECEC /* SellInfo.m */,
+				3C6418721BC7DB8F00B0ECEC /* SellInfoManagement.h */,
+				3C6418731BC7DB8F00B0ECEC /* SellInfoManagement.m */,
+			);
+			name = Seller;
 			sourceTree = "<group>";
 		};
 		3C64832D1B494BB600EFAE4E /* Model */ = {
@@ -886,6 +907,8 @@
 				3CBC0F631BA9A42400FC5562 /* MAddressCollectionViewController.m */,
 				3C62498C1B3C1395008F34C7 /* MCustInfoViewController.h */,
 				3C62498D1B3C1395008F34C7 /* MCustInfoViewController.m */,
+				3C6418751BC7E30C00B0ECEC /* MSellInfoViewController.h */,
+				3C6418761BC7E30C00B0ECEC /* MSellInfoViewController.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -1090,6 +1113,7 @@
 				3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */,
 				3C6D856A1B4DDFD20076F4AE /* Product.m in Sources */,
 				3C5D0B511B8C9730006FFC87 /* OrderSiderBarViewController.m in Sources */,
+				3C6418771BC7E30C00B0ECEC /* MSellInfoViewController.m in Sources */,
 				3CFC01E11B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m in Sources */,
 				3C5678381B5B25E1001B6B40 /* OProductItem.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
@@ -1114,10 +1138,12 @@
 				3C8F6F741B987B1B00A920A3 /* DGAddressBook.m in Sources */,
 				3C344AAE1B6CED2D00818F19 /* ProductWithCount.m in Sources */,
 				19B0F2A5A729CC3A56F1B82E /* MineViewController.m in Sources */,
+				3C6418741BC7DB8F00B0ECEC /* SellInfoManagement.m in Sources */,
 				3C6249821B3C11A5008F34C7 /* MFinanceViewController.m in Sources */,
 				3C344AA81B6CD46500818F19 /* OrderBasketPickerViewController.m in Sources */,
 				3CBC0F641BA9A42400FC5562 /* MAddressCollectionViewController.m in Sources */,
 				3CB3E0061BC2518C004347F2 /* AddNewProcurementViewController.m in Sources */,
+				3C6418711BC7D9CA00B0ECEC /* SellInfo.m in Sources */,
 				3C62497F1B3C1173008F34C7 /* MDeliveryManagementViewController.m in Sources */,
 				3C036AFD1B59FBD100DBF0B9 /* OrderBasketCell.m in Sources */,
 				3C6DDF261B441156000B8152 /* MEditCustomInfoViewController.m in Sources */,

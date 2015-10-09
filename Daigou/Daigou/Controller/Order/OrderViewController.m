@@ -58,7 +58,7 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 
 - (void)initNavBar {
     _searchBar = [[UISearchBar alloc]initWithAccessory];
-    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    _searchBar.searchBarStyle = UISearchBarStyleProminent;
     _searchBar.delegate = self;
     _searchBar.frame = CGRectMake(0, 0, 100, 44);
     _searchBar.layer.cornerRadius = 12;

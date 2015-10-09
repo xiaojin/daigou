@@ -47,6 +47,8 @@
         make.right.equalTo(self.view);
         make.height.equalTo(@44);
     }];
+    
+    UIBarButtonItem *saveClient = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(addUserContact)];
 }
 
 - (void) initTableView {
@@ -107,6 +109,10 @@
         [_containsPeopleList addObject:[_peoples objectAtIndex:tappedIndexPath.row]];
     }
     [self.peopleListTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:tappedIndexPath] withRowAnimation: UITableViewRowAnimationFade];
+}
+
+- (void)addUserContact {
+    
 }
 
 @end

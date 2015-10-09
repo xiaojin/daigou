@@ -14,6 +14,7 @@
 #import "MSettingViewController.h"
 #import "MAboutViewController.h"
 #import "IASKAppSettingsViewController.h"
+#import "MSellInfoViewController.h"
 
 #define kICONCOLOR [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:144.0f/255.0f alpha:1.0f]
 #define kICONSIZE 20.0f
@@ -38,7 +39,7 @@ NSString *const kTableCellID = @"SETTINGCELLID";
     NSMutableArray *firstSection = [
             @[[SettingItem itemWithIcon:ion_android_person title:@"客户列表" controller: [MCustInfoViewController class]],
                     [SettingItem itemWithIcon:ion_android_plane title:@"快递管理" controller:[MDeliveryManagementViewController class]],
-                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"卖家管理" controller:[MDeliveryManagementViewController class]]]
+                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"卖家管理" controller:[MSellInfoViewController class]]]
             mutableCopy];
 
     NSMutableArray *secondSection = [

@@ -56,7 +56,7 @@ NSString *const stockListcellIdentity = @"stockListcellIdentity";
 - (void)addSearchView {
 
     _searchBar = [[UISearchBar alloc]initWithAccessory];
-    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    _searchBar.searchBarStyle = UISearchBarStyleProminent;
     _searchBar.delegate = self;
     _searchBar.frame = CGRectMake(0, 0, 160, 44);
     _searchBar.layer.cornerRadius = 12;
