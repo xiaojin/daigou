@@ -10,6 +10,7 @@
 #import "CustomInfo.h"
 #import "CommonDefines.h"
 #import <FMDB/FMDB.h>
+#import "NSString+StringToPinYing.h"
 @implementation CustomInfoManagement {
   FMDatabase *_db;
 }
@@ -92,6 +93,9 @@
     customInfo.note = [rs stringForColumn:@"note"];
     customInfo.ename = [rs stringForColumn:@"ename"];
     customInfo.syncDate = [rs doubleForColumn:@"syncDate"];
+    if (customInfo.ename == nil || [customInfo.ename isEqualToString:@""]) {
+        customInfo.ename = [customInfo.name transformToPinyin];
+    }
     return customInfo;
 }
 
@@ -118,6 +122,15 @@
         [_db commit];
         [_db close];
     }
+    return result;
+}
+
+- (BOOL)insertCustomInfo:(CustomInfo *)custom {
+    if (![_db open]) {
+        NSLog(@"Could not open db.");
+        return NO ;
+    }
+    BOOL result = [self addCustomInfo:custom];
     return result;
 }
 

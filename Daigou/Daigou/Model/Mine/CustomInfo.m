@@ -7,16 +7,20 @@
 //
 
 #import "CustomInfo.h"
+#import "NSString+StringToPinYing.h"
 
 @implementation CustomInfo
 
 
 - (NSArray *)cutomToArray {
+    if ((self.ename == nil || [self.ename isEqualToString:@""]) && self.name !=nil && ![self.name isEqualToString:@""]) {
+        self.ename = [self.name transformToPinyin];
+    }
   NSArray *result = @[self.name?self.name :[NSNull null],
                       self.email?self.email :[NSNull null],
                       self.phonenum?self.phonenum:[NSNull null],
                       self.wechat?self.wechat:[NSNull null],
-                      self.idnum?self.idnum :[NSNull null],
+                      (self.idnum==nil || [self.idnum isEqualToString:@""])?[NSNull null] : self.idnum,
                       self.postcode?self.postcode : [NSNull null],
                       @(self.agent)?@(self.agent):[NSNull null],
                       self.address?self.address :[NSNull null],

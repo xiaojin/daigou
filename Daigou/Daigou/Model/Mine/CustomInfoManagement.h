@@ -15,4 +15,5 @@
 - (BOOL)deleteCustomInfoByID:(NSString *)name;
 - (BOOL)updateCustomInfo:(CustomInfo *)custom;
 - (CustomInfo *)getCustomInfoById:(NSInteger)cid;
+- (BOOL)insertCustomInfo:(CustomInfo *)custom;
 @end

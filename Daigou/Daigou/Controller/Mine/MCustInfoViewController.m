@@ -17,10 +17,17 @@
 #import "DGAddressBook.h"
 #import "AddressBookTableViewController.h"
 #import "MineViewController.h"
+#import "UIScanViewController.h"
+#import "HttpPromiseRequestOperation.h"
+#import <CHCSVParser/CHCSVParser.h>
+#import "NSString+StringToPinYing.h"
 
-@interface MCustInfoViewController ()<UIActionSheetDelegate, ABPeoplePickerNavigationControllerDelegate,UIAlertViewDelegate>
+
+@interface MCustInfoViewController ()<UIActionSheetDelegate, ABPeoplePickerNavigationControllerDelegate,UIAlertViewDelegate, UIScanViewControllerDelegate,CHCSVParserDelegate>
 @property(nonatomic, strong) NSArray *contacts;
 @property(nonatomic, strong) NSArray *indexList;
+@property(nonatomic, strong) NSMutableArray *currentRow;
+@property(nonatomic, strong) NSMutableArray *csvArray;
 @end
 
 @implementation MCustInfoViewController
@@ -66,8 +73,7 @@
 }
 
 - (void)addNewCustom {
-    
-    UIActionSheet *addCustomInfoStype = [[UIActionSheet alloc]initWithTitle:@"添加联系人信息" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从通讯录导入",@"自定义添加联系人",nil];
+    UIActionSheet *addCustomInfoStype = [[UIActionSheet alloc]initWithTitle:@"添加联系人信息" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从通讯录导入",@"自定义添加联系人",@"批量导入客户信息",nil];
     [addCustomInfoStype showFromTabBar:self.tabBarController.tabBar];
 
 }
@@ -138,6 +144,7 @@
             }
         }
         addressBook.name = nameString;
+        addressBook.ename = [nameString transformToPinyin];
         addressBook.recordID = (int)ABRecordGetRecordID(person);;
         
         ABPropertyID multiProperties[] = {
@@ -189,6 +196,99 @@
     [self.navigationController pushViewController:booktableViewController animated:YES];
 }
 
+- (void) bunchImportCustomInfo {
+    UIScanViewController *scaViewController = [[UIScanViewController alloc] init];
+    scaViewController.isQR = NO;
+    // 2. configure ViewController
+    scaViewController.delegate = self;
+    
+    // 3. show ViewController
+    [self presentViewController:scaViewController animated:YES completion:nil];
+}
+
+- (void)handlerContacter:(NSString *)downloadURL {
+    [self downloadContact:downloadURL];
+}
+
+- (RXPromise *)downloadContact:(NSString *)urlString {
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *downloadRequest = [NSMutableURLRequest requestWithURL:url];
+
+    HttpPromiseRequestOperation *operation = [HttpPromiseRequestOperation operationWithRequest:downloadRequest];
+    
+    operation.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        NSLog(@"bytesRead: %ld, totalBytesRead: %lld, totalBytesExpectedToRead: %lld", bytesRead, totalBytesRead, totalBytesExpectedToRead);
+    }];
+    @weakify(self);
+    return [operation startPromise].then(^id(NSData *data){
+        @strongify(self);
+        NSInputStream *inputSteam = [[NSInputStream alloc]initWithData:data];
+        NSStringEncoding encoding = NSUTF8StringEncoding;
+        CHCSVParser *csvParser = [[CHCSVParser alloc] initWithInputStream:inputSteam usedEncoding:&encoding delimiter:','];
+        csvParser.delegate = self;
+        _csvArray = [[NSMutableArray alloc] init];
+        [csvParser parse];          
+        return data;
+        //parse csv file
+    },^id(NSError *error){
+        return error;
+    });
+}
+
+#pragma mark -- CHCSParseDelegate
+- (void)parser:(CHCSVParser *)parser didBeginLine:(NSUInteger)recordNumber {
+    _currentRow = [[NSMutableArray alloc] init];
+}
+
+- (void)parser:(CHCSVParser *)parser didReadField:(NSString *)field atIndex:(NSInteger)fieldIndex {
+    [_currentRow addObject:field];
+}
+
+- (void)parser:(CHCSVParser *)parser didEndLine:(NSUInteger)recordNumber {
+    [_csvArray addObject:_currentRow];
+}
+
+- (void)parserDidEndDocument:(CHCSVParser *)parser {
+    [self savePeopleInfo];
+    NSLog(@"did finish parse Contact Name");
+}
+
+- (void)parser:(CHCSVParser *)parser didFailWithError:(NSError *)error {
+    NSLog(@"Parser failed with error: %@ %@", [error localizedDescription], [error userInfo]);
+}
+
+
+- (void)savePeopleInfo {
+    //名字，地址，电话，身份证号，电子邮箱，备用地址，备用地址，备用地址，备注
+    CustomInfoManagement *customInfoManagement = [CustomInfoManagement shareInstance];
+    for (int i = 1; i < _csvArray.count; i++) {
+        NSArray *row = [_csvArray objectAtIndex:i];
+        CustomInfo *customInfo = [[CustomInfo alloc] init];
+        customInfo.name = [self replaceCharacter:[row objectAtIndex:0]];
+        customInfo.address = [self replaceCharacter:[row objectAtIndex:1]];
+        customInfo.phonenum = [self replaceCharacter:[row objectAtIndex:2]];
+        customInfo.idnum = [self replaceCharacter:[row objectAtIndex:3]];
+        customInfo.email = [self replaceCharacter:[row objectAtIndex:4]];
+        customInfo.address1 = [self replaceCharacter:[row objectAtIndex:5]];
+        customInfo.address2 = [self replaceCharacter:[row objectAtIndex:6]];
+        customInfo.address3 = [self replaceCharacter:[row objectAtIndex:7]];
+        [customInfoManagement insertCustomInfo:customInfo];
+    }
+}
+
+- (NSString *)replaceCharacter:(NSString *)objectString {
+    objectString = [objectString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    objectString = [objectString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    objectString = [objectString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    return objectString;
+}
+#pragma mark --scameBarcode
+
+- (void)didFinishedReadingQR:(NSString *)string {
+    [self handlerContacter:string];
+    NSLog(@"%@",string);
+}
 
 #pragma mark- UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -216,7 +316,9 @@
         editCustomInfoViewController.view.backgroundColor = [UIColor whiteColor];
         [self.navigationController pushViewController:editCustomInfoViewController animated:YES];
 
-    } else if (buttonIndex == 2){
+    } else if (buttonIndex == 2) {
+        [self bunchImportCustomInfo];
+    } else if (buttonIndex == 3) {
         NSLog(@"Cancel");
     }
 

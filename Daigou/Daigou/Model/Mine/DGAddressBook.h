@@ -14,4 +14,5 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *tel;
+@property (nonatomic, strong) NSString *ename;
 @end

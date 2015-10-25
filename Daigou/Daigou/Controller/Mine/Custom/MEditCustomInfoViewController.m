@@ -641,7 +641,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 - (void)saveCustomInfo {
     //dismiss keyboard.
     [self.view endEditing:YES];
-    if ([_customInfo.name isEqualToString:@""] || _customInfo.name == nil) {
+    if (([_customInfo.name isEqualToString:@""] || _customInfo.name == nil) && [_nameField.text isEqualToString:@""]){
         [ErrorHelper showErrorAlertWithTitle:@"客户信息" message:@"客户姓名不能为空"];
         return;
     }

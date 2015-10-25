@@ -8,6 +8,9 @@
 
 
 // execute a block only once using dispatch_once
+#import <libextobjc/EXTScope.h>
+
+
 #define once_only(BLOCK) ({ \
 static dispatch_once_t oncetoken = 0; \
 dispatch_once(&oncetoken, BLOCK); \

@@ -88,9 +88,13 @@
 		3C6EED231B2C5E6100C7478F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED201B2C5E6100C7478F /* AppDelegate.m */; };
 		3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EED221B2C5E6100C7478F /* DGViewController.m */; };
 		3C70BF0C1B9F0B9500C17481 /* UIScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */; };
+		3C775E271BCBBF5C003980AA /* HttpPromiseRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C775E261BCBBF5C003980AA /* HttpPromiseRequestOperation.m */; };
+		3C775E2A1BCBC357003980AA /* HTTPPromiseRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C775E291BCBC357003980AA /* HTTPPromiseRequestOperationManager.m */; };
+		3C775E2D1BCBDBA0003980AA /* NSError+OperationCancelled.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C775E2C1BCBDBA0003980AA /* NSError+OperationCancelled.m */; };
 		3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */; };
 		3C7794391B7F647E0034D91D /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7794381B7F647E0034D91D /* OrderDetailViewController.m */; };
 		3C77943C1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */; };
+		3C885FBE1BDCCB1900CBC5A8 /* NSString+StringToPinYing.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C885FBD1BDCCB1900CBC5A8 /* NSString+StringToPinYing.m */; };
 		3C8F6F741B987B1B00A920A3 /* DGAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F6F731B987B1B00A920A3 /* DGAddressBook.m */; };
 		3C8F6F781B98804C00A920A3 /* AddressBookTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F6F771B98804C00A920A3 /* AddressBookTableViewController.m */; };
 		3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A1F4A1B9705580030647B /* StockListCell.m */; };
@@ -270,12 +274,20 @@
 		3C6EED221B2C5E6100C7478F /* DGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGViewController.m; sourceTree = "<group>"; };
 		3C70BF0A1B9F0B9500C17481 /* UIScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIScanViewController.h; path = Daigou/Controller/Product/UIScanViewController.h; sourceTree = SOURCE_ROOT; };
 		3C70BF0B1B9F0B9500C17481 /* UIScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIScanViewController.m; path = Daigou/Controller/Product/UIScanViewController.m; sourceTree = SOURCE_ROOT; };
+		3C775E251BCBBF5C003980AA /* HttpPromiseRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpPromiseRequestOperation.h; path = Network/HttpPromiseRequestOperation.h; sourceTree = "<group>"; };
+		3C775E261BCBBF5C003980AA /* HttpPromiseRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpPromiseRequestOperation.m; path = Network/HttpPromiseRequestOperation.m; sourceTree = "<group>"; };
+		3C775E281BCBC357003980AA /* HTTPPromiseRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPPromiseRequestOperationManager.h; path = Network/HTTPPromiseRequestOperationManager.h; sourceTree = "<group>"; };
+		3C775E291BCBC357003980AA /* HTTPPromiseRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPPromiseRequestOperationManager.m; path = Network/HTTPPromiseRequestOperationManager.m; sourceTree = "<group>"; };
+		3C775E2B1BCBDBA0003980AA /* NSError+OperationCancelled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+OperationCancelled.h"; path = "Extension/NSError+OperationCancelled.h"; sourceTree = "<group>"; };
+		3C775E2C1BCBDBA0003980AA /* NSError+OperationCancelled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+OperationCancelled.m"; path = "Extension/NSError+OperationCancelled.m"; sourceTree = "<group>"; };
 		3C7794311B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+UITextFieldAccessory.h"; path = "Extension/UITextField+UITextFieldAccessory.h"; sourceTree = "<group>"; };
 		3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+UITextFieldAccessory.m"; path = "Extension/UITextField+UITextFieldAccessory.m"; sourceTree = "<group>"; };
 		3C7794371B7F647E0034D91D /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
 		3C7794381B7F647E0034D91D /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
 		3C77943A1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDeliveryStatusViewController.h; sourceTree = "<group>"; };
 		3C77943B1B7FFD6D0034D91D /* OrderDeliveryStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDeliveryStatusViewController.m; sourceTree = "<group>"; };
+		3C885FBC1BDCCB1900CBC5A8 /* NSString+StringToPinYing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+StringToPinYing.h"; path = "Extension/NSString+StringToPinYing.h"; sourceTree = "<group>"; };
+		3C885FBD1BDCCB1900CBC5A8 /* NSString+StringToPinYing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+StringToPinYing.m"; path = "Extension/NSString+StringToPinYing.m"; sourceTree = "<group>"; };
 		3C8F6F721B987B1B00A920A3 /* DGAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGAddressBook.h; sourceTree = "<group>"; };
 		3C8F6F731B987B1B00A920A3 /* DGAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGAddressBook.m; sourceTree = "<group>"; };
 		3C8F6F761B98804C00A920A3 /* AddressBookTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookTableViewController.h; path = Custom/AddressBook/AddressBookTableViewController.h; sourceTree = "<group>"; };
@@ -739,6 +751,10 @@
 				3C7794321B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m */,
 				3CFC01DF1B913BD400995CAB /* UISearchBar+UISearchBarAccessory.h */,
 				3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */,
+				3C775E2B1BCBDBA0003980AA /* NSError+OperationCancelled.h */,
+				3C775E2C1BCBDBA0003980AA /* NSError+OperationCancelled.m */,
+				3C885FBC1BDCCB1900CBC5A8 /* NSString+StringToPinYing.h */,
+				3C885FBD1BDCCB1900CBC5A8 /* NSString+StringToPinYing.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -767,6 +783,7 @@
 		3C6EECBC1B2C3D7B00C7478F /* Daigou */ = {
 			isa = PBXGroup;
 			children = (
+				3C775E241BCBBF1C003980AA /* Network */,
 				3C6EED1E1B2C5E6100C7478F /* Main */,
 				3C6EECBD1B2C3D7B00C7478F /* Supporting Files */,
 				19B0F8345A9DD2655658FEB2 /* Controller */,
@@ -826,6 +843,17 @@
 				3C6249951B3C2254008F34C7 /* CommonDefines.h */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		3C775E241BCBBF1C003980AA /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3C775E251BCBBF5C003980AA /* HttpPromiseRequestOperation.h */,
+				3C775E261BCBBF5C003980AA /* HttpPromiseRequestOperation.m */,
+				3C775E281BCBC357003980AA /* HTTPPromiseRequestOperationManager.h */,
+				3C775E291BCBC357003980AA /* HTTPPromiseRequestOperationManager.m */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		3C8F6F751B987FD500A920A3 /* AddressBook */ = {
@@ -1102,9 +1130,11 @@
 				3CB5EFE31BA6E43E00B55968 /* MExpressManagementViewController.m in Sources */,
 				3C344AB11B6CF6B600818F19 /* OrderBasketPickerCell.m in Sources */,
 				3C3021651B4FDF1B001A741D /* ProductCategory.m in Sources */,
+				3C775E271BCBBF5C003980AA /* HttpPromiseRequestOperation.m in Sources */,
 				3C5D0B541B8C9904006FFC87 /* LLBlurSidebar.m in Sources */,
 				3C3021681B50C82A001A741D /* BrandManagement.m in Sources */,
 				3C6E1DF21B9DD50A0062FBF0 /* UIProductInfoEditViewController.m in Sources */,
+				3C775E2D1BCBDBA0003980AA /* NSError+OperationCancelled.m in Sources */,
 				3C442A351B74D8E8008BF244 /* DateUtil.m in Sources */,
 				3C6EED241B2C5E6100C7478F /* DGViewController.m in Sources */,
 				3CD933E21BA45AFB00E2370D /* DirectoryUtil.m in Sources */,
@@ -1118,8 +1148,10 @@
 				3C5678381B5B25E1001B6B40 /* OProductItem.m in Sources */,
 				3C62498B1B3C11D6008F34C7 /* MAboutViewController.m in Sources */,
 				3CA8A5701BC3FEFD001955FA /* OrderSearchViewController.m in Sources */,
+				3C775E2A1BCBC357003980AA /* HTTPPromiseRequestOperationManager.m in Sources */,
 				3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */,
 				3C7794331B7ECB9A0034D91D /* UITextField+UITextFieldAccessory.m in Sources */,
+				3C885FBE1BDCCB1900CBC5A8 /* NSString+StringToPinYing.m in Sources */,
 				19B0FE5D509F202C88A34690 /* StockViewController.m in Sources */,
 				3C6D856D1B4DDFE70076F4AE /* ProductManagement.m in Sources */,
 				3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */,
