@@ -13,6 +13,7 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "WXApi.h"
 #import "WeiboSDK.h"
+#import <SDWebImage/SDImageCache.h>
 
 @interface AppDelegate ()
 
@@ -23,6 +24,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self initShareSDK];
+    
+    [[SDImageCache sharedImageCache] setMaxCacheAge:60*60*24*365*10];
+    [[SDImageCache sharedImageCache] setMaxCacheSize:1024*1024*1024];
   // Override point for customization after application launch.
     return YES;
 }

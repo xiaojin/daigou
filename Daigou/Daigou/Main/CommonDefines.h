@@ -65,3 +65,5 @@ dispatch_once(&oncetoken, BLOCK); \
 #define DONETITLE @"已完成"
 
 #define PHOTOURLS @"photourls"
+
+#define IMAGEURL @"http://7xlkb6.com1.z0.glb.clouddn.com/image/"

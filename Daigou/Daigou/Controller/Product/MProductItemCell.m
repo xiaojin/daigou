@@ -9,6 +9,7 @@
 #import "MProductItemCell.h"
 #import <Masonry/Masonry.h>
 #import "CommonDefines.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface MProductItemCell()
 @property(nonatomic, strong)UIImageView *productImageView;
@@ -17,8 +18,6 @@
 @end
 
 @implementation MProductItemCell
-
-
 
 - (void)layoutSubviews{
     [super layoutSubviews];
@@ -30,7 +29,11 @@
     if (textFieldSize.height > (kWindowWidth/3 +10)) {
         textFieldSize = CGSizeMake(textFieldSize.width, (kWindowWidth/3 +10));
     }
-    _productImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"default"]];
+    
+    _productImageView = [[UIImageView alloc] init];
+     NSString *URLString =  [IMAGEURL stringByAppendingString:[NSString stringWithFormat:@"%@.png", _product.uid]];
+    [_productImageView sd_setImageWithURL:[NSURL URLWithString:URLString] placeholderImage:[UIImage imageNamed:@"default"]];
+ 
     [self.contentView addSubview:_productImageView];
     [_productImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(10);
