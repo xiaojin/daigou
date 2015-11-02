@@ -49,8 +49,7 @@
     _searchBar.searchBarStyle = UISearchBarStyleProminent;
     [self.view addSubview:_searchBar];
     [_searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        UIView *topLayoutView = (id)self.topLayoutGuide;
-        make.top.equalTo(topLayoutView.mas_bottom);
+        make.top.equalTo(self.mas_topLayoutGuideBottom);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.equalTo(@44);

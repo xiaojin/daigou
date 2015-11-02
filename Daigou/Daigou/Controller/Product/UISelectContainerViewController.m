@@ -32,8 +32,7 @@
     [super viewDidAppear:animated];
     [self.view addSubview:_subView];
     [_subView mas_makeConstraints:^(MASConstraintMaker *make) {
-        UIView *layoutGrid = (id)self.topLayoutGuide;
-        make.top.equalTo(layoutGrid.mas_bottom);
+        make.top.equalTo(self.mas_topLayoutGuideBottom);
         make.width.equalTo(self.view.mas_width);
         make.bottom.equalTo(self.view.mas_bottom);
     }];

@@ -43,11 +43,10 @@
     [_productsCollectionView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_productsCollectionView];
     [_productsCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        UIView *bottomLayoutGuide = (id)self.bottomLayoutGuide;
         make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(bottomLayoutGuide.mas_top);
+        make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
     [self initNavigationBarMenu];
     
@@ -82,8 +81,7 @@
     [self.sidebarVC setBgRGB:0x000000];
     [self.view insertSubview:self.sidebarVC.view aboveSubview:_productsCollectionView];
     [_sidebarVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        UIView *topLayGrid = (id)self.topLayoutGuide;
-        make.top.equalTo(topLayGrid.mas_bottom);
+        make.top.equalTo(self.mas_topLayoutGuideBottom);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(_productsCollectionView.mas_bottom);
