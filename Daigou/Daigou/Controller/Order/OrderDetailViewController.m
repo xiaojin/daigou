@@ -20,6 +20,7 @@
 #import "OProductItem.h"
 #import "CustomInfo.h"
 #import "OrderItem.h"
+#import <MMPopupView/MMAlertView.h>
 
 
 @interface OrderDetailViewController  () <UIScrollViewDelegate,UIAlertViewDelegate>
@@ -163,38 +164,39 @@
 }
 
 - (void)shareOrder {
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
-
-    //创建弹出菜单容器
-    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-                                       defaultContent:@"测试一下"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.mob.com"
-                                          description:@"这是一条测试信息"
-                                            mediaType:SSPublishContentMediaTypeNews];
-    id<ISSContainer> container = [ShareSDK container];
-
-    [container setIPhoneContainerWithViewController:self];
-    
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    NSLog(@"分享成功");
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
-                                }
-                            }];
+  
+//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
+//
+//    //创建弹出菜单容器
+//    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+//                                       defaultContent:@"测试一下"
+//                                                image:[ShareSDK imageWithPath:imagePath]
+//                                                title:@"ShareSDK"
+//                                                  url:@"http://www.mob.com"
+//                                          description:@"这是一条测试信息"
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    id<ISSContainer> container = [ShareSDK container];
+//
+//    [container setIPhoneContainerWithViewController:self];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                                
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    NSLog(@"分享成功");
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+//                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
+//                                }
+//                            }];
 }
 
 - (UIButton *)makeStatusUpdateButton:(NSString *)title withButtonAction:(SEL)buttonAction {

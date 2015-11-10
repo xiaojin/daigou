@@ -47,8 +47,8 @@
                        tencentOAuthCls:[TencentOAuth class]];
     
     //微信登陆的时候需要初始化
-    [ShareSDK connectWeChatWithAppId:@"wx4868b35061f87885"
-                           appSecret:@"64020361b8ec4c99936c0e3999a9f249"
+    [ShareSDK connectWeChatWithAppId:@"wx2ce85c82ea87189b"
+                           appSecret:@"d4624c36b6795d1d99dcf0547af5443d"
                            wechatCls:[WXApi class]];
     
 }

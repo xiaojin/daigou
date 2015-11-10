@@ -3,12 +3,11 @@
 
 target 'Daigou' do
 pod "AFNetworking", "~> 2.6.0"
-pod "FMDB", "~>2.5.0"
+pod "FMDB", "~>2.5"
 pod "ionicons", "~> 2.0.1"
 pod "MJRefresh"
 pod "Masonry","~> 0.6.2"
 pod "JVFloatLabeledTextField"
-pod "SDWebImage"
 pod "FXForms"
 pod "UIAlertView-Blocks", '~> 1.0'
 pod "FSImageViewer", '~> 2.6.3'

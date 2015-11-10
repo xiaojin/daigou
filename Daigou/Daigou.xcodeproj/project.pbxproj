@@ -136,6 +136,7 @@
 		3C8F6F741B987B1B00A920A3 /* DGAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F6F731B987B1B00A920A3 /* DGAddressBook.m */; };
 		3C8F6F781B98804C00A920A3 /* AddressBookTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F6F771B98804C00A920A3 /* AddressBookTableViewController.m */; };
 		3C9A1F4B1B9705580030647B /* StockListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A1F4A1B9705580030647B /* StockListCell.m */; };
+		3C9FE4D51BE77FFC00BD9200 /* ProductShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FE4D41BE77FFC00BD9200 /* ProductShareView.m */; };
 		3CA1A2941B551FCD00C0A74C /* OrderMainInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2931B551FCD00C0A74C /* OrderMainInfoViewController.m */; };
 		3CA1A2971B56884200C0A74C /* OrderItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A2961B56884200C0A74C /* OrderItemView.m */; };
 		3CA1A29D1B5694A100C0A74C /* OrderBasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1A29C1B5694A100C0A74C /* OrderBasketViewController.m */; };
@@ -150,6 +151,7 @@
 		3CD933E81BA45F0F00E2370D /* PhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933E71BA45F0F00E2370D /* PhotoCollection.m */; };
 		3CD933EB1BA4634000E2370D /* OrderPhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933EA1BA4634000E2370D /* OrderPhotoViewCell.m */; };
 		3CD933F31BA5B4D800E2370D /* MEditExpressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD933F21BA5B4D800E2370D /* MEditExpressViewController.m */; };
+		3CF8B8411BF0C30E00982DEA /* OrderShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF8B8401BF0C30E00982DEA /* OrderShareView.m */; };
 		3CFC01E11B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */; };
 /* End PBXBuildFile section */
 
@@ -383,6 +385,8 @@
 		3C8F6F771B98804C00A920A3 /* AddressBookTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookTableViewController.m; path = Custom/AddressBook/AddressBookTableViewController.m; sourceTree = "<group>"; };
 		3C9A1F491B9705580030647B /* StockListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockListCell.h; sourceTree = "<group>"; };
 		3C9A1F4A1B9705580030647B /* StockListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockListCell.m; sourceTree = "<group>"; };
+		3C9FE4D31BE77FFC00BD9200 /* ProductShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductShareView.h; path = Daigou/View/Product/ProductShareView.h; sourceTree = SOURCE_ROOT; };
+		3C9FE4D41BE77FFC00BD9200 /* ProductShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductShareView.m; path = Daigou/View/Product/ProductShareView.m; sourceTree = SOURCE_ROOT; };
 		3CA1A2921B551FCD00C0A74C /* OrderMainInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderMainInfoViewController.h; sourceTree = "<group>"; };
 		3CA1A2931B551FCD00C0A74C /* OrderMainInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderMainInfoViewController.m; sourceTree = "<group>"; };
 		3CA1A2951B56884200C0A74C /* OrderItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderItemView.h; path = Daigou/View/Order/OrderItemView.h; sourceTree = SOURCE_ROOT; };
@@ -411,6 +415,8 @@
 		3CD933EA1BA4634000E2370D /* OrderPhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPhotoViewCell.m; sourceTree = "<group>"; };
 		3CD933F11BA5B4D800E2370D /* MEditExpressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEditExpressViewController.h; path = Express/MEditExpressViewController.h; sourceTree = "<group>"; };
 		3CD933F21BA5B4D800E2370D /* MEditExpressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEditExpressViewController.m; path = Express/MEditExpressViewController.m; sourceTree = "<group>"; };
+		3CF8B83F1BF0C30E00982DEA /* OrderShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderShareView.h; sourceTree = "<group>"; };
+		3CF8B8401BF0C30E00982DEA /* OrderShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderShareView.m; sourceTree = "<group>"; };
 		3CFC01DF1B913BD400995CAB /* UISearchBar+UISearchBarAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UISearchBar+UISearchBarAccessory.h"; path = "Extension/UISearchBar+UISearchBarAccessory.h"; sourceTree = "<group>"; };
 		3CFC01E01B913BD400995CAB /* UISearchBar+UISearchBarAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+UISearchBarAccessory.m"; path = "Extension/UISearchBar+UISearchBarAccessory.m"; sourceTree = "<group>"; };
 		60015C4B43E1105AC2D795B4 /* libPods-Daigou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Daigou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -598,6 +604,8 @@
 				3CD933EA1BA4634000E2370D /* OrderPhotoViewCell.m */,
 				3C442A361B760ACE008BF244 /* OrderStausListTableView.h */,
 				3C442A371B760ACE008BF244 /* OrderStausListTableView.m */,
+				3CF8B83F1BF0C30E00982DEA /* OrderShareView.h */,
+				3CF8B8401BF0C30E00982DEA /* OrderShareView.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -928,6 +936,8 @@
 				3C3021561B4F98DF001A741D /* ProductItemCell.m */,
 				3C3021571B4F98DF001A741D /* ProductItemFrame.h */,
 				3C3021581B4F98DF001A741D /* ProductItemFrame.m */,
+				3C9FE4D31BE77FFC00BD9200 /* ProductShareView.h */,
+				3C9FE4D41BE77FFC00BD9200 /* ProductShareView.m */,
 			);
 			name = Product;
 			path = Mine;
@@ -1207,6 +1217,7 @@
 				3C6EECB71B2C3D7B00C7478F /* Frameworks */,
 				3C6EECB81B2C3D7B00C7478F /* Resources */,
 				3EE476ED30DC2CB5B63A7CAF /* Copy Pods Resources */,
+				D4C6F738B7854132E7D6F298 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1336,6 +1347,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Daigou/Pods-Daigou-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D4C6F738B7854132E7D6F298 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Daigou/Pods-Daigou-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1399,6 +1425,7 @@
 				3C5661761B679B910082F49E /* OrderProductsRightTableView.m in Sources */,
 				3C56617C1B67AC6A0082F49E /* OrderProductsRightCell.m in Sources */,
 				19B0FF72718EF29A756E96DB /* ProcurementViewController.m in Sources */,
+				3C9FE4D51BE77FFC00BD9200 /* ProductShareView.m in Sources */,
 				3C6DDF1C1B43F86C000B8152 /* MShowDetailCell.m in Sources */,
 				3C30216B1B50C841001A741D /* ProductCategoryManagement.m in Sources */,
 				3C0BBDA91B9484E100BA0E1E /* StockStatusListTableView.m in Sources */,
@@ -1424,6 +1451,7 @@
 				3C70BF0C1B9F0B9500C17481 /* UIScanViewController.m in Sources */,
 				3C6249911B3C1E81008F34C7 /* CustomInfo.m in Sources */,
 				3C64486D1BA0457400873739 /* UISelectContainerViewController.m in Sources */,
+				3CF8B8411BF0C30E00982DEA /* OrderShareView.m in Sources */,
 				3C6448631BA00AAB00873739 /* MProductItemCell.m in Sources */,
 				3C6249941B3C1FDC008F34C7 /* CustomInfoManagement.m in Sources */,
 				3CBF22ED1B7B6A4D00F3EB72 /* UILabelStrikeThrough.m in Sources */,
@@ -1575,6 +1603,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Daigou/ShareSDK/Connection",
@@ -1604,6 +1633,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Daigou/ShareSDK/Connection",

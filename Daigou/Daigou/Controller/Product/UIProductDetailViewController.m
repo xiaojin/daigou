@@ -23,8 +23,11 @@
 #import "MCategoryTableView.h"
 #import "MBrandTableView.h"
 #import "UISelectContainerViewController.h"
+#import "ProductShareView.h"
+#import <MMPopupView/MMPopupView.h>
+#import <ShareSDK/ShareSDK.h>
 
-@interface UIProductDetailViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,UIProductInfoEditViewControllerDelegate,MCategoryTableViewDelegate, MBrandTableViewDelegate,UIAlertViewDelegate>{
+@interface UIProductDetailViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIScanViewControllerDelegate,UIProductInfoEditViewControllerDelegate,MCategoryTableViewDelegate, MBrandTableViewDelegate,UIAlertViewDelegate,ProductShareViewDelegate>{
     CGSize keyboardSize;
 }
 @property(nonatomic, strong)JVFloatLabeledTextField *productNameField;
@@ -92,9 +95,58 @@
     
 }
 
+- (void) shareProduct {
+
+    MMPopupBlock completeBlock = ^(MMPopupView *popupView){
+        NSLog(@"animation complete");
+    };
+    
+    ProductShareView *sharedView = [[ProductShareView alloc]init];
+    sharedView.product =_product;
+    sharedView.delegate = self;
+    [sharedView showWithBlock:completeBlock];
+
+}
+
+- (void)didShareProduct:(UIImage *)shareImage product:(Product *)productInfo {
+    //创建弹出菜单容器
+    
+    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                       defaultContent:@"产品详情"
+                                                image:[ShareSDK pngImageWithImage:shareImage]
+                                                title:@"代购管家"
+                                                  url:@"http://www.idgb.co/"
+                                          description:productInfo.name
+                                            mediaType:SSPublishContentMediaTypeImage];
+    id<ISSContainer> container = [ShareSDK container];
+    
+    [container setIPhoneContainerWithViewController:self];
+    
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions:nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(@"分享成功");
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
+                                }
+                            }];
+
+}
+
 - (void)initNavigationBar {
     UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(finishProduct)];
-    self.navigationItem.rightBarButtonItem = doneItem;
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareProduct)];
+    self.navigationItem.rightBarButtonItems = @[shareItem, doneItem];
     
     UIImage *backImage = [IonIcons imageWithIcon:ion_ios_arrow_left size:26 color:SYSTEMBLUE];
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 33)];
