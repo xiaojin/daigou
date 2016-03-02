@@ -21,6 +21,7 @@
 #import "CustomInfo.h"
 #import "OrderItem.h"
 #import <MMPopupView/MMAlertView.h>
+#import "OrderShareViewController.h"
 
 
 @interface OrderDetailViewController  () <UIScrollViewDelegate,UIAlertViewDelegate>
@@ -164,39 +165,29 @@
 }
 
 - (void)shareOrder {
-  
-//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
-//
-//    //创建弹出菜单容器
-//    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-//                                       defaultContent:@"测试一下"
-//                                                image:[ShareSDK imageWithPath:imagePath]
-//                                                title:@"ShareSDK"
-//                                                  url:@"http://www.mob.com"
-//                                          description:@"这是一条测试信息"
-//                                            mediaType:SSPublishContentMediaTypeNews];
-//    id<ISSContainer> container = [ShareSDK container];
-//
-//    [container setIPhoneContainerWithViewController:self];
-//    
-//    //弹出分享菜单
-//    [ShareSDK showShareActionSheet:container
-//                         shareList:nil
-//                           content:publishContent
-//                     statusBarTips:YES
-//                       authOptions:nil
-//                      shareOptions:nil
-//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-//                                
-//                                if (state == SSResponseStateSuccess)
-//                                {
-//                                    NSLog(@"分享成功");
-//                                }
-//                                else if (state == SSResponseStateFail)
-//                                {
-//                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
-//                                }
-//                            }];
+    OrderItem *shareItem = [_orderItem copy];
+    OrderShareViewController *shareViewController = [[OrderShareViewController alloc]init];
+    shareItem.clientid = _addNewOrderViewController.customInfo.cid;
+    shareItem.subtotal = _addNewOrderViewController.orderItem.subtotal;
+    shareItem.discount = _addNewOrderViewController.orderItem.discount;
+    shareItem.totoal = _addNewOrderViewController.orderItem.totoal;
+    shareItem.othercost =_addNewOrderViewController.orderItem.othercost;
+    shareItem.profit = _addNewOrderViewController.orderItem.profit;
+    shareItem.note = _addNewOrderViewController.orderItem.note;
+    //DELIVERY STATUS
+    CustomInfo *receiverInfo = _deliveryStatusViewController.receiverInfo;
+    shareItem.expressid = _deliveryStatusViewController.express.eid;
+    shareItem.barcode = _deliveryStatusViewController.deliverybarCode;
+    shareItem.delivery = _deliveryStatusViewController.deliveryPrice;
+    shareItem.reviever = receiverInfo.name;
+    shareItem.address = receiverInfo.address;
+    shareItem.phonenumber = receiverInfo.phonenum;
+    shareItem.postcode = receiverInfo.postcode;
+    shareItem.idnum = receiverInfo.idnum;
+    
+    shareViewController.orderItem = shareItem;
+    shareViewController.prodList = self.products;
+    [self.navigationController pushViewController:shareViewController animated:YES];
 }
 
 - (UIButton *)makeStatusUpdateButton:(NSString *)title withButtonAction:(SEL)buttonAction {
@@ -588,6 +579,7 @@
         _orderItem.address = receiverInfo.address;
         _orderItem.phonenumber = receiverInfo.phonenum;
         _orderItem.postcode = receiverInfo.postcode;
+        _orderItem.idnum = receiverInfo.idnum;
         OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
         [orderItemManagement updateOrderItem:_orderItem];
         
@@ -686,6 +678,7 @@
     NSArray *products = [orderItemManagement getOrderProductsByOrderId:_orderItem.oid];
     _productsInPurchseList = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
 }
+
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

@@ -17,6 +17,7 @@
 #import "JVFloatLabeledTextField.h"
 #import "OrderItemManagement.h"
 #import "ErrorHelper.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface OrderBasketCell() <UITextFieldDelegate>{
     BOOL editStatus;
@@ -399,6 +400,8 @@
     [_totalCountValue setText:[NSString stringWithFormat:@"%@",@(productCount)]];
     [_prodCountValue setText:[NSString stringWithFormat:@"%@",@(_pruchaseNumber)]];
     [_alreadyPurchasedCount setText:[NSString stringWithFormat:@"%@",@(_stockNumber)]];
+    NSString *URLString =  [IMAGEURL stringByAppendingString:[NSString stringWithFormat:@"%@.png", product.uid]];
+    [_imagePic sd_setImageWithURL:[NSURL URLWithString:URLString] placeholderImage:[UIImage imageNamed:@"default"]];
     //TODO setProductImage
 }
 - (Product *)getProductForOrderItem:(NSInteger)pid {
@@ -460,17 +463,15 @@
 
 - (void)updateOrderProductInfo {
     OrderItemManagement *orderItemManagement = [OrderItemManagement shareInstance];
-    //[orderItemManagement updateOrderProductItemWithProductItem:_productItem];
     NSArray *productItems = [orderItemManagement getOrderProductItems:_productItem];
     NSInteger changeNumber = ([_countField.text integerValue]- [productItems count]);
-    
     NSArray *stockFilterProducts = [[orderItemManagement getUnOrderProducItemByStatus:PRODUCT_INSTOCK] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productid == %d",_productItem.productid]];
     
     NSArray *orderFilterStockProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_INSTOCK]];
     NSArray *orderFilterPurchaseProducts =[productItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"statu == %d",PRODUCT_PURCHASE]];
     _pruchaseNumber = [orderFilterPurchaseProducts count];
     _stockNumber = [orderFilterStockProducts count];
-    
+    float sellPrice = [_sellPriceField text] ?[[_sellPriceField text] floatValue]:0.0f;
     if (changeNumber > 0) {
         NSInteger fromStockCount =[stockFilterProducts count] > changeNumber ? changeNumber :[stockFilterProducts count];
         
@@ -479,6 +480,7 @@
         for ( int y = 0; y< fromStockCount; y++) {
             OProductItem *productItem = [stockFilterProducts objectAtIndex:y];
             productItem.orderid = _productItem.orderid;
+            productItem.sellprice = sellPrice;
             [updateArray addObject:productItem];
             _stockNumber ++;
         }
@@ -488,6 +490,7 @@
         NSMutableArray *array = [NSMutableArray array];
         for (int x = 0; x < insertCount; x++) {
             _productItem.statu = PRODUCT_PURCHASE;
+            _productItem.sellprice = sellPrice;
             [array addObject:_productItem];
             _pruchaseNumber ++;
         }
@@ -508,6 +511,7 @@
         for ( int y = 0; y< fromStockCount; y++) {
             OProductItem *productItem = [orderFilterStockProducts objectAtIndex:y];
             productItem.orderid = 0;
+            productItem.sellprice = sellPrice;
             [updateArray addObject:productItem];
             _stockNumber --;
         }
@@ -515,10 +519,23 @@
         
         NSMutableArray *array = [NSMutableArray array];
         for (int x = 0; x < fromPurchseCount; x++) {
-            [array addObject:orderFilterPurchaseProducts[x]];
+            OProductItem *productItem = orderFilterPurchaseProducts[x];
+            productItem.sellprice = sellPrice;
+            [array addObject:productItem];
             _pruchaseNumber --;
         }
         [orderItemManagement removeOrderProductItems:array];
+    }
+    else {
+        // if user update the OProductItem price
+        //NSMutableArray *updateArray = [NSMutableArray array];
+        for (OProductItem *prodItem in productItems) {
+            prodItem.sellprice = sellPrice;
+           // [updateArray addObject:prodItem];
+        }
+        NSLog(@"%.2f",[(OProductItem *)productItems[0] sellprice]);
+        
+        [orderItemManagement updateProductItemWithProductItem:productItems withNull:NO];
     }
     [_prodCountValue setText:[NSString stringWithFormat:@"%@",@(_pruchaseNumber)]];
     [_alreadyPurchasedCount setText:[NSString stringWithFormat:@"%@",@(_stockNumber)]];

@@ -40,4 +40,36 @@
     
 }
 
+
+- (id)copyWithZone:(NSZone *)zone {
+
+    OrderItem *newItem = [[OrderItem allocWithZone:zone] init];
+    newItem.clientid = self.clientid;
+    newItem.statu = self.statu;
+    newItem.expressid = self.expressid;
+    newItem.parentoid = self.parentoid;
+    newItem.freeShip = self.freeShip;
+    newItem.address = [self.address copy];
+    newItem.reviever = [self.reviever copy];
+    newItem.phonenumber = [self.postcode copy];
+    newItem.totoal = self.totoal;
+    newItem.discount = self.discount;
+    newItem.delivery = self.delivery;
+    newItem.subtotal = self.subtotal;
+    newItem.profit = self.profit;
+    newItem.othercost = self.othercost;
+    newItem.creatDate = self.creatDate;
+    newItem.shipDate = self.shipDate;
+    newItem.deliverDate = self.deliverDate;
+    newItem.payDate = self.payDate;
+    newItem.note = [self.note copy];
+    newItem.barcode = [self.barcode copy];
+    newItem.idnum = [self.idnum copy];
+    newItem.proxy = self.proxy;
+    newItem.noteImage = [self.noteImage copy];
+    newItem.syncDate = self.syncDate;
+    return newItem;
+}
+
+
 @end

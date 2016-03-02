@@ -127,14 +127,15 @@ NSString *const oAddNewOrderCellIdentify = @"oAddNewOrderCellIdentify";
         otherValue = [_orderCell otherValue];
     }
     
-    [self.products enumerateObjectsUsingBlock:^(OProductItem *obj, NSUInteger idx, BOOL *stop) {
-        totalValue = totalValue + obj.sellprice;
-        purchaseValue = purchaseValue + obj.price;
-    }];
+    for (OProductItem *prodItem in self.products) {
+        totalValue = totalValue + prodItem.sellprice;
+        purchaseValue = purchaseValue + prodItem.price;
+    }
     finalValue = totalValue - discountValue;
     benefitValue = finalValue - purchaseValue * EXCHANGERATE - otherValue*EXCHANGERATE;
     NSDictionary *benefitDict = @{@"totalvalue":@(totalValue),@"discountvalue":@(discountValue),@"finalvalue":@(finalValue),@"purchasevalue":@(purchaseValue),@"othervalue":@(otherValue),@"benefitvalue":@(benefitValue)};
     _benefitDict = benefitDict;
+    //finalValue = orderitem.totalvalue, totalvalue = orderitem.subtotal
 }
 
 #pragma mark - UINotification

@@ -129,10 +129,11 @@
 
 - (float)caculateOrderTotalPrice {
    NSArray *orderProducts = [[OrderItemManagement shareInstance] getOrderProductsByOrderId:self.orderItem.oid];
-    __block float totalPrice = 0.0f;
-    [orderProducts enumerateObjectsUsingBlock:^(OProductItem *obj, NSUInteger idx, BOOL *stop) {
+    float totalPrice = 0.0f;
+    for (OProductItem *obj in orderProducts) {
         totalPrice = totalPrice + obj.price;
-    }];
+
+    }
     return totalPrice;
 }
 

@@ -130,11 +130,11 @@
 
 - (void)storeCartProductIntoCache{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [_products enumerateObjectsUsingBlock:^(ProductWithCount *obj, NSUInteger idx, BOOL *stop) {
+    for (ProductWithCount *obj in _products) {
         NSString *cartKey = [NSString stringWithFormat:@"%ld",(long)obj.product.pid];
         NSData *productEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:obj];
         [_cartDict setObject:productEncodedObject forKey:cartKey];
-    }];
+    }
 
     [userDefaults setObject:_cartDict forKey:CARTPRODUCTSCACHE];
     [userDefaults synchronize];

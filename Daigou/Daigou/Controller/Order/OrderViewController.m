@@ -371,13 +371,13 @@ NSString *const orderlistcellIdentity = @"orderlistcellIdentity";
 }
 
 - (CustomInfo *)getCustomInfobyId:(NSInteger)clientID {
-    __block CustomInfo *customInfo = nil;
-    [self.custominfos enumerateObjectsUsingBlock:^(CustomInfo *obj, NSUInteger idx, BOOL *stop) {
+    CustomInfo *customInfo = nil;
+    for (CustomInfo *obj in self.custominfos) {
         if (obj.cid == clientID) {
             customInfo = obj;
-            return;
+            break;
         }
-    }];
+    }
     return customInfo;
 }
 

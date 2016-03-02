@@ -83,14 +83,16 @@
         NSMutableArray *array = [NSMutableArray array];
         [items addObject:array];
     }
-    [objects enumerateObjectsUsingBlock:^(OrderItem *item, NSUInteger idx, BOOL *stop) {
+    
+    for (OrderItem *item in objects) {
         [(NSMutableArray *)[items objectAtIndex:(item.statu/10)] addObject:item];
-    }];
-    [items enumerateObjectsUsingBlock:^(NSMutableArray *obj, NSUInteger idx, BOOL *stop) {
+
+    }
+    for (NSMutableArray *obj in items) {
         if ([obj count] == 0) {
             [items removeObject:obj];
         }
-    }];
+    }
     
     _orderList = items;
     return _orderList;

@@ -102,7 +102,7 @@
     brandTitle.lineBreakMode = NSLineBreakByWordWrapping;
     brandTitle.numberOfLines = 0;
     [brandTitle setText:product.name];
-    CGSize brandTitleSize = [self initSizeWithText:product.name withSize:CGSizeMake(self.frame.size.width-20, MAXFLOAT) withFont:MONEYSYMFONT];
+    CGSize brandTitleSize = [self initSizeWithText:product.name withSize:CGSizeMake(self.frame.size.width-120, MAXFLOAT) withFont:MONEYSYMFONT];
     [_contentView addSubview:brandTitle];
     [brandTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(prodImage.mas_top).with.offset(-10);
@@ -128,7 +128,7 @@
     contentLbl.lineBreakMode = NSLineBreakByWordWrapping;
     contentLbl.numberOfLines = 0;
     [contentLbl setText:contentString];
-    CGSize contentLblSize = [self initSizeWithText:contentString withSize:CGSizeMake(self.frame.size.width-20, MAXFLOAT) withFont:MONEYSYMFONT];
+    CGSize contentLblSize = [self initSizeWithText:contentString withSize:CGSizeMake(self.frame.size.width-120, MAXFLOAT) withFont:MONEYSYMFONT];
     [_contentView addSubview:contentLbl];
     [contentLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(brandTitle.mas_bottom);
