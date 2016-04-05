@@ -63,7 +63,9 @@
 - (void)getOrderItemsWithExpress:(Express *)express {
     OrderItemManagement *itemManagement = [OrderItemManagement shareInstance];
     NSArray *items = [itemManagement getOrderItemsByExpress:express];
-    [self arrayForSections:items];
+    if ([items count] > 0) {
+        [self arrayForSections:items];
+    }
 }
 
 #pragma mark - Table view data source
@@ -143,14 +145,5 @@
     [_orderItemTableView reloadData];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

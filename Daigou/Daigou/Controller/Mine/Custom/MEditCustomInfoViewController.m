@@ -84,14 +84,14 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     _imageCollection.dataSource = self;
     _imageCollection.delegate = self;
     _imageCollection.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    _selectPhotos = [[NSMutableArray alloc] init];
+    _selectPhotos = [NSMutableArray arrayWithObjects:[Photo new], [Photo new], nil];
     if (_customInfo.photoback != nil && ![_customInfo.photoback isEqualToString:@""]) {
         Photo *backPhoto = [[Photo alloc]initWithPath:_customInfo.photoback];
-        [_selectPhotos addObject:backPhoto];
+        [_selectPhotos replaceObjectAtIndex:1 withObject:backPhoto];
     }
     if (_customInfo.photofront != nil && ![_customInfo.photofront isEqualToString:@""]) {
         Photo *frontPhoto = [[Photo alloc]initWithPath:_customInfo.photofront];
-        [_selectPhotos addObject:frontPhoto];
+        [_selectPhotos replaceObjectAtIndex:0 withObject:frontPhoto];
     }
     
 }
@@ -165,7 +165,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     _addressField.floatingLabelTextColor = floatingLabelColor;
     [_addressField setText:_customInfo.address];
     [_contentView addSubview:_addressField];
-    [_addressField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_addressField mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.equalTo(_nameField.mas_bottom).with.offset(10);
         make.left.equalTo(_nameField.mas_left);
         make.width.equalTo(self.view).with.offset(-20);
@@ -421,7 +421,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     _address3Field = [[JVFloatLabeledTextField alloc]initHasAccessory];
     _address3Field.delegate = self;
     _address3Field.font = [UIFont systemFontOfSize:kJVFieldFontSize];
-    _address3Field.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"备用地址2"
+    _address3Field.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"备用地址3"
                                                                            attributes:@{NSForegroundColorAttributeName: fontColor}];
     _address3Field.floatingLabelFont = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     _address3Field.floatingLabelTextColor = floatingLabelColor;
@@ -481,20 +481,18 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
 }
 
 -(void)presentImagePicker:(BOOL)forCamera{
-    if (_selectPhotos.count < 2) {
-        _imagePicker = [[UIImagePickerController alloc]init];
-        _imagePicker.delegate = self;
-        _imagePicker.allowsEditing = NO;
-        _imagePicker.sourceType = forCamera ? UIImagePickerControllerSourceTypeCamera :
-        UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        if (IOS8_OR_ABOVE) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [self showViewController:_imagePicker];
-            }];
-        } else {
+    _imagePicker = [[UIImagePickerController alloc]init];
+    _imagePicker.delegate = self;
+    _imagePicker.allowsEditing = NO;
+    _imagePicker.sourceType = forCamera ? UIImagePickerControllerSourceTypeCamera :
+    UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    if (IOS8_OR_ABOVE) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self showViewController:_imagePicker];
-        }
+        }];
+    } else {
+        [self showViewController:_imagePicker];
     }
 }
 -(void)showViewController:(UIViewController*)viewController
@@ -509,15 +507,18 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
         UIImageWriteToSavedPhotosAlbum(chosenImage, nil, nil, nil);
     }
     Photo *photo = [[Photo alloc] initWithImage:chosenImage];
-    [_selectPhotos addObject:photo];
-     dispatch_async(dispatch_get_main_queue(), ^{
-    [_imageCollection reloadData];
-    });
+
     if (_isFrontPhoto) {
         _customInfo.photofront = photo.imageUrl;
+        [_selectPhotos replaceObjectAtIndex:0 withObject:photo];
     } else {
         _customInfo.photoback = photo.imageUrl;
+        [_selectPhotos replaceObjectAtIndex:1 withObject:photo];
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_imageCollection reloadData];
+    });
     [self imagePickerControllerDidCancel:picker];
 }
 
@@ -651,6 +652,7 @@ NSString *const mEditCustomDetailCellIdentify = @"MEditCustomDetailCell";
     _customInfo.phonenum = _phoneField.text;
     _customInfo.idnum = _idNumberField.text;
     _customInfo.postcode = _postCodeField.text;
+    _customInfo.address = _addressField.text;
     _customInfo.address1 = _address1Field.text;
     _customInfo.address2 = _address2Field.text;
     _customInfo.address3 = _address3Field.text;

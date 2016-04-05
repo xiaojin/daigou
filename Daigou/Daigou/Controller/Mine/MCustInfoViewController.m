@@ -75,7 +75,6 @@
 - (void)addNewCustom {
     UIActionSheet *addCustomInfoStype = [[UIActionSheet alloc]initWithTitle:@"添加联系人信息" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从通讯录导入",@"自定义添加联系人",@"批量导入客户信息",nil];
     [addCustomInfoStype showFromTabBar:self.tabBarController.tabBar];
-
 }
 
 
@@ -97,7 +96,6 @@
         //2
         [self getUserInfoFromAddressBook];
 //        NSLog(@"Authorized");
-//        [self addPetToContacts:sender];
     } else{
         //3 ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
         NSLog(@"Not determined");
@@ -110,7 +108,6 @@
                 }
                 //5
                  [self getUserInfoFromAddressBook];
-                //[self addPetToContacts:sender];
             });
         });
     }
@@ -197,13 +194,16 @@
 }
 
 - (void) bunchImportCustomInfo {
-    UIScanViewController *scaViewController = [[UIScanViewController alloc] init];
-    scaViewController.isQR = NO;
-    // 2. configure ViewController
-    scaViewController.delegate = self;
-    
-    // 3. show ViewController
-    [self presentViewController:scaViewController animated:YES completion:nil];
+    if (TARGET_IPHONE_SIMULATOR) {
+        UIScanViewController *scaViewController = [[UIScanViewController alloc] init];
+        scaViewController.isQR = NO;
+        // 2. configure ViewController
+        scaViewController.delegate = self;
+        
+        // 3. show ViewController
+        [self presentViewController:scaViewController animated:YES completion:nil];
+    }
+  
 }
 
 - (void)handlerContacter:(NSString *)downloadURL {

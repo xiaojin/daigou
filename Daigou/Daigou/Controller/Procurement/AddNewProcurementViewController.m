@@ -265,15 +265,18 @@
 
 // 读二维码
 - (void)handleScanBar:(id)sender {
-    // 扫描二维码
-    // 1. init ViewController
-    UIScanViewController *VC = [[UIScanViewController alloc] init];
-    VC.isQR = NO;
-    // 2. configure ViewController
-    VC.delegate = self;
-    
-    // 3. show ViewController
-    [self presentViewController:VC animated:YES completion:nil];
+    if (TARGET_IPHONE_SIMULATOR) {
+        // 扫描二维码
+        // 1. init ViewController
+        UIScanViewController *VC = [[UIScanViewController alloc] init];
+        VC.isQR = NO;
+        // 2. configure ViewController
+        VC.delegate = self;
+        
+        // 3. show ViewController
+        [self presentViewController:VC animated:YES completion:nil];
+    }
+
 }
 
 - (void)didFinishedReadingQR:(NSString *)string {

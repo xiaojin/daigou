@@ -42,11 +42,11 @@ NSString *const kTableCellID = @"SETTINGCELLID";
                     [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"卖家管理" controller:[MSellInfoViewController class]]]
             mutableCopy];
 
-    NSMutableArray *secondSection = [
-            @[[SettingItem itemWithIcon:ion_android_person title:@"快递助手" controller:[MCustInfoViewController class]],
-                    [SettingItem itemWithIcon:ion_android_plane title:@"经营统计" controller:[MDeliveryManagementViewController class]],
-                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"数据导出" controller:[MDeliveryManagementViewController class]]]
-            mutableCopy];
+//    NSMutableArray *secondSection = [
+//                                     
+//            @[[SettingItem itemWithIcon:ion_android_person title:@"快递助手" controller:[MCustInfoViewController class]],[SettingItem itemWithIcon:ion_android_plane title:@"经营统计" controller:[MDeliveryManagementViewController class]],
+//                    [SettingItem itemWithIcon:ion_ios_calculator_outline title:@"数据导出" controller:[MDeliveryManagementViewController class]]]
+//            mutableCopy];
 
     NSMutableArray *thirdSection = [
             @[[SettingItem itemWithIcon:ion_ios_gear_outline title:@"设置" controller:[MSettingViewController class]],
@@ -54,7 +54,7 @@ NSString *const kTableCellID = @"SETTINGCELLID";
                     [SettingItem itemWithIcon:ion_ios_information_outline title:@"关于" controller:[MAboutViewController class]]]
             mutableCopy];
 
-    self.settings = [@[firstSection, secondSection, thirdSection] mutableCopy];
+    self.settings = [@[firstSection, thirdSection] mutableCopy];
 }
 
 - (SettingItem *) getItem:(NSIndexPath *)indexPath {
